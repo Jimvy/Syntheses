@@ -61,7 +61,7 @@ Elles sont tout de même listées à l'Annexe~\ref{ann:nota}.
 \end{enumerate}
 
 \paragraph{Chaleur de réaction:}
-\'Energie de réaction: énergie absorbée par le système (par convention)
+Énergie de réaction: énergie absorbée par le système (par convention)
 $$\Delta E = E_{\textrm{produits}}-E_{\textrm{réactifs}}$$
 
 Si réaction endothermique: absorption d'énergie $\Rightarrow \Delta E > 0$
@@ -145,6 +145,11 @@ mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
 Les électrons (et la matière en général) ont
 à la fois un caractère ondulatoire et un caractère corpusculaire.
 
+%FIXME : c'est faux, surtout la partie p=mv. Il y a un facteur de Lorentz gamma
+% qui "vaut" l'infini quand la particule se déplace à c et ça compense la masse
+% nulle, pour que p soit non nul. La suite avec E=mc^2 n'a pas de sens
+% (énergie nulle alors qu'on a défini plus haut qu'un photon a une énergie ?).
+% En fait, E=pc. Je propose de retirer cette digression. JM
 
 \section{Fonction d'onde}
 
@@ -181,6 +186,7 @@ $n$ peut prendre les valeurs $1, 2, \ldots$
 $n$ détermine la couche de l'orbitale.
 %La valeur de $n$ peut aussi être représenté par la période correspondante
 % NOT SURE
+% En effet, ce n'est pas vraiment ça ; mais numéro de la période = valeur de n de la sous-couche ns ajoutée au début.
 %\begin{center}
 %\begin{tabular}{c|ccccc}
 %	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
@@ -262,7 +268,7 @@ On dit aussi qu'ils sont monoélectroniques.
   \item Effet de pénétration des $e^-$: un $e^-$ $\sorb$ de n'importe quelle couche peut se trouver près du noyau
     $\rightarrow$ il peut pénétrer à travers les couches internes.
     Un $e^-$ $\porb$ pénètre beaucoup moins (sa fonction d'onde s'annule sur le noyau) $\Rightarrow$ charge nucléaire effective inférieure à celle que subit l'$e^-$ $\sorb$.
-  \item \'Energie fonction de $n$ et de $l$.
+  \item Énergie fonction de $n$ et de $l$.
 \end{itemize}
 $\Rightarrow$ Ordre des énergies des orbitales: $\sorb<\porb<\dorb<\forb<...$
 Pour une même couche,
@@ -287,16 +293,16 @@ que celle provenant des orbitales inférieures.
     Puis seulement, on met les 3 autres électrons s'appariant aux électrons déjà mis.
 \end{description}
 
-Exemple le fluore \ce{F} : \configElectronique{9} ou \configElectronique[courte]{9}.
-
+Exemple le fluor \ce{F} : \configElectronique{9} ou \configElectronique[courte]{9}.
+%TODO ajouter exceptions
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
 \begin{itemize}
   \item En général, diminution de gauche à droite dans une période :
-  $\uparrow$nombre de protons $\Rightarrow$ $\uparrow$attraction dans une même couche $\Rightarrow$  $\downarrow$rayon
+  $\uparrow$ nombre de protons $\Rightarrow$ $\uparrow$ attraction dans une même couche $\Rightarrow$  $\downarrow$ rayon
   \item En général, augmentation de haut en bas dans un groupe :
-  $\uparrow$nombre de couches $\Rightarrow$ $\uparrow$écrantage $\Rightarrow$ $\uparrow$rayon
+  $\uparrow$ nombre de couches $\Rightarrow$ $\uparrow$ écrantage $\Rightarrow$ $\uparrow$ rayon
 \end{itemize}
 
 \section{\'Energie d'ionisation}
@@ -425,7 +431,7 @@ Les électrons sont apportés par chaque atome et s'apparient $\Rightarrow$ éta
 \paragraph{Règle de l'octet}
 Les atomes ont tendance à compléter leur couche externe pour obtenir une configuration électronique stable,
 i.e. la configuration électronique d'un gaz noble.
-C'est à dire à former des liaisons covalentes jusqu'à être entourés de 8 $e^-$.
+C'est-à-dire à former des liaisons covalentes jusqu'à être entourés de 8 $e^-$.
 \subparagraph{Exceptions à la règle de l'octet}
 Certains atomes peuvent loger plus de 8 $e^-$ dans leur couche de valence. Il s'agit des non-métaux de la 3\up{e}
 période et des périodes ultérieures. Les atomes de ces éléments possèdent des orbitales $d$ vides dans leur couche
@@ -539,8 +545,8 @@ les angles peuvent varier quelque peu des angles théoriques
 %\end{itemize}
 
 \paragraph{Molécules polaires}
-Une molécule est polaire ssi la résultante de ses moments dipôlaires est non nulle.
-Pour cela, il faut faire une somme vectorielle pondérée des moments dipôlaires.
+Une molécule est polaire ssi la résultante de ses moments dipolaires est non nulle.
+Pour cela, il faut faire une somme vectorielle pondérée des moments dipolaires.
 La résultante dépend donc de la géométrie de la molécule.
 Une molécule non polaire est dite apolaire.
 Les molécules diatomiques homonucléaires (ex: \ce{H2}) sont toujours apolaires.
@@ -577,7 +583,7 @@ Elles ne peuvent se recouvrir que latéralement (un $e^-$ de chaque côté de l'
   \item Symétrie avec plan nodal
 \end{itemize}
 
-\paragraph{Détermination de type de liaison}
+\paragraph{Détermination du type de liaison}
 
 \begin{center}
   \begin{tabular}{l|ll}
@@ -744,7 +750,7 @@ par ordre décroissant d'intensité
       \end{tabular}
     \end{center}
 \end{itemize}
-
+%TODO modifier (c'est là où ça coinçait).
 \subsection{Interactions dipolaires}
 $\rightarrow$ Interactions électrostatiques
 \begin{itemize}
@@ -807,7 +813,7 @@ Interactions entre dipôles permanents.
 \subsection{Liaisons hydrogènes}
 \paragraph{Origine}
 Possible qu'entre $\ce{H}$ et $\ce{F}$,
-$\ce{O}$, $\ce{N}$, des atomes fortement éléctronégatifs.
+$\ce{O}$, $\ce{N}$, des atomes fortement électronégatifs.
 Les atomes $\ce{H}$,
 partiellement chargé $\delta^+$ de petites tailles se rapprochent des atomes ($\ce{F}$, $\ce{O}$, $\ce{N}$) $\delta^-$.
 Il y a formation de ponts $\ce{H}$.
@@ -999,11 +1005,11 @@ Les expériences montrent que la pression évolue linéairement avec la tempéra
 En cherchant pour quelle température la pression s'annule, on trouve
 pour tous les gaz que $p = 0$ à une température de $\unit{-273.15}{\celsius}$
 , appelée ``zéro absolu''. On peut alors définir la température absolue, notée
-$T$ et exprimée en Kelvin ($K$) égale à la température en celsius + \np{273,15}.
+$T$ et exprimée en Kelvin ($K$) égale à la température en Celsius + \np{273,15}.
 
 \subsection{Gaz parfaits}
-Le modèle des gaz parfaits est un modèle simpifié des gaz réels.
-Dans ce modèle, le gaz est contitué de molécules animées de mouvements
+Le modèle des gaz parfaits est un modèle simplifié des gaz réels.
+Dans ce modèle, le gaz est constitué de molécules animées de mouvements
 aléatoires incessants. Ces molécules n'interagissent pas entre elles,
 sauf lors de leurs collisions.
 
@@ -1045,7 +1051,7 @@ se situe un peu au-delà du pic de probabilité.
 
 \paragraph{Pressions partielles}
 Lorsqu'on travaille avec des mélanges de gaz, la pression totale est la somme
-des pressions partielles dûes à chaque gaz :
+des pressions partielles dues à chaque gaz :
 
 $$p_\mathrm{tot} = p_1 + p_2 \cdots + p_n$$
 
@@ -1077,9 +1083,9 @@ $$pV = nRT$$
 Où $R = kN_{av} \approx \unit{8,314}{\joule\per\kelvin\cdot\mole}$ est appelée la constante
 des gaz parfaits.
 
-\subsection{Energie d'un corps et première loi de la thermodynamique}
+\subsection{Énergie d'un corps et première loi de la thermodynamique}
 
-\subsubsection{Energie interne d'un corps}
+\subsubsection{Énergie interne d'un corps}
 Tout corps au repos possède une énergie interne.
 
 \paragraph{Origine}
@@ -1133,7 +1139,7 @@ positives (point de vue \emph{égoïste} du système).
 
 \subparagraph{Système} Milieu réactionnel.
 \subparagraph{Environnement} Extérieur du système.
-\subparagraph{Système ouvert} Echanges de matière et d'énergie avec l'environnement.
+\subparagraph{Système ouvert} Échanges de matière et d'énergie avec l'environnement.
 \subparagraph{Système fermé} Uniquement des échanges d'énergie avec l'environnement.
 \subparagraph{Système isolé} Aucun échange avec l'environnement ($w = q = 0$ et $U$ constante).
 
@@ -1222,7 +1228,7 @@ dire qu'une réaction a un $\Delta H = \unit{x}{\kilo\joule\per\mole}$ est déco
 Il vaut mieux écrire $\Delta H = \unit{x}{\kilo\joule}$.
 On comprendra que c'est l'énergie absorbée par réaction,
 c'est à dire,
-par mole d'un composé ayant un coefficient stoechiométrique 1 dans la réaction.
+par mole d'un composé ayant un coefficient st\oe{}chiométrique 1 dans la réaction.
 
 \subsubsection{Enthalpie standard d'une réaction}
 
@@ -1350,7 +1356,7 @@ De manière plus précise :
 $$\Delta H\std(T_2) = \Delta H\std(T_{ref}) + \int_{T_1}^{T_2} \Delta C_p \dif T$$
 
 Où $\Delta C_p$ est la différence des capacités calorifiques molaires
-des produits et des réactifs pondérées par leur coefficient stoéchiométrique.
+des produits et des réactifs pondérées par leur coefficient st\oe{}chiométrique.
 
 %\subparagraph{Exemples}
 %\begin{eqnarray*}
@@ -1520,7 +1526,7 @@ L'entropie molaire $S_\mathrm{m}(p_2, T_2)$ d'un composé chimique
 peut être calculer à partir de l'entropie molaire dans un
 état de référence donné $S_\mathrm{m} (p\std, T_\mathrm{ref})$.
 
-\paragraph{Etat de référence standard}
+\paragraph{État de référence standard}
 La pression de référence vaut $p\std = \unit{1}{bar}$, c'est
 à dire approximativement la pression atmosphérique.
 
@@ -1615,7 +1621,7 @@ L'\'Equation de Gibbs et un peu d'algèbre nous permet de dresser la Table~\ref{
       $-$ & $+$ & $-$ & $\forall$ & Spontanée\\
       \hline
       \multirow{2}{*}{$-$} & \multirow{2}{*}{$-$} & $-$ & bas & Spontanée\\
-                                    & & $+$ & élevé & Non spontatée\\
+                                    & & $+$ & élevé & Non spontanée\\
       \hline
       \multirow{2}{*}{$+$} & \multirow{2}{*}{$+$} & $+$ & bas & Non spontanée\\
                                     & & $-$ & élevé & Spontanée\\
@@ -1701,7 +1707,7 @@ qui nous indique comment varie la pression partielle d'équilibre de la
 vapeur, $p_p^{eq}$ avec la température. On appelle cette pression la tension
 de vapeur.
 
-\paragraph{Equation de Clapeyron-Clausius}
+\paragraph{Équation de Clapeyron-Clausius}
 L'équation de Clapeyron-Clausius permet de calculer la tension de vapeur à
 une température $T_2$ lorsqu'on la connait à une température $T_1$ :
 
@@ -1725,7 +1731,7 @@ $t$ et $n_{X0}$ est le nombre de moles initial.
 Au début de la réaction, $\xi = 0$, lorsque l'équilibre est atteint,
 $\xi = \xi_{eq}$.
 
-\subsection{Equilibre chimique à température et pression totale constantes}
+\subsection{Équilibre chimique à température et pression totale constantes}
 Le degré d'avancement $\xi$ évolue de façon à diminuer l'enthalpie libre $G$
 jusqu'à ce que l'équilibre soit atteint. A l'équilibre, on a donc :
 
@@ -1814,7 +1820,7 @@ $$K = \frac{\frac{\xi}{n_1-\xi}\frac{p}{p\std}}{(\frac{n_1 - 2\xi}{n_1-\xi}\frac
 = \frac{\xi(n_1-\xi)p\std}{(n_1-2\xi)p}$$
 
 On remarque que la pression apparaît encore dans l'expression de $K$, ce sera
-toujours le cas lorsque les coéfficients stoéchiométriques des composés de
+toujours le cas lorsque les coefficients st\oe{}chiométriques des composés de
 la réaction sont différents. Dans les autres cas, il y aura simplification
 et la pression n'apparaitra pas.
 On va donc utiliser la loi des gaz parfaits pour éliminer la pression :
@@ -2071,7 +2077,7 @@ en solution aqueuse.
 \[ \ph = -\log{[\ce{H3O+}]} \]
 
 \subsubsection{Base forte}
-Une base forte est un électrolyte fort $\rightarrow$ dissociation toale
+Une base forte est un électrolyte fort $\rightarrow$ dissociation totale
 en solution aqueuse.
 
 \[ \ph = -\log{[\ce{H3O+}]} = -\log{\frac{K_w}{[\ce{OH-}]}} = 14 + \log{[\ce{OH-}]} \]
@@ -2082,8 +2088,8 @@ le $\ph$ est influencé par l'autoprotolyse de l'eau de façon significative. Il
 en trois étapes\cite[p.~464]{atkins2011principes} :
 
 \begin{enumerate}
-	\item Ecriture de l'équation d'équilibre des charges ;
-	\item Ecriture de l'équation de conservation de la matière ;
+	\item Écriture de l'équation d'équilibre des charges ;
+	\item Écriture de l'équation de conservation de la matière ;
 	\item Expression de la constante d'autoprotolyse.
 \end{enumerate}
 
@@ -2164,7 +2170,7 @@ Dans le cas d'un acide faible ou d'une base faible, si le \% de déprotonation e
     Ex: \ce{HCl(aq) + KOH(aq) -> KCl(aq) + H2O(l)}: ni \ce{K+} ni \ce{Cl-} ne réagissent avec l'eau car HCl (acide fort) et KOH (base forte) n'existent pas en solution aqueuse.
 \end{itemize}
 
-\section{Equilibre en phase aqueuse}
+\section{Équilibre en phase aqueuse}
 \subsection{Solutions tampons}
 Une solution tampon est constituée à la fois d'un acide faible et de sa base conjuguée ou d'une base faible et de son acide conjugué.
 \[ \ce{HA + H2O <=> A- + H3O+} \]
@@ -2231,13 +2237,13 @@ Acide Fort +
 \end{itemize}
 (Même principe pour les Bases Fortes)
 
-acide faible +
+Acide faible +
 \begin{itemize}
   \item[$\bullet$] sel neutre $\rightarrow$ af dilué
   \item[$\bullet$] sel basique de l'af et BF $\rightarrow$ mélange tampon
 \end{itemize}
 
-base faible + sel acide de la bf et AF $\rightarrow$ mélange tampon
+Base faible + sel acide de la bf et AF $\rightarrow$ mélange tampon
 
 \section{Titrages acido-basiques}
 Un titrage permet de déterminer les concentrations d'une solution inconnue à partir d'une solution de concentration connue.
@@ -2259,7 +2265,7 @@ Pour calculer le $\ph$ au cours d'un titrage acide fort/base forte (ou inverseme
 				la quantité d’ions \ce{OH-} (si la solution à titrer est une base forte) ;
 	\item Calculez la quantité d’ions ce{OH-} (si le réactif de titrage est une base forte)
 				ou d’ions \ce{H3O+} (si le réactif de titrage est un acide fort) ;
-	\item	Ecrivez l’équation chimique équilibrée de la réaction de neutralisation et
+	\item	Écrivez l’équation chimique équilibrée de la réaction de neutralisation et
 				calculez la quantité d’ions \ce{H3O+} (ou d’ions \ce{OH-} , si la solution à titrer est
 				une base forte) restante dans la solution après réaction avec tout le
 				réactif de titrage ajouté ;
@@ -2273,7 +2279,7 @@ tampons, il faut tenir compte de l'influence du sel sur le $\ph$.
 \paragraph{Remarque}
 Le $\ph$ au demi-point d'équivalence est égal au $\pka$ de l'acide (figure~12.8, \cite[p.~490]{atkins2011principes}).
 
-\subsection{Neutralisation d'un acide fort (HCl) par une base forte (NaOH)}
+\subsection{Neutralisation d'un acide fort (\ce{HCl}) par une base forte (\ce{NaOH)}}
 La neutralisation se fait selon le diagramme bilan figurant sur la Figure~\ref{fig:diagbil}.
 
 \begin{figure}[ht!]
@@ -2297,7 +2303,7 @@ La neutralisation se fait selon le diagramme bilan figurant sur la Figure~\ref{f
 \end{figure}
 
 
-\subsection{Equilibres de solubilité}
+\subsection{Équilibres de solubilité}
 \subsubsection{Solution, soluté et solubilité}
 Une \textbf{solution} est une phase liquide homogène qui consiste en un mélange homogène
 de plusieurs substances en proportions variables.
@@ -2361,7 +2367,7 @@ On remarque un ion commun entre le soluté et le solvant. Dressons un tableau d'
 	\end{tabular}
 \end{table}
 
-On va supposer ici que la quantité d'ions chlorure apporté par la dissolution du \ce{PbCl2(s)}
+On va supposer ici que la quantité d'ions chlorure apportée par la dissolution du \ce{PbCl2(s)}
 est largement inférieure à la quantité d'ions chlorure dans la solution de \ce{CaCl2(aq)} :
 $2s \ll 0.050$. Le $K_s$ du \ce{PbCl2(s)} vaut $1,6 \cdot 10^{-5}$ et on trouve alors
 $s = \unit{6,4 \cdot 10^{-3}}{\mole\per\liter}$.
@@ -2458,7 +2464,7 @@ Un \textbf{indicateur coloré} est un composé soluble dans l'eau dont la couleu
 
 			Rouge de méthyle&4.4 - 6.2&Rouge - Jaune\\
 
-			Phénophtaléine&8.2 - 10&Incolore - Rose\\
+			Phénolphtaléine&8.2 - 10&Incolore - Rose\\
 
 			Jaune d'alizarine R&10.1 - 12&Rouge - Jaune\\
 			\hline
@@ -2474,7 +2480,7 @@ Un \textbf{indicateur coloré} est un composé soluble dans l'eau dont la couleu
 \label{ann:nota}
 De nombreuses notations seront utilisées au cours de cette synthèse.
 Pour des raisons de concision,
-leur signification ne sera pas rappelée à chaque fois mais elle sera indiqué dans la Table~\ref{tab:notations}.
+leur signification ne sera pas rappelée à chaque fois mais elle sera indiquée dans la Table~\ref{tab:notations}.
 \begin{table}[h!]
   \begin{center}
     \begin{tabular}{ll}
@@ -2492,7 +2498,7 @@ leur signification ne sera pas rappelée à chaque fois mais elle sera indiqué 
       voir section~\ref{sec:neutral} page~\pageref{sec:neutral}\\
       $E_l$ & \'Energie de liaison covalente,
       voir section~\ref{sec:E_l} page~\pageref{sec:E_l}\\ % FIXME: E_l ou E_D ?
-      $N_A$ & Nombre d'avogadro\\
+      $N_A$ & Nombre d'Avogadro\\
       %$r$ & Le rayon d'un atome\\
       $C_s$ & Capacité calorifique spécifique d'un corps,
       voir section~\ref{sec:C_s} page~\pageref{sec:C_s}\\
@@ -2508,7 +2514,7 @@ leur signification ne sera pas rappelée à chaque fois mais elle sera indiqué 
 
 \section{Différentes énergies}
 
-Quand on travail avec des énergies,
+Quand on travaille avec des énergies,
 il faut faire bien attention de les utiliser dans le bon sens.
 Est-ce l'énergie à fournir au système,
 c'est à dire absorbée par le système ou dégagée par le système ?
