@@ -253,13 +253,11 @@ c'est pourquoi on dit qu'une orbitale est définie par 3 nombres quantiques et n
     et s'il acquiert suffisamment d'énergie $\rightarrow$ quitte l'atome.
 \end{itemize}
 
-Les atomes hydrogénoïdes ont des sous-couches dégénérées, c'est-à-dire que les orbitales associées au même
-nombre quantique principal ont la même énergie.
-Par exemple, pour \ce{O^7+}, l'énergie associée à l'orbitale 2s est la même que celle associée à l'orbitale
-2p.
-
 On entend par atomes hydrogénoïdes, les atomes ou ions qui possèdent exactement $1$ électron (par exemple: \ce{H}, \ce{He^+}, \ce{O^7+}, ...).
 On dit aussi qu'ils sont monoélectroniques.
+
+Les atomes hydrogénoïdes ont des sous-couches dégénérées, c'est-à-dire que les orbitales associées au même nombre quantique principal ont la même énergie.
+Par exemple, pour \ce{O^7+}, l'énergie associée à l'orbitale 2s est la même que celle associée à l'orbitale 2p.
 
 \section{Atomes polyélectroniques}
 \begin{itemize}
@@ -295,6 +293,10 @@ que celle provenant des orbitales inférieures.
 
 Exemple le fluor \ce{F} : \configElectronique{9} ou \configElectronique[courte]{9}.
 %TODO ajouter exceptions
+\paragraph{Exceptions}
+Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$, en désaccord avec la règle de Klechkowsky (où la couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergiquement. Cela a d'ailleurs une conséquence sur leur conductivité électrique. Ainsi, au lieu d'être [Ar] 3d9 4s2, le cuivre a pour configuration électronique [Ar] 3d10 4s1. Test à supprimer : \configElectronique{29} et \configElectronique[courte]{29}. %FIXME
+
+L'atome de chrome complète également sa demi-sous-couche $\dorb$ au dépit de la sous-couche $\sorb$. Et plus on descend dans le tableau, moins les atomes respectent les règles.
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
@@ -314,7 +316,7 @@ $$\ce{X(g) -> X+(g) + e-}$$
 $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
 
 \begin{itemize}
-  \item Toujours endothermique;
+  \item Toujours endothermique (donc $>0$);
   \item $E_I$ diminue globalement de haut en bas d'un groupe (quand le rayon atomique augmente).
     En effet il faut fournir moins d'énergie pour arracher un $e^-$ loin du noyau;
   \item $E_I$ augmente globalement le long d'une période à cause de l'augmentation de la charge nucléaire effective;
@@ -327,12 +329,13 @@ $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
     les $e^-$ de la sous-couche $\sorb$ de la dernière couche sont enlevés les premiers;
   \item L'ion résultant est appelé ``cation'';
   \item Rayon cationique < Rayon atomique.
+  %TODO ajouter pê plus de détails ?
 \end{itemize}
 
 \section{Électroaffinité}
 \label{sec:electro}
 
-$E_A$ = énergie dégagée lors de la capture d'un électron par l'atome \textbf{en phase gazeuse}.
+$E_A$ = énergie absorbée lors de la capture d'un électron par l'atome \textbf{en phase gazeuse}.%FIXME Nysten dit absorbée, Atkins dégagée, et les tables absorbée.
 \[ \ce{X(g) + e- -> X^-(g)} \]
 
 $\Delta H = E(\ce{X^-})-E(\ce{X})=-E_A$
@@ -370,7 +373,7 @@ de pouvoir être étirés et allongés sans se rompre.}.
 \begin{itemize}
   \item conducteurs d'électricité;
   \item déformables, plastiques;
-  \item liaison \emph{forte} et \emph{isotrope} (toutes les directions).
+  \item liaison \emph{forte} et \emph{isotrope} (identique dans toutes les directions).
 \end{itemize}
 
 \subsection{Liaisons ioniques}
@@ -423,7 +426,7 @@ Les électrons sont apportés par chaque atome et s'apparient $\Rightarrow$ éta
 \paragraph{Caractéristiques}
 \begin{itemize}
   \item partage d'électrons de valence;
-  \item rigidité et fragilité des solides covalents;
+  \item rigidité et fragilité des solides covalents;% heu, et le diamand ?
   \item la liaison est favorisée si $E_I$ et $E_A$ sont élevées;
   \item liaison \emph{forte} et \emph{anisotrope}.
 \end{itemize}
@@ -752,12 +755,12 @@ par ordre décroissant d'intensité
 \end{itemize}
 %TODO modifier (c'est là où ça coinçait).
 \subsection{Interactions dipolaires}
-$\rightarrow$ Interactions électrostatiques
+$\rightarrow$ Interactions électrostatiques.
 \begin{itemize}
-  \item Ions-ions: $E_p=\frac{q_1q_2}{4\pi\epsilon_0\cdot r}$
-  \item Ions-dipôles: explique le pouvoir de solvatation de l'eau: les molécules d'eau se fixent à chaque ion et les séparent des autres ions $\rightarrow$ hydratation due au caractère polaire de \ce{H2O} (attirance charges de signe opposé).
-    Les interactions ion-dipôle sont fortes pour des petits ions très chargés.
-  \item Dipôles-dipôles: + la polarité des molécules est grande,
+  \item Ions-ions : $E_p=\frac{q_1q_2}{4\pi\epsilon_0\cdot r}$
+  \item Ions-dipôles : explique le pouvoir de solvatation de l'eau: les molécules d'eau se fixent à chaque ion et les séparent des autres ions $\rightarrow$ hydratation due au caractère polaire de \ce{H2O} (attirance charges de signe opposé).
+    Les interactions ion-dipôle sont fortes pour des petits ions très chargés. $E_p \propto \frac{-|z| \mu}{r^2}$, où $|z|$ est la charge de l'ion et $\mu$ est la polarisation du dipôle.
+  \item Dipôles-dipôles : + la polarité des molécules est grande,
     + les interactions sont fortes.
     Les interactions dipôles-dipôles sont plus faibles que les forces entre les ions.
 \end{itemize}
@@ -772,19 +775,20 @@ polaire ou un ion est à proximité.
 \subsection{Forces de London}
 Dipôle induit-induit.
 
-\[ E_p = \frac{-\alpha_1 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité
+\[ E_p \propto \frac{-\alpha_1 \alpha_2}{r^6} \]
+où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
-Les nuages électroniques des atomes et molécules ne sont pas uniformes\\ $\rightarrow$ charge partielle instantanée dans une région de la molécule\\ $\rightarrow$ moment dipolaire instantané qui induit un moment dipolaire instantané dans une molécule voisine\\ $\rightarrow$ attraction des 2 moments dipolaires\\
+Les nuages électroniques des atomes et molécules ne sont pas uniformes\\ $\rightarrow$ charge partielle instantanée dans une région de la molécule\\ $\rightarrow$ moment dipolaire instantané qui induit un moment dipolaire instantané dans une molécule voisine\\ $\rightarrow$ attraction des 2 moments dipolaires.
+
 Bien que le moment dipolaire de la 1\up{ère} molécule change constamment d'orientation,
-il y a un attraction permanente entre les 2 molécules.
+il y a une attraction permanente entre les 2 molécules.
 
 \subsection{Forces de Debye}
 Dipôle permanent-induit.
 
-\[ E_p = \frac{-\mu_1^2 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité
+\[ E_p \propto \frac{-\mu_1^2 \alpha_2}{r^6} \]
+où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
 Modification de la répartition électronique dans la molécule apolaire induite par la molécule polaire.
@@ -794,7 +798,7 @@ l'intensité d'une telle interaction dépend de la polarisabilité de la molécu
 \subsection{Forces de Keesom}
 Dipôle permanent-permanent.
 
-\[ E_p = \frac{-\mu_1^2 \mu_2^2}{r^6} \]
+\[ E_p \propto \frac{-\mu_1^2 \mu_2^2}{r^6} \]
 
 \paragraph{Origine}
 Interactions entre dipôles permanents.
@@ -802,10 +806,8 @@ Interactions entre dipôles permanents.
 \subsection{Influences}
 
 \begin{itemize}
-  \item Intensité du moment dipôlaire ($\mu$)
-    $\alpha$ augmente avec la différence d'électronégativité $\Delta\chi$ et avec la taille des molécules;
-  \item Polarisabilité
-    $\alpha$ augmente avec le nombre d'$e^-$ et avec le rayon atomique
+  \item Intensité du moment dipolaire ($\mu$) : augmente avec la différence d'électronégativité $\Delta\chi$ et avec la taille des molécules;
+  \item Polarisabilité : $\alpha$ augmente avec le nombre d'$e^-$ et avec le rayon atomique
     $\Rightarrow$ interactions de London et de Debye + fortes pour une grosse molécule que pour une petite;
   \item Taille des molécules augmente l'intensité des interactions.
 \end{itemize}
