@@ -145,6 +145,11 @@ mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
 Les électrons (et la matière en général) ont
 à la fois un caractère ondulatoire et un caractère corpusculaire.
 
+%FIXME : c'est faux, surtout la partie p=mv. Il y a un facteur de Lorentz gamma
+% qui "vaut" l'infini quand la particule se déplace à c et ça compense la masse
+% nulle, pour que p soit non nul. La suite avec E=mc^2 n'a pas de sens
+% (énergie nulle alors qu'on a défini plus haut qu'un photon a une énergie ?).
+% En fait, E=pc. Je propose de retirer cette digression. JM
 
 \section{Fonction d'onde}
 
@@ -181,6 +186,7 @@ $n$ peut prendre les valeurs $1, 2, \ldots$
 $n$ détermine la couche de l'orbitale.
 %La valeur de $n$ peut aussi être représenté par la période correspondante
 % NOT SURE
+% En effet, ce n'est pas vraiment ça ; mais numéro de la période = valeur de n de la sous-couche ns ajoutée au début.
 %\begin{center}
 %\begin{tabular}{c|ccccc}
 %	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
@@ -744,7 +750,7 @@ par ordre décroissant d'intensité
       \end{tabular}
     \end{center}
 \end{itemize}
-
+%TODO modifier (c'est là où ça coinçait).
 \subsection{Interactions dipolaires}
 $\rightarrow$ Interactions électrostatiques
 \begin{itemize}
@@ -2469,7 +2475,7 @@ Un \textbf{indicateur coloré} est un composé soluble dans l'eau dont la couleu
 \end{table}
 
 
-\annexe
+\annexe %FIXME : changer commande dans eplbase pour rester cohérent avec LaTeX ?
 \section{Notations}
 \label{ann:nota}
 De nombreuses notations seront utilisées au cours de cette synthèse.
@@ -2484,7 +2490,7 @@ leur signification ne sera pas rappelée à chaque fois mais elle sera indiquée
       $c_0$ & La vitesse de la lumière dans le vide\\
       $p$ & Quantité de mouvement d'un corps\\
       $h$ & La constante de Planck\\
-      $E_A$ & \'Electroaffinité d'un atome,
+      $E_A$ & Électroaffinité d'un atome,
       voir section~\ref{sec:electro} page~\pageref{sec:electro}\\
       $E_I$ & Énergie d'ionisation d'un atome,
       voir section~\ref{sec:ioni} page~\pageref{sec:ioni}\\
