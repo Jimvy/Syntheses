@@ -37,8 +37,6 @@
 {Beno\^it Legat\and Lucas Nyssens\and Laurent Opsomer\and Antoine Paris}
 {Sophie Demoustier, Alain Jonas et Bernard Nysten}
 
-% \begin{document}
-
 \paragraph{Remarque préliminaire}
 Dans certaines formules,
 des variables seront utilisées sans expliciter leur signification.
@@ -91,6 +89,7 @@ Si réaction exothermique: dégagement d'énergie $\Rightarrow  \Delta E < 0$
 \end{itemize}
 
 \section{Rayonnement électromagnétique}
+%FIXME : normalement ça constitue des parenthèses à ne pas connaitre.
 
 La lumière, les ondes radios,...
 sont des rayonnements électromagnétiques constitués d'un champ électrique oscillant
@@ -120,44 +119,33 @@ qui est l'énergie transmise par un photon et qui vaut
 \end{equation}
 
 L'énergie émise par un atome dont un électron passe d'une couche à une distance $n_i$
-à un couche à une distance $n_f$ vaut
+à une couche à une distance $n_f$ vaut
 \[ \Delta E = h\nu = \frac{hc}{\lambda} = R_y \left( \frac{1}{n_f^2} - \frac{1}{n_i^2} \right) \]
 où $R_y = hc R_\infty = \numprint[\joule]{2,178e-18}$ est la constante de Rydberg.
 
 Si un électron se déplace d'une couche plus éloignée à une couche moins éloignée,
 un photon est émis par l'atome et si un photon apporte son énergie à un atome,
 un électron va se déplacer d'une couche moins éloignée à une couche plus éloignée.
+Ces transitions expliquent les spectres d'absorption et d'émission des éléments.
 
 \subsection{Longueur d'onde de de Broglie}
 Toute particule dotée d'une quantité de mouvement a une longueur
 d'onde, nommée longueur d'onde de de Broglie, qui est donnée par
 \begin{equation}
-    \lambda = \frac{h}{p} = \frac{h}{mv}
+    \lambda = \frac{h}{p}% = \frac{h}{mv}
     \label{eq:deBroglie}
 \end{equation}
 
-Il est amusant d'observer qu'en utilisant les formules vues plus haut
-et la longueur d'onde de de Broglie dans le cas d'un rayonnement électromagnétique,
-c'est à dire que $v = c$, on trouve
-\[ E \stackrel{\eqref{eq:Ehnu}}{=} h\nu \stackrel{\eqref{eq:deBroglie}}{=}
-mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
-
 Les électrons (et la matière en général) ont
 à la fois un caractère ondulatoire et un caractère corpusculaire.
-
-%FIXME : c'est faux, surtout la partie p=mv. Il y a un facteur de Lorentz gamma
-% qui "vaut" l'infini quand la particule se déplace à c et ça compense la masse
-% nulle, pour que p soit non nul. La suite avec E=mc^2 n'a pas de sens
-% (énergie nulle alors qu'on a défini plus haut qu'un photon a une énergie ?).
-% En fait, E=pc. Je propose de retirer cette digression. JM
 
 \section{Fonction d'onde}
 
 Dualité onde-particule $\Rightarrow$ les électrons ne tournent pas autour du noyau selon une trajectoire définie.
 
-$\Rightarrow$ Fonction d'onde $\psi$ (solutions équation de Schrödinger)\\
+$\Rightarrow$ Fonction d'onde $\psi$ (solutions équation de Schrödinger)
 
-Max Born: $\psi^2 = $ densité de probabilité de présence de la particule (probabilité de présence/volume).
+Max Born: $\abs{\psi^2} = $ densité de probabilité de présence de la particule (probabilité de présence/volume).
 
 Les \textbf{orbitales atomiques} sont les fonctions d'onde des électrons dans les atomes.
 
@@ -183,23 +171,23 @@ $n$ détermine donc aussi le rayon de l'orbitale et son énergie.
 On voit que $n$ est proportionnel au rayon de l'orbitale.
 $n$ peut prendre les valeurs $1, 2, \ldots$
 
-$n$ détermine la couche de l'orbitale.
+$n$ détermine la couche de l'orbitale, et peut être notée par une lettre majuscule (à partir de K, \textit{kernel}). Enfin, tous les éléments d'une période $n$ dans le tableau périodique ont le même nombre de couches électroniques, à savoir $n$.
 %La valeur de $n$ peut aussi être représenté par la période correspondante
 % NOT SURE
-% En effet, ce n'est pas vraiment ça ; mais numéro de la période = valeur de n de la sous-couche ns ajoutée au début.
-%\begin{center}
-%\begin{tabular}{c|ccccc}
-%	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
-%	\cline{1-5}
-%	Période & K & L & M & N
-%\end{tabular}
-%\end{center}
+% En effet, ce n'est pas vraiment ça ; mais numéro de la période = numéro de la couche de valence (selon les définition données du prof).
+\begin{center}
+\begin{tabular}{c|ccccc}
+	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
+	\cline{1-5}
+	Période & K & L & M & N
+\end{tabular}
+\end{center}
 
 \subsection{Le nombre quantique secondaire}
 $l$ détermine la forme de l'orbitale.
 Il y a exactement $n$ formes possible pour une orbitale de nombre quantique $n$.
 
-{\bf La numérotation se fait}, comme en informatique, {\bf à partir de $0$}.
+{\bf La numérotation se fait à partir de $0$}.
 Pour une orbitale de nombre quantique $n$, $l$ peut prendre les valeurs $0, 1, \ldots, n-1$
 
 $l$ détermine la sous-couche de l'orbitale.
@@ -233,7 +221,7 @@ La valeur de $m_s$ peut aussi être représenté par l'orientation du moment mag
   \end{tabular}
 \end{center}
 
-$m_s$ ne décrit pas l'orbitale mais l'électron dans celle ci,
+$m_s$ ne décrit pas l'orbitale mais l'électron dans celle-ci,
 c'est pourquoi on dit qu'une orbitale est définie par 3 nombres quantiques et non 4.
 
 % E ^
@@ -253,13 +241,10 @@ c'est pourquoi on dit qu'une orbitale est définie par 3 nombres quantiques et n
     et s'il acquiert suffisamment d'énergie $\rightarrow$ quitte l'atome.
 \end{itemize}
 
-Les atomes hydrogénoïdes ont des sous-couches dégénérées, c'est-à-dire que les orbitales associées au même
-nombre quantique principal ont la même énergie.
-Par exemple, pour \ce{O^7+}, l'énergie associée à l'orbitale 2s est la même que celle associée à l'orbitale
-2p.
+On entend par atomes hydrogénoïdes, ou atomes monoélectroniques, les atomes ou ions qui possèdent exactement $1$ électron (par exemple: \ce{H}, \ce{He^+}, \ce{O^7+}, ...).
 
-On entend par atomes hydrogénoïdes, les atomes ou ions qui possèdent exactement $1$ électron (par exemple: \ce{H}, \ce{He^+}, \ce{O^7+}, ...).
-On dit aussi qu'ils sont monoélectroniques.
+Les atomes hydrogénoïdes ont des sous-couches dégénérées, c'est-à-dire que les orbitales associées au même nombre quantique principal ont la même énergie.
+Par exemple, pour \ce{O^7+}, l'énergie associée à l'orbitale 2s est la même que celle associée à l'orbitale 2p.
 
 \section{Atomes polyélectroniques}
 \begin{itemize}
@@ -293,8 +278,31 @@ que celle provenant des orbitales inférieures.
     Puis seulement, on met les 3 autres électrons s'appariant aux électrons déjà mis.
 \end{description}
 
-Exemple le fluor \ce{F} : \configElectronique{9} ou \configElectronique[courte]{9}.
+Exemple : le fluor \ce{F} a pour configuration électronique \configElectronique{9} ou \configElectronique[courte]{9}.
 %TODO ajouter exceptions
+\subsection{Exceptions}
+Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec la règle de Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergétiquement.
+Ainsi, au lieu d'être \configElectronique[courte]{29}, le cuivre a pour configuration électronique $\left[\text{Ar}\right] \, \text{3d}^\text{10} \, \text{4s}^\text{1}$.% j'ai adapté le code du fichier annexe, peut-être l'améliorer ?
+Cela a d'ailleurs une conséquence sur leur conductivité électrique : les liaisons chimiques de ces éléments impliquent principalement l'orbitale $\sorb$ et beaucoup moins l'orbitale $\dorb$, ce qui diminue le caractère covalent des liaisons et augmente la mobilité des électrons et donc, la conductivité.
+
+Ce phénomène se retrouve aussi dans le cas du chrome, qui complète sa demi-sous-couche $3\dorb$ au lieu de la sous-couche $4\sorb$ ; sa configuration électronique est $\left[\text{Ar}\right] \, \text{3d}^5 \, \text{4s}^1$ au lieu de \configElectronique[courte]{24}. Dans les périodes $\ge 5$, la majorité des métaux de transition et les éléments du bloc $\forb$ constituent des exceptions (qu'il ne faut pas connaitre).
+
+\section{Électrons de valence et électrons de cœur}
+
+Il existe plusieurs manières de définir ce que sont les électrons de cœur et les électrons de valence.
+Si ces définition sont identiques pour les atomes des 3 premières périodes, elles divergent pour les suivantes et ont moins de pertinence.
+
+Définition dans le cadre du cours :
+\begin{description}
+	\item[Électrons de cœur]
+	  Électrons se trouvant dans les orbitales du gaz rare précédent.
+	\item[Électrons de valence]
+	  Électrons se situant dans la dernière couche électronique partiellement ou totalement remplie.
+\end{description}
+
+Exemple : Pour le scandium, de configuration \configElectronique{21}, les électrons de cœur sont \configElectronique{18}, les électrons de valence $\text{4s}^2$ et l'électron de la sous-couche $3\dorb$ n'est ni l'un ni l'autre. Néanmoins, il vaut mieux préciser la définition que l'on applique, voire d'énoncer les deux possibilités : les électrons de valence du scandium sont $\text{4s}^2$ si on considère que les électrons de valence sont ceux de la couche externe, ou $\text{3d}^1\text{4s}^2$ si on tient aussi compte des électrons de la sous-couche $\dorb$.
+
+Les électrons des sous-couches $\dorb$ peuvent participer aux liaisons chimiques, en particulier à des liaisons covalentes (paragraphe~\ref{subpar:valence_d}).
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
@@ -314,11 +322,10 @@ $$\ce{X(g) -> X+(g) + e-}$$
 $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
 
 \begin{itemize}
-  \item Toujours endothermique;
-  \item $E_I$ diminue globalement de haut en bas d'un groupe (quand le rayon atomique augmente).
-    En effet il faut fournir moins d'énergie pour arracher un $e^-$ loin du noyau;
-  \item $E_I$ augmente globalement le long d'une période à cause de l'augmentation de la charge nucléaire effective;
-  \item La répulsion entre 2 $e^-$ d'une même orbitale augmente leur énergie et rend le départ d'un électron + facile que dans le cas de 2 $e^-$ non-appariés;
+  \item Toujours endothermique (donc $>0$);
+  \item Aux exceptions près, $E_I$ est inversement proportionnel au rayon atomique : plus celui-ci est élevé, plus l'électron arraché est loin du noyau, et donc moins l'énergie d'ionisation est grande. $E_I$ diminue en descendant dans un groupe car l'électron ionisé, sur une couche de plus en plus éloignée du noyau, est de moins en moins lié ; et $E_I$ augmente le long d'une période à cause de l'augmentation de la charge nucléaire effective ;
+  \item Le passage d'une sous-couche à une autre d'énergie supérieure, ou dans une couche supérieure, s'accompagne d'une diminution de l'énergie d'ionisation (exemple : passage béryllium $\rightarrow$ bore : l'électron $\text{3p}$ est moins lié que le $\text{3s}$) ;
+  \item La répulsion entre 2 $e^-$ appariés (d'une même orbitale) augmente leur énergie et rend le départ d'un électron plus facile que dans le cas de 2 $e^-$ non-appariés (exemple : passage azote $\rightarrow$ oxygène) ;
   \item Les électrons de valence sont arrachés en premier.
     Plus précisément,
     l'électron doit être pris dans l'orbitale au plus grand $n$,
@@ -326,13 +333,13 @@ $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
     Pour les métaux de transition,
     les $e^-$ de la sous-couche $\sorb$ de la dernière couche sont enlevés les premiers;
   \item L'ion résultant est appelé ``cation'';
-  \item Rayon cationique < Rayon atomique.
+  \item Rayon cationique < Rayon atomique ; les ionisations successives ont un rayon de plus en plus petit (moins d'$e^-$ et moins de répulsions).
 \end{itemize}
 
 \section{\'Electroaffinité}
 \label{sec:electro}
 
-$E_A$ = énergie dégagée lors de la capture d'un électron par l'atome \textbf{en phase gazeuse}.
+$E_A$ = énergie absorbée lors de la capture d'un électron par l'atome \textbf{en phase gazeuse}.%FIXME Nysten dit absorbée, Atkins dégagée, et les tables absorbée.
 \[ \ce{X(g) + e- -> X^-(g)} \]
 
 $\Delta H = E(\ce{X^-})-E(\ce{X})=-E_A$
@@ -345,6 +352,7 @@ $\Delta H = E(\ce{X^-})-E(\ce{X})=-E_A$
     pour \ce{Na},
     $E_A = \numprint[\kilo\joule\per\mole]{+53}$ alors que pour \ce{Mg},
     $E_A \leq \numprint[\kilo\joule\per\mole]{0}$;
+  \item $E_A$ diminue lorsque l'électron capturé doit prendre place dans une orbitale de plus grande énergie, comme une orbitale déjà occupée (cas de l'azote, où l'électron doit s'apparier) ou une nouvelle sous-couche (cas du béryllium).
   \item Les gaz nobles ont une $E_A$ légèrement négative (endothermique) car tout $e^-$ ajouté occupe une orbitale au-delà d'une couche pleine et loin du noyau.
     Mais comme ils sont très stables,
     $E_A \approx 0$;
@@ -370,7 +378,7 @@ de pouvoir être étirés et allongés sans se rompre.}.
 \begin{itemize}
   \item conducteurs d'électricité;
   \item déformables, plastiques;
-  \item liaison \emph{forte} et \emph{isotrope} (toutes les directions).
+  \item liaison \emph{forte} et \emph{isotrope} (identique dans toutes les directions).
 \end{itemize}
 
 \subsection{Liaisons ioniques}
@@ -423,7 +431,7 @@ Les électrons sont apportés par chaque atome et s'apparient $\Rightarrow$ éta
 \paragraph{Caractéristiques}
 \begin{itemize}
   \item partage d'électrons de valence;
-  \item rigidité et fragilité des solides covalents;
+  \item rigidité et fragilité des solides covalents;% heu, et le diamand ?
   \item la liaison est favorisée si $E_I$ et $E_A$ sont élevées;
   \item liaison \emph{forte} et \emph{anisotrope}.
 \end{itemize}
@@ -433,6 +441,7 @@ Les atomes ont tendance à compléter leur couche externe pour obtenir une confi
 i.e. la configuration électronique d'un gaz noble.
 C'est-à-dire à former des liaisons covalentes jusqu'à être entourés de 8 $e^-$.
 \subparagraph{Exceptions à la règle de l'octet}
+\label{subpar:valence_d}
 Certains atomes peuvent loger plus de 8 $e^-$ dans leur couche de valence. Il s'agit des non-métaux de la 3\up{e}
 période et des périodes ultérieures. Les atomes de ces éléments possèdent des orbitales $d$ vides dans leur couche
 de valence, ce qui leur permet d'étendre leur couche de valence.
@@ -752,12 +761,12 @@ par ordre décroissant d'intensité
 \end{itemize}
 %TODO modifier (c'est là où ça coinçait).
 \subsection{Interactions dipolaires}
-$\rightarrow$ Interactions électrostatiques
+$\rightarrow$ Interactions électrostatiques.
 \begin{itemize}
-  \item Ions-ions: $E_p=\frac{q_1q_2}{4\pi\epsilon_0\cdot r}$
-  \item Ions-dipôles: explique le pouvoir de solvatation de l'eau: les molécules d'eau se fixent à chaque ion et les séparent des autres ions $\rightarrow$ hydratation due au caractère polaire de \ce{H2O} (attirance charges de signe opposé).
-    Les interactions ion-dipôle sont fortes pour des petits ions très chargés.
-  \item Dipôles-dipôles: + la polarité des molécules est grande,
+  \item Ions-ions : $E_p=\frac{q_1q_2}{4\pi\epsilon_0\cdot r}$
+  \item Ions-dipôles : explique le pouvoir de solvatation de l'eau: les molécules d'eau se fixent à chaque ion et les séparent des autres ions $\rightarrow$ hydratation due au caractère polaire de \ce{H2O} (attirance charges de signe opposé).
+    Les interactions ion-dipôle sont fortes pour des petits ions très chargés. $E_p \propto \frac{-|z| \mu}{r^2}$, où $|z|$ est la charge de l'ion et $\mu$ est la polarisation du dipôle.
+  \item Dipôles-dipôles : + la polarité des molécules est grande,
     + les interactions sont fortes.
     Les interactions dipôles-dipôles sont plus faibles que les forces entre les ions.
 \end{itemize}
@@ -766,25 +775,25 @@ $\rightarrow$ Interactions électrostatiques
 Molécules polaires.
 
 \paragraph{Dipôle induit}
-Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule
-polaire ou un ion est à proximité.
+Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule polaire ou un ion est à proximité.
 
 \subsection{Forces de London}
 Dipôle induit-induit.
 
-\[ E_p = \frac{-\alpha_1 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité
+\[ E_p \propto \frac{-\alpha_1 \alpha_2}{r^6} \]
+où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
-Les nuages électroniques des atomes et molécules ne sont pas uniformes\\ $\rightarrow$ charge partielle instantanée dans une région de la molécule\\ $\rightarrow$ moment dipolaire instantané qui induit un moment dipolaire instantané dans une molécule voisine\\ $\rightarrow$ attraction des 2 moments dipolaires\\
+Les nuages électroniques des atomes et molécules ne sont pas uniformes\\ $\rightarrow$ charge partielle instantanée dans une région de la molécule\\ $\rightarrow$ moment dipolaire instantané qui induit un moment dipolaire instantané dans une molécule voisine\\ $\rightarrow$ attraction des 2 moments dipolaires.
+
 Bien que le moment dipolaire de la 1\up{ère} molécule change constamment d'orientation,
-il y a un attraction permanente entre les 2 molécules.
+il y a une attraction permanente entre les 2 molécules.
 
 \subsection{Forces de Debye}
 Dipôle permanent-induit.
 
-\[ E_p = \frac{-\mu_1^2 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité
+\[ E_p \propto \frac{-\mu_1^2 \alpha_2}{r^6} \]
+où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
 Modification de la répartition électronique dans la molécule apolaire induite par la molécule polaire.
@@ -794,7 +803,7 @@ l'intensité d'une telle interaction dépend de la polarisabilité de la molécu
 \subsection{Forces de Keesom}
 Dipôle permanent-permanent.
 
-\[ E_p = \frac{-\mu_1^2 \mu_2^2}{r^6} \]
+\[ E_p \propto \frac{-\mu_1^2 \mu_2^2}{r^6} \]
 
 \paragraph{Origine}
 Interactions entre dipôles permanents.
@@ -802,10 +811,8 @@ Interactions entre dipôles permanents.
 \subsection{Influences}
 
 \begin{itemize}
-  \item Intensité du moment dipôlaire ($\mu$)
-    $\alpha$ augmente avec la différence d'électronégativité $\Delta\chi$ et avec la taille des molécules;
-  \item Polarisabilité
-    $\alpha$ augmente avec le nombre d'$e^-$ et avec le rayon atomique
+  \item Intensité du moment dipolaire ($\mu$) : augmente avec la différence d'électronégativité $\Delta\chi$ et avec la taille des molécules;
+  \item Polarisabilité : $\alpha$ augmente avec le nombre d'$e^-$ et avec le rayon atomique
     $\Rightarrow$ interactions de London et de Debye + fortes pour une grosse molécule que pour une petite;
   \item Taille des molécules augmente l'intensité des interactions.
 \end{itemize}
@@ -1275,7 +1282,7 @@ est $\unit{-277.69}{\kilo\joule\per\mole}$
 De la définition de l'enthalpie de formation, on s'aperçoit
 que l'enthalpie standard de formation des corps simples est nulle.
 
-% A garder mais en expliquant mieux.
+%TODO A garder mais en expliquant mieux.
 %\paragraph{Etat de référence chimique pour les enthalpies}
 %Il n'est pas possible de déterminer de manière absolue l'enthalpie
 %d'un composé (car il n'est pas non plus possible de déterminer de
