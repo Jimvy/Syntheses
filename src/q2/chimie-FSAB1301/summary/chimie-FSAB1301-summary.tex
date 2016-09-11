@@ -37,6 +37,12 @@
 {Beno\^it Legat\and Lucas Nyssens\and Laurent Opsomer\and Antoine Paris}
 {Sophie Demoustier, Alain Jonas et Bernard Nysten}
 
+% Pour ceux qui chercheront :
+% - le commit d616268 a créé un nouveau dossier chimie-FSAB1301 en laissant l'ancien dossier chimie à côté (ce qui fait que Git n'a pas fait le lien)
+% - le commit c6a3999 a supprimé l'ancien dossier, et a cassé l'historique du fichier
+% Si vous voulez retrouver l'historique du fichier avant ces commits, afficher l'état du dépôt au commit d616268.
+
+
 % \begin{document}
 
 \paragraph{Remarque préliminaire}
@@ -91,6 +97,7 @@ Si réaction exothermique: dégagement d'énergie $\Rightarrow  \Delta E < 0$
 \end{itemize}
 
 \section{Rayonnement électromagnétique}
+%FIXME : normalement ça constitue des parenthèses à ne pas connaitre.
 
 La lumière, les ondes radios,...
 sont des rayonnements électromagnétiques constitués d'un champ électrique oscillant
@@ -120,39 +127,38 @@ qui est l'énergie transmise par un photon et qui vaut
 \end{equation}
 
 L'énergie émise par un atome dont un électron passe d'une couche à une distance $n_i$
-à un couche à une distance $n_f$ vaut
+à une couche à une distance $n_f$ vaut
 \[ \Delta E = h\nu = \frac{hc}{\lambda} = R_y \left( \frac{1}{n_f^2} - \frac{1}{n_i^2} \right) \]
 où $R_y = hc R_\infty = \numprint[\joule]{2,178e-18}$ est la constante de Rydberg.
 
 Si un électron se déplace d'une couche plus éloignée à une couche moins éloignée,
 un photon est émis par l'atome et si un photon apporte son énergie à un atome,
 un électron va se déplacer d'une couche moins éloignée à une couche plus éloignée.
+Ces transitions expliquent les spectres d'absorption et d'émission des éléments.
 
 \subsection{Longueur d'onde de de Broglie}
 Toute particule dotée d'une quantité de mouvement a une longueur
 d'onde, nommée longueur d'onde de de Broglie, qui est donnée par
 \begin{equation}
-    \lambda = \frac{h}{p} = \frac{h}{mv}
+    \lambda = \frac{h}{p}% = \frac{h}{mv}
     \label{eq:deBroglie}
 \end{equation}
 
-Il est amusant d'observer qu'en utilisant les formules vues plus haut
-et la longueur d'onde de de Broglie dans le cas d'un rayonnement électromagnétique,
-c'est à dire que $v = c$, on trouve
-\[ E \stackrel{\eqref{eq:Ehnu}}{=} h\nu \stackrel{\eqref{eq:deBroglie}}{=}
-mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
+%Il est amusant d'observer qu'en utilisant les formules vues plus haut
+%et la longueur d'onde de de Broglie dans le cas d'un rayonnement électromagnétique,
+%c'est à dire que $v = c$, on trouve
+%\[ E \stackrel{\eqref{eq:Ehnu}}{=} h\nu \stackrel{\eqref{eq:deBroglie}}{=}
+%mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
+%  C'est erroné. En fait, p=mv n'est pas valable pour des grandes vitesses
+%  ou pour des masses nulles ; dans ces cas, il faut utiliser la relativité
+%  qui corrige les tendances vers infini et 0 de ces équation. En fait,
+%  E=pc pour des particules de masse 0 (photon).
 
 Les électrons (et la matière en général) ont
 à la fois un caractère ondulatoire et un caractère corpusculaire.
 
-%FIXME : c'est faux, surtout la partie p=mv. Il y a un facteur de Lorentz gamma
-% qui "vaut" l'infini quand la particule se déplace à c et ça compense la masse
-% nulle, pour que p soit non nul. La suite avec E=mc^2 n'a pas de sens
-% (énergie nulle alors qu'on a défini plus haut qu'un photon a une énergie ?).
-% En fait, E=pc. Je propose de retirer cette digression. JM
-
 \section{Fonction d'onde}
-
+%TODO ce n'est pas dualité, mais comportement ondulatoire
 Dualité onde-particule $\Rightarrow$ les électrons ne tournent pas autour du noyau selon une trajectoire définie.
 
 $\Rightarrow$ Fonction d'onde $\psi$ (solutions équation de Schrödinger)\\
@@ -186,7 +192,7 @@ $n$ peut prendre les valeurs $1, 2, \ldots$
 $n$ détermine la couche de l'orbitale.
 %La valeur de $n$ peut aussi être représenté par la période correspondante
 % NOT SURE
-% En effet, ce n'est pas vraiment ça ; mais numéro de la période = valeur de n de la sous-couche ns ajoutée au début.
+% En effet, ce n'est pas vraiment ça ; mais numéro de la période = numéro de la couche de valence (selon les définition données du prof).
 %\begin{center}
 %\begin{tabular}{c|ccccc}
 %	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
@@ -199,7 +205,7 @@ $n$ détermine la couche de l'orbitale.
 $l$ détermine la forme de l'orbitale.
 Il y a exactement $n$ formes possible pour une orbitale de nombre quantique $n$.
 
-{\bf La numérotation se fait}, comme en informatique, {\bf à partir de $0$}.
+{\bf La numérotation se fait à partir de $0$}.
 Pour une orbitale de nombre quantique $n$, $l$ peut prendre les valeurs $0, 1, \ldots, n-1$
 
 $l$ détermine la sous-couche de l'orbitale.
@@ -233,7 +239,7 @@ La valeur de $m_s$ peut aussi être représenté par l'orientation du moment mag
   \end{tabular}
 \end{center}
 
-$m_s$ ne décrit pas l'orbitale mais l'électron dans celle ci,
+$m_s$ ne décrit pas l'orbitale mais l'électron dans celle-ci,
 c'est pourquoi on dit qu'une orbitale est définie par 3 nombres quantiques et non 4.
 
 % E ^
@@ -291,12 +297,30 @@ que celle provenant des orbitales inférieures.
     Puis seulement, on met les 3 autres électrons s'appariant aux électrons déjà mis.
 \end{description}
 
-Exemple le fluor \ce{F} : \configElectronique{9} ou \configElectronique[courte]{9}.
+Exemple : le fluor \ce{F} a pour configuration électronique \configElectronique{9} ou \configElectronique[courte]{9}.
 %TODO ajouter exceptions
-\paragraph{Exceptions}
-Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$, en désaccord avec la règle de Klechkowsky (où la couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergiquement. Cela a d'ailleurs une conséquence sur leur conductivité électrique. Ainsi, au lieu d'être [Ar] 3d9 4s2, le cuivre a pour configuration électronique [Ar] 3d10 4s1. Test à supprimer : \configElectronique{29} et \configElectronique[courte]{29}. %FIXME
+\subsection{Exceptions}
+Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec la règle de Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergiquement.%Pas sûr de l'orthographe
+Cela a d'ailleurs une conséquence sur leur conductivité électrique.
+Ainsi, au lieu d'être \configElectronique[courte]{29}, le cuivre a pour configuration électronique $\left[\text{Ar}\right] \, \text{3d}^\text{10} \, \text{4s}^\text{1}$.% j'ai adapté le code du fichier annexe, peut-être l'améliorer ?
 
-L'atome de chrome complète également sa demi-sous-couche $\dorb$ au dépit de la sous-couche $\sorb$. Et plus on descend dans le tableau, moins les atomes respectent les règles.
+Ce phénomène se retrouve aussi dans le cas du chrome, qui complète sa demi-sous-couche $3\dorb$ au lieu de la sous-couche $4\sorb$ ; sa configuration électronique est $\left[\text{Ar}\right] \, \text{3d}^5 \, \text{4s}^1$ au lieu de \configElectronique[courte]{24}. Dans les périodes $\ge 5$, la majorité des métaux de transition et les éléments du bloc $\forb$ constituent des exceptions (qu'il ne faut pas connaitre).
+
+\section{Électrons de valence et électrons de cœur}%FIXME a corriger si je me trompe ; je dois vérifier si en accord avec examens ; cf forum
+Il existe plusieurs manières de définir ce que sont les électrons de cœur et les électrons de valence.
+Si ces définition sont identiques pour les atomes des 3 premières périodes, elles divergent pour les suivantes et ont moins de pertinence.
+
+Définition dans le cadre du cours :
+\begin{description}
+	\item[Électrons de cœur]
+	  Électrons se trouvant dans les orbitales du gaz rare précédent.
+	\item[Électrons de valence]
+	  Électrons se situant dans la dernière couche électronique partiellement ou totalement remplie.
+\end{description}
+
+Exemple : Pour le scandium, de configuration \configElectronique{21}, les électrons de coeur sont \configElectronique{18}, les électrons de valence $\text{4s}^2$ et l'électron de la sous-couche $3\dorb$ n'est ni l'un ni l'autre.
+
+Les électrons des sous-couches $\dorb$ peuvent participer aux liaisons chimiques (paragraphe~\ref{subpar:valence_d}).
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
@@ -436,9 +460,11 @@ Les atomes ont tendance à compléter leur couche externe pour obtenir une confi
 i.e. la configuration électronique d'un gaz noble.
 C'est-à-dire à former des liaisons covalentes jusqu'à être entourés de 8 $e^-$.
 \subparagraph{Exceptions à la règle de l'octet}
+\label{subpar:valence_d}
 Certains atomes peuvent loger plus de 8 $e^-$ dans leur couche de valence. Il s'agit des non-métaux de la 3\up{e}
 période et des périodes ultérieures. Les atomes de ces éléments possèdent des orbitales $d$ vides dans leur couche
 de valence, ce qui leur permet d'étendre leur couche de valence.
+%TOdo verifier si vraiment couche de valence
 
 \paragraph{Structure de résonance}
 Si plusieurs configuration de Lewis sont équivalentes,
@@ -769,8 +795,7 @@ $\rightarrow$ Interactions électrostatiques.
 Molécules polaires.
 
 \paragraph{Dipôle induit}
-Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule
-polaire ou un ion est à proximité.
+Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule polaire ou un ion est à proximité.
 
 \subsection{Forces de London}
 Dipôle induit-induit.
@@ -1277,7 +1302,7 @@ est $\unit{-277.69}{\kilo\joule\per\mole}$
 De la définition de l'enthalpie de formation, on s'aperçoit
 que l'enthalpie standard de formation des corps simples est nulle.
 
-% A garder mais en expliquant mieux.
+%TODO A garder mais en expliquant mieux.
 %\paragraph{Etat de référence chimique pour les enthalpies}
 %Il n'est pas possible de déterminer de manière absolue l'enthalpie
 %d'un composé (car il n'est pas non plus possible de déterminer de
