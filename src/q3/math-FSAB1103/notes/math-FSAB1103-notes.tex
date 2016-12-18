@@ -1,0 +1,113 @@
+\documentclass[fr]{../../../eplnotes}
+
+\usepackage[SIunits]{../../../eplunits}
+
+\usepackage{pgfplots}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\hypertitle{math-FSAB1103}{3}{FSAB}{1103}
+{Jean-Martin Vlaeminck} % narcissique ? Pas vraiment
+{Jean-François Remacle, Grégoire Winckelmans et Roland Keunings}[
+\paragraph{Remarque importante}
+Ce document a été conçu sur base du syllabus sur les équations aux dérivées partielles, et sur les cours magistraux donnés lors de l'année académique 2016-2017. Il a pour objectif de couvrir l'ensemble de la matière utile pour les cours et pour les examens, et d'être plus facile à lire que le syllabus officiel.
+]
+
+\newcommand{\fnpart}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[section] % mydef
+\newtheorem{thm}{Théorème}[section] % mytheo
+\newtheorem{lemme}[thm]{Lemme} % mylem
+\newtheorem{propriete}[thm]{Propriété} % myprop
+\newtheorem{exemple}{Exemple} % myexem
+
+% commandes :
+% \fpart{u}{x} donne du/dx avec des partial
+% \ffpart{u}{x} donne d^2 u/dx^2 (partial)
+% \fdpart{u}{x}{y} donne d^2 u/dx dy (partial)
+% \fdif{u}{x} donne du/dx avec des d droits
+% \ffdif{u}{x} donne d^2 u/dx^2 (d droits)
+% \dif{t} donne dt
+% \divn{V} donne la divergence de V
+% \rotn{V} donne le rotationnel de V
+% \grad{V} donne le gradient
+% \lap{V} donne le laplacien
+
+\part{Équations aux dérivées partielles (EDP)}
+
+\section{Introduction et définitions}
+
+Soit une fonction scalaire $u$, dépendant de $m$ variables $x_1, x_2, \ldots, x_m$. Une relation $\mathcal{F}$ entre $u$, les variables $x_i$ et les dérivées partielles de $u$ par rapport à ces variables,
+\[ \mathcal{F} \left( u, x_1, \ldots, \fpart{u}{x_1}, \ldots, \ffpart{u}{x_1}, \ldots, \fdpart{u}{x_1}{x_2}, \ldots, \fnpart{u}{x_1}{n} \right) = 0\]
+définit une \emph{équations aux dérivées partielles} d'ordre $n$.
+
+La résolution d'une telle équation dépend de plusieurs facteurs et de plusieurs caractéristiques de l'équation, dont l'ordre de l'équation ($n$), sa (non-)linéarité, son homogénéité et encore d'autre facteurs.
+
+\emph{L'ordre} d'une EDP est l'ordre de la dérivée partielle dont l'ordre est la plus élevée. Par exemple, $\fpart{u}{x} + \fdpart{u}{y}{x} -u^3=0$ est d'ordre $2$.
+
+L'équation suivante, avec $A, B, C, D$ et $F$ des fonctions de $x$, $y$ et $u$
+\begin{equation}
+\label{intro-exemple1}
+ A \ffpart{u}{x} + B \fdpart{u}{x}{y} + C \ffpart{u}{y} + Du = F
+\end{equation}
+est une équation d'ordre 2, à deux variables ; $m=2$ et $n=2$ (mais ce n'est pas le cas en général). Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
+
+Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution.
+
+Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c-est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
+
+Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation \ref{intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
+
+Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, x_m)$, est qualifiée de \emph{surface intégrale} ou simplement une intégrale de l'EDP.
+
+\subsection{Quelques exemples, et une remarque concernant les unités}
+
+Afin de mieux comprendre les différents types d'EDP, le mieux est de s'attarder sur quelques exemples, parfois notables.
+
+\[ \ffpart{u}{x} + \ffpart{u}{y} = 0\]
+est une EDP à deux variables, d'ordre $2$, linéaire (l'opérateur de dérivation est linéaire), à coefficients constants, et homogène (le membre de droite est nul, et la solution $u=0$ satisfait l'équation). Il s'agit de l'\emph{équation de Laplace}.
+
+\[ x \fpart{u}{x} + y \fpart{u}{y} + \frac{xy}{l^2} u=2u_0 \]
+est une équation d'ordre $1$, linéaire (vérifiez !), à coefficients non constants (ce sont des fonctions) et non homogène (le membre de droite est supposé non nul). La présence de la constante $l$ n'est pas anodin : dans le cadre de ce cours, toutes les équations que l'on voit ont une interprétation physique, et ont donc des dimensions et des unités. Ici, $x$ et $y$ ont des unités d'une longueur, et donc $l$ doit avoir les unités d'une longueur également. De même, $u_0$ doit avoir les mêmes dimensions que $u$ (température, pression, chaleur, \ldots).
+
+\[ \left(\fpart{u}{y}\right)^2 \ffpart{u}{x} + \left(\fpart{u}{x}\right)^2 \ffpart{u}{y} = 0 \]
+est une équation d'ordre $2$, homogène, non linéaire (à cause des carrés), mais bien quasi-linéaire. En effet, les dérivées partielles d'ordre 2 sont des fonctions linéaires (elles ne sont pas élevées au carré, prises dans un logarithme ou dans un sinus, \ldots) ; le fait que le coefficient de ces dérivées d'ordre 2 dépendent de $u$, voire même de $\fpart{u}{x}$ au carré, ne change pas le fait qu'elle est linéaire.
+
+\[ \fpart{u}{y} \ffpart{u}{x} + \frac{1}{l} \left(\fpart{u}{x}\right)^2 +\fpart{u}{x} \ffpart{u}{y} = 0\]
+est également d'ordre $2$, homogène et quasi linéaire (seuls les dérivées d'ordre 2 comptent).
+
+\[ \frac{1}{l} \left(\fpart{u}{x}\right)^2 + \fpart{u}{x} \ffpart{u}{y} = 0 \]
+est d'ordre $2$, homogène, mais pas quasi linéaire. En effet, elle est linéaire par rapport à la dérivée partielle la plus élevée en $y$ (qui est $\ffpart{u}{y}$), mais pas par rapport à celle en $x$, qui est $\fpart{u}{x}$.
+
+\[ c \fpart{u}{x} + \fpart{u}{t} = 0 \]
+est une EDP à deux variables (une spatiale, $x$, et une temporelle, $t$), d'ordre $1$, linéaire, à coefficients constants si $c$ est une constante, et homogène. L'EDP reste linéaire si $c$ est une fonction de $x$ et/ou de $t$, mais n'est plus linéaire (mais quasi-linéaire) si $c$ est une fonction de $u$. C'est l'\emph{équation de transport}.
+
+\[ u \fpart{u}{x} + \fpart{u}{t} = 0 \]
+est une EDP d'ordre $1$, quasi linéaire et homogène. C'est l'\emph{équation de Burgers}, qui peut aussi s'écrire sous une forme conservative,
+\[ \fpart{}{x} \left( \frac{u^2}{2} \right) + \fpart{u}{t} = 0 \]
+
+\[ \fpart{}{x} \left( \alpha(u) \fpart{u}{x} \right) - \fpart{u}{t} = 0 \]
+est, enfin, une EDP d'ordre 2, quasi-linéaire (ceci peut être vérifié en développant l'équation par la règle du produit) et homogène. Si $\alpha(u) > 0$, il s'agit de l'équation de diffusion, avec $\alpha$ le coefficient de diffusivité.
+
+\section{EDP d'ordre 1}
+
+Commençons donc par résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela singifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
+
+Les EDP du 1er ordre quasi linéaires ont la forme
+\[ P \fpart{u}{x} + Q \fpart{u}{y} = R \]
+avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$\footnote{Et très probablement, si $G$ est une fonction linéaire en $u$.}.
+
+Les EDP du 1er ordre linéaires ont presque la même forme, à savoir
+\[ P \fpart{u}{x} + Q \fpart{u}{y} + Gu = F \]
+où $P, Q, F$ et $G$ sont des fonctions de $x$ et/ou de $y$, mais pas de $u$. Et l'équation est homogène si $F=0$ (dans ce cas, $u=0$ est bien solution). La principale différence entre les EDP quasi-linéaires et linéaires vient du fait que la fonction $R$ s'écrit $R(x, y, u) = F(x, y) - G(x, y)\cdot u$, avec $H(x, y, u) = G(x, y) \cdot u$ ; la fonction $H$ est bien linéaire en $u$.
+
+La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace de dimension 3. Cette surface peut être décrite à partir d'une relation explicite ($u(x, y)$) ou à partir d'une relation implicite ($\mathcal{F}(x, y, u)=0$).
+
+\subsection{Méthode des caractéristiques}
+
+
+
+\section{Méthode de séparation des variables}
+
+\end{document}
