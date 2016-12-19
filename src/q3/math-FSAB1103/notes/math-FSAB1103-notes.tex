@@ -48,16 +48,16 @@ La résolution d'une telle équation dépend de plusieurs facteurs et de plusieu
 
 L'équation suivante, avec $A, B, C, D$ et $F$ des fonctions de $x$, $y$ et $u$
 \begin{equation}
-\label{intro-exemple1}
+\label{eq:intro-exemple1}
  A \ffpart{u}{x} + B \fdpart{u}{x}{y} + C \ffpart{u}{y} + Du = F
 \end{equation}
 est une équation d'ordre 2, à deux variables ; $m=2$ et $n=2$ (mais ce n'est pas le cas en général). Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
 
-Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution.
+Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution.
 
 Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c-est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
 
-Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation \ref{intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
+Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation \ref{eq:intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
 
 Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, x_m)$, est qualifiée de \emph{surface intégrale} ou simplement une intégrale de l'EDP.
 
@@ -92,21 +92,106 @@ est, enfin, une EDP d'ordre 2, quasi-linéaire (ceci peut être vérifié en dé
 
 \section{EDP d'ordre 1}
 
-Commençons donc par résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela singifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
+Commençons donc par résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela signifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
 
 Les EDP du 1er ordre quasi linéaires ont la forme
-\[ P \fpart{u}{x} + Q \fpart{u}{y} = R \]
+\begin{equation}
+\label{eq:order1-genequa}
+P \fpart{u}{x} + Q \fpart{u}{y} = R
+\end{equation}
 avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$\footnote{Et très probablement, si $G$ est une fonction linéaire en $u$.}.
 
 Les EDP du 1er ordre linéaires ont presque la même forme, à savoir
 \[ P \fpart{u}{x} + Q \fpart{u}{y} + Gu = F \]
 où $P, Q, F$ et $G$ sont des fonctions de $x$ et/ou de $y$, mais pas de $u$. Et l'équation est homogène si $F=0$ (dans ce cas, $u=0$ est bien solution). La principale différence entre les EDP quasi-linéaires et linéaires vient du fait que la fonction $R$ s'écrit $R(x, y, u) = F(x, y) - G(x, y)\cdot u$, avec $H(x, y, u) = G(x, y) \cdot u$ ; la fonction $H$ est bien linéaire en $u$.
 
-La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace de dimension 3. Cette surface peut être décrite à partir d'une relation explicite ($u(x, y)$) ou à partir d'une relation implicite ($\mathcal{F}(x, y, u)=0$).
+La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace de dimension 3. Cette surface peut être décrite à partir d'une relation explicite ($u(x, y)$) ou à partir d'une relation implicite ($\mathcal{F}(x, y, u)=0$). Dans la suite, nous considérerons surtout les équations non nécessairement homogènes.
 
 \subsection{Méthode des caractéristiques}
 
+Une EDP seule n'est pas résoluble De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de la connaissance de l'EDP et de la connaissance de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc de Cauchy}), constitue le \emph{problème de Cauchy}.
 
+Pour résoudre les EDP du 1er ordre, une méthode particulièrement utile et puissance est la \emph{méthode des caractéristiques}. Le principe de cette méthode est la suivante : comme nous connaissons la valeur de $u$ sur $\Gamma$, ainsi que la variation de $u$ dans un voisinage de $\Gamma$ (grâce à l'équation différentielle), il doit être possible de déterminer $u$ dans un voisinage de $\Gamma$, et d'appliquer à nouveau ce principe pour déterminer $u$ en n'importe quel point. On détermine donc $u(x, y)$ de proche en proche, en partant de la courbe $\Gamma$ et en utilisant l'équation différentielle pour obtenir les solutions intermédiaires entre $\Gamma$ et $(x, y)$, ce qui nous permet alors de bien calculer $u$.
+
+Tout le problème devient à présent de déterminer s'il est possible, et à quelles conditions, de déterminer $u$ dans un voisinage d'une courbe, étant donné l'EDP. De même, nous aimerions une méthode générique, dépendant le moins possible de la courbe $\Gamma$ donnée, et de la valeur de $u$ sur cette courbe (la fonction $f(s)$, généralement donnée). Voyons donc ce que l'on peut faire.
+
+Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la dérivée partielle de $u$ par rapport au paramètre $s$ est également connu (c'est $f'(s)$), et donc\footnote{Pour ceux qui se le demanderaient, l'utilisation de la notation avec $\partial$ dans les dérivées partielles est généralement utilisée quand la fonction dépend de plusieurs variables. Si la fonction est à une seule variable, on utilise généralement $\mathrm{d}$ à la place de $\partial$.}
+
+\begin{equation}
+f'(s) = \fdif{u}{s} = \fpart{u}{x} \cdot \fdif{x}{s} + \fpart{u}{y} \cdot \fdif{y}{s}
+\end{equation}
+
+C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire cette équation, avec notre EDP (équation \ref{eq:order1-genequa}), le système
+\begin{equation}
+\label{eq:order1-bienpose}
+\begin{pmatrix}
+P & Q \\
+\fdif{x}{s} & \fdif{y}{s} \\
+\end{pmatrix}
+\begin{pmatrix}
+\fpart{u}{x} \\
+\fpart{u}{y} \\
+\end{pmatrix}
+= \begin{pmatrix}
+R \\
+\fdif{u}{s} = f'(s) \\
+\end{pmatrix}
+\end{equation}
+
+Dans ce système, les fonctions $P$, $Q$, $R$, les dérivées $\fdif{x}{s}$, $\fdif{y}{s}$ et $f'(s)=\fdif{u}{s}$ sont toutes connues. Si le déterminant est non nul, on peut alors toujours déterminer les dérivées partielles $\fpart{u}{x}$ et $\fpart{u}{y}$, et donc déterminer la valeur de $u$ un peu à côté de notre point de référence sur $\Gamma$ ; en effet, du cours de maths 2, on sait que
+\[ u(x+\dif{x}, y+\dif{y}) = u(x, y) + \fpart{u}{x}(x, y) \dif{x} + \fpart{u}{y}(x, y) \dif{y} \]
+
+On peut donc déterminer $u$ un peu plus loin de $\Gamma$, et réitérer le processus afin de déterminer $u$ au point qui nous intéresse. Sauf que ce système, et donc cette relation, n'est valable que sur $\Gamma$, ou sur une courbe paramétrée sur laquelle on connait $u$, ce qui n'est pas pratique. Il faut donc trouver une meilleure manière de déterminer cette \og propagation \fg{} de la solution.
+
+Cette méthode, néanmoins, ne fonctionne que si le déterminant ne s'annule pas. Si le déterminant s'annule, il est impossible de déterminer les dérivées partielles, et toute la résolution s'écroule. On dira que \emph{le problème de Cauchy est \strong{bien posé}} si le déterminant du système ne s'annule en aucun des points de la courbe. Il est donc important, lorsqu'on pose un problème de Cauchy, de spécifier $\Gamma$ de telle sorte que le problème résultant soit bien posé.
+
+Voyons maintenant ce qu'il se passe si on tente de propager l'équation selon une direction $(\dif{x}, \dif{y})$. Cette direction doit, bien évidemment, être non parallèle à la courbe (sinon on n'avance pas). Autrement dit,
+\[ (\dif{x}, \dif{y}) \neq \alpha (\fdif{x}{s}, \fdif{y}{s}) \quad \alpha \in \mathrm{R} \]
+La variation de $u$, le long de cette direction, est égale à
+\[ \fpart{u}{x} \dif{x} + \fpart{u}{y} \dif{y} = \dif{u} \]
+De nouveau, on peut former un nouveau système avec notre EDP,
+\begin{equation}
+\label{eq:order1-dirpart}
+\begin{pmatrix}
+P & Q \\ \dif{x} & \dif{y} \\
+\end{pmatrix}
+\begin{pmatrix}
+\fpart{u}{x} \\ \fpart{u}{y} \\
+\end{pmatrix}
+= \begin{pmatrix}
+R \\ \dif{u} \\
+\end{pmatrix}
+\end{equation}
+Afin de simplifier les calculs, nous allons choisir $\dif{x}$ et $\dif{y}$ tels que le déterminant de cette équation s'annule. Cela correspond à une direction particulière, où le calcul de la propagation de $u$ est plus simple. Plus précisément, il s'agit d'une direction telle que
+\begin{equation}
+\label{eq:order1-caractode}
+P\dif{y} = Q \dif{x}
+\end{equation}
+soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \propto (P, Q)$ ; la direction $(\dif{x}, \dif{y})$ est, en quelque sorte, parallèle à la direction définie par $P$ et $Q$.
+
+Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose} serait nul, et le problème serait mal posé\footnote{
+	Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
+
+Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques}.
+
+Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités.
+
+Maintenant que l'on connait une direction caractéristique, comment peut-on propager notre solution $u$ le long de cette caractéristique ? Tout simplement en utilisant le système \ref{eq:order1-dirpart}. Comme le déterminant principal s'annule, la seule manière d'avoir encore une solution est que le déterminant formé en remplaçant une colonne de la matrice principale, par la colonne des termes indépendants, s'annule également (un peu à la Kramer). C'est-à-dire :
+\[ \begin{vmatrix} P & R \\ \dif{x} & \dif{u} \\ \end{vmatrix} = 0 \quad \quad \begin{vmatrix} R & Q \\ \dif{u} & \dif{y} \\ \end{vmatrix} = 0 \]
+\begin{equation}
+\label{eq:order1-compatode}
+\Leftrightarrow P\dif{u} = R\dif{x} \quad \quad Q\dif{u} = R\dif{y}
+\end{equation}
+
+Les deux relations obtenues sont des \emph{relations de compatibilité}, ou relations caractéristiques ; elles définissent le comportement de $u$ qui est compatible avec la direction, et donc la courbe, caractéristique. Elles permettent de relier $\dif{u}$ à la variation $\dif{x}$ le long de la caractéristique. Or, ces relations sont des équations différentielles ordinaires ; notre EDP est donc devenue une EDO le long de chaque caractéristique, ce qui est beaucoup plus simple à résoudre.
+
+Désormais, pour déterminer $u$, il ne reste plus qu'à intégrer la relation de compatibilité le long de la caractéristique.
+
+Il est à noter qu'une seule des deux relations de compatibilité est nécessaire pour l'intégration ; l'autre relation peut directement être obtenue à partir de l'une et de \ref{eq:order1-caractode}. Une manière de retenir ces relations est
+\[\frac{\dif{x}}{P} = \frac{\dif{y}}{Q} = \frac{\dif{u}}{R}\]
+Néanmoins, comme $P$, $Q$ ou $R$ peuvent s'annuler, il vaut mieux revenir à la forme normale de ces équations lors de l'intégration. De même, il vaut mieux choisir la relation la plus simple à intégrer.
+
+Le cas où $R=0$ donne $\dif{u}=0$ le long de la caractéristique : $u$ est alors constant le long de la caractéristique. On appelle ça un \emph{invariant de Riemann}.
 
 \section{Méthode de séparation des variables}
 
