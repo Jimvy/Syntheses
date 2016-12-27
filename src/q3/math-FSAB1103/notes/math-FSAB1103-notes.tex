@@ -177,6 +177,16 @@ Si le problème est bien posé, alors cette direction particulière n'est jamais
 
 Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités.
 
+Comment obtenir l'équation d'une des courbes caractéristiques ? En intégrant la direction caractéristique, depuis un point de $\Gamma$ $(x(s), y(s))$ jusqu'à un point $(x, y)$. Plus précisément\footnote{Dans cette équation, $P'$ et $Q'$ sont deux fonctions, dépendant uniquement respectivement de $y$ et de $x$ ; elles peuvent obtenues à partir de $P(x, y)$ et $Q(x, y)$ en isolant $x$ et $y$ de chaque côté. Les variables $x'$ et $y'$ sont les mêmes que $x$ et $y$, mais ces symboles sont déjà utilisées dans les bornes de l'intégrale.} :
+\begin{equation}
+\label{eq:order1-caractcurve_integral}
+\begin{split}
+P \dif{y} &= Q \dif{x} \\
+\int_{x(s)}^{x} P'(y') \dif{y'} &= \int_{y(s)}^{y} Q'(x') \dif{x'}
+\end{split}
+\end{equation}
+L'idée est que, pour déterminer les points $x$ et $y$ qui seront atteignables par la caractéristique issue d'un point de la courbe de Cauchy en $(x(s), y(s))$ pour un $s$ donné, on va suivre et intégrer la direction caractéristique, et donc parcourir la courbe, depuis ce point de la courbe de Cauchy jusqu'à un point $(x, y)$ que l'on suppose appartenir à la caractéristique. Cela donne donc une relation entre $x$ et $y$ pour un $s$ donné, et également une relation qui donne $s$ en fonction de $x$ et $y$. $s$ est une constante dans cette relation, et paramétrise la courbe : pour un $s$ donné, on obtient une courbe caractéristique précise.
+
 Maintenant que l'on connait une direction caractéristique, comment peut-on propager notre solution $u$ le long de cette caractéristique ? Tout simplement en utilisant le système \ref{eq:order1-dirpart}. Comme le déterminant principal s'annule, la seule manière d'avoir encore une solution est que le déterminant formé en remplaçant une colonne de la matrice principale, par la colonne des termes indépendants, s'annule également (un peu à la Kramer). C'est-à-dire :
 \[ \begin{vmatrix} P & R \\ \dif{x} & \dif{u} \\ \end{vmatrix} = 0 \quad \quad \begin{vmatrix} R & Q \\ \dif{u} & \dif{y} \\ \end{vmatrix} = 0 \]
 \begin{equation}
@@ -209,7 +219,7 @@ Afin d'illustrer la méthode des caractéristiques, considérons l'EDP suivante
 \[y\fpart{u}{x} - x\fpart{u}{y} = R\]
 et la courbe $\Gamma$ définie par $x(s)=s$ et $y(s)=0$, pour $s$ strictement positif (on verra pourquoi). Il s'agit du demi-axe des x strictement positifs. On spécifie sur cette courbe une fonction $f(s)$ donnée (ici, peu importe sa définition).
 
-On commence par déterminer le réseau des caractéristiques. Puisque $P=y$ et $Q=-x$, les caractéristiques sont déterminées par l'intégration suivante :
+On commence par déterminer le réseau des caractéristiques. Puisque $P=y$ et $Q=-x$, les caractéristiques sont déterminées par l'intégration suivante (équation \ref{eq:order1-caractcurve_integral}) :
 \begin{align*}
 P \dif{y} &= Q \dif{x} \\
 y \dif{y} &= -x \dif{x} \\
@@ -219,7 +229,7 @@ y \dif{y} &= -x \dif{x} \\
 x^2 + y^2 &= s^2
 \end{align*}
 
-Comment interpréter cette intégration ? L'idée est que, pour déterminer les points $x$ et $y$ qui seront atteignables par la caractéristique issue d'un point de la courbe de Cauchy en $(x(s), y(s))$ pour un $s$ donné, on va intégrer la direction caractéristique, et donc parcourir la courbe, depuis ce point de la courbe de Cauchy jusqu'à un point $(x, y)$ que l'on suppose appartenir à la caractéristique. Cela donne donc une relation entre $x$ et $y$ pour $s$ donné, et également une relation qui donne $s$ en fonction de $x$ et $y$.
+Comment interpréter cette intégration ? Nous avons suivi la direction caractéristique depuis un point de $\Gamma$ jusqu'à un point $(x, y)$. Cela donne donc une relation entre $x$ et $y$ pour $s$ donné, et également une relation qui donne $s$ en fonction de $x$ et $y$.
 
 Ici, pour un $s$ donné, la caractéristique n'est rien d'autre que le cercle de rayon $s$ centré à l'origine ; le réseau est donc un ensemble de cercles concentriques. C'est pour ça qu'on a défini la courbe de Cauchy ainsi : la demi-droite ne coupe chaque cercle qu'une seule fois, et n'est pas parallèle à la tangente au cercle. $\Gamma$ est donc admissible et le problème est bien posé.
 
@@ -237,6 +247,46 @@ Considérons le cas où $R=0$. L'équation est alors homogène, et les relations
 \end{align*}
 Et comme, pour $x$ et $y$ donnés, on a $x^2+y^2=s^2$, on a $s=\sqrt{x^2+y^2}$ et donc,
 \[u(x, y) = f(\sqrt{x^2+y^2})\]
+
+Considérons un cas plus complexe, celui où $R=\frac{u_0xy}{l^2}$. On remarque tout de suite la présence du $l^2$ au dénominateur ; celui-ci sert à rendre adimensionnel le produit $xy$, de sorte que $R$ ait les mêmes dimensions que $u_0$ et donc $u$. Les dimensions sont très importantes dans ce cours.
+
+En intégrant l'une des deux relations de compatibilité (par exemple la première), on obtient
+\begin{align*}
+\int_{u(x(s), y(s))}^{u(x, y)} P \dif{u'} &= \int_{x(s)}^{x} R \dif{x'} \\
+\int_{u(x(s), y(s))}^{u(x, y)} y \dif{u'} &= \int_{s}^{x} \frac{u_0x y }{l^2} \dif{x'} \\
+\int_{f(s)}^{u(x, y)} 1 \dif{u'} &= u_0 \int_{s}^{x} \frac{x}{l^2} \dif{x'} \\
+u(x, y) &= f(\sqrt{x^2+y^2}) + u_0 (\frac{x^2}{2l^2}  \frac{s^2}{2l^2}) \\
+&= f(\sqrt{x^2+y^2}) - u_0 \frac{y^2}{2l^2}
+\end{align*}
+où nous avons utilisé le fait que $x^2+y^2=s^2$, afin d'éliminer $s$ de l'équation.
+
+Considérons enfin le cas $R=u_0$. Il parait bien inoffensif, mais il ne l'est point. De nouveau, on intègre (cette fois avec la deuxième relation) :
+\begin{align*}
+Q \dif{u} &= R \dif{y} \\
+-x \dif{u} &= u_0 \dif{y} \quad \text{ or, } x=\pm \sqrt{s^2-y^2} \\
+\dif{u} &= -u_0 \frac{1}{ \pm \sqrt{s^2-y^2}} \dif{y} \\
+\int_{u(x(s), y(s))}^{u(x, y)} \dif{u'} &= \int_{y(s)}^{y} -u_0 \frac{1}{\pm \sqrt{s^2-y^2}} \dif{y'} \\
+\int_{f(s)}^{u(x, y)} 1 \dif{u'} &= -u_0 \int_{0}^{y} \pm \frac{1}{ \sqrt{s^2-y^2}} \dif{y'} \quad \quad + \text{ si } x>0 \; ; \, - \text{ sinon} \\
+u(x, y) - f(s) &= -u_0 \left[ \pm \arcsin(\frac{y}{s}) \right]_{0}^{y}\\
+&= \mp u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right)
+\end{align*}
+et donc,
+\[
+u(x, y) = f(\sqrt{x^2+y^2}) + \begin{cases}
+(-u_0) \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{si } x>0 \\
+u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{sinon} \\
+\end{cases}
+\]
+Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer $x$ en fonction de $y$ (car nous intégrons par rapport à $y$, et $s$ est une constante sur la caractéristique). Ensuite, il faut tenir compte des deux signes possibles pour $x$, et donc bien définir la fonction.
+%TODO : il est possible que j'aie fait une ou deux erreurs
+
+\subsection{Équation de transport}
+
+Un exemple classique d'EDP du premier ordre, unidimensionnel et dépendant du temps, est \emph{l'équation de transport} (ou équation de convection) :
+\begin{equation}
+\label{eq:order1-transport-ncgen}
+c \fpart{u}{x} + \fpart{u}{t} = 0
+\end{equation}
 
 \section{Méthode de séparation des variables}
 
