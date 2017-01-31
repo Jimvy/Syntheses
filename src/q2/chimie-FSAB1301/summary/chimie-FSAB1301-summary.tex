@@ -424,6 +424,37 @@ Distance inter-ionique: équilibre entre : l'attraction coulombienne ($-\frac{1}
 où $d^* = \numprint[\pico\meter]{34,5}$,
 $A$ est la constante de Madelung qui varie selon les composés et $d$ est comme pour les gaz.
 
+\paragraph{Calcul de l'enthalpie de formation et de l'enthalpie réticulaire d'un solide : cycle de Born-Haber}
+%\begin{figure}
+%	\centering
+%	\begin{tikzpicture}
+%	%TODO
+%	\end{tikzpicture}
+%	\caption{Cycle de Born-Haber}
+%	\label{fig:bornhaber}
+%\end{figure}
+
+L'énergie (ou enthalpie) réticulaire est l'énergie de formation d'un cristal solide (par exemple de $\ce{NaCl(s)}$) à partir des constituants à l'état gazeux (ici, $\ce{Na(s)}$ et $\ce{Cl(g)}$). Pour la calculer, on utilise un cycle de Born-Haber, qui décompose la réaction en plusieurs petites réactions dont les énergies sont connues ou plus facilement calculables. Plus précisément, il faut souvent calculer
+\begin{itemize}
+	\item l'énergie de vaporisation ou de sublimation des constituants (car ils doivent être à l'état gazeux) (par exemple, $\ce{Na(s) -> Na(g)}$) ; ce n'est pas nécessaire si l'on demande l'énergie réticulaire, car les constituants sont par définition à l'état gazeux ;
+	\item l'énergie de dissociation des molécules covalentes (ici, $\ce{Cl2}$) ;
+	\item l'énergie d'ionisation du cation ($\ce{Na -> Na+ + e-}$) et l'affinité électronique de l'anion ($\ce{Cl + e- -> Cl-}$) ;
+	\item l'énergie de neutralisation, pour la formation du solide ionique ($\ce{Na+(g) + Cl-(g) -> NaCl(s)}$). On utilise la formule pour les solides ioniques.
+\end{itemize}
+Une fois toutes ces valeurs calculées, on les ajoute et cela nous donne l'énergie de formation du cristal.
+
+\subparagraph{Exemple} Calculons l'enthalpie de formation de $\ce{CsI(s)}$ à partir de césium liquide et d'iode solide. La réaction est $\ce{Cs(l) + 1/2I2(s) -> CsI(s)}$.
+On calcule :
+\begin{itemize}
+	\item $E_1=\Delta_\mathrm{vap} H_{\ce{Cs}} = \numprint[\kilo\joule\per\mole]{+67.74}$ ;
+	\item $E_2=\frac{1}{2} \Delta_\mathrm{subl} H_{\ce{I2}} = \frac{1}{2} \numprint[\kilo\joule\per\mole]{+62.42} = \numprint[\kilo\joule\per\mole]{+31.21}$ ;
+	\item $E_3=\frac{1}{2} E_\mathrm{diss}^{\ce{I2}} = \frac{1}{2} \numprint[\kilo\joule\per\mole]{+139} = \numprint[\kilo\joule\per\mole]{+69.5}$ ;
+	\item $E_4=E_I^{\ce{Cs}} = \numprint[\kilo\joule\per\mole]{+376}$ ;
+	\item $E_5=E_A^{\ce{I2}} = \numprint[\kilo\joule\per\mole]{-295}$ ;
+	\item $E_6 = E_N = \numprint[\kilo\joule\per\mole]{-576}$ (avec $d=167+220=\numprint[\pico\meter]{387}$, $z_1=z_2=1$ et $A=1.763$).
+\end{itemize}
+Et donc, l'enthalpie de formation est $\Delta H_f = E_1+E_2+E_3+E_4+E_5+E_6=\numprint[\kilo\joule\per\mole]{-327}$.
+
 \subsection{Liaison covalente}
 
 Les électrons sont apportés par chaque atome et s'apparient $\Rightarrow$ état de moindre énergie (équilibre entre attraction $e^-$/noyau et répulsion noyau/noyau).
@@ -741,6 +772,23 @@ Voir table.
     moins elle est réactionnelle.
 \end{itemize}
 
+\subsection{Configuration spatiale des molécules}
+
+La théorie VSEPR permet de déterminer dans bien des cas la forme de la molécule, en particulier l'agencement des atomes les uns par rapport aux autres, et donc de déterminer si certains atomes sont dans le même plan ou non, ou leur nombre. Généralement, on cherche à compter le nombre d'atomes dans le plan contenant l'axe principal de la molécule (parfois, il y en a plusieurs). Quelques éléments permettant de répondre à la question :
+\begin{itemize}
+	\item dans les configurations triangulaires planes et linéaires, les atomes de ces configurations sont tous dans le même plan. Par exemple, dans le cas de l'éthène, les deux atomes de carbone et les deux atomes hydrogène liés à l'un d'eux sont dans le même plan ;
+	\item les configurations tétraédriques ne permettent pas d'avoir tous les atomes dans le même plan : dans le meilleur des cas, seuls trois atomes (centre+deux liés) sont dans un même plan ;
+	\item les doubles liaisons bloquent la rotation des atomes autour de l'axe de la liaison, et donc la rotation des plans ;
+	\item dans le cas d'un atome à deux doubles liaisons (donc 4 ; linéaire), les doubles liaisons sont perpendiculaires, et les plans des liaisons restantes sont aussi perpendiculaires.
+\end{itemize}
+
+Quelques exemples (tirés d'examens) :%FIXME trouver d'autres exemples.
+\begin{itemize}
+	\item La molécule d'acrylonitrile \ce{H2C-CHCN} a tous ses atomes dans le même plan : le carbone de gauche est en triangulaire, le C de droite aussi, la double liaison force les plans à rester alignés, et le carbone lié à l'azote est linéaire, et est donc dans le même plan.
+	\item La molécule \ce{H2C=CH2} a tous ses atomes dans le même plan (deux configurations triangulaires reliées par une double liaison), la molécule \ce{H2C=C=CH2} possède deux plans perpendiculaires (les deux doubles liaisons du carbone central sont perpendiculaires), et la molécule \ce{H2C=C=C=CH2} a tous ses atomes dans le même plan.
+	\item L'acide acrylique \ce{H2C=CH-COOH} possède 6 atomes dans le même plan : elle n'en possède pas plus car il y a possibilité de rotation autour de la liaison C-C simple.
+\end{itemize}
+
 \section{Liaisons intermoléculaires}
 Les liaisons intermoléculaires sont à l'origine de la cohésion du matériau.
 Ce sont des liaisons faibles: $E_p<\numprint[kJ/mol]{40}$.
@@ -835,11 +883,25 @@ Si la condition est respectée et qu'il y a plusieurs \ce{F}, \ce{O}, \ce{N} ou 
   \item \ce{NH2OH}
 \end{itemize}
 
+\subsection{Influence des liaisons sur la température d'ébullition}
+
+Afin de comparer la température d'ébullition de deux molécules différentes, il faut déterminer les intensités relatives des liaisons intermoléculaires des deux molécules.
+
+Voici les différents facteurs qui influencent la température d'ébullition, par ordre décroissant d'importance (les premiers facteurs sont les plus différenciant) :
+\begin{itemize}
+	\item le type de liaisons : ioniques >> métalliques >> covalents.
+	\item la masse molaire de la molécule : plus celle-ci est élevée, plus la température est élevée. Si la différence de masse molaire n'est pas significative (inférieure à 10\%), on ne peut pas conclure. Si l'une des molécules peut faire des liaisons hydrogène tandis que l'autre ne peut pas, il faut que la différence de masse molaire soit très grande pour que ce critère soit applicable.
+	\item la présence de ponts hydrogène et leur multiplicité. C'est peut-être le critère le plus important pour des molécules de masse assez proche.
+	\item le type de ponts hydrogènes : les ponts H-O sont plus intenses que les ponts H-N.
+	\item la polarité de la molécule : elle augmente avec l'intensité de la polarisation (double, triple liaison ; différence d'électronégativité), le nombre de liaisons polaires, et l'alignement de la polarisation (par exemple, le méthoxyéthane $\ce{CH3-CH2-O-CH3}$ a une température d'ébullition de 7,4\degree C, l'acétone $\ce{CH3-CO-CH3}$ 56\degree C, et l'éthylène glycol $\ce{HO-CH2-CH2-OH}$ 197\degree C).
+	\item le type de liaison van der Waals : plus la liaison est forte, plus les molécules sont liées et plus la température est élevée (Keesom > Debye > London) ;
+	\item la symétrie de la molécule : celle-ci influence la polarisation de la molécule, mais dans des proportions plus faibles.
+	\item la longueur et la grandeur de la molécule : plus la molécule est longue ou vaste, plus les liaisons de van der Waals seront fortes.
+\end{itemize}
+
 \section{Synthèse sur les liaisons chimiques}
 
 Voir \sectionref{synthese_liaisons} dans les annexes.
-
-
 
 \iffalse
 \part{Chimie du solide (Uniquement pour Projet)}
