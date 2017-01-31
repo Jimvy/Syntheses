@@ -144,26 +144,16 @@ d'onde, nommée longueur d'onde de de Broglie, qui est donnée par
     \label{eq:deBroglie}
 \end{equation}
 
-%Il est amusant d'observer qu'en utilisant les formules vues plus haut
-%et la longueur d'onde de de Broglie dans le cas d'un rayonnement électromagnétique,
-%c'est à dire que $v = c$, on trouve
-%\[ E \stackrel{\eqref{eq:Ehnu}}{=} h\nu \stackrel{\eqref{eq:deBroglie}}{=}
-%mc\lambda\nu \stackrel{\eqref{eq:clambdanu}}{=} mc^2 \]
-%  C'est erroné. En fait, p=mv n'est pas valable pour des grandes vitesses
-%  ou pour des masses nulles ; dans ces cas, il faut utiliser la relativité
-%  qui corrige les tendances vers infini et 0 de ces équation. En fait,
-%  E=pc pour des particules de masse 0 (photon).
-
 Les électrons (et la matière en général) ont
 à la fois un caractère ondulatoire et un caractère corpusculaire.
 
 \section{Fonction d'onde}
-%TODO ce n'est pas dualité, mais comportement ondulatoire
+
 Dualité onde-particule $\Rightarrow$ les électrons ne tournent pas autour du noyau selon une trajectoire définie.
 
-$\Rightarrow$ Fonction d'onde $\psi$ (solutions équation de Schrödinger)\\
+$\Rightarrow$ Fonction d'onde $\psi$ (solutions équation de Schrödinger)
 
-Max Born: $\psi^2 = $ densité de probabilité de présence de la particule (probabilité de présence/volume).
+Max Born: $\abs{\psi^2} = $ densité de probabilité de présence de la particule (probabilité de présence/volume).
 
 Les \textbf{orbitales atomiques} sont les fonctions d'onde des électrons dans les atomes.
 
@@ -189,17 +179,17 @@ $n$ détermine donc aussi le rayon de l'orbitale et son énergie.
 On voit que $n$ est proportionnel au rayon de l'orbitale.
 $n$ peut prendre les valeurs $1, 2, \ldots$
 
-$n$ détermine la couche de l'orbitale.
+$n$ détermine la couche de l'orbitale, et peut être notée par une lettre majuscule (à partir de K, \textit{kernel}). Enfin, tous les éléments d'une période $n$ dans le tableau périodique ont le même nombre de couches électroniques, à savoir $n$.
 %La valeur de $n$ peut aussi être représenté par la période correspondante
 % NOT SURE
 % En effet, ce n'est pas vraiment ça ; mais numéro de la période = numéro de la couche de valence (selon les définition données du prof).
-%\begin{center}
-%\begin{tabular}{c|ccccc}
-%	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
-%	\cline{1-5}
-%	Période & K & L & M & N
-%\end{tabular}
-%\end{center}
+\begin{center}
+\begin{tabular}{c|ccccc}
+	$n$ & 1 & 2 & 3 & 4 & \multirow{2}{*}{$\cdots$}\\
+	\cline{1-5}
+	Période & K & L & M & N
+\end{tabular}
+\end{center}
 
 \subsection{Le nombre quantique secondaire}
 $l$ détermine la forme de l'orbitale.
@@ -259,8 +249,7 @@ c'est pourquoi on dit qu'une orbitale est définie par 3 nombres quantiques et n
     et s'il acquiert suffisamment d'énergie $\rightarrow$ quitte l'atome.
 \end{itemize}
 
-On entend par atomes hydrogénoïdes, les atomes ou ions qui possèdent exactement $1$ électron (par exemple: \ce{H}, \ce{He^+}, \ce{O^7+}, ...).
-On dit aussi qu'ils sont monoélectroniques.
+On entend par atomes hydrogénoïdes, ou atomes monoélectroniques, les atomes ou ions qui possèdent exactement $1$ électron (par exemple: \ce{H}, \ce{He^+}, \ce{O^7+}, ...).
 
 Les atomes hydrogénoïdes ont des sous-couches dégénérées, c'est-à-dire que les orbitales associées au même nombre quantique principal ont la même énergie.
 Par exemple, pour \ce{O^7+}, l'énergie associée à l'orbitale 2s est la même que celle associée à l'orbitale 2p.
@@ -300,13 +289,14 @@ que celle provenant des orbitales inférieures.
 Exemple : le fluor \ce{F} a pour configuration électronique \configElectronique{9} ou \configElectronique[courte]{9}.
 %TODO ajouter exceptions
 \subsection{Exceptions}
-Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec la règle de Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergiquement.%Pas sûr de l'orthographe
-Cela a d'ailleurs une conséquence sur leur conductivité électrique.
+Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec la règle de Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergétiquement.
 Ainsi, au lieu d'être \configElectronique[courte]{29}, le cuivre a pour configuration électronique $\left[\text{Ar}\right] \, \text{3d}^\text{10} \, \text{4s}^\text{1}$.% j'ai adapté le code du fichier annexe, peut-être l'améliorer ?
+Cela a d'ailleurs une conséquence sur leur conductivité électrique : les liaisons chimiques de ces éléments impliquent principalement l'orbitale $\sorb$ et beaucoup moins l'orbitale $\dorb$, ce qui diminue le caractère covalent des liaisons et augmente la mobilité des électrons et donc, la conductivité.
 
 Ce phénomène se retrouve aussi dans le cas du chrome, qui complète sa demi-sous-couche $3\dorb$ au lieu de la sous-couche $4\sorb$ ; sa configuration électronique est $\left[\text{Ar}\right] \, \text{3d}^5 \, \text{4s}^1$ au lieu de \configElectronique[courte]{24}. Dans les périodes $\ge 5$, la majorité des métaux de transition et les éléments du bloc $\forb$ constituent des exceptions (qu'il ne faut pas connaitre).
 
-\section{Électrons de valence et électrons de cœur}%FIXME a corriger si je me trompe ; je dois vérifier si en accord avec examens ; cf forum
+\section{Électrons de valence et électrons de cœur}
+
 Il existe plusieurs manières de définir ce que sont les électrons de cœur et les électrons de valence.
 Si ces définition sont identiques pour les atomes des 3 premières périodes, elles divergent pour les suivantes et ont moins de pertinence.
 
@@ -318,9 +308,9 @@ Définition dans le cadre du cours :
 	  Électrons se situant dans la dernière couche électronique partiellement ou totalement remplie.
 \end{description}
 
-Exemple : Pour le scandium, de configuration \configElectronique{21}, les électrons de coeur sont \configElectronique{18}, les électrons de valence $\text{4s}^2$ et l'électron de la sous-couche $3\dorb$ n'est ni l'un ni l'autre.
+Exemple : Pour le scandium, de configuration \configElectronique{21}, les électrons de cœur sont \configElectronique{18}, les électrons de valence $\text{4s}^2$ et l'électron de la sous-couche $3\dorb$ n'est ni l'un ni l'autre. Néanmoins, il vaut mieux préciser la définition que l'on applique, voire d'énoncer les deux possibilités : les électrons de valence du scandium sont $\text{4s}^2$ si on considère que les électrons de valence sont ceux de la couche externe, ou $\text{3d}^1\text{4s}^2$ si on tient aussi compte des électrons de la sous-couche $\dorb$.
 
-Les électrons des sous-couches $\dorb$ peuvent participer aux liaisons chimiques (paragraphe~\ref{subpar:valence_d}).
+Les électrons des sous-couches $\dorb$ peuvent participer aux liaisons chimiques, en particulier à des liaisons covalentes (paragraphe~\ref{subpar:valence_d}).
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
@@ -341,10 +331,9 @@ $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
 
 \begin{itemize}
   \item Toujours endothermique (donc $>0$);
-  \item $E_I$ diminue globalement de haut en bas d'un groupe (quand le rayon atomique augmente).
-    En effet il faut fournir moins d'énergie pour arracher un $e^-$ loin du noyau;
-  \item $E_I$ augmente globalement le long d'une période à cause de l'augmentation de la charge nucléaire effective;
-  \item La répulsion entre 2 $e^-$ d'une même orbitale augmente leur énergie et rend le départ d'un électron + facile que dans le cas de 2 $e^-$ non-appariés;
+  \item Aux exceptions près, $E_I$ est inversement proportionnel au rayon atomique : plus celui-ci est élevé, plus l'électron arraché est loin du noyau, et donc moins l'énergie d'ionisation est grande. $E_I$ diminue en descendant dans un groupe car l'électron ionisé, sur une couche de plus en plus éloignée du noyau, est de moins en moins lié ; et $E_I$ augmente le long d'une période à cause de l'augmentation de la charge nucléaire effective ;
+  \item Le passage d'une sous-couche à une autre d'énergie supérieure, ou dans une couche supérieure, s'accompagne d'une diminution de l'énergie d'ionisation (exemple : passage béryllium $\rightarrow$ bore : l'électron $\text{3p}$ est moins lié que le $\text{3s}$) ;
+  \item La répulsion entre 2 $e^-$ appariés (d'une même orbitale) augmente leur énergie et rend le départ d'un électron plus facile que dans le cas de 2 $e^-$ non-appariés (exemple : passage azote $\rightarrow$ oxygène) ;
   \item Les électrons de valence sont arrachés en premier.
     Plus précisément,
     l'électron doit être pris dans l'orbitale au plus grand $n$,
@@ -352,8 +341,7 @@ $\Delta H = E(\ce{X^+})-E(\ce{X}) = E_I$
     Pour les métaux de transition,
     les $e^-$ de la sous-couche $\sorb$ de la dernière couche sont enlevés les premiers;
   \item L'ion résultant est appelé ``cation'';
-  \item Rayon cationique < Rayon atomique.
-  %TODO ajouter pê plus de détails ?
+  \item Rayon cationique < Rayon atomique ; les ionisations successives ont un rayon de plus en plus petit (moins d'$e^-$ et moins de répulsions).
 \end{itemize}
 
 \section{Électroaffinité}
@@ -372,6 +360,7 @@ $\Delta H = E(\ce{X^-})-E(\ce{X})=-E_A$
     pour \ce{Na},
     $E_A = \numprint[\kilo\joule\per\mole]{+53}$ alors que pour \ce{Mg},
     $E_A \leq \numprint[\kilo\joule\per\mole]{0}$;
+  \item $E_A$ diminue lorsque l'électron capturé doit prendre place dans une orbitale de plus grande énergie, comme une orbitale déjà occupée (cas de l'azote, où l'électron doit s'apparier) ou une nouvelle sous-couche (cas du béryllium).
   \item Les gaz nobles ont une $E_A$ légèrement négative (endothermique) car tout $e^-$ ajouté occupe une orbitale au-delà d'une couche pleine et loin du noyau.
     Mais comme ils sont très stables,
     $E_A \approx 0$;
@@ -464,7 +453,6 @@ C'est-à-dire à former des liaisons covalentes jusqu'à être entourés de 8 $e
 Certains atomes peuvent loger plus de 8 $e^-$ dans leur couche de valence. Il s'agit des non-métaux de la 3\up{e}
 période et des périodes ultérieures. Les atomes de ces éléments possèdent des orbitales $d$ vides dans leur couche
 de valence, ce qui leur permet d'étendre leur couche de valence.
-%TOdo verifier si vraiment couche de valence
 
 \paragraph{Structure de résonance}
 Si plusieurs configuration de Lewis sont équivalentes,
