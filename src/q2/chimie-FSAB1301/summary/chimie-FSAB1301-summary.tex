@@ -184,13 +184,9 @@ $n$ détermine la couche de l'orbitale, et peut être notée par une lettre maju
 \end{center}
 
 \subsection{Le nombre quantique secondaire}
-$l$ détermine la forme de l'orbitale.
-Il y a exactement $n$ formes possible pour une orbitale de nombre quantique $n$.
-
-{\bf La numérotation se fait à partir de $0$}.
-Pour une orbitale de nombre quantique $n$, $l$ peut prendre les valeurs $0, 1, \ldots, n-1$
-
-$l$ détermine la sous-couche de l'orbitale.
+$l$ détermine la forme de l'orbitale et la sous-couche.
+Il y a exactement $n$ formes possible pour une orbitale de nombre quantique $n$, et
+$l$ peut prendre les valeurs $0, 1, \ldots, n-1$ (en commençant à zéro).
 
 La valeur de $l$ peut aussi être représentée par une lettre minuscule
 
@@ -279,18 +275,18 @@ que celle provenant des orbitales inférieures.
 \end{description}
 
 Exemple : le fluor \ce{F} a pour configuration électronique \configElectronique{9} ou \configElectronique[courte]{9}.
-%TODO ajouter exceptions
+
 \subsection{Exceptions}
-Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec la règle de Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergétiquement.
+Les atomes du groupe 11 (cuivre, argent, or) complètent leur sous-couche $\dorb$ avec un des électrons de la sous-couche $\sorb$ externe, en désaccord avec Klechkowsky (où la sous-couche $\sorb$ devrait être remplie), car cette configuration est plus stable énergétiquement.
 Ainsi, au lieu d'être \configElectronique[courte]{29}, le cuivre a pour configuration électronique $\left[\text{Ar}\right] \, \text{3d}^\text{10} \, \text{4s}^\text{1}$.% j'ai adapté le code du fichier annexe, peut-être l'améliorer ?
-Cela a d'ailleurs une conséquence sur leur conductivité électrique : les liaisons chimiques de ces éléments impliquent principalement l'orbitale $\sorb$ et beaucoup moins l'orbitale $\dorb$, ce qui diminue le caractère covalent des liaisons et augmente la mobilité des électrons et donc, la conductivité.
+Conséquence : les liaisons chimiques de ces éléments impliquent principalement l'orbitale $\sorb$ et beaucoup moins l'orbitale $\dorb$, ce qui diminue le caractère covalent des liaisons et augmente la mobilité des électrons et donc, la conductivité.
 
 Ce phénomène se retrouve aussi dans le cas du chrome, qui complète sa demi-sous-couche $3\dorb$ au lieu de la sous-couche $4\sorb$ ; sa configuration électronique est $\left[\text{Ar}\right] \, \text{3d}^5 \, \text{4s}^1$ au lieu de \configElectronique[courte]{24}. Dans les périodes $\ge 5$, la majorité des métaux de transition et les éléments du bloc $\forb$ constituent des exceptions (qu'il ne faut pas connaitre).
 
 \section{Électrons de valence et électrons de cœur}
 
-Il existe plusieurs manières de définir ce que sont les électrons de cœur et les électrons de valence.
-Si ces définition sont identiques pour les atomes des 3 premières périodes, elles divergent pour les suivantes et ont moins de pertinence.
+Il existe plusieurs manières de définir les électrons de cœur et les électrons de valence.
+Si ces définition sont identiques pour les atomes des 3 premières périodes, elles divergent pour les suivantes et sont moins pertinentes.
 
 Définition dans le cadre du cours :
 \begin{description}
@@ -302,7 +298,7 @@ Définition dans le cadre du cours :
 
 Exemple : Pour le scandium, de configuration \configElectronique{21}, les électrons de cœur sont \configElectronique{18}, les électrons de valence $\text{4s}^2$ et l'électron de la sous-couche $3\dorb$ n'est ni l'un ni l'autre. Néanmoins, il vaut mieux préciser la définition que l'on applique, voire d'énoncer les deux possibilités : les électrons de valence du scandium sont $\text{4s}^2$ si on considère que les électrons de valence sont ceux de la couche externe, ou $\text{3d}^1\text{4s}^2$ si on tient aussi compte des électrons de la sous-couche $\dorb$.
 
-Les électrons des sous-couches $\dorb$ peuvent participer aux liaisons chimiques, en particulier à des liaisons covalentes (paragraphe~\ref{subpar:valence_d}).
+Les électrons des sous-couches $\dorb$ peuvent participer à des liaisons chimiques (paragraphe~\ref{subpar:valence_d}).
 
 \section{Rayon atomique}
 Le rayon atomique est la distance moyenne entre le noyau et la frontière du nuage électronique.
@@ -409,12 +405,12 @@ Vérifiez bien que la plupart soient négatifs !
 
 \paragraph{Calcul de l'énergie de neutralisation $E_N$}
 \label{sec:neutral}
-L'énergie de neutralisation est l'énergie à fournir pour lier deux atomes déjà ionisés.
+L'énergie de neutralisation est l'énergie à fournir pour lier deux atomes déjà ionisés. $d = r_{\mathrm{anion}} + r_{\mathrm{cation}}$ la distance entre les centres atomiques.
 
 \subparagraph{Pour les gaz}
 \[ E_N = \frac{-N_A}{4\pi\epsilon_0}\times\frac{|z_1z_2|e^2}{d} \]
-où $z_1$ et $z_2$ sont les valences des atomes,
-$e$ la charge d'un électron et $d = r_{\mathrm{anion}} + r_{\mathrm{cation}}$ la distance entre leurs centres atomiques.
+où $z_1$ et $z_2$ sont les valences des atomes
+et $e$ la charge d'un électron.
 \subparagraph{Pour les solides ioniques}
 Interaction entre un grand nombre d'anions et de cations.
 L'alternance anion-cation rend les solides ioniques rigides et fragiles.
@@ -422,7 +418,7 @@ L'alternance anion-cation rend les solides ioniques rigides et fragiles.
 Distance inter-ionique: équilibre entre : l'attraction coulombienne ($-\frac{1}{d}$) et la répulsion des nuages d'électrons ($\frac{1}{d^n}$).
 \[ E_N = \frac{-N_A}{4\pi\epsilon_0}\times\frac{|z_1z_2|e^2}{d} \left(1-\frac{d^*}{d}\right)A \]
 où $d^* = \numprint[\pico\meter]{34,5}$,
-$A$ est la constante de Madelung qui varie selon les composés et $d$ est comme pour les gaz.
+$A$ est la constante de Madelung qui varie selon les composés.
 
 \paragraph{Calcul de l'enthalpie de formation et de l'enthalpie réticulaire d'un solide : cycle de Born-Haber}
 %\begin{figure}
@@ -438,8 +434,8 @@ L'énergie (ou enthalpie) réticulaire est l'énergie de formation d'un cristal 
 \begin{itemize}
 	\item l'énergie de vaporisation ou de sublimation des constituants (car ils doivent être à l'état gazeux) (par exemple, $\ce{Na(s) -> Na(g)}$) ; ce n'est pas nécessaire si l'on demande l'énergie réticulaire, car les constituants sont par définition à l'état gazeux ;
 	\item l'énergie de dissociation des molécules covalentes (ici, $\ce{Cl2}$) ;
-	\item l'énergie d'ionisation du cation ($\ce{Na -> Na+ + e-}$) et l'affinité électronique de l'anion ($\ce{Cl + e- -> Cl-}$) ;
-	\item l'énergie de neutralisation, pour la formation du solide ionique ($\ce{Na+(g) + Cl-(g) -> NaCl(s)}$). On utilise la formule pour les solides ioniques.
+	\item l'énergie d'ionisation du cation ($\ce{Na+}$) et l'affinité électronique de l'anion ($\ce{Cl-}$) ;
+	\item l'énergie de neutralisation, pour la formation du solide ionique ($\ce{Na+(g) + Cl-(g) -> NaCl(s)}$). On utilise l'expression pour les solides ioniques.
 \end{itemize}
 Une fois toutes ces valeurs calculées, on les ajoute et cela nous donne l'énergie de formation du cristal.
 
@@ -474,8 +470,8 @@ C'est-à-dire à former des liaisons covalentes jusqu'à être entourés de 8 $e
 \subparagraph{Exceptions à la règle de l'octet}
 \label{subpar:valence_d}
 Certains atomes peuvent loger plus de 8 $e^-$ dans leur couche de valence. Il s'agit des non-métaux de la 3\up{e}
-période et des périodes ultérieures. Les atomes de ces éléments possèdent des orbitales $d$ vides dans leur couche
-de valence, ce qui leur permet d'étendre leur couche de valence.
+période et suivantes. Les atomes de ces éléments possèdent des orbitales $d$ vides,
+ce qui leur permet d'étendre leur couche de valence.
 
 \paragraph{Structure de résonance}
 Si plusieurs configuration de Lewis sont équivalentes,
@@ -629,7 +625,7 @@ Elles ne peuvent se recouvrir que latéralement (un $e^-$ de chaque côté de l'
   \begin{tabular}{l|ll}
     Liaison & Nombre de liaisons $\sigma$ & Nombre de liaisons $\pi$\\
     \hline
-    Simple & 1 & 0\\ % sauf $p-p$ où c'est $\pi$ <- not sure
+    Simple & 1 & 0\\ %FIXME sauf $p-p$ où c'est $\pi$ <- not sure
     Double & 1 & 1\\
     Triple & 1 & 2\\
   \end{tabular}
@@ -715,7 +711,7 @@ Pour augmenter le nombre de liaisons possibles (trop d'électrons opposés) on f
 \end{center}
 
 Pour former 4 liaisons identiques  $\sigma$, il faut qu'elles aient le même niveau énergétique.
-On va créer une orbitale intermédiaire $\sorb\porb^3$ dont le niveau énergétique est plus élevé que celui de $\sorb$ et plus bas que celui de $\porb$.
+On va créer une orbitale intermédiaire $\sorb\porb^3$ dont le niveau énergétique est supérieur à celui de $\sorb$ et inférieur à celui de $\porb$.
 
 \begin{center}
   \begin{tabular}{ll}
@@ -792,8 +788,7 @@ Quelques exemples (tirés d'examens) :%FIXME trouver d'autres exemples.
 \section{Liaisons intermoléculaires}
 Les liaisons intermoléculaires sont à l'origine de la cohésion du matériau.
 Ce sont des liaisons faibles: $E_p<\numprint[kJ/mol]{40}$.
-Plus il y en a et plus elles sont fortes,
-plus les températures de fusion ($t\degree_{\mathrm{fus}}$) et d'ébullition ($t\degree_{\textrm{éb}}$) sont importantes.
+Les températures de fusion et d'ébullition augmentent avec leur nombre et leur intensité.
 Voici les différentes liaisons intermoléculaires,
 par ordre décroissant d'intensité
 \begin{itemize}
@@ -807,7 +802,7 @@ par ordre décroissant d'intensité
       \end{tabular}
     \end{center}
 \end{itemize}
-%TODO modifier (c'est là où ça coinçait).
+
 \subsection{Interactions dipolaires}
 $\rightarrow$ Interactions électrostatiques.
 \begin{itemize}
@@ -820,16 +815,15 @@ $\rightarrow$ Interactions électrostatiques.
 \end{itemize}
 
 \paragraph{Dipôle permanent}
-Molécules polaires.
+Molécules polaires. $\mu$ est l'intensité du moment dipolaire.
 
 \paragraph{Dipôle induit}
-Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule polaire ou un ion est à proximité.
+Un dipôle induit est un dipôle qui se forme dans une molécule lorsqu'une autre molécule polaire ou un ion est à proximité. $\alpha$ est la fonction de polarisabilité.
 
 \subsection{Forces de London}
 Dipôle induit-induit.
 
 \[ E_p \propto \frac{-\alpha_1 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
 Les nuages électroniques des atomes et molécules ne sont pas uniformes\\ $\rightarrow$ charge partielle instantanée dans une région de la molécule\\ $\rightarrow$ moment dipolaire instantané qui induit un moment dipolaire instantané dans une molécule voisine\\ $\rightarrow$ attraction des 2 moments dipolaires.
@@ -841,12 +835,11 @@ il y a une attraction permanente entre les 2 molécules.
 Dipôle permanent-induit.
 
 \[ E_p \propto \frac{-\mu_1^2 \alpha_2}{r^6} \]
-où $\alpha$ est la fonction de polarisabilité.
 
 \paragraph{Origine}
 Modification de la répartition électronique dans la molécule apolaire induite par la molécule polaire.
 Comme les forces de London,
-l'intensité d'une telle interaction dépend de la polarisabilité de la molécule.
+l'intensité de l'interaction dépend de la polarisabilité de la molécule.
 
 \subsection{Forces de Keesom}
 Dipôle permanent-permanent.
@@ -867,21 +860,15 @@ Interactions entre dipôles permanents.
 
 \subsection{Liaisons hydrogènes}
 \paragraph{Origine}
-Possible qu'entre $\ce{H}$ et $\ce{F}$,
-$\ce{O}$, $\ce{N}$, des atomes fortement électronégatifs.
-Les atomes $\ce{H}$,
-partiellement chargé $\delta^+$ de petites tailles se rapprochent des atomes ($\ce{F}$, $\ce{O}$, $\ce{N}$) $\delta^-$.
+Les atomes $\ce{H}$ de petites tailles,
+partiellement chargé $\delta^+$, se rapprochent des atomes ($\ce{F}$, $\ce{O}$, $\ce{N}$) fortement électronégatifs, avec une charge $\delta^-$.
 Il y a formation de ponts $\ce{H}$.
 \paragraph{Condition}
 Pour avoir un pont hydrogène, il faut un \ce{H} avec un fort $\delta^+$ (qui a une liaison avec \ce{F}, \ce{O} ou \ce{N}) et un \ce{F}, un \ce{O} ou un \ce{N} avec un fort $\delta^-$ (qui a une liaison avec un \ce{H}) et un doublet libre (non-liant).
 \paragraph{Multiplicité}
-Si la condition est respectée et qu'il y a plusieurs \ce{F}, \ce{O}, \ce{N} ou plusieurs \ce{H} liés à un \ce{F}, un \ce{O} ou un \ce{N}, il y a plusieurs ponts \ce{H}.
+Le nombre de ponts H \emph{par molécules} est égal au minimum entre le nombre de \ce{H} liés à \ce{F}, \ce{O}, \ce{N}, et le nombre de doublets libres de ces atomes. Chaque molécule participe au double de ce nombre de ponts H.
 \subparagraph{Exemples}
-\begin{itemize}
-  \item \ce{H2O}
-  \item \ce{CH3COOH}
-  \item \ce{NH2OH}
-\end{itemize}
+\ce{H2O} peut former, \emph{au total}, 4 ponts H ; \ce{CH3COOH} peut en former 2 (entre l'oxygène doublement lié au \ce{C} et polarisé, et l'hydrogène lié à O) ; \ce{NH3} peut en former 2 ; et \ce{NH2OH} peut théoriquement en former 6.
 
 \subsection{Influence des liaisons sur la température d'ébullition}
 
@@ -893,9 +880,9 @@ Voici les différents facteurs qui influencent la température d'ébullition, pa
 	\item la masse molaire de la molécule : plus celle-ci est élevée, plus la température est élevée. Si la différence de masse molaire n'est pas significative (inférieure à 10\%), on ne peut pas conclure. Si l'une des molécules peut faire des liaisons hydrogène tandis que l'autre ne peut pas, il faut que la différence de masse molaire soit très grande pour que ce critère soit applicable.
 	\item la présence de ponts hydrogène et leur multiplicité. C'est peut-être le critère le plus important pour des molécules de masse assez proche.
 	\item le type de ponts hydrogènes : les ponts H-O sont plus intenses que les ponts H-N.
-	\item la polarité de la molécule : elle augmente avec l'intensité de la polarisation (double, triple liaison ; différence d'électronégativité), le nombre de liaisons polaires, et l'alignement de la polarisation (par exemple, le méthoxyéthane $\ce{CH3-CH2-O-CH3}$ a une température d'ébullition de 7,4\degree C, l'acétone $\ce{CH3-CO-CH3}$ 56\degree C, et l'éthylène glycol $\ce{HO-CH2-CH2-OH}$ 197\degree C).
+	\item la polarité de la molécule : elle augmente avec l'intensité de la polarisation (double, triple liaison ; différence d'électronégativité), le nombre de liaisons polaires, et l'alignement de la polarisation (par exemple, le méthoxyéthane $\ce{CH3-CH2-O-CH3}$ a une température d'ébullition de 7,4\degree C, l'acétone $\ce{CH3-CO-CH3}$ 56\degree C, et l'éthylène glycol $\ce{HO-CH2-CH2-OH}$ 197\degree C) ;
 	\item le type de liaison van der Waals : plus la liaison est forte, plus les molécules sont liées et plus la température est élevée (Keesom > Debye > London) ;
-	\item la symétrie de la molécule : celle-ci influence la polarisation de la molécule, mais dans des proportions plus faibles.
+	\item la symétrie de la molécule : celle-ci influence la polarisation de la molécule ;
 	\item la longueur et la grandeur de la molécule : plus la molécule est longue ou vaste, plus les liaisons de van der Waals seront fortes.
 \end{itemize}
 
