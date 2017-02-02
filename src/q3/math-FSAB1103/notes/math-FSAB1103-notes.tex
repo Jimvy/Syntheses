@@ -54,13 +54,15 @@ L'équation suivante, avec $A, B, C, D$ et $F$ des fonctions de $x$, $y$ et $u$
 \end{equation}
 est une équation d'ordre 2, à deux variables ; $m=2$ et $n=2$ (mais ce n'est pas le cas en général). Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
 
-Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution.
+Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution ; c'est d'ailleurs une manière de vérifier la (quasi)-linéarité.
 
-Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c-est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
+Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c'est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
 
 Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation \ref{eq:intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
 
 Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, x_m)$, est qualifiée de \emph{surface intégrale} ou simplement une intégrale de l'EDP.
+
+Terminons cette introduction par une remarque importante : toutes les équations que l'on va voir dans ce cours ont une interprétation physique. Cela a des conséquences sur les unités présentes dans les équations (comme on verra dans la section suivante) et cela implique également que les solutions que l'on recherche ont une valeur finie en n'importe quel point (pas de singularité, comme une valeur infinie au milieu du domaine) et qu'elles diminuent et approchent de zéro lorsqu'on s'éloigne de la région d'intérêt : la solution tend vers $0$ quand la position $(x, y, z)$ tend vers l'infini, ou $\lim\limits_{(x, y, z)\rightarrow\infty} u = 0$.
 
 \subsection{Quelques exemples, et une remarque concernant les unités}
 
@@ -85,7 +87,7 @@ est d'ordre $2$, homogène, mais pas quasi linéaire. En effet, elle est linéai
 est une EDP à deux variables (une spatiale, $x$, et une temporelle, $t$), d'ordre $1$, linéaire, à coefficients constants si $c$ est une constante, et homogène. L'EDP reste linéaire si $c$ est une fonction de $x$ et/ou de $t$, mais n'est plus linéaire (mais quasi-linéaire) si $c$ est une fonction de $u$. C'est l'\emph{équation de transport}.
 
 \[ u \fpart{u}{x} + \fpart{u}{t} = 0 \]
-est une EDP d'ordre $1$, quasi linéaire et homogène. C'est l'\emph{équation de Burgers}, qui peut aussi s'écrire sous une forme conservative,
+est une EDP d'ordre $1$, quasi linéaire et homogène. C'est l'\emph{équation de Burgers}, qui peut aussi s'écrire sous une forme dite conservative,
 \[ \fpart{}{x} \left( \frac{u^2}{2} \right) + \fpart{u}{t} = 0 \]
 
 \[ \fpart{}{x} \left( \alpha(u) \fpart{u}{x} \right) - \fpart{u}{t} = 0 \]
@@ -287,6 +289,149 @@ Un exemple classique d'EDP du premier ordre, unidimensionnel et dépendant du te
 \label{eq:order1-transport-ncgen}
 c \fpart{u}{x} + \fpart{u}{t} = 0
 \end{equation}
+où $c$ a les dimensions d'une vitesse. L'équation de transport se retrouve dans des phénomènes physiques où une certaine quantité se transport dans l'espace, avec une vitesse $c$.
+
+Il s'agit d'une EDP du premier ordre, avec $P=c$, $Q=1$ et $R=0$. La vitesse $c$ est, en toute généralité, une fonction de $x$, $t$ et même $u$. Le cas linéaire de l'EDP nécessite que $c=c(x, t)$ mais que $c$ ne dépende pas de $u$ (sinon, il y aurait un produit entre une fonction de $u$ et une dérivée partielle de $u$, et l'EDP ne serait plus linéaire). Comme $R=0$, $u$ est conservé le long des caractéristiques, qui sont données par intégration de $\dif{x}=c\dif{t}$.
+
+Le domaine de l'équation de transport peut être borné ou non borné (ouvert) : un domaine borné est borné au niveau spatial, il y a des limites pour la valeur de $x$. Pour ce qui est de la \og condition initiale \fg{}\footnote{J'écris cette condition entre guillemets pour la différencier de la \og vraie \fg{} condition initiale, et qui est défini à la ligne d'après.} (la condition sur $u$ que l'on donne sur la courbe de Cauchy), on spécifie généralement $u$ sur la courbe de Cauchy définie par $\Gamma \equiv x(s)=s, t(s)=0$, et on donne $u(s, 0)=f(s)$. C'est alors une \emph{condition initiale}, une condition que l'on spécifie en un temps donné. L'intérêt des conditions initiales est avant tout pratique : lorsqu'on étudie un phénomène physique, on peut généralement déterminer ce phénomène à un instant donné (par des mesures par exemple), et on souhaite ensuite déterminer l'évolution de ce phénomène pour des instants ultérieurs.
+
+Il se fait que quelle que soit la vitesse $c$, une telle condition initiale est bien posée : la direction locale des caractéristiques est donnée par $\frac{\dif{t}}{\dif{x}}=\frac{1}{c}\neq 0$\footnote{Ici, il est bien plus simple d'écrire la direction comme étant une certaine \emph{pente}, afin d'aider l'interprétation.}, tandis que la direction locale de la courbe de Cauchy est $\frac{\dif{x}}{\dif{t}}=0$. Physiquement, si on donne une condition initiale ainsi que la vitesse de déplacement de la quantité étudiée, on peut toujours calculer (parfois difficilement, comme on verra) l'état de cette quantité pour un instant $t>0$, simplement en suivant la vitesse. Le seul cas où une telle détermination est impossible, et où le problème est mal posé, survient quand $c \rightarrow \infty$ : la caractéristique et la courbe de Cauchy sont parallèles et confondues.
+
+Commençons par étudier le cas le plus simple, avec $c$ constant. Dans ce cas, l'intégration des caractéristiques donne
+\[ \int_{s}^{x} \dif{x'} = c \int_{0}^{t} \Leftrightarrow x-s=ct\]
+et donc, $x(t)=ct+s$ pour un $s$ donné. Les caractéristiques sont des droites parallèles, et on a alors simplement
+\[ u(x, t)=f(s)=f(x-ct) \]
+La fonction initiale est simplement transportée à une vitesse constante $c$, sans aucune déformation. Mieux, la solution est aussi connue pour des $t$ négatifs : on peut connaitre le passé de la fonction !
+
+Dans le cas $c$ constant, aurait-on pu spécifier une condition limite plutôt qu'une condition initiale ? Une condition limite est une condition sur $u(x, t)$ pour un $x$ fixé : on donne la valeur de $u$ sur une limite du domaine de la fonction (par exemple en $x=0$). Considérons donc $\Gamma' \equiv x(\tau)=0, t(\tau)=\tau$, sur laquelle on spécifie $u(0, \tau)=h(\tau)$, une autre fonction donnée. Cette fois, pour peu que $c\neq 0$, le problème est toujours bien posé : la direction locale de la courbe de Cauchy peut s'écrire comme $\frac{\dif{x}}{\dif{t}}=0$ tandis que la direction locale de la caractéristique est $\frac{\dif{x}}{\dif{t}}=c\neq 0$ (remarquez bien que la fraction a été inversée !). L'intégration des caractéristiques donne cette fois
+\[ \int_{0}^{x} \dif{x'} = c \int_{\tau}^{t} \Leftrightarrow x=c(t-\tau) \Leftrightarrow \tau=t-\frac{x}{c}\]
+qui sont toujours des droites parallèles, et la solution est donc
+\[ u(x, t)=h(\tau)=h \left( t-\frac{x}{c} \right) \]
+
+Si $c=0$, le problème est mal posé, et pour cause : plus rien ne se déplace vu que la vitesse est nulle, ce qui fait qu'une condition limite devient inutile et dangereuse ; inutile car elle ne spécifie pas la fonction $u$ ailleurs que sur la limite, et donc $u$ est inconnue partout ailleurs, et condamnée à ne jamais être connue en raison de la vitesse nulle et des caractéristiques mal orientée ; dangereuse car elle risque de spécifier plusieurs valeurs pour $u$ sur la limite, alors que $u$ n'y varie jamais (car la vitesse est nulle).
+
+Si $c>0$, l'intuition nous dit que la fonction est translatée en direction des $x$ positifs, et les caractéristiques sont des droites dont la pente est positive ; par conséquent, on peut décider de considérer un domaine borné à gauche (on dit aussi semi-borné) $0 \le x < \infty$. Il est alors nécessaire de spécifier deux conditions : une condition initiale de la fonction et $t=0$, qui va nous permettre de calculer $u(x, t)$ $\forall x, t$ tels que $x-ct\ge 0$ (sur un graphique $(x, t)$ avec $x$ en abscisse, ce sont les points en dessous de l'axe $x=ct$, qui est la caractéristique issue de $s=0$), \emph{et} une condition limite en $x=0$, qui va nous permettre de calculer $u$ pour les autres points. Pourquoi deux conditions limites ? Parce que le fait de borner le domaine à gauche \og élimine \fg{} la connaissance de $u$ pour $x<0$, et donc la connaissance de $u$ pour tous les points $(x, t)$ qui appartenaient à une caractéristique pour laquelle $s<0$. Il faut donc retrouver cette connaissance, en spécifiant par exemple une condition en $x=0$, de sorte que les caractéristiques issues de cette condition \og propagent \fg{} la valeur de $u$ sur l'ensemble du domaine. On spécifie alors deux fonctions, $u(s, 0)=f(s)$ pour $s\ge 0$ et $u(0, \tau)=h(\tau)$ pour $\tau>0$, et on sépare la solution en deux cas, par exemple :
+\[u(x, t) = \begin{cases}
+f(x-ct) & \text{si } x-ct>0 \\
+h \left(t-\frac{x}{c} \right) \text{sinon} \\
+\end{cases}\]
+
+Pour $c>0$, aurait-on pu décider de spécifier une deuxième condition limite, en $x=L>0$, de sorte que l'on ait un domaine borné à gauche et à droite ? La réponse est non \footnote{Du moins, dans le cas $c$ constant ; si $c$ est tarabiscoté, il est possible que ce soit possible.}. La valeur de $u$ en $x=L$ est en effet entièrement définie par ce qui vient de la gauche : les caractéristiques transportant de l'information, on ne peut pas spécifier deux conditions sur une même caractéristiques, et comme les caractéristiques transportent l'information vers la droite, la valeur de $u(L, t)$ est déjà spécifiée.
+
+Tient, et si $c<0$, et que l'on considère un domaine borné à gauche ($0\le x < \infty$) ? Que se passe-t-il, que peut-on imposer ? Les caractéristiques sont alors des droites à pente négative, qui transmettent de l'information vers la gauche. Il suffit alors de spécifier une seule condition, par exemple une condition initiale $u(s, 0)=f(s), s\ge 0$, pour que $u$ soit connu $\forall x, t \ge 0$. Cela vient du fait que $s=x-ct\ge 0$ pour n'importe quels $x$ et $t$ du domaine choisi, et la condition initiale peut donc être utilisée partout. Une condition limite en $x=0$ peut également être utilisée partout. Par contre, pour des temps négatifs, il est de nouveau nécessaire de spécifier une deuxième condition. Intuitivement, la condition initiale se déplace vers la gauche, et atteint donc tous les points du plan.
+
+Considérons maintenant le cas où $c=c(x, t)$ ; cette fois, il faut intégrer une relation qui peut être parfois assez complexe. Commençons par un cas où $c=c(x)=\frac{x}{\tau}$ par exemple, et où on considère une condition initiale $u(s, 0)=f(s)$. L'intégration donne
+\begin{align*}
+\int_{s}^{x} \frac{\dif{x'}}{x'} &= \int_{0}^{t} \frac{\dif{t'}}{\tau} \\
+\ln \left( \frac{x}{s} \right) &= \frac{t}{\tau} \\
+x &= s e^{t/\tau} \\
+s &= x e^{-t/\tau}
+\end{align*}
+Les caractéristiques sont des courbes exponentielles, et la fonction initiale va donc être déformée. En effet, la solution est
+\[ u(x, t)=f(x e^{-t/\tau}) \]
+
+Ce problème était encore relativement simple, la fonction à intégrer étant gentille. Les choses sont rarement aussi idéales. Considérons par exemple $c=c(x)=c_0 \frac{x^2}{x^2+L^2}$, avec $L$ une constante ayant les mêmes dimensions que $x$ (donc, une constante de longueur). Il s'agit d'intégrer
+\begin{align*}
+c(x) \dif{t} &= 1 \dif{x} \\
+\int_{x'=s}^{x'=x} \frac{1}{c} \dif{x'} &= \int_{t'=0}^{t'=t} \dif{t'} \\
+\int_{s}^{x} \frac{1}{c_0} \frac{x'^2+L^2}{x'^2} \dif{x'} &= t \\
+\left[ x'-\frac{L^2}{x'} \right]_s^x &= c_0 t \\
+x-s +L^2 \left(\frac{1}{s} - \frac{1}{x} \right) &= c_0t
+\end{align*}
+qui est une relation implicite entre $x$, $t$ et $s$. On peut déterminer $s$ en résolvant l'équation du second degré suivante (qui n'est autre qu'une réécriture de la précédente relation) :
+\[ s^2 + \left( \frac{L^2}{x} - x + C_0 t \right) - L^2 = 0 \]
+Comme on voit, la valeur de $s$ peut être particulièrement compliquée à obtenir. Dans l'APE 2, $c=c(x)=C_0\frac{x^2+(L/2)^2}{x^2+L^2}$ conduit même à résoudre l'équation transcendante
+\[ x-s + \frac{3L}{2} \arctan \left( \frac{2L(x-s)}{L^2+4xs} \right) =c_0t\]
+pour obtenir $s$.
+
+En toute généralité et pour une condition initiale, si $c=c(x)$, l'intégration donne
+\[\int_{s}^{x} \frac{\dif{x'}}{c(x')} = \int_{0}^{t} \dif{t'} = t\]
+et, en posant $I(x)=\int_{0}^{x} \frac{\dif{x'}}{c(x')}$\footnote{Comme il s'agit d'une sorte de primitive (la borne inférieure $0$ étant arbitraire), on écrit parfois cette intégrale en omettant la borne inférieur ; c'est alors une primitive, définie à une constante près.},
+\[ I(x)-I(s)=t \]
+$t$ est alors fonction de $x$ par le biais de la \og primitive \fg{} $I(x)$.
+
+Considérons le cas où $c=c(t)$, et considérons toujours le problème posé en condition initiale. En toute généralité, l'intégration donne cette fois
+\[ \int_{s}^{x} \dif{x'} = \int_{0}^{t} c(t') \dif{t'} = x - s\]
+et, en posant $H(t)=\int^{t} c(t') \dif{t'}$,
+\[ x-s = H(t)-H(0) \]
+\[ t=H^{-1} (x-s+H(0)) \]
+Pour un temps $t$ fixé, l'écart $x-s$ (entre la position actuelle et la position de départ) est le même quel que soit ce point, et l'écart entre deux points de la courbe initiale est donc constante. Les caractéristiques obtenues sont alors des courbes parallèles (par rapport à l'axe de l'espace) : la fonction $u$ est transportée sans être déformée.
+\footnote{C'est assez difficile à se l'imaginer, mais on peut interpréter cela ainsi : la vitesse change au cours du temps, mais elle change \emph{de la même manière} pour tous les points de la courbe. Et donc, la forme de la courbe initiale est conservée, de la même manière qu'un véhicule ne se déforme pas tant que la vitesse de chaque point est identique, même si la voiture accélère.}
+
+Prenons $c(t)=\frac{l}{t+\tau}$, $l$ étant une constante de longueur et $\tau$ une constante de temps. L'intégration donne :
+\begin{align*}
+\int_{s}^{x} \dif{x'} &= \int_{0}^{t} \frac{l}{t'+\tau} \dif{t'} \\
+x-s &= l \left( \ln(t+\tau) - \ln(0+\tau)\right) \\
+\frac{x-s}{l} &= \ln\frac{t+\tau}{\tau} \\
+s &= x - l \ln\left(1+t/\tau \right)
+\end{align*}
+ce qui donne finalement comme solution
+\[u(x, t)=f\left( x - l \ln(1+t/\tau )\right)\]
+
+Les équations pour lesquelles $c$ est une fonction ont des règles similaires quant aux conditions qui peuvent être posées pour former un problème de Cauchy complet et cohérent. En particulier, si $c=0$ en un point à un instant, la valeur de la fonction reste immobile : rien ne bouge. Si $c>0$, la valeur se déplace vers les $x$ positifs, et si $c<0$, vers les $x$ négatifs. La seule différence vient du fait que $c$ étant une fonction, il est possible que des points qui sont immobiles deviennent soudainement mobiles, et que le comportement de la fonction soit plus difficile à analyser.
+
+On peut également déterminer si un problème est bien posé, en fonction des conditions initiales et limites données. La majorité des problèmes possèdent une condition initiale, la plus simple à déterminer et à utiliser. Pour des vitesses finies, le problème de Cauchy est toujours bien posé. Pour des vitesses non finies, le problème est mal posé si la vitesse devient infinie sur la courbe de Cauchy\footnote{Le problème a aussi de fortes chances de ne pas être résoluble.}.
+
+Dans ce cas, à quelles conditions peut-on donner une condition limite, en particulier une condition à gauche (par exemple, en $x=0$, de sorte que le domaine devient borné à gauche, avec $0 \le x < \infty$) ? Uniquement si cette condition n'est pas redondante. Et pour déterminer cela, on utilise la pente locale de la caractéristique, $\fdif{x}{t}$. Si cette pente est négative, la caractéristique est dite sortante (elle sort du domaine) et l'information concernant la valeur de la fonction vient de l'intérieur du domaine, à droite, et est donc déjà imposée. On ne peut donc pas donner de condition. Si la pente est positive, et la caractéristique entrante, l'information vient de la gauche, et donc de l'extérieur ; il faut donc donner la condition limite, sinon une partie du domaine ne sera pas défini. Si la pente est nulle, on ne peut pas non plus spécifier de caractéristique, et si elle est infinie, on doit le faire.
+
+Ces conditions ne sont valables que dans le cas d'un domaine du type $0 \le x < \infty$ et $0 \le t < \infty$. Dans les autres cas, des critères similaires peuvent être établis, avec le même impératif : la non-redondance. Un croquis du domaine et de ses caractéristiques permet souvent de s'y retrouver.
+
+\subsection{Équation de transport sous forme conservative}
+
+Une variante de l'équation de transport est l'équation de transport sous forme conservative :
+\begin{equation}
+\label{eq:order1-transport-consgen}
+\fpart{cu}{x} + \fpart{u}{t} = 0
+\end{equation}
+La vitesse $c$ est à l'intérieur de la dérivée partielle par rapport à $x$. Dans le cas où $c$ n'est pas une fonction de $x$ (par exemple, $c=c(t)$, ou $c$ est constant), on retombe sur l'équation de transport de la section précédente.
+
+Comme d'habitude, on considère un problème posé en condition initiale ($x(s)=s$, $t(s)=0$, et $u(s, 0)=f(s)$). Le domaine peut être soit non borné (ouvert), soit périodique (de période $L$).
+
+L'équation de transport tire son nom du fait qu'elle conserve l'intégrale de la fonction dans le temps. En effet, en notant $\Omega$ le domaine et $\partial \Omega$ son bord, on a
+\begin{align*}
+\fdif{}{t} \left( \int_\Omega u \dif{x} \right) &= \int_\Omega \fpart{u}{t} \dif{x} \\
+&= - \int_\Omega \fpart{}{x}(cu) \dif{x} \\
+&= - \left[ cu \right]_{\partial \Omega}
+\end{align*}
+Il s'agit alors de calculer ce terme. Or, dans le cas d'un domaine périodique, la fonction et la vitesse sont périodiques, ce qui donne
+\[-\left[cu\right]_x^{x+L} = -c(x+L)u(x+L) + c(x)u(x) = -c(x)u(x)+c(x)u(x)=0\]
+Si le domaine est infini en revanche, on a que $\lim\limits_{x\rightarrow \pm \infty} u = 0$ et $c$ garde une valeur finie. Rappelons que l'on cherche la solution d'un problème d'origine physique : dans le monde réel, peu de quantité tendent vers l'infini, et donc il faut que l'intégrale de $u$ ait aussi une valeur finie, même dans un domaine infini ; cela implique que $u$ s'approche de $0$ à l'infini. Et donc,
+\[ -\left[ cu \right]_{-\infty}^{+\infty} = -0+0=0\]
+Par conséquent, l'intégrale ne varie pas dans le temps, et la fonction est conservée. Cette affirmation n'est plus vraie si $u$ est discontinue ou possède des singularités ; dans ce cas, l'intégrale a tendance à varier.
+\footnote{Il peut arriver que l'on étudie un problème qui n'a pas d'origine physique.} Les phénomènes où la quantité globale est conservée sont assez fréquent en pratique.
+
+Autant l'intégrale de $u$ est conservée dans le temps, autant $u$ lui même n'est plus conservé le long des caractéristiques. En effet, en développant l'équation,
+\[c \fpart{u}{x} + \fpart{u}{t} = -u \fpart{c}{x}\]
+on constate que $R\neq 0$. Le long des caractéristiques, la variation de $u$ est donnée par
+\[ \dif{u} = -u \fpart{c}{x} \dif{t} \]
+
+Considérons le cas où $c=c(x)$ (c'est le cas le plus fréquent). Dans ce cas, on peut écrire, via la relation des caractéristiques, que $\dif{t} = \frac{1}{c} \dif{x}$ (les dérivées partielles deviennent des dérivées simples) et donc, la relation de compatibilité devient
+\[ \dif{u} = -u \fdif{c}{x} \frac{1}{c} \dif{x} \]
+\[\Leftrightarrow c \dif{u} + u \dif{c} = \dif{(cu)} = 0\]
+Par conséquent, $cu$ est conservé le long de chaque caractéristique ! Le développement complet nous aurait amené à la même conclusion, et on a donc
+\[u(x, t) = \frac{c(s)}{c(x)} u(s, 0)=\frac{c(s)}{c(x)} f(s)\]
+avec $s$ qui peut être obtenu à partir de la relation caractéristique. Les équations de transport conservatives sont donc à peine plus compliquées que les équations non-conservatives.
+
+%Est-ce qu'une autre quantité est conservée ? Peut-être l'énergie $u^2/2$ :
+%\footnote{Ici, $a=-\infty$ et $b=+\infty$ pour un domaine ouvert, et $a=x$ et $b=x+L$ pour un domaine périodique.}
+%\begin{align*}
+%\fdif{}{t} \int_{a}^{b} \frac{u^2}{2} \dif{x} &= \int_{a}^{b} \fdif{}{t} \left( \frac{u(x, t)^2}{2} \right) \dif{x} \\
+%&=
+%\end{align*}
+
+Un cas intéressant est celui du puits de vitesse. La vitesse s'exprime alors
+\begin{align*}
+c(x) &= c_\mathrm{max} - \frac{c_\mathrm{max}-c_\mathrm{min}}{1+x^2/a^2} \\
+&= \frac{c_\mathrm{min}+c_\mathrm{max}x^2/a^2}{1+x^2/a^2} \\
+&= \frac{a^2 c_\mathrm{min} + x^2 c_\mathrm{max}}{x^2+a^2}
+\end{align*}
+La vitesse présente un minimum en $x=0$. La fonction $u$ est alors déformée lors du passage au niveau du puits de vitesse ; en entrant dans le puits, la vitesse diminue, ce qui implique que la valeur de la fonction augmente dans le puits, l'intégrale devant être conservée. En sortant du puits, la vitesse augmente et la fonction diminue à nouveau. On a donc une sorte de \og sursaut \fg{} de la fonction à l'intérieur de la vitesse.
+
+%TODO équations non linéaires, équation de Burgers, discontinuités.
+
+%TODO EDP du second ordre, méthode des caractéristiques.
+
+%TODO Systèmes d'EDP du premier ordre
 
 \section{Méthode de séparation des variables}
 
