@@ -1,4 +1,4 @@
-\documentclass[fr]{../../../eplnotes}
+\documentclass[fr, usereportclass]{../../../eplnotes}
 
 \usepackage[SIunits]{../../../eplunits}
 
@@ -37,7 +37,7 @@ Ce document a été conçu sur base du syllabus sur les équations aux dérivée
 
 \part{Équations aux dérivées partielles (EDP)}
 
-\section{Introduction et définitions}
+\chapter*{Introduction et définitions}
 
 Soit une fonction scalaire $u$, dépendant de $m$ variables $x_1, x_2, \ldots, x_m$. Une relation $\mathcal{F}$ entre $u$, les variables $x_i$ et les dérivées partielles de $u$ par rapport à ces variables,
 \[ \mathcal{F} \left( u, x_1, \ldots, \fpart{u}{x_1}, \ldots, \ffpart{u}{x_1}, \ldots, \fdpart{u}{x_1}{x_2}, \ldots, \fnpart{u}{x_1}{n} \right) = 0\]
@@ -64,7 +64,7 @@ Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, 
 
 Terminons cette introduction par une remarque importante : toutes les équations que l'on va voir dans ce cours ont une interprétation physique. Cela a des conséquences sur les unités présentes dans les équations (comme on verra dans la section suivante) et cela implique également que les solutions que l'on recherche ont une valeur finie en n'importe quel point (pas de singularité, comme une valeur infinie au milieu du domaine) et qu'elles diminuent et approchent de zéro lorsqu'on s'éloigne de la région d'intérêt : la solution tend vers $0$ quand la position $(x, y, z)$ tend vers l'infini, ou $\lim\limits_{(x, y, z)\rightarrow\infty} u = 0$.
 
-\subsection{Quelques exemples, et une remarque concernant les unités}
+\section{Quelques exemples, et une remarque concernant les unités}
 
 Afin de mieux comprendre les différents types d'EDP, le mieux est de s'attarder sur quelques exemples, parfois notables.
 
@@ -93,7 +93,7 @@ est une EDP d'ordre $1$, quasi linéaire et homogène. C'est l'\emph{équation d
 \[ \fpart{}{x} \left( \alpha(u) \fpart{u}{x} \right) - \fpart{u}{t} = 0 \]
 est, enfin, une EDP d'ordre 2, quasi-linéaire (ceci peut être vérifié en développant l'équation par la règle du produit) et homogène. Si $\alpha(u) > 0$, il s'agit de l'équation de diffusion, avec $\alpha$ le coefficient de diffusivité.
 
-\section{EDP d'ordre 1}
+\chapter{EDP d'ordre 1}
 
 Commençons donc par résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela signifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
 
@@ -110,7 +110,7 @@ où $P, Q, F$ et $G$ sont des fonctions de $x$ et/ou de $y$, mais pas de $u$. Et
 
 La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace de dimension 3. Cette surface peut être décrite à partir d'une relation explicite ($u(x, y)$) ou à partir d'une relation implicite ($\mathcal{F}(x, y, u)=0$). Dans la suite, nous considérerons surtout les équations non nécessairement homogènes.
 
-\subsection{Méthode des caractéristiques}
+\section{Méthode des caractéristiques}
 
 Une EDP seule n'est pas résoluble De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de la connaissance de l'EDP et de la connaissance de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc de Cauchy}), constitue le \emph{problème de Cauchy}.
 
@@ -215,7 +215,7 @@ Les EDP du 1\ier{} ordre (avec des fonctions réelles) ont toutes la propriété
 
 Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation \ref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit aussi une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{}. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
 
-\subsection{Exemples}
+\section{Exemples}
 
 Afin d'illustrer la méthode des caractéristiques, considérons l'EDP suivante
 \[y\fpart{u}{x} - x\fpart{u}{y} = R\]
@@ -282,7 +282,7 @@ u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{si
 Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer $x$ en fonction de $y$ (car nous intégrons par rapport à $y$, et $s$ est une constante sur la caractéristique). Ensuite, il faut tenir compte des deux signes possibles pour $x$, et donc bien définir la fonction.
 %TODO : il est possible que j'aie fait une ou deux erreurs
 
-\subsection{Équation de transport}
+\section{Équation de transport}
 
 Un exemple classique d'EDP du premier ordre, unidimensionnel et dépendant du temps, est \emph{l'équation de transport} (ou équation de convection) :
 \begin{equation}
@@ -376,7 +376,7 @@ Dans ce cas, à quelles conditions peut-on donner une condition limite, en parti
 
 Ces conditions ne sont valables que dans le cas d'un domaine du type $0 \le x < \infty$ et $0 \le t < \infty$. Dans les autres cas, des critères similaires peuvent être établis, avec le même impératif : la non-redondance. Un croquis du domaine et de ses caractéristiques permet souvent de s'y retrouver.
 
-\subsection{Équation de transport sous forme conservative}
+\section{Équation de transport sous forme conservative}
 
 Une variante de l'équation de transport est l'équation de transport sous forme conservative :
 \begin{equation}
