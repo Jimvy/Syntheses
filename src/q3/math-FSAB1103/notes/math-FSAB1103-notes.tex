@@ -6,7 +6,19 @@
 \usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{mathtools}
 \usepackage[frenchb]{babel}
+
+\makeatletter % from http://tex.stackexchange.com/questions/75831/how-do-i-show-the-equation-formula-again-instead-of-its-number-of-ref
+% alternative : http://latex-community.org/forum/viewtopic.php?f=46&t=8275
+\newcommand{\repeatable}[2]{
+	\label{#1}\global\@namedef{repeatable@#1}{#2}#2
+}
+\newcommand{\recalleq}[2]{
+	\@isundefined{repeatable@#1}{NOT FOUND}{$\@nameuse{repeatable@#1}$}
+	~\eqref{#1}
+}
+\makeatother
 
 \hypertitle{math-FSAB1103}{3}{FSAB}{1103}
 {Jean-Martin Vlaeminck} % narcissique ? Pas vraiment
@@ -455,6 +467,88 @@ c(x) &= c_\mathrm{max} - \frac{c_\mathrm{max}-c_\mathrm{min}}{1+x^2/a^2} \\
 La vitesse présente un minimum en $x=0$. La fonction $u$ est alors déformée lors du passage au niveau du puits de vitesse ; en entrant dans le puits, la vitesse diminue, ce qui implique que la valeur de la fonction augmente dans le puits, l'intégrale devant être conservée. En sortant du puits, la vitesse augmente et la fonction diminue à nouveau. On a donc une sorte de \og sursaut \fg{} de la fonction à l'intérieur de la vitesse.
 
 %TODO équations non linéaires, équation de Burgers, discontinuités.
+
+\section{Le problème inverse de Cauchy : à la recherche de l'EDP (ou l'examen de septembre 2016)}
+
+Lors de ce chapitre, nous avons vu comment résoudre les EDP du 1\ier{} ordre à l'aide de la méthode des caractéristiques. À partir de l'équation \ref{eq:order1-genequa}, nous avons développé la méthode des caractéristiques qui nous permet de résoudre ces EDP, lorsqu'une condition est donnée sur une courbe $\Gamma$. Le c\oe{}ur de cette méthode est le calcul de l'équation des caractéristiques, à partir de la relation caractéristique
+\begin{equation*}
+P \dif{y} = Q \dif{x} \tag{\ref{eq:order1-caractode}}
+\end{equation*}
+et en intégrant la relation, selon l'équation \ref{eq:order1-caractcurve_integral}.
+
+À partir d'une EDP, on peut donc construire un réseau de courbes caractéristiques, qui peuvent être utilisées pour propager la valeur de $u$ dans l'ensemble du plan, à partir de la courbe de Cauchy. Cela semble assez vraisemblable. Néanmoins, par le plus grand des hasards, serait-il possible d'emprunter le chemin inverse, de partir d'un réseau de caractéristiques et obtenir une EDP valable ? Cela semble invraisemblable et peu probable. Et pourtant, la réponse est oui !
+
+Il y a une sorte de bijection entre les EDP du premier ordre d'une part, et les réseaux de caractéristiques d'autre part : le lien entre les deux est la relation différentielle $P \dif{y} = Q \dif{x}$. Le chemin classique a déjà été abordé dans les sections précédentes ; il est temps de montrer le chemin inverse.
+\footnote{Pour l'anecdote, les professeurs utilisent généralement ce chemin inverse pour trouver leurs énoncés d'EDP ; très souvent, partir d'une EDP choisie au hasard et tenter de trouver le réseau correspondant résulte dans une impasse, avec des intégrales non calculables ou difficiles et des développements algébriques lourds, parce que les EDP ont rarement un comportement gentil. C'est plus sûr de partir d'un réseau connu et de tenter d'obtenir une EDP ayant ce réseau : au moins, on peut prédire visuellement le résultat.}
+
+L'exemple le plus classique (et à vrai dire le seul) de ce type de question est l'examen de septembre 2016. Il avait causé une assez grande hécatombe, et est représentatif du raisonnement. Voici l'énoncé.
+
+\begin{quotation}
+	On considère l'EDP suivante pour $u(x, y)$ :
+	\[ P \fpart{u}{x} + Q \fpart{u}{y} = R \]
+
+	Pour le problème de Cauchy, la courbe $\Gamma$ est l'arc de cercle défini par $x(s)=r_0 \cos(s)$ et $y(s)=r_0 \sin(s)$ avec $r_0$ donné et $-\frac{\pi}{2} \le s \le \frac{\pi}{2}$. On donne également $u(x(s), y(s)) = u_0 \sin^3 (s)$.
+
+	L'équation des caractéristiques est de la forme :
+	\[ r=L\theta + B(r_0, s) \]
+	avec $r$ le module et $\theta$ la position angulaire du point $(x, y)$ : $x=r\cos \theta$ et $y=r\sin\theta$.
+
+	\begin{enumerate}
+		\item Obtenez l'expression de $B(r_0, s)$, et donc d'équation finale des caractéristiques. Esquissez alors la courbe $\Gamma$ ainsi que le réseau des caractéristiques, et ce pour $0\le r \le 2r_0$ et $s=0$ et $s=\frac{\pi}{4}$. On utilisera ici $\frac{r_0}{L}=\frac{\pi}{4}$ pour l'esquisse.
+		\item Par différenciation de l'équation des caractéristiques, obtenez les fonctions $P(x, y)$ et $Q(x, y)$ du problème présent.
+		\item On considère le cas $R=0$ ; obtenez l'expression de $u(\sqrt{2}r_0, \sqrt{2}r_0)$.
+	\end{enumerate}
+\end{quotation}
+
+Récapitulons ce que nous savons et ce que nous ignorons : nous connaissons la courbe de Cauchy, une expression non complète des caractéristiques, ainsi que $u(s)$. Nous ne connaissons pas par contre les coefficients $P$ et $Q$ ; ce sont eux que l'on veut retrouver ! Il va donc falloir compléter le problème, et utiliser l'ensemble des informations disponibles pour le résoudre.
+
+La résolution commence par trouver l'expression complète des caractéristiques. Pour le moment, on sait qu'elles sont de la forme $r=L\theta + B(r_0, s)$ mais on ne connait pas $B$. L'expression des caractéristiques contient deux termes : un terme $L\theta$ qui varie le long d'une des caractéristiques, et qui va nous donner une partie de $r$, et le terme $B(r_0, s)$ qui est une constante pour chaque caractéristique.
+
+L'expression des caractéristiques définit une famille de courbes appelées spirales d'Archimède : il s'agit de courbes de la forme d'hélice, tournant autour de l'origine et s'étendant à l'infini.
+\footnote{Malheureusement, ça faisait partie de la culture générale qu'il fallait apparemment avoir à l'examen...}
+
+Comment calculer $B$ ? Rappelons \strong{la} propriété fondamentale des caractéristiques d'un problème bien posé : elles croisent la courbe de Cauchy une et une seule fois. Cherchons donc le point d'intersection entre la caractéristique définie par un certain $s$ et la courbe de Cauchy. Ce point n'est rien d'autre que le point de la courbe de Cauchy pour le paramètre $s$ : les caractéristiques émanent de ce point. Or, pour un $s$ donné, le point de la courbe de Cauchy a pour coordonnées $(x(s), y(s)) = (r_0 \cos\theta, r_0\sin\theta)$ ou, en coordonnées polaires, $(r_0 ; s)$ : il est sur le cercle ($r=r_0$) et est son propre argument.
+
+Ce point, $(r_0; s)$, doit appartenir à la caractéristique définie par ce $s$, et on doit donc avoir, pour $r=r_0$ et $\theta=s$ :
+\[ r_0=Ls+B(r_0, s) \quad \Rightarrow \quad B(r_0, s) = r_0-L\cdot s \]
+et les caractéristiques ont donc comme équation générale
+\begin{equation}
+\label{eq:order1-2016sept-caractequafinal}
+(r-r_0) = L (\theta - s)
+\end{equation}
+
+Rappelons la démarche : on sait que la caractéristique définie par $s$ coupe la courbe de Cauchy au point de cette courbe défini par $s$. L'égalité des coordonnées donne une relation entre les deux, qui nous permet de calculer $B(r_0, s)$.
+
+Déterminons à présent $P$ et $Q$. L'objectif à présent est d'obtenir une expression de la forme $f(x, y) \dif{y} = g(x, y) \dif{x}$, pour laquelle on pourra dire $P=f$ et $Q=g$. Pour cela, on nous propose de différencier notre équation des caractéristiques. Faisons-le :
+\begin{align*}
+r-r_0 &= L(\theta-s) \shortintertext{En différenciant} \\
+\dif{r} &= L \dif{\theta}
+\shortintertext{En utilisant la règle de la chaine} \\
+\fpart{r}{x} \dif{x} + \fpart{r}{y} \dif{y}
+&= L \fpart{\theta}{x} \dif{x} + L \fpart{\theta}{y} \dif{y}
+\shortintertext{Avec $r=\sqrt{x^2+y^2}$ et $\theta=\arctan(y/x)$} \\
+\fpart{}{x} (\sqrt{x^2+y^2}) \dif{x} + \fpart{}{y} (\sqrt{x^2+y^2})
+&= L \fpart{}{x} \arctan\left(\frac{y}{x}\right) \dif{x} + L \fpart{}{y} \arctan\left(\frac{y}{x}\right) \dif{y} \\
+\frac{1}{2\sqrt{x^2+y^2}} 2x\dif{x} + \frac{1}{2\sqrt{x^2+y^2}} 2y\dif{y}
+&= L \frac{1}{1+\frac{y^2}{x^2}} \cdot \left(\frac{-y}{x^2}\right) \dif{x}
++ L \frac{1}{1+\frac{y^2}{x^2}} \cdot \frac{1}{x} \dif{y} \\
+\frac{x}{\sqrt{x^2+y^2}} \dif{x} + \frac{y}{\sqrt{x^2+y^2}} \dif{y}
+&= L \frac{x^2}{x^2+y^2} \frac{-y}{x^2} \dif{x} + L \frac{x^2}{x^2+y^2} \frac{1}{x} \dif{y} \\
+\frac{x}{r} \dif{x} + \frac{y}{r} \dif{y} &= \frac{-yL}{r^2} \dif{x} + \frac{xL}{r^2} \dif{y} \\
+\left(\frac{x}{r} + \frac{yL}{r^2} \right) \dif{x} &= \left(\frac{xL}{r^2} - \frac{y}{r}\right) \dif{y} \shortintertext{En multipliant par $r$ (unités)} \\
+\left( x + \frac{yL}{\sqrt{x^2+y^2}} \right) \dif{x} &= \left( \frac{xL}{\sqrt{x^2+y^2}} - y \right) \\
+\end{align*}
+et donc, on obtient la valeur de $P$ et $Q$ :
+\begin{equation}
+\label{eq:order1-2016sept-pq}
+P=\frac{xL}{\sqrt{x^2+y^2}} - y \quad \text{et} \quad Q=\frac{yL}{\sqrt{x^2+y^2}} + x
+\end{equation}
+
+On connait dès lors l'ensemble du problème de Cauchy, et il ne reste plus qu'à calculer la solution quand $R=0$. Il suffit d'exprimer $s$ en fonction de $r$ et $\theta$ à l'aide de \ref{eq:order1-2016sept-caractequafinal}, d'utiliser la valeur de $u(s)$, et de voir ce qu'il se passe quand $r=2r_0$ et $\theta=\frac{\pi}{4}$ (les calculs sont plus simples en coordonnées polaires).
+
+Que retenir de tout cela ? Une caractéristique pour une valeur $s_1$ croise la courbe de Cauchy en un seul point, qui est le point de la courbe de Cauchy pour $s=s_1$ ; cela permet de compléter l'équation. Ensuite, à partir de l'équation des caractéristiques, on différencie et on utilise au besoin la règle de la chaine ou d'autre relations pour finalement arriver à $P$ et $Q$.
+
+%TODO rajouter un autre exemple
 
 \chapter{Les EDP du second ordre}
 
