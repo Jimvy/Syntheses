@@ -659,6 +659,65 @@ Comme toute équation du second degré, les racines peuvent être réelles et di
 
 %TODO d'abord, expliquer chaque type d'EDP, juste la méthode des caractéristiques ; ne pas expliquer comment on les résout, ce sera fait après.
 
+\section{Les différents types d'EDP}
+
+Les trois cas que nous avons relevé ci-dessus ne sont pas anodin, et sont l'objet de théories particulières pour chacune :
+\begin{itemize}
+	\item Lorsque $B^2-4AC>$, l'EDP est qualifiée \emph{hyperbolique}. L'équation \ref{eq:order2-caractequa} possède deux solution distinctes, et la méthode des caractéristiques est applicable. Un exemple est l'équation d'onde.
+	\item Lorsque $B^2-4AC=0$, l'EDP est dite \emph{parabolique}. L'équation \ref{eq:order2-caractequa} ne possède qu'une seule solution, et la méthode des caractéristiques n'est pas applicable. Un exemple est l'équation de diffusion, qui doit être résolue en partant d'une condition initiale.
+	\item Lorsque $B^2-4AC<0$, l'EDP est \emph{elliptique}. Les solutions de \ref{eq:order2-caractequa} sont complexes, la méthode des caractéristiques n'est plus applicable. Un exemple est l'équation de Poisson, qui doit être résolue de manière globale.
+\end{itemize}
+
+Les types d'EDP sont ainsi nommés par analogie avec les différentes coniques : l'hyperbole, la parabole et l'ellipse (le cercle en étant un cas particulier).
+
+Le premier type peut être résolu par la méthode des caractéristiques, même si celle-ci est particulièrement lourde. Les deux autres types nécessitent d'autres méthodes ; plus particulièrement, nous allons voir la méthode de séparation des variables pour les résoudre.
+
+\section{EDP hyperboliques : équation d'onde et méthode des caractéristiques}
+
+Dans le cas des EDP hyperboliques, l'équation \ref{eq:order2-caractequa} a deux solutions réelles, et définit donc deux directions caractéristiques. La méthode des caractéristiques est alors utilisable, et on peut propager la solution $u$ de la courbe de Cauchy sur l'ensemble du plan.
+
+Les caractéristiques peuvent être obtenues en intégrant les deux EDO obtenues à partir de la relation caractéristique, d'une manière assez similaire à celle utilisée lors des EDP du 1\ier{} ordre. Ensuite, la valeur de $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ peuvent être obtenues en intégrant les relations obtenues en remplaçant le terme indépendant de \ref{eq:order2-dirpart} dans une colonne de la matrice. Cela fait donc deux EDO le long de deux caractéristiques. Enfin, la valeur de $\phi$ peut être évaluée à partir des relations \ref{eq:order2-propag-all}.
+Nous vous redirigeons vers le syllabus officiel et vers l'APE 3 pour de plus amples informations. %La flemme
+
+%TODO mettre le développement des caractéristiques : copy-paste 1er ordre
+%TODO mettre l'équation d'onde et ses caractéristiques, les conditions aux frontières
+%TODO mettre d'Alembert : factorisation, solution, onde stationnaire
+
+Il est maintenant possible de définir ce que l'on entend par EDP hyperbolique. Le point commun de toutes ces équations est que l'information de la condition initiale est \emph{transportée} : l'information est transportée le long des caractéristiques à une vitesse finie (la vitesse de l'onde) $c$, et donc il faut un certain temps de propagation, pendant lequel aucune information n'est connue. Une autre propriété est que la régularité est la \emph{smoothness} de la solution est déterminée par la \emph{smoothness} de la condition initiale : une discontinuité de la condition initiale se propagera dans l'ensemble du domaine, exactement comme une onde. Les EDP hyperboliques ont enfin la propriété intéressante que leur problème de Cauchy est bien posé et est résoluble dans les environs de la condition initiale.
+
+Les EDP du premier ordre, de transport ou non, conservatives ou non, et les EDP du second ordre du type équation d'onde, ont les mêmes caractéristiques de propagation d'information à vitesse finie et ont toutes un comportement similaire à une onde transportant de l'information.
+
+\section{EDP paraboliques : équation de diffusion}
+
+%TODO Compléter : présenter l'équation de diffusion, les caractéristiques.
+%TODO Domaine infini : solution gaussienne, diffusion de l'intégrale, singularité, Dirac, fonction de Green
+%TODO illustrer brièvement la méthode de séparation des variables, pour montrer la diffusion et l'atténuation.
+
+Les EDP paraboliques ont toutes un comportement similaire à celui de l'équation de diffusion. Elles doivent être posées en terme de condition initiale, et ont la fâcheuse tendance d'exploser pour des temps négatifs : l'évolution qu'elles décrivent est à un seul sens, et tenter de remonter la solution jusqu'à l'origine du temps donnera des singularités, des valeurs infinies et incohérentes, ou des indéterminations. Dans la direction naturelle d'évolution, elles dispersent la quantité, gomment les singularités, et atténuent les petits sursauts initiaux ; l'information initiale se perd au fur et à mesure de l'évolution du temps, et le phénomène n'est pas réversible.
+
+Ces équations portent donc bien leur nom : la quantité initiale \emph{diffuse} dans l'ensemble du domaine, dans un processus irréversible. C'est tout le contraire des EDP hyperboliques ou de l'équation d'onde, pour laquelle on peut toujours remonter dans le temps et calculer la solution dans l'ensemble du domaine. A noter que les EDP paraboliques possèdent des caractéristiques transportant l'information de l'état initial : néanmoins, elles ne permettent pas de résoudre l'équation.
+
+\section{EDP elliptiques : équation de Laplace et de Poisson}
+
+%TODO présenter Poisson et Laplace, les conditions limites, la relation de compatibilité, la singularité, solution de Poisson, fonction de Green.
+
+Les différentes EDP elliptiques requièrent de résoudre le problème sur un domaine précis, de manière globale : la valeur de $\phi$ en chaque point est influencée par la valeur de $\phi$ aux points environnants. L'information se transmet donc sur l'entièreté de la surface à une vitesse infinie. Les solutions sont toujours régulières et \emph{smooth} : l'équation atténue les irrégularités et les discontinuités dans l'ensemble du domaine, même si les conditions aux frontières sont irrégulières (les frontières gardent leurs irrégularités, mais celles-ci ne se propagent pas). Cette propriété de régularité complète provient directement de l'absence de caractéristiques : les irrégularités ne peuvent se propager que le long de celles-ci, et comme elles sont absentes, il ne peut pas y avoir de discontinuité, ni pour $\phi$ ni pour ses dérivées. Les EDP elliptiques sont donc adaptées à la description de phénomènes statiques, où toute irrégularité a été effacée, par exemple après une diffusion. Elles sont donc à l'opposé des équations hyperboliques.
+
+\section{Avant de conclure}
+
+%TODO mieux conclure
+%TODO EDP de type mixte, dont la résolution. Transport-diffusion, Burgers-diffusion, télégraphistes, diffusion-source (Poisson-diffusion)
+
+Avant de passer à la méthode de séparation des variables, ajoutons que les concepts d'équations hyperboliques, paraboliques et elliptiques peuvent être étendus à des espaces à plus de deux dimensions : l'existence ou la non-existence de caractéristiques définit leur catégorie.
+
+La classification peut aussi être faite à partir de l'étude de l'opérateur linéaire qui définit l'équation, en particulier les valeurs propres de la matrice de l'opérateur.
+\begin{itemize}
+	\item L'EDP est elliptique si ses valeurs propres sont toutes strictement positives ou toutes strictement négatives.
+	\item L'EDP est parabolique si les valeurs propres sont toutes strictement positives ou toutes strictement négatives, à part une seule qui vaut zéro.
+	\item L'EDP est hyperbolique si toutes les valeurs propres sont strictement positives sauf une qui est strictement négative, ou l'inverse.
+	\item L'EDP est dite \emph{ultrahyperbolique} si il y a plus d'une valeur propre qui n'est pas du même signe, et aucune valeur propre n'est négative. Ce type d'équation est très rare.
+\end{itemize}
+
 %TODO Systèmes d'EDP du premier ordre
 
 \chapter{Méthode de séparation des variables}
