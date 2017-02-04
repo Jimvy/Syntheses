@@ -35,13 +35,13 @@ Ce document a été conçu sur base du syllabus sur les équations aux dérivée
 % \grad{V} donne le gradient
 % \lap{V} donne le laplacien
 
-\part{Équations aux dérivées partielles (EDP)}
+\part{Équations aux dérivées partielles}
 
 \chapter*{Introduction et définitions}
 
-Soit une fonction scalaire $u$, dépendant de $m$ variables $x_1, x_2, \ldots, x_m$. Une relation $\mathcal{F}$ entre $u$, les variables $x_i$ et les dérivées partielles de $u$ par rapport à ces variables,
+Soit une fonction scalaire $u$, qui est notre inconnue, dépendant de $m$ variables $x_1, x_2, \ldots, x_m$ (par exemple les trois coordonnées de l'espace). Une relation $\mathcal{F}$ entre $u$, les variables $x_i$ et les dérivées partielles de $u$ par rapport à ces variables,
 \[ \mathcal{F} \left( u, x_1, \ldots, \fpart{u}{x_1}, \ldots, \ffpart{u}{x_1}, \ldots, \fdpart{u}{x_1}{x_2}, \ldots, \fnpart{u}{x_1}{n} \right) = 0\]
-définit une \emph{équations aux dérivées partielles} d'ordre $n$.
+définit une \emph{équations aux dérivées partielles} d'ordre $n$ (EDP).
 
 La résolution d'une telle équation dépend de plusieurs facteurs et de plusieurs caractéristiques de l'équation, dont l'ordre de l'équation ($n$), sa (non-)linéarité, son homogénéité et encore d'autre facteurs.
 
@@ -52,9 +52,9 @@ L'équation suivante, avec $A, B, C, D$ et $F$ des fonctions de $x$, $y$ et $u$
 \label{eq:intro-exemple1}
  A \ffpart{u}{x} + B \fdpart{u}{x}{y} + C \ffpart{u}{y} + Du = F
 \end{equation}
-est une équation d'ordre 2, à deux variables ; $m=2$ et $n=2$ (mais ce n'est pas le cas en général). Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
+est une équation d'ordre 2, et à deux variables ; $m=2$ et $n=2$. Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
 
-Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution ; c'est d'ailleurs une manière de vérifier la (quasi)-linéarité.
+Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles : la relation $\mathcal{F}$ est linéaire par rapport à $u$ et à ses dérivées, mais pas par rapport aux $x_i$. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires \emph{homogènes} est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution. C'est d'ailleurs une manière de vérifier la (quasi)-linéarité : on vérifie le principe de superposition pour cette EDP (en enlevant toutefois les termes non homogènes).
 
 Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c'est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
 
@@ -91,18 +91,18 @@ est une EDP d'ordre $1$, quasi linéaire et homogène. C'est l'\emph{équation d
 \[ \fpart{}{x} \left( \frac{u^2}{2} \right) + \fpart{u}{t} = 0 \]
 
 \[ \fpart{}{x} \left( \alpha(u) \fpart{u}{x} \right) - \fpart{u}{t} = 0 \]
-est, enfin, une EDP d'ordre 2, quasi-linéaire (ceci peut être vérifié en développant l'équation par la règle du produit) et homogène. Si $\alpha(u) > 0$, il s'agit de l'équation de diffusion, avec $\alpha$ le coefficient de diffusivité.
+est, enfin, une EDP d'ordre 2, quasi-linéaire (ceci peut être vérifié en développant l'équation par la règle du produit) et homogène. Si $\alpha(u) > 0$, il s'agit de l'équation de diffusion, avec $\alpha$ le coefficient de diffusivité. %TODO mettre le développement dans la section de l'équation de diffusion.
 
 \chapter{EDP d'ordre 1}
 
-Commençons donc par résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela signifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
+Commençons donc par étudier et résoudre les EDP du 1er ordre. Ces EDP sont dites \emph{à caractère hyperbolique} (on verra plus loin ce que cela signifie). Les équations que nous allons voir dépendent de deux paramètres, $x$ et $y$ (équation dans un plan 2D, indépendante du temps) ou $x$ et $t$ (équation en 1D dépendante du temps), et on a donc, en reprenant les notations de l'introduction, $n=1$ et $m=2$. Dans la suite, on utilisera $x$ et $y$.
 
 Les EDP du 1er ordre quasi linéaires ont la forme
 \begin{equation}
 \label{eq:order1-genequa}
 P \fpart{u}{x} + Q \fpart{u}{y} = R
 \end{equation}
-avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$\footnote{Et très probablement, si $G$ est une fonction linéaire en $u$.}.
+avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$ (tous les termes dépendent de $u$)\footnote{Et très probablement, si $H$ est une fonction linéaire en $u$.}.
 
 Les EDP du 1er ordre linéaires ont presque la même forme, à savoir
 \begin{equation}
@@ -115,20 +115,19 @@ La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace 
 
 \section{Méthode des caractéristiques}
 
-Une EDP seule n'est pas résoluble De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de la connaissance de l'EDP et de la connaissance de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc de Cauchy}), constitue le \emph{problème de Cauchy}.
+Une EDP seule n'est pas résoluble De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de l'EDP et de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc ou courbe de Cauchy}), constitue le \emph{problème de Cauchy}.
 
 Pour résoudre les EDP du 1er ordre, une méthode particulièrement utile et puissance est la \emph{méthode des caractéristiques}. Le principe de cette méthode est la suivante : comme nous connaissons la valeur de $u$ sur $\Gamma$, ainsi que la variation de $u$ dans un voisinage de $\Gamma$ (grâce à l'EDP), il doit être possible de déterminer $u$ dans un voisinage de $\Gamma$, et d'appliquer à nouveau ce principe pour déterminer $u$ en n'importe quel point. On détermine donc $u(x, y)$ de proche en proche, en partant de la courbe $\Gamma$ et en utilisant l'équation différentielle pour obtenir les solutions intermédiaires entre $\Gamma$ et $(x, y)$, ce qui nous permet alors de bien calculer $u$.
 
 Tout le problème devient à présent de déterminer s'il est possible, et à quelles conditions, de déterminer $u$ dans un voisinage d'une courbe, étant donné l'EDP. De même, nous aimerions une méthode générique, dépendant le moins possible de la courbe $\Gamma$ donnée, et de la valeur de $u$ sur cette courbe (la fonction $f(s)$, généralement donnée). Voyons donc ce que l'on peut faire.
 
-Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la dérivée partielle de $u$ par rapport au paramètre $s$ est également connu (c'est $f'(s)$), et donc\footnote{Pour ceux qui se le demanderaient, l'utilisation de la notation avec $\partial$ dans les dérivées partielles est généralement utilisée quand la fonction dépend de plusieurs variables. Si la fonction est à une seule variable, on utilise généralement $\mathrm{d}$ à la place de $\partial$.}
-
+Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la dérivée partielle de $u$ par rapport au paramètre $s$ est également connu (c'est $f'(s)$), et donc
+\footnote{Pour ceux qui se le demanderaient, l'utilisation de la notation avec $\partial$ dans les dérivées partielles est généralement utilisée quand la fonction dépend de plusieurs variables. Si la fonction est à une seule variable, on utilise généralement $\mathrm{d}$ à la place de $\partial$.}
 \begin{equation}
 \label{eq:order1-duds}
 f'(s) = \fdif{u}{s} = \fpart{u}{x} \cdot \fdif{x}{s} + \fpart{u}{y} \cdot \fdif{y}{s}
 \end{equation}
-
-C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire cette équation, avec notre EDP (équation \ref{eq:order1-genequa}), le système
+C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire, à partir de cette équation et notre EDP (équation \ref{eq:order1-genequa}), le système
 \begin{equation}
 \label{eq:order1-bienpose-edp-duds}
 \begin{pmatrix}
@@ -153,7 +152,7 @@ u(x+\dif{x}, y+\dif{y}) = u(x, y) + \fpart{u}{x}(x, y) \dif{x} + \fpart{u}{y}(x,
 
 On peut donc déterminer $u$ un peu plus loin de $\Gamma$, et réitérer le processus afin de déterminer $u$ au point qui nous intéresse. Sauf que ce système, et donc cette relation, n'est valable que sur $\Gamma$, ou sur une courbe paramétrée sur laquelle on connait $u$, ce qui n'est pas pratique. Il faut donc trouver une meilleure manière de déterminer cette \og propagation \fg{} de la solution.
 
-Cette méthode ne fonctionne que si le déterminant ne s'annule pas. Si le déterminant s'annule, il est impossible de déterminer les dérivées partielles, et toute la résolution s'écroule. On dira que \emph{le problème de Cauchy est \strong{bien posé}} si le déterminant du système ne s'annule en aucun des points de la courbe. Il est donc important, lorsqu'on pose un problème de Cauchy, de spécifier $\Gamma$ de telle sorte que le problème résultant soit bien posé.
+Cette méthode ne fonctionne que si le déterminant ne s'annule pas. Si le déterminant s'annule, il est impossible de déterminer les dérivées partielles, et toute la résolution s'écroule. On dira que \emph{le problème de Cauchy est \strong{bien posé}} ssi le déterminant du système ne s'annule en aucun des points de la courbe. Il est donc important, lorsqu'on pose un problème de Cauchy, de spécifier $\Gamma$ de telle sorte que le problème résultant soit bien posé.
 
 Voyons maintenant ce qu'il se passe si on tente de propager l'équation selon une direction $(\dif{x}, \dif{y})$. Cette direction doit, bien évidemment, être non parallèle à la courbe (sinon on n'avance pas). Autrement dit,
 \[ (\dif{x}, \dif{y}) \neq \alpha (\fdif{x}{s}, \fdif{y}{s}) \quad \alpha \in \mathrm{R} \]
@@ -182,14 +181,14 @@ P\dif{y} = Q \dif{x}
 \end{equation}
 soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \propto (P, Q)$ ; la direction $(\dif{x}, \dif{y})$ est, en quelque sorte, parallèle à la direction définie par $P$ et $Q$.
 
-Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé\footnote{
-	Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
+Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé
+\footnote{Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
 
 Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques}.
 
-Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités.
+Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités. Également, si l'on peut imposer n'importe quelle valeur pour $u$ sur $\Gamma$, on ne peut pas imposer $u$ sur une caractéristique : la valeur de $u$ est dictée par l'EDP et par la courbe de Cauchy.
 
-Comment obtenir l'équation d'une des courbes caractéristiques ? En intégrant la direction caractéristique, depuis un point de $\Gamma$ $(x(s), y(s))$ jusqu'à un point $(x, y)$. Plus précisément\footnote{Dans cette équation, $P'$ et $Q'$ sont deux fonctions, dépendant uniquement respectivement de $y$ et de $x$ ; elles peuvent obtenues à partir de $P(x, y)$ et $Q(x, y)$ en isolant $x$ et $y$ de chaque côté. Les variables $x'$ et $y'$ sont les mêmes que $x$ et $y$, mais ces symboles sont déjà utilisées dans les bornes de l'intégrale.} :
+Comment obtenir l'équation d'une des courbes caractéristiques ? En intégrant la direction caractéristique, depuis un point de $\Gamma$ $(x(s), y(s))$ jusqu'à un point $(x, y)$. Plus précisément\footnote{Dans cette équation, $P'$ et $Q'$ sont deux fonctions, dépendant uniquement respectivement de $y$ et de $x$ ; elles peuvent obtenues à partir de $P(x, y)$ et $Q(x, y)$ en isolant $x$ et $y$ de chaque côté. Les variables $x'$ et $y'$ sont les mêmes que $x$ et $y$, mais ces symboles sont déjà utilisées dans les bornes de l'intégrale (les fameuses \emph{dummy variables}).} :
 \begin{equation}
 \label{eq:order1-caractcurve_integral}
 \begin{split}
@@ -208,9 +207,10 @@ Maintenant que l'on connait une direction caractéristique, comment peut-on prop
 
 Les deux relations obtenues sont des \emph{relations de compatibilité}, ou relations caractéristiques ; elles définissent le comportement de $u$ qui est compatible avec la direction, et donc la courbe, caractéristique. Elles permettent de relier $\dif{u}$ à la variation $\dif{x}$ le long de la caractéristique. Or, ces relations sont des équations différentielles ordinaires ; notre EDP est donc devenue une EDO le long de chaque caractéristique, ce qui est beaucoup plus simple à résoudre.
 
-Désormais, pour déterminer $u$ à un point $A$ donné, il ne reste plus qu'à intégrer la relation de compatibilité le long de la caractéristique, depuis un point $B$ sur la courbe de Cauchy (où l'on connait $u$) jusqu'à notre point $A$\footnote{Le point $B$ peut être déterminé, vu que s'il y a une caractéristique qui passe par $A$, alors cette caractéristique croise une seule fois la courbe de Cauchy. Il est néanmoins possible que l'on ne puisse pas calculer $u$ à un certain point, si la courbe de Cauchy ou si les caractéristiques empêchent la propagation de $u$ en ce point : caractéristiques absentes, $\Gamma$ trop courte.}.
+Désormais, pour déterminer $u$ à un point $A$ donné, il ne reste plus qu'à intégrer la relation de compatibilité le long de la caractéristique, depuis un point $B$ sur la courbe de Cauchy (où l'on connait $u$) jusqu'à notre point $A$ (où l'on veut connaitre $u$)
+\footnote{Le point $B$ peut être déterminé, vu que s'il y a une caractéristique qui passe par $A$, alors cette caractéristique croise une seule fois la courbe de Cauchy. Il est néanmoins possible que l'on ne puisse pas calculer $u$ à un certain point, si la courbe de Cauchy ou si les caractéristiques empêchent la propagation de $u$ en ce point : caractéristiques absentes, $\Gamma$ trop courte.}.
 
-Il est à noter qu'une seule des deux relations de compatibilité est nécessaire pour l'intégration ; l'autre relation peut directement être obtenue à partir de l'une et de \ref{eq:order1-caractode}. Une manière de retenir ces relations est
+Notons qu'une seule des deux relations de compatibilité est requise pour l'intégration ; l'autre relation peut directement être obtenue à partir de l'une et de \ref{eq:order1-caractode}. Une manière de retenir ces relations est
 \begin{equation}
 \label{eq:order1-diffeqnmemo}
 \frac{\dif{x}}{P} = \frac{\dif{y}}{Q} = \frac{\dif{u}}{R}
@@ -222,8 +222,9 @@ Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = 
 Le cas où $R=0$ donne $\dif{u}=0$ le long de la caractéristique : $u$ est alors constant le long de la caractéristique. On appelle ça un \emph{invariant de Riemann}.
 
 Les EDP du 1\ier{} ordre (avec des fonctions réelles) ont toutes la propriété d'être \emph{à caractère hyperbolique}. Cette propriété peut être résumée, de manière informelle, par le fait qu'elles ont toutes la particularité de pouvoir être résolues par une sorte de propagation de la solution le long de caractéristiques.
+\footnote{Le concept sera éclairci lorsqu'on abordera les EDP du second ordre.}
 
-Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation \ref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit aussi une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{}. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
+Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation \ref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{} ordre. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
 
 \section{Exemples}
 
@@ -290,7 +291,7 @@ u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{si
 \end{cases}
 \]
 Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer $x$ en fonction de $y$ (car nous intégrons par rapport à $y$, et $s$ est une constante sur la caractéristique). Ensuite, il faut tenir compte des deux signes possibles pour $x$, et donc bien définir la fonction.
-%TODO : il est possible que j'aie fait une ou deux erreurs
+%FIXME : il est possible que j'aie fait une ou deux erreurs
 
 \section{Équation de transport}
 
@@ -328,7 +329,23 @@ h \left(t-\frac{x}{c} \right) \text{sinon} \\
 
 Pour $c>0$, aurait-on pu décider de spécifier une deuxième condition limite, en $x=L>0$, de sorte que l'on ait un domaine borné à gauche et à droite ? La réponse est non \footnote{Du moins, dans le cas $c$ constant ; si $c$ est tarabiscoté, il est possible que ce soit possible.}. La valeur de $u$ en $x=L$ est en effet entièrement définie par ce qui vient de la gauche : les caractéristiques transportant de l'information, on ne peut pas spécifier deux conditions sur une même caractéristiques, et comme les caractéristiques transportent l'information vers la droite, la valeur de $u(L, t)$ est déjà spécifiée.
 
-Tient, et si $c<0$, et que l'on considère un domaine borné à gauche ($0\le x < \infty$) ? Que se passe-t-il, que peut-on imposer ? Les caractéristiques sont alors des droites à pente négative, qui transmettent de l'information vers la gauche. Il suffit alors de spécifier une seule condition, par exemple une condition initiale $u(s, 0)=f(s), s\ge 0$, pour que $u$ soit connu $\forall x, t \ge 0$. Cela vient du fait que $s=x-ct\ge 0$ pour n'importe quels $x$ et $t$ du domaine choisi, et la condition initiale peut donc être utilisée partout. Une condition limite en $x=0$ peut également être utilisée partout. Par contre, pour des temps négatifs, il est de nouveau nécessaire de spécifier une deuxième condition. Intuitivement, la condition initiale se déplace vers la gauche, et atteint donc tous les points du plan.
+Tient, et si $c<0$, et que l'on considère un domaine borné à gauche ($0\le x < \infty$) ? Que se passe-t-il, que peut-on imposer ? Les caractéristiques sont alors des droites à pente négative, qui transmettent de l'information vers la gauche quand on avance dans le temps. Il suffit alors de spécifier une seule condition, par exemple une condition initiale $u(s, 0)=f(s), s\ge 0$, pour que $u$ soit connu $\forall x, t \ge 0$. Cela vient du fait que $s=x-ct\ge 0$ pour n'importe quels $x$ et $t$ du domaine choisi, et la condition initiale peut donc être utilisée partout. Une condition limite en $x=0$ peut également être utilisée partout. Par contre, pour des temps négatifs, il est de nouveau nécessaire de spécifier une deuxième condition. Intuitivement, la condition initiale se déplace vers la gauche, et atteint donc tous les points du plan.
+
+Comme on l'a dit, l'équation de transport modélise un déplacement dans le temps d'une quantité selon une vitesse $c$. On peut donc être intéressé de savoir ce qu'une observatrice
+\footnote{C'est plus facile pour les pronoms par après.}
+verrait au cours du temps et au cours du déplacement de cette quantité. Considérons donc une observatrice qui se déplace, indépendamment de la quantité étudiée (mettons un train)
+\footnote{Après tout, un train est aussi une quantité physique, qui obéit à l'équation de transport.}
+selon une loi $x_p(t)$. Elle voit donc, à tout instant, une valeur de $u$ égale à $u_p(t)=u(x_p(t), t)$. La variation de $u$ dans le temps qu'elle perçoit est donnée par la règle de la chaine :
+\[ \fdif{}{t} u(x_p(t), t) = \fpart{u}{x} \cdot \fdif{x_p}{t} + \fpart{u}{t} \]
+En comparant avec notre EDP,
+\[ 0=\fpart{u}{x} \cdot c + \fpart{u}{t} \]
+on voit que si elle se déplace exactement à la vitesse $c$, la variation de $u$ est nulle : comme elle accompagne le mouvement, aucun changement n'est visible.
+
+On peut établir des relations encore plus intéressantes en étudiant la vitesse de l'observatrice, $c_p(t)=\fdif{x_p}{t}(t)$.
+Si, à un certain instant $t$, elle ne se déplace pas ($c_p=0$), la variation de $u$ vue par l'observatrice est exactement la variation de $u$ à cet endroit : si elle est en train de filmer un train se déplaçant à vitesse constante, elle aura l'ensemble de l'histoire du passage du train.
+Si l'observatrice se déplace exactement à la vitesse du train, elle aura une image fixe. Si elle se déplace à des vitesse différentes, elle enregistrera un déplacement du train à une vitesse moins grande, ou en sens inverse.
+L'ensemble de ces remarques sont également applicables à des cas où $c$ ou $c_p$ ne sont pas constants : seule la vitesse instantanée importe dans ce cas. L'équation de transport et la méthode des caractéristiques se retrouvent dans la vraie vie.
+%TODO développer
 
 Considérons maintenant le cas où $c=c(x, t)$ ; cette fois, il faut intégrer une relation qui peut être parfois assez complexe. Commençons par un cas où $c=c(x)=\frac{x}{\tau}$ par exemple, et où on considère une condition initiale $u(s, 0)=f(s)$. L'intégration donne
 \begin{align*}
@@ -366,7 +383,7 @@ et, en posant $H(t)=\int^{t} c(t') \dif{t'}$,
 \[ x-s = H(t)-H(0) \]
 \[ t=H^{-1} (x-s+H(0)) \]
 Pour un temps $t$ fixé, l'écart $x-s$ (entre la position actuelle et la position de départ) est le même quel que soit ce point, et l'écart entre deux points de la courbe initiale est donc constante. Les caractéristiques obtenues sont alors des courbes parallèles (par rapport à l'axe de l'espace) : la fonction $u$ est transportée sans être déformée.
-\footnote{C'est assez difficile à se l'imaginer, mais on peut interpréter cela ainsi : la vitesse change au cours du temps, mais elle change \emph{de la même manière} pour tous les points de la courbe. Et donc, la forme de la courbe initiale est conservée, de la même manière qu'un véhicule ne se déforme pas tant que la vitesse de chaque point est identique, même si la voiture accélère.}
+\footnote{C'est assez difficile à se l'imaginer, mais on peut interpréter cela ainsi : la vitesse change au cours du temps, mais elle change \emph{de la même manière} pour tous les points de la courbe. Et donc, la forme de la courbe initiale est conservée, de la même manière qu'une voiture ne se déforme pas tant que la vitesse de chaque point est identique, même si elle accélère.}
 
 Prenons $c(t)=\frac{l}{t+\tau}$, $l$ étant une constante de longueur et $\tau$ une constante de temps. L'intégration donne :
 \begin{align*}
@@ -410,12 +427,12 @@ Si le domaine est infini en revanche, on a que $\lim\limits_{x\rightarrow \pm \i
 Par conséquent, l'intégrale ne varie pas dans le temps, et la fonction est conservée. Cette affirmation n'est plus vraie si $u$ est discontinue ou possède des singularités ; dans ce cas, l'intégrale a tendance à varier.
 \footnote{Il peut arriver que l'on étudie un problème qui n'a pas d'origine physique.} Les phénomènes où la quantité globale est conservée sont assez fréquent en pratique.
 
-Autant l'intégrale de $u$ est conservée dans le temps, autant $u$ lui même n'est plus conservé le long des caractéristiques. En effet, en développant l'équation,
+Autant l'intégrale de $u$ sur le domaine est conservée dans le temps, autant $u$ lui même n'est plus conservé le long des caractéristiques. En effet, en développant l'équation,
 \[c \fpart{u}{x} + \fpart{u}{t} = -u \fpart{c}{x}\]
 on constate que $R\neq 0$. Le long des caractéristiques, la variation de $u$ est donnée par
 \[ \dif{u} = -u \fpart{c}{x} \dif{t} \]
 
-Considérons le cas où $c=c(x)$ (c'est le cas le plus fréquent). Dans ce cas, on peut écrire, via la relation des caractéristiques, que $\dif{t} = \frac{1}{c} \dif{x}$ (les dérivées partielles deviennent des dérivées simples) et donc, la relation de compatibilité devient
+Considérons le cas où $c=c(x)$ (c'est le cas le plus fréquent : un transport dans un milieu non homogène, avec des vitesse locales différentes). Dans ce cas, on peut écrire, via la relation des caractéristiques, que $\dif{t} = \frac{1}{c} \dif{x}$ (les dérivées partielles deviennent des dérivées simples) et donc, la relation de compatibilité devient
 \[ \dif{u} = -u \fdif{c}{x} \frac{1}{c} \dif{x} \]
 \[\Leftrightarrow c \dif{u} + u \dif{c} = \dif{(cu)} = 0\]
 Par conséquent, $cu$ est conservé le long de chaque caractéristique ! Le développement complet nous aurait amené à la même conclusion, et on a donc
@@ -471,7 +488,7 @@ où $A, B, C, P, Q, G, F$ sont au plus des fonctions de $x$ et $y$, mais pas de 
 
 Terminons cette petite introduction en indiquant que ces EDP sont homogènes ssi $F=0$.
 
-\section{Méthode des caractéristiques}
+\section{Problème de Cauchy et méthode des caractéristiques}
 
 Comme on l'a vu à la section précédente, la méthode des caractéristiques s'avère extrêmement puissante pour résoudre des EDP du premier ordre, malgré son côté un peu calculatoire. Elle permet -- en théorie -- de résoudre l'ensemble des équations du premier ordre. Dès lors, on aimerait bien pouvoir utiliser la méthode des caractéristiques pour résoudre les équations du second ordre.
 
