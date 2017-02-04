@@ -105,7 +105,10 @@ P \fpart{u}{x} + Q \fpart{u}{y} = R
 avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$\footnote{Et très probablement, si $G$ est une fonction linéaire en $u$.}.
 
 Les EDP du 1er ordre linéaires ont presque la même forme, à savoir
-\[ P \fpart{u}{x} + Q \fpart{u}{y} + Gu = F \]
+\begin{equation}
+\label{eq:order1-genequalin}
+P \fpart{u}{x} + Q \fpart{u}{y} + Gu = F
+\end{equation}
 où $P, Q, F$ et $G$ sont des fonctions de $x$ et/ou de $y$, mais pas de $u$. Et l'équation est homogène si $F=0$ (dans ce cas, $u=0$ est bien solution). La principale différence entre les EDP quasi-linéaires et linéaires vient du fait que la fonction $R$ s'écrit $R(x, y, u) = F(x, y) - G(x, y)\cdot u$, avec $H(x, y, u) = G(x, y) \cdot u$ ; la fonction $H$ est bien linéaire en $u$.
 
 La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace de dimension 3. Cette surface peut être décrite à partir d'une relation explicite ($u(x, y)$) ou à partir d'une relation implicite ($\mathcal{F}(x, y, u)=0$). Dans la suite, nous considérerons surtout les équations non nécessairement homogènes.
@@ -121,12 +124,13 @@ Tout le problème devient à présent de déterminer s'il est possible, et à qu
 Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la dérivée partielle de $u$ par rapport au paramètre $s$ est également connu (c'est $f'(s)$), et donc\footnote{Pour ceux qui se le demanderaient, l'utilisation de la notation avec $\partial$ dans les dérivées partielles est généralement utilisée quand la fonction dépend de plusieurs variables. Si la fonction est à une seule variable, on utilise généralement $\mathrm{d}$ à la place de $\partial$.}
 
 \begin{equation}
+\label{eq:order1-duds}
 f'(s) = \fdif{u}{s} = \fpart{u}{x} \cdot \fdif{x}{s} + \fpart{u}{y} \cdot \fdif{y}{s}
 \end{equation}
 
 C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire cette équation, avec notre EDP (équation \ref{eq:order1-genequa}), le système
 \begin{equation}
-\label{eq:order1-bienpose}
+\label{eq:order1-bienpose-edp-duds}
 \begin{pmatrix}
 P & Q \\
 \fdif{x}{s} & \fdif{y}{s} \\
@@ -142,7 +146,10 @@ R \\
 \end{equation}
 
 Dans ce système, les fonctions $P$, $Q$, $R$, les dérivées $\fdif{x}{s}$, $\fdif{y}{s}$ et $f'(s)=\fdif{u}{s}$ sont toutes connues. Si le déterminant est non nul, on peut alors toujours déterminer les dérivées partielles $\fpart{u}{x}$ et $\fpart{u}{y}$, et donc déterminer la valeur de $u$ un peu à côté de notre point de référence sur $\Gamma$ ; en effet, du cours de maths 2, on sait que
-\[ u(x+\dif{x}, y+\dif{y}) = u(x, y) + \fpart{u}{x}(x, y) \dif{x} + \fpart{u}{y}(x, y) \dif{y} \]
+\begin{equation}
+\label{eq:order1-propag}
+u(x+\dif{x}, y+\dif{y}) = u(x, y) + \fpart{u}{x}(x, y) \dif{x} + \fpart{u}{y}(x, y) \dif{y}
+\end{equation}
 
 On peut donc déterminer $u$ un peu plus loin de $\Gamma$, et réitérer le processus afin de déterminer $u$ au point qui nous intéresse. Sauf que ce système, et donc cette relation, n'est valable que sur $\Gamma$, ou sur une courbe paramétrée sur laquelle on connait $u$, ce qui n'est pas pratique. Il faut donc trouver une meilleure manière de déterminer cette \og propagation \fg{} de la solution.
 
@@ -150,9 +157,12 @@ Cette méthode ne fonctionne que si le déterminant ne s'annule pas. Si le déte
 
 Voyons maintenant ce qu'il se passe si on tente de propager l'équation selon une direction $(\dif{x}, \dif{y})$. Cette direction doit, bien évidemment, être non parallèle à la courbe (sinon on n'avance pas). Autrement dit,
 \[ (\dif{x}, \dif{y}) \neq \alpha (\fdif{x}{s}, \fdif{y}{s}) \quad \alpha \in \mathrm{R} \]
-La variation de $u$, le long de cette direction, est égale à
-\[ \fpart{u}{x} \dif{x} + \fpart{u}{y} \dif{y} = \dif{u} \]
-De nouveau, on peut former un nouveau système avec notre EDP,
+La variation de $u$, le long de cette direction, peut être exprimée par la différentielle
+\begin{equation}
+\label{eq:order1-diffdu}
+\fpart{u}{x} \dif{x} + \fpart{u}{y} \dif{y} = \dif{u}
+\end{equation}
+On peut dès lors former un nouveau système avec notre EDP,
 \begin{equation}
 \label{eq:order1-dirpart}
 \begin{pmatrix}
@@ -172,8 +182,8 @@ P\dif{y} = Q \dif{x}
 \end{equation}
 soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \propto (P, Q)$ ; la direction $(\dif{x}, \dif{y})$ est, en quelque sorte, parallèle à la direction définie par $P$ et $Q$.
 
-Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose} serait nul, et le problème serait mal posé\footnote{
-	Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
+Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé\footnote{
+	Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
 
 Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques}.
 
@@ -429,10 +439,117 @@ La vitesse présente un minimum en $x=0$. La fonction $u$ est alors déformée l
 
 %TODO équations non linéaires, équation de Burgers, discontinuités.
 
-%TODO EDP du second ordre, méthode des caractéristiques.
+\chapter{Les EDP du second ordre}
+
+Après avoir vu les EDP du premier ordre, emmenons nos Stormtroopers sur une nouvelle planète : les EDP du second ordre\footnote{On dit aussi, plus correctement, du deuxième ordre.}, qui vont nous intéresser pendant le reste de ce ce document.\footnote{Oui, j'ai craqué.}
+
+Les EDP du second ordre contiennent des dérivées d'ordre 2 de la fonction que l'on recherche. L'EDP la plus générale du deuxième ordre et à deux variables indépendantes est
+\begin{equation}
+\label{eq:order2-genequa}
+A \ffpart{\phi}{x} + B \fdpart{\phi}{x}{y} + C \ffpart{\phi}{y} = R
+\end{equation}
+où $A, B, C, R$ sont fonctions au plus de $x$, $y$, $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$, mais pas d'une dérivée seconde de $\phi$.
+
+Cette EDP est quasi-linéaire, c'est-à-dire linéaire par rapport aux dérivées du plus haut ordre en chacune des variables, et c'est le moment rêvé d'expliquer ce que cela signifie. La linéarité signifie que toute combinaison linéaire de deux solutions $\phi_1$ et $\phi_2$ est également une solution, lorsqu'on l'injecte dans l'équation : comme les opérateurs de dérivation sont linéaires, la linéarité doit s'appliquer à chaque terme de l'équation contenant la fonction $\phi$ ou ses dérivées, et les différentes apparitions de la fonction $\phi$ doivent être linéaires. La quasi-linéarité retire cette contrainte, en ignorant la linéarité de toutes les dérivées à part les plus élevées : en gros, les termes contenant les dérivées du plus haut ordre ($\ffpart{\phi}{x}$, $\fdpart{\phi}{x}{y}$ et $\ffpart{\phi}{y}$) sont linéaires, et on considère uniquement ceux-là. Cela signifie qu'une combinaison linéaire $a \cdot \left(\ffpart{\phi}{x}\right)_1 + b \cdot \left(\ffpart{\phi}{x}\right)_2$ est bien \og solution \fg{} de l'EDP, en ignorant les autres dérivées de $\phi$ comme s'il s'agissait de constantes ou d'autres fonctions.
+\footnote{Si le paragraphe n'est pas très clair, ne vous inquiétez pas : retenez juste la définition de la quasi-linéarité, ainsi que la forme générale de l'équation, et normalement tout ira bien.}
+Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions de dérivées d'ordre 2, mais bien de dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :
+\begin{align*}
+& A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \left(a \cdot \ffpart{\phi_1}{x} + b \cdot \ffpart{\phi_2}{x}\right) \\
+&= A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot a \cdot \ffpart{\phi_1}{x} + A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot b \cdot \ffpart{\phi_2}{x} \\
+&= a \cdot \left( A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \ffpart{\phi_1}{x}\right) + b \cdot \left( A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \ffpart{\phi_2}{x}\right) \\
+\end{align*}
+%FIXME si quelqu'un a une meilleure manière d'expliquer la quasi-linéarité, qu'il n'hésite pas à l'écrire ici !
+
+Traditionnellement, on utilise $\phi$ et non $u$ comme fonction inconnue. Notons que $R$ peut généralement décomposé en $R\left(x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y}\right) = F(x, y) + G\left( x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y} \right)$ où $G$ dépend toujours de $\phi$ ; $G$ est \og homogène \fg{} en $\phi$.
+
+Les EDP du second ordre \emph{linéaires} ont par contre la forme suivante
+\begin{equation}
+\label{eq:order2-genequalin}
+A \ffpart{\phi}{x} + B \fdpart{\phi}{x}{y} + C \ffpart{\phi}{y} + P \fpart{\phi}{x} + Q \fpart{\phi}{y} + G \phi =F
+\end{equation}
+où $A, B, C, P, Q, G, F$ sont au plus des fonctions de $x$ et $y$, mais pas de $\phi$ ou d'une de ses dérivées.
+
+Terminons cette petite introduction en indiquant que ces EDP sont homogènes ssi $F=0$.
+
+\section{Méthode des caractéristiques}
+
+Comme on l'a vu à la section précédente, la méthode des caractéristiques s'avère extrêmement puissante pour résoudre des EDP du premier ordre, malgré son côté un peu calculatoire. Elle permet -- en théorie -- de résoudre l'ensemble des équations du premier ordre. Dès lors, on aimerait bien pouvoir utiliser la méthode des caractéristiques pour résoudre les équations du second ordre.
+
+Pour cela, posons de nouveau notre \emph{problème de Cauchy} : on se donne une EDP du deuxième ordre, linéaire ou quasi-linéaire, ainsi qu'une courbe paramétrée $\Gamma \equiv (x(s), y(s))$ sur laquelle on spécifie deux informations : la valeur de la fonction $\phi(s)$ ainsi que la valeur de la dérivée par rapport à la normale, $\fpart{\phi}{n}(s)$. Il est nécessaire de spécifier deux conditions pour que le problème n'ait qu'une solution. On notera $n(s)$ la normale à la courbe, qui est un réel.%FIXME c'est pas très clair
+La question désormais est de savoir si l'on peut construire, à partir de ces informations, la solution de l'EDP au voisinage de la courbe $\Gamma$. Si c'est le cas, on pourra étendre cette construction pour couvrir l'ensemble du plan et donc, déterminer la solution $\phi$. Cela ressemble à la méthode vue pour les EDP du premier ordre. Comme on va le voir, ce sera beaucoup plus difficile...
+
+Commençons par établir la liste des relations que l'on connait au sujet de notre courbe et de notre fonction. On connait $\phi(s)$ le long de la courbe $(x(s), y(s))$, et donc on connait $\fpart{\phi}{s}$. Par conséquent, on connait $\grad \phi(s) = \left(\fpart{\phi}{x}(s), \fpart{\phi}{y}(s)\right)$ (le gradient de $\phi$ le long de $\Gamma$). Enfin, les dérivées de chaque terme du gradient, $\fpart{}{s} \left(\fpart{\phi}{x}\right)$ et $\fpart{}{s} \left(\fpart{\phi}{y}\right)$ sont également connus le long de $\Gamma$. On peut ainsi écrire (similairement à l'équation \ref{eq:order1-duds}) :
+\begin{equation}
+\label{eq:order2-dphidxs}
+\fpart{}{x} \left(\fpart{\phi}{x}\right) \cdot \fdif{x}{s} + \fpart{}{y} \left(\fpart{\phi}{x}\right) \cdot \fdif{y}{s} = \fdif{}{s} \left(\fpart{\phi}{x}\right)
+\end{equation}
+et
+\begin{equation}
+\label{eq:order2-dphidys}
+\fpart{}{x} \left(\fpart{\phi}{y}\right) \cdot \fdif{x}{s} + \fpart{}{y} \left(\fpart{\phi}{y}\right) \cdot \fdif{y}{s} = \fdif{}{s} \left(\fpart{\phi}{y}\right)
+\end{equation}
+et de la même manière, on peut tout mettre en notation matricielle (similaire à \ref{eq:order1-bienpose-edp-duds})
+\begin{equation}
+\label{eq:order2-bienpose-edp-dphidxys}
+\begin{pmatrix}
+A & B & C \\ \fdif{x}{s} & \fdif{y}{s} & 0 \\[0.5 em] 0 & \fdif{x}{s} & \fdif{y}{s}\\
+\end{pmatrix}
+\begin{pmatrix}
+\ffpart{\phi}{x} \\[0.5 em] \fdpart{\phi}{x}{y} \\[0.5 em] \ffpart{\phi}{y} \\
+\end{pmatrix}
+=\begin{pmatrix}
+R \\ \fdif{}{s} \left(\fpart{\phi}{x}\right) \\[0.5 em] \fdif{}{s} \left(\fpart{\phi}{y}\right) \\
+\end{pmatrix}
+\end{equation}
+
+Tant que le déterminant de ce système ne s'annule pas, on peut le résoudre et donc obtenir la valeur des trois dérivées partielles secondes. On peut dès lors calculer $\phi$ et ses dérivées premières à l'aide des relations suivantes
+\begin{subequations}
+\label{eq:order2-propag-all}
+\begin{align}
+\phi(x+\dif{x}, y+\dif{y}) &= \phi(x, y) + \dif{x} \fpart{\phi}{x} (x, y) + \dif{y} \fpart{\phi}{y} (x, y) \label{eq:order2-propag-phi} \\
+\fpart{\phi}{x} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{x} (x, y) + \dif{x} \fpart{}{x} \left(\fpart{\phi}{x}\right) (x, y) + \dif{y} \fpart{}{y} \left(\fpart{\phi}{x}\right) (x, y) \label{eq:order2-propag-dphidx} \\
+\fpart{\phi}{y} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{y} (x, y) + \dif{x} \fpart{}{x} \left(\fpart{\phi}{y}\right) (x, y) + \dif{y} \fpart{}{y} \left(\fpart{\phi}{y}\right) (x, y) \label{eq:order2-propag-dphidy}\\
+\end{align}
+\end{subequations}
+et donc, on peut propager la solution sur tout le plan. Pour que cela fonctionne, il faut que le déterminant de la matrice de \ref{eq:order2-bienpose-edp-dphidxys} ne s'annule pas -- cela définit un \emph{problème bien posé}.
+
+Il reste désormais à déterminer des directions de propagations, $(\dif{x}, \dif{y})$. Considérons donc une telle direction non parallèle à $\Gamma$, qui va nous permettre (du moins, on l'espère) de propager la solution. Les variations de $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ peuvent être décrites par les différentielles suivantes :
+\begin{subequations}
+\label{eq:order2-diffdphi-all}
+\begin{align}
+\fpart{}{x} \left( \fpart{\phi}{x} \right) \dif{x} + \fpart{}{y} \left( \fpart{\phi}{x} \right) \dif{y} &= \dif{\left( \fpart{\phi}{x} \right)} \label{eq:order2-diffdphi-dx} \\
+\fpart{}{x} \left( \fpart{\phi}{y} \right) \dif{x} + \fpart{}{y} \left( \fpart{\phi}{y} \right) \dif{y} &= \dif{\left( \fpart{\phi}{y} \right)} \label{eq:order2-diffdphi-dy} \\
+\end{align}
+\end{subequations}
+En y ajoutant l'EDP, on peut former encore un autre système
+\begin{equation}
+\label{eq:order2-dirpart}
+\begin{pmatrix}
+A & B & C \\ \dif{x} & \dif{y} & 0 \\ 0 & \dif{x} & \dif{y} \\
+\end{pmatrix}
+\begin{pmatrix}
+\ffpart{\phi}{x} \\[0.5em] \fdpart{\phi}{x}{y} \\[0.5em] \ffpart{\phi}{y} \\
+\end{pmatrix}
+= \begin{pmatrix}
+R \\[0.5em] \dif{\left(\fpart{\phi}{x}\right)} \\[0.5em] \dif{\left(\fpart{\phi}{y}\right)} \\
+\end{pmatrix}
+\end{equation}
+Notons la similarité entre les équations \ref{eq:order1-propag} et \ref{eq:order2-propag-all}, \ref{eq:order1-diffdu} et \ref{eq:order2-diffdphi-all}, et \ref{eq:order1-dirpart} et \ref{eq:order2-dirpart} -- elles expriment les mêmes idées concernant la propagation. De la même manière qu'on a souhaité, dans les EDP d'ordre 1, trouver une direction facile à utiliser, nous allons imposer que le déterminant de ce système soit nul, afin de trouver des directions caractéristiques particulières. Ces directions sont donc solutions de
+\[A \dif{y}^2 - B \dif{y} \dif{x} + C \dif{x}^2=0\]
+soit, en divisant par $\dif{x}$ :
+\footnote{Si $\dif{x}$ est nul, il suffit de diviser par $\dif{y}$ -- cela ne change strictement rien pour la suite.}
+\begin{equation}
+\label{eq:order2-caractequa}
+A \left(\fdif{y}{x}\right)^2 - B \fdif{y}{x} + C = 0
+\end{equation}
+Il ne reste plus qu'à calculer les deux racines de cette équation. Seulement voilà, elle n'a peut-être pas de solution !
+
+Comme toute équation du second degré, les racines peuvent être réelles et distinctes (auquel cas on a nos caractéristiques), réelles mais confondues (on verra que les caractéristiques dégénèrent) ou carrément imaginaires (aucune caractéristique n'est possible). Tout l'avenir de notre résolution par la méthode des caractéristiques dépend de la valeur de ces solutions, et on entrevoit déjà que dans certains cas, la méthode des caractéristiques est en mauvaise posture...
+
+%TODO d'abord, expliquer chaque type d'EDP, juste la méthode des caractéristiques ; ne pas expliquer comment on les résout, ce sera fait après.
 
 %TODO Systèmes d'EDP du premier ordre
 
-\section{Méthode de séparation des variables}
+\chapter{Méthode de séparation des variables}
 
 \end{document}
