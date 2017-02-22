@@ -2,6 +2,7 @@
 
 \usepackage[SIunits]{../../../eplunits}
 
+\usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{xspace}
 \usepackage{amsmath}
@@ -127,7 +128,25 @@ La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace 
 
 \section{Méthode des caractéristiques}
 
-Une EDP seule n'est pas résoluble De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de l'EDP et de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc ou courbe de Cauchy}), constitue le \emph{problème de Cauchy}.
+Une EDP seule n'est pas résoluble. De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de l'EDP et de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc ou courbe de Cauchy}), constitue le \emph{problème de Cauchy} (figure \ref{fig:order1-Cauchy}).
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=5]
+	% Axes
+	\draw[>=stealth, ->] (-0.2, 0) -- (2, 0);
+	\draw (2, 0) node[right] {$x$};
+	\draw[>=stealth, ->] (0, -0.2) -- (0, 1);
+	\draw (0, 1) node[above] {$y$};
+	% courbe de Cauchy
+	\draw[thick] [domain=-0.2:1.5] plot [variable=\x, samples=100] (\x, {0.4*\x^4-0.4*\x^3-0.4*\x+0.6});
+	\draw (0.5, 0.5) node[above] {$\Gamma\equiv (x(s), y(s))$};
+	\draw (0.6, 0.4) node[right] {$u(x(s), y(s))=f(s)$};
+	\draw[>=stealth, ->] (1.35, 0.5) -- (1.45, 0.7) node[midway, above left] {$s$};
+	\end{tikzpicture}
+	\caption{Représentation du problème de Cauchy. La valeur de $u$ est connue le long de la courbe $\Gamma$ paramétrée par $s$.}
+	\label{fig:order1-Cauchy}
+\end{figure}
 
 Pour résoudre les EDP du 1er ordre, une méthode particulièrement utile et puissance est la \emph{méthode des caractéristiques}. Le principe de cette méthode est la suivante : comme nous connaissons la valeur de $u$ sur $\Gamma$, ainsi que la variation de $u$ dans un voisinage de $\Gamma$ (grâce à l'EDP), il doit être possible de déterminer $u$ dans un voisinage de $\Gamma$, et d'appliquer à nouveau ce principe pour déterminer $u$ en n'importe quel point. On détermine donc $u(x, y)$ de proche en proche, en partant de la courbe $\Gamma$ et en utilisant l'équation différentielle pour obtenir les solutions intermédiaires entre $\Gamma$ et $(x, y)$, ce qui nous permet alors de bien calculer $u$.
 
@@ -196,7 +215,27 @@ soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \pro
 Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé
 \footnote{Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
 
-Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques}.
+Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques} (figure \ref{fig:order1-reseau-caract})
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=5]
+	% Axes
+	\draw[>=stealth, ->] (-0.2, 0) -- (2, 0);
+	\draw (2, 0) node[right] {$x$};
+	\draw[>=stealth, ->] (0, -0.2) -- (0, 1);
+	\draw (0, 1) node[above] {$y$};
+	% courbe de Cauchy
+	\draw[thick] [domain=-0.2:1.5] plot [variable=\x, samples=100] (\x, {0.4*\x^4-0.4*\x^3-0.4*\x+0.6});
+	\draw (0.5, 0.5) node[below right] {$\Gamma$};
+	% caractéristique
+	\draw[thick] [domain=1.1:1.4] plot [variable=\x] (\x, {4*\x^2-12*\x+9});
+	\draw (1.3, 0.2) node[right] {$C_s$};
+	\draw (1.235, 0.28) node {$\bullet$};
+	\end{tikzpicture}
+	\caption{La courbe de Cauchy et une des caractéristiques $C_s$. Il y a en fait une multitude de caractéristiques différentes.}
+	\label{fig:order1-reseau-caract}
+\end{figure}
 
 Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités. Également, si l'on peut imposer n'importe quelle valeur pour $u$ sur $\Gamma$, on ne peut pas imposer $u$ sur une caractéristique : la valeur de $u$ est dictée par l'EDP et par la courbe de Cauchy.
 
@@ -318,7 +357,7 @@ Il s'agit d'une EDP du premier ordre, avec $P=c$, $Q=1$ et $R=0$. La vitesse $c$
 
 Le domaine de l'équation de transport peut être borné ou non borné (ouvert) : un domaine borné est borné au niveau spatial, il y a des limites pour la valeur de $x$. Pour ce qui est de la \og condition initiale \fg{}\footnote{J'écris cette condition entre guillemets pour la différencier de la \og vraie \fg{} condition initiale, et qui est défini à la ligne d'après.} (la condition sur $u$ que l'on donne sur la courbe de Cauchy), on spécifie généralement $u$ sur la courbe de Cauchy définie par $\Gamma \equiv x(s)=s, t(s)=0$, et on donne $u(s, 0)=f(s)$. C'est alors une \emph{condition initiale}, une condition que l'on spécifie en un temps donné. L'intérêt des conditions initiales est avant tout pratique : lorsqu'on étudie un phénomène physique, on peut généralement déterminer ce phénomène à un instant donné (par des mesures par exemple), et on souhaite ensuite déterminer l'évolution de ce phénomène pour des instants ultérieurs.
 
-Il se fait que quelle que soit la vitesse $c$, une telle condition initiale est bien posée : la direction locale des caractéristiques est donnée par $\frac{\dif{t}}{\dif{x}}=\frac{1}{c}\neq 0$\footnote{Ici, il est bien plus simple d'écrire la direction comme étant une certaine \emph{pente}, afin d'aider l'interprétation.}, tandis que la direction locale de la courbe de Cauchy est $\frac{\dif{x}}{\dif{t}}=0$. Physiquement, si on donne une condition initiale ainsi que la vitesse de déplacement de la quantité étudiée, on peut toujours calculer (parfois difficilement, comme on verra) l'état de cette quantité pour un instant $t>0$, simplement en suivant la vitesse. Le seul cas où une telle détermination est impossible, et où le problème est mal posé, survient quand $c \rightarrow \infty$ : la caractéristique et la courbe de Cauchy sont parallèles et confondues.
+Il se fait que quelle que soit la vitesse $c$, une telle condition initiale est bien posée : la direction locale des caractéristiques est donnée par $\frac{\dif{t}}{\dif{x}}=\frac{1}{c}\neq 0$\footnote{Ici, il est bien plus simple d'écrire la direction comme étant une certaine \emph{pente}, afin d'aider l'interprétation.}, tandis que la direction locale de la courbe de Cauchy est $\frac{\dif{t}}{\dif{x}}=0$. Physiquement, si on donne une condition initiale ainsi que la vitesse de déplacement de la quantité étudiée, on peut toujours calculer (parfois difficilement, comme on verra) l'état de cette quantité pour un instant $t>0$, simplement en suivant la vitesse. Le seul cas où une telle détermination est impossible, et où le problème est mal posé, survient quand $c \rightarrow \infty$ : la caractéristique et la courbe de Cauchy sont parallèles et confondues.
 
 Commençons par étudier le cas le plus simple, avec $c$ constant. Dans ce cas, l'intégration des caractéristiques donne
 \[ \int_{s}^{x} \dif{x'} = c \int_{0}^{t} \Leftrightarrow x-s=ct\]
