@@ -51,6 +51,7 @@ Ce document a été conçu sur base du syllabus sur les équations aux dérivée
 \part{Équations aux dérivées partielles}
 
 \chapter*{Introduction et définitions}
+\addcontentsline{toc}{chapter}{Introduction et définition}
 
 Soit une fonction scalaire $u$, qui est notre inconnue, dépendant de $m$ variables $x_1, x_2, \ldots, x_m$ (par exemple les trois coordonnées de l'espace). Une relation $\mathcal{F}$ entre $u$, les variables $x_i$ et les dérivées partielles de $u$ par rapport à ces variables,
 \[ \mathcal{F} \left( u, x_1, \ldots, \fpart{u}{x_1}, \ldots, \ffpart{u}{x_1}, \ldots, \fdpart{u}{x_1}{x_2}, \ldots, \fnpart{u}{x_1}{n} \right) = 0\]
@@ -77,7 +78,8 @@ Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, 
 
 Terminons cette introduction par une remarque importante : toutes les équations que l'on va voir dans ce cours ont une interprétation physique. Cela a des conséquences sur les unités présentes dans les équations (comme on verra dans la section suivante) et cela implique également que les solutions que l'on recherche ont une valeur finie en n'importe quel point (pas de singularité, comme une valeur infinie au milieu du domaine) et qu'elles diminuent et approchent de zéro lorsqu'on s'éloigne de la région d'intérêt : la solution tend vers $0$ quand la position $(x, y, z)$ tend vers l'infini, ou $\lim\limits_{(x, y, z)\rightarrow\infty} u = 0$.
 
-\section{Quelques exemples, et une remarque concernant les unités}
+\section*{Quelques exemples, et une remarque concernant les unités}
+\addcontentsline{toc}{section}{Quelques exemples, et une remarque concernant les unités}
 
 Afin de mieux comprendre les différents types d'EDP, le mieux est de s'attarder sur quelques exemples, parfois notables.
 
@@ -116,6 +118,7 @@ Les EDP du 1er ordre quasi linéaires ont la forme
 P \fpart{u}{x} + Q \fpart{u}{y} = R
 \end{equation}
 avec $P, Q, R$ des fonctions qui dépendent, au plus, de $x$, $y$ et $u$ (elles ne peuvent pas dépendre des dérivées partielles, sinon l'équation ne serait plus linéaire). $R$ peut toujours être écrit sous la forme $R(x, y, u) = F(x, y) + H(x, y, u)$. L'équation sera homogène si $F=0$ (tous les termes dépendent de $u$)\footnote{Et très probablement, si $H$ est une fonction linéaire en $u$.}.
+% FIXME le très probablement signifie simplement que je ne suis pas sûr.
 
 Les EDP du 1er ordre linéaires ont presque la même forme, à savoir
 \begin{equation}
@@ -217,7 +220,7 @@ Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système 
 
 Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques} (figure \ref{fig:order1-reseau-caract})
 
-\begin{figure}
+\begin{figure} % TODO improve
 	\centering
 	\begin{tikzpicture}[scale=5]
 	% Axes
@@ -345,6 +348,7 @@ Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer
 %FIXME : il est possible que j'aie fait une ou deux erreurs
 
 \section{Équation de transport}
+% TODO rajouter des graphes, et encore des graphes.
 
 Un exemple classique d'EDP du premier ordre, unidimensionnel et dépendant du temps, est \emph{l'équation de transport} (ou équation de convection) :
 \begin{equation}
@@ -465,7 +469,7 @@ La vitesse $c$ est à l'intérieur de la dérivée partielle par rapport à $x$.
 
 Comme d'habitude, on considère un problème posé en condition initiale ($x(s)=s$, $t(s)=0$, et $u(s, 0)=f(s)$). Le domaine peut être soit non borné (ouvert), soit périodique (de période $L$).
 
-L'équation de transport tire son nom du fait qu'elle conserve l'intégrale de la fonction dans le temps. En effet, en notant $\Omega$ le domaine et $\partial \Omega$ son bord, on a
+L'équation tire son nom du fait qu'elle conserve l'intégrale de la fonction dans le temps. En effet, en notant $\Omega$ le domaine et $\partial \Omega$ son bord, on a
 \begin{align*}
 \fdif{}{t} \left( \int_\Omega u \dif{x} \right) &= \int_\Omega \fpart{u}{t} \dif{x} \\
 &= - \int_\Omega \fpart{}{x}(cu) \dif{x} \\
@@ -505,9 +509,12 @@ c(x) &= c_\mathrm{max} - \frac{c_\mathrm{max}-c_\mathrm{min}}{1+x^2/a^2} \\
 \end{align*}
 La vitesse présente un minimum en $x=0$. La fonction $u$ est alors déformée lors du passage au niveau du puits de vitesse ; en entrant dans le puits, la vitesse diminue, ce qui implique que la valeur de la fonction augmente dans le puits, l'intégrale devant être conservée. En sortant du puits, la vitesse augmente et la fonction diminue à nouveau. On a donc une sorte de \og sursaut \fg{} de la fonction à l'intérieur de la vitesse.
 
-%TODO équations non linéaires, équation de Burgers, discontinuités.
+%TODO équations non linéaires
+%TODO équation de Burgers
+%TODO discontinuités
 
 \section{Le problème inverse de Cauchy : à la recherche de l'EDP (ou l'examen de septembre 2016)}
+% TODO rajouter des graphes
 
 Lors de ce chapitre, nous avons vu comment résoudre les EDP du 1\ier{} ordre à l'aide de la méthode des caractéristiques. À partir de l'équation \ref{eq:order1-genequa}, nous avons développé la méthode des caractéristiques qui nous permet de résoudre ces EDP, lorsqu'une condition est donnée sur une courbe $\Gamma$. Le c\oe{}ur de cette méthode est le calcul de l'équation des caractéristiques, à partir de la relation caractéristique
 \begin{equation*}
@@ -558,9 +565,11 @@ et les caractéristiques ont donc comme équation générale
 
 Rappelons la démarche : on sait que la caractéristique définie par $s$ coupe la courbe de Cauchy au point de cette courbe défini par $s$. L'égalité des coordonnées donne une relation entre les deux, qui nous permet de calculer $B(r_0, s)$.
 
+% FIXME Ligne d'après : overfull hbox 1.30pt too wide
 Déterminons à présent $P$ et $Q$. L'objectif à présent est d'obtenir une expression de la forme $f(x, y) \dif{y} = g(x, y) \dif{x}$, pour laquelle on pourra dire $P=f$ et $Q=g$. Pour cela, on nous propose de différencier notre équation des caractéristiques. Faisons-le :
 \begin{align*}
-r-r_0 &= L(\theta-s) \shortintertext{En différenciant} \\
+r-r_0 &= L(\theta-s)
+\shortintertext{En différenciant} \\
 \dif{r} &= L \dif{\theta}
 \shortintertext{En utilisant la règle de la chaine} \\
 \fpart{r}{x} \dif{x} + \fpart{r}{y} \dif{y}
@@ -574,7 +583,8 @@ r-r_0 &= L(\theta-s) \shortintertext{En différenciant} \\
 \frac{x}{\sqrt{x^2+y^2}} \dif{x} + \frac{y}{\sqrt{x^2+y^2}} \dif{y}
 &= L \frac{x^2}{x^2+y^2} \frac{-y}{x^2} \dif{x} + L \frac{x^2}{x^2+y^2} \frac{1}{x} \dif{y} \\
 \frac{x}{r} \dif{x} + \frac{y}{r} \dif{y} &= \frac{-yL}{r^2} \dif{x} + \frac{xL}{r^2} \dif{y} \\
-\left(\frac{x}{r} + \frac{yL}{r^2} \right) \dif{x} &= \left(\frac{xL}{r^2} - \frac{y}{r}\right) \dif{y} \shortintertext{En multipliant par $r$ (unités)} \\
+\left(\frac{x}{r} + \frac{yL}{r^2} \right) \dif{x} &= \left(\frac{xL}{r^2} - \frac{y}{r}\right) \dif{y}
+\shortintertext{En multipliant par $r$ (unités)} \\
 \left( x + \frac{yL}{\sqrt{x^2+y^2}} \right) \dif{x} &= \left( \frac{xL}{\sqrt{x^2+y^2}} - y \right) \\
 \end{align*}
 et donc, on obtient la valeur de $P$ et $Q$ :
@@ -589,9 +599,15 @@ Que retenir de tout cela ? Une caractéristique pour une valeur $s_1$ croise la 
 
 %TODO rajouter un autre exemple
 
-\chapter{Les EDP du second ordre}
+%TODO Systèmes d'EDP du premier ordre
 
-Après avoir vu les EDP du premier ordre, emmenons nos Stormtroopers sur une nouvelle planète : les EDP du second ordre\footnote{On dit aussi, plus correctement, du deuxième ordre.}, qui vont nous intéresser pendant le reste de ce ce document.\footnote{Oui, j'ai craqué.}
+%  /======================================================\
+% |                                                       %|
+  \chapter{Les EDP du second ordre}                       %|
+% |                                                       %|
+%  \======================================================/
+
+Après avoir vu les EDP du premier ordre, emmenons nos Stormtroopers sur une nouvelle planète : les EDP du second ordre\footnote{On dit aussi, plus correctement, du deuxième ordre.}, qui vont nous intéresser pendant le reste de ce document.\footnote{Oui, j'ai craqué.}
 
 Les EDP du second ordre contiennent des dérivées d'ordre 2 de la fonction que l'on recherche. L'EDP la plus générale du deuxième ordre et à deux variables indépendantes est
 \begin{equation}
@@ -602,7 +618,7 @@ où $A, B, C, R$ sont fonctions au plus de $x$, $y$, $\phi$, $\fpart{\phi}{x}$ e
 
 Cette EDP est quasi-linéaire, c'est-à-dire linéaire par rapport aux dérivées du plus haut ordre en chacune des variables, et c'est le moment rêvé d'expliquer ce que cela signifie. La linéarité signifie que toute combinaison linéaire de deux solutions $\phi_1$ et $\phi_2$ est également une solution, lorsqu'on l'injecte dans l'équation : comme les opérateurs de dérivation sont linéaires, la linéarité doit s'appliquer à chaque terme de l'équation contenant la fonction $\phi$ ou ses dérivées, et les différentes apparitions de la fonction $\phi$ doivent être linéaires. La quasi-linéarité retire cette contrainte, en ignorant la linéarité de toutes les dérivées à part les plus élevées : en gros, les termes contenant les dérivées du plus haut ordre ($\ffpart{\phi}{x}$, $\fdpart{\phi}{x}{y}$ et $\ffpart{\phi}{y}$) sont linéaires, et on considère uniquement ceux-là. Cela signifie qu'une combinaison linéaire $a \cdot \left(\ffpart{\phi}{x}\right)_1 + b \cdot \left(\ffpart{\phi}{x}\right)_2$ est bien \og solution \fg{} de l'EDP, en ignorant les autres dérivées de $\phi$ comme s'il s'agissait de constantes ou d'autres fonctions.
 \footnote{Si le paragraphe n'est pas très clair, ne vous inquiétez pas : retenez juste la définition de la quasi-linéarité, ainsi que la forme générale de l'équation, et normalement tout ira bien.}
-Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions de dérivées d'ordre 2, mais bien de dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :
+Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions des dérivées d'ordre 2, mais bien des dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :\footnote{Les parenthèses après le $A$ servent à rappeler que c'est une fonction de ces paramètres.}
 \begin{align*}
 & A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \left(a \cdot \ffpart{\phi_1}{x} + b \cdot \ffpart{\phi_2}{x}\right) \\
 &= A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot a \cdot \ffpart{\phi_1}{x} + A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot b \cdot \ffpart{\phi_2}{x} \\
@@ -610,7 +626,7 @@ Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 o
 \end{align*}
 %FIXME si quelqu'un a une meilleure manière d'expliquer la quasi-linéarité, qu'il n'hésite pas à l'écrire ici !
 
-Traditionnellement, on utilise $\phi$ et non $u$ comme fonction inconnue. Notons que $R$ peut généralement décomposé en $R\left(x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y}\right) = F(x, y) + G\left( x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y} \right)$ où $G$ dépend toujours de $\phi$ ; $G$ est \og homogène \fg{} en $\phi$.
+Traditionnellement, on utilise $\phi$ et non $u$ comme fonction inconnue pour les équations du second ordre. Notons que $R$ peut généralement décomposé en $R\left(x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y}\right) = F(x, y) + G\left( x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y} \right)$ où $G$ dépend toujours de $\phi$ ; $G$ est \og homogène \fg{} en $\phi$.
 
 Les EDP du second ordre \emph{linéaires} ont par contre la forme suivante
 \begin{equation}
@@ -623,12 +639,13 @@ Terminons cette petite introduction en indiquant que ces EDP sont homogènes ssi
 
 \section{Problème de Cauchy et méthode des caractéristiques}
 
-Comme on l'a vu à la section précédente, la méthode des caractéristiques s'avère extrêmement puissante pour résoudre des EDP du premier ordre, malgré son côté un peu calculatoire. Elle permet -- en théorie -- de résoudre l'ensemble des équations du premier ordre. Dès lors, on aimerait bien pouvoir utiliser la méthode des caractéristiques pour résoudre les équations du second ordre.
+Comme on l'a vu à la section précédente, la méthode des caractéristiques s'avère extrêmement puissante pour résoudre des EDP du premier ordre, malgré son côté un peu (beaucoup) calculatoire. Elle permet -- en théorie -- de résoudre l'ensemble des équations du premier ordre. Dès lors, on aimerait bien pouvoir utiliser la méthode des caractéristiques pour résoudre les équations du second ordre.
 
-Pour cela, posons de nouveau notre \emph{problème de Cauchy} : on se donne une EDP du deuxième ordre, linéaire ou quasi-linéaire, ainsi qu'une courbe paramétrée $\Gamma \equiv (x(s), y(s))$ sur laquelle on spécifie deux informations : la valeur de la fonction $\phi(s)$ ainsi que la valeur de la dérivée par rapport à la normale, $\fpart{\phi}{n}(s)$. Il est nécessaire de spécifier deux conditions pour que le problème n'ait qu'une solution. On notera $n(s)$ la normale à la courbe, qui est un réel.%FIXME c'est pas très clair
-La question désormais est de savoir si l'on peut construire, à partir de ces informations, la solution de l'EDP au voisinage de la courbe $\Gamma$. Si c'est le cas, on pourra étendre cette construction pour couvrir l'ensemble du plan et donc, déterminer la solution $\phi$. Cela ressemble à la méthode vue pour les EDP du premier ordre. Comme on va le voir, ce sera beaucoup plus difficile...
+Pour cela, posons de nouveau notre \emph{problème de Cauchy} : on se donne une EDP du deuxième ordre, linéaire ou quasi-linéaire, ainsi qu'une courbe paramétrée $\Gamma \equiv (x(s), y(s))$ sur laquelle on spécifie deux informations : la valeur de la fonction $\phi(s)$ ainsi que la valeur de la dérivée par rapport à la normale, $\fpart{\phi}{n}(s)$. Il est nécessaire de spécifier deux conditions pour que le problème n'ait qu'une solution. On notera $n(s)$ la normale à la courbe, qui est un réel. %FIXME c'est pas très clair
+La question désormais est de savoir si l'on peut construire, à partir de ces informations, la solution de l'EDP au voisinage de la courbe $\Gamma$. Si c'est le cas, on pourra étendre cette construction pour couvrir l'ensemble du plan et donc, déterminer la solution $\phi$. Cela ressemble à la méthode vue pour les EDP du premier ordre. Et comme on va le voir, ce sera beaucoup plus difficile...
 
-Commençons par établir la liste des relations que l'on connait au sujet de notre courbe et de notre fonction. On connait $\phi(s)$ le long de la courbe $(x(s), y(s))$, et donc on connait $\fpart{\phi}{s}$. Par conséquent, on connait $\grad \phi(s) = \left(\fpart{\phi}{x}(s), \fpart{\phi}{y}(s)\right)$ (le gradient de $\phi$ le long de $\Gamma$). Enfin, les dérivées de chaque terme du gradient, $\fpart{}{s} \left(\fpart{\phi}{x}\right)$ et $\fpart{}{s} \left(\fpart{\phi}{y}\right)$ sont également connus le long de $\Gamma$. On peut ainsi écrire (similairement à l'équation \ref{eq:order1-duds}) :
+Commençons par établir la liste des relations que l'on connait au sujet de notre courbe et de notre fonction. On connait $\phi(s) = f(s)$ le long de la courbe $\Gamma(s) \equiv (x(s), y(s))$, et donc on connait $\fpart{\phi}{s}(s) = f'(s)$. Grâce à $\fpart{\phi}{n}(s)$, la dérivée normale à la courbe, on connait $\grad \phi(s) = \left(\fpart{\phi}{x}(s), \fpart{\phi}{y}(s)\right)$ (le gradient de $\phi$ le long de $\Gamma$). %\footnote{Plus en détail, \[ \fpart{\phi}{x}(x(s)) = \fpart{\phi}{s}(s) \fpart{s}{x}(x) \]}.
+Enfin, les dérivées de chaque terme du gradient, $\fpart{}{s} \left(\fpart{\phi}{x}\right)$ et $\fpart{}{s} \left(\fpart{\phi}{y}\right)$ sont également connus le long de $\Gamma$. On peut ainsi écrire (similairement à l'équation \ref{eq:order1-duds}) :
 \begin{equation}
 \label{eq:order2-dphidxs}
 \fpart{}{x} \left(\fpart{\phi}{x}\right) \cdot \fdif{x}{s} + \fpart{}{y} \left(\fpart{\phi}{x}\right) \cdot \fdif{y}{s} = \fdif{}{s} \left(\fpart{\phi}{x}\right)
@@ -657,8 +674,8 @@ Tant que le déterminant de ce système ne s'annule pas, on peut le résoudre et
 \label{eq:order2-propag-all}
 \begin{align}
 \phi(x+\dif{x}, y+\dif{y}) &= \phi(x, y) + \dif{x} \fpart{\phi}{x} (x, y) + \dif{y} \fpart{\phi}{y} (x, y) \label{eq:order2-propag-phi} \\
-\fpart{\phi}{x} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{x} (x, y) + \dif{x} \fpart{}{x} \left(\fpart{\phi}{x}\right) (x, y) + \dif{y} \fpart{}{y} \left(\fpart{\phi}{x}\right) (x, y) \label{eq:order2-propag-dphidx} \\
-\fpart{\phi}{y} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{y} (x, y) + \dif{x} \fpart{}{x} \left(\fpart{\phi}{y}\right) (x, y) + \dif{y} \fpart{}{y} \left(\fpart{\phi}{y}\right) (x, y) \label{eq:order2-propag-dphidy}\\
+\fpart{\phi}{x} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{x} (x, y) + \dif{x} \left( \fpart{}{x} \fpart{\phi}{x}\right) (x, y) + \dif{y} \left( \fpart{}{y} \fpart{\phi}{x}\right) (x, y) \label{eq:order2-propag-dphidx} \\
+\fpart{\phi}{y} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{y} (x, y) + \dif{x} \left( \fpart{}{x} \fpart{\phi}{y}\right) (x, y) + \dif{y} \left( \fpart{}{y} \fpart{\phi}{y}\right) (x, y) \label{eq:order2-propag-dphidy}
 \end{align}
 \end{subequations}
 et donc, on peut propager la solution sur tout le plan. Pour que cela fonctionne, il faut que le déterminant de la matrice de \ref{eq:order2-bienpose-edp-dphidxys} ne s'annule pas -- cela définit un \emph{problème bien posé}.
@@ -702,12 +719,12 @@ Comme toute équation du second degré, les racines peuvent être réelles et di
 
 Les trois cas que nous avons relevé ci-dessus ne sont pas anodin, et sont l'objet de théories particulières pour chacune :
 \begin{itemize}
-	\item Lorsque $B^2-4AC>$, l'EDP est qualifiée \emph{hyperbolique}. L'équation \ref{eq:order2-caractequa} possède deux solution distinctes, et la méthode des caractéristiques est applicable. Un exemple est l'équation d'onde.
+	\item Lorsque $B^2-4AC>0$, l'EDP est qualifiée \emph{hyperbolique}. L'équation \ref{eq:order2-caractequa} possède deux solution distinctes, et la méthode des caractéristiques est applicable. Un exemple est l'équation d'onde.
 	\item Lorsque $B^2-4AC=0$, l'EDP est dite \emph{parabolique}. L'équation \ref{eq:order2-caractequa} ne possède qu'une seule solution, et la méthode des caractéristiques n'est pas applicable. Un exemple est l'équation de diffusion, qui doit être résolue en partant d'une condition initiale.
 	\item Lorsque $B^2-4AC<0$, l'EDP est \emph{elliptique}. Les solutions de \ref{eq:order2-caractequa} sont complexes, la méthode des caractéristiques n'est plus applicable. Un exemple est l'équation de Poisson, qui doit être résolue de manière globale.
 \end{itemize}
 
-Les types d'EDP sont ainsi nommés par analogie avec les différentes coniques : l'hyperbole, la parabole et l'ellipse (le cercle en étant un cas particulier).
+Les types d'EDP sont ainsi nommés par analogie avec les différentes coniques, et aux conditions permettant de les différencier : l'hyperbole, la parabole et l'ellipse (le cercle en étant un cas particulier).
 
 Le premier type peut être résolu par la méthode des caractéristiques, même si celle-ci est particulièrement lourde. Les deux autres types nécessitent d'autres méthodes ; plus particulièrement, nous allons voir la méthode de séparation des variables pour les résoudre.
 
@@ -722,7 +739,7 @@ Nous vous redirigeons vers le syllabus officiel et vers l'APE 3 pour de plus amp
 %TODO mettre l'équation d'onde et ses caractéristiques, les conditions aux frontières
 %TODO mettre d'Alembert : factorisation, solution, onde stationnaire
 
-Il est maintenant possible de définir ce que l'on entend par EDP hyperbolique. Le point commun de toutes ces équations est que l'information de la condition initiale est \emph{transportée} : l'information est transportée le long des caractéristiques à une vitesse finie (la vitesse de l'onde) $c$, et donc il faut un certain temps de propagation, pendant lequel aucune information n'est connue. Une autre propriété est que la régularité est la \emph{smoothness} de la solution est déterminée par la \emph{smoothness} de la condition initiale : une discontinuité de la condition initiale se propagera dans l'ensemble du domaine, exactement comme une onde. Les EDP hyperboliques ont enfin la propriété intéressante que leur problème de Cauchy est bien posé et est résoluble dans les environs de la condition initiale.
+Il est maintenant possible de définir ce que l'on entend par EDP hyperbolique. Le point commun de toutes ces équations est que l'information de la condition initiale est \emph{transportée} : l'information est transportée le long des caractéristiques à une vitesse finie (la vitesse de l'onde) $c$, et donc il faut un certain temps de propagation, pendant lequel aucune information n'est connue. Une autre propriété est que la régularité et la \emph{smoothness} de la solution est déterminée par la \emph{smoothness} de la condition initiale : une discontinuité de la condition initiale se propagera dans l'ensemble du domaine, exactement comme une onde. Les EDP hyperboliques ont enfin la propriété intéressante que leur problème de Cauchy est bien posé et est résoluble dans les environs de la condition initiale.
 
 Les EDP du premier ordre, de transport ou non, conservatives ou non, et les EDP du second ordre du type équation d'onde, ont les mêmes caractéristiques de propagation d'information à vitesse finie et ont toutes un comportement similaire à une onde transportant de l'information.
 
@@ -732,7 +749,7 @@ Les EDP du premier ordre, de transport ou non, conservatives ou non, et les EDP 
 %TODO Domaine infini : solution gaussienne, diffusion de l'intégrale, singularité, Dirac, fonction de Green
 %TODO illustrer brièvement la méthode de séparation des variables, pour montrer la diffusion et l'atténuation.
 
-Les EDP paraboliques ont toutes un comportement similaire à celui de l'équation de diffusion. Elles doivent être posées en terme de condition initiale, et ont la fâcheuse tendance d'exploser pour des temps négatifs : l'évolution qu'elles décrivent est à un seul sens, et tenter de remonter la solution jusqu'à l'origine du temps donnera des singularités, des valeurs infinies et incohérentes, ou des indéterminations. Dans la direction naturelle d'évolution, elles dispersent la quantité, gomment les singularités, et atténuent les petits sursauts initiaux ; l'information initiale se perd au fur et à mesure de l'évolution du temps, et le phénomène n'est pas réversible.
+Les EDP paraboliques ont toutes un comportement similaire à celui de l'équation de diffusion. Elles sont causales, doivent être posées en terme de condition initiale, et ont la fâcheuse tendance d'exploser pour des temps négatifs : l'évolution qu'elles décrivent est à un seul sens, et tenter de remonter la solution jusqu'à l'origine du temps donnera des singularités, des valeurs infinies et incohérentes, ou des indéterminations. Dans la direction naturelle d'évolution, elles dispersent la quantité, gomment les singularités, et atténuent les petits sursauts initiaux ; l'information initiale se perd au fur et à mesure de l'évolution du temps, et le phénomène n'est pas réversible.
 
 Ces équations portent donc bien leur nom : la quantité initiale \emph{diffuse} dans l'ensemble du domaine, dans un processus irréversible. C'est tout le contraire des EDP hyperboliques ou de l'équation d'onde, pour laquelle on peut toujours remonter dans le temps et calculer la solution dans l'ensemble du domaine. A noter que les EDP paraboliques possèdent des caractéristiques transportant l'information de l'état initial : néanmoins, elles ne permettent pas de résoudre l'équation.
 
@@ -741,6 +758,54 @@ Ces équations portent donc bien leur nom : la quantité initiale \emph{diffuse}
 %TODO présenter Poisson et Laplace, les conditions limites, la relation de compatibilité, la singularité, solution de Poisson, fonction de Green.
 
 Les différentes EDP elliptiques requièrent de résoudre le problème sur un domaine précis, de manière globale : la valeur de $\phi$ en chaque point est influencée par la valeur de $\phi$ aux points environnants. L'information se transmet donc sur l'entièreté de la surface à une vitesse infinie. Les solutions sont toujours régulières et \emph{smooth} : l'équation atténue les irrégularités et les discontinuités dans l'ensemble du domaine, même si les conditions aux frontières sont irrégulières (les frontières gardent leurs irrégularités, mais celles-ci ne se propagent pas). Cette propriété de régularité complète provient directement de l'absence de caractéristiques : les irrégularités ne peuvent se propager que le long de celles-ci, et comme elles sont absentes, il ne peut pas y avoir de discontinuité, ni pour $\phi$ ni pour ses dérivées. Les EDP elliptiques sont donc adaptées à la description de phénomènes statiques, où toute irrégularité a été effacée, par exemple après une diffusion. Elles sont donc à l'opposé des équations hyperboliques.
+
+% Idéalement, la section suivante devrait contenir le développement de la méthode des caractéristiques pour l'équation d'onde. Mais j'ai une grosse flemme de vouloir l'expliquer.
+\section{La méthode des caractéristiques appliquée à l'équation d'onde}
+
+Des trois types d'équations du second ordre que nous avons vu, un seul peut être résolu par la méthode des caractéristiques : les EDP hyperboliques, aussi nommées équations d'onde. Ce sont des équations de la forme
+\begin{equation*}
+A \ffpart{\phi}{x} + B \fdpart{\phi}{x}{y} + C \ffpart{\phi}{y} = R \tag{\ref{eq:order2-genequa}}
+\end{equation*}
+pour lesquelles $B^2-4AC>0$.
+
+\subsection{Résolution de d'Alembert}
+
+Comme l'a montré la précédente section, résoudre l'équation d'onde par la méthode des caractéristiques est particulièrement lourde, même si elle est intéressante. Ne pourrait-on pas la résoudre plus facilement ?
+
+La réponse est oui, même si elle requiert de l'astuce. Il se fait que l'on peut \emph{factoriser} l'équation d'onde de la façon suivante :
+\begin{equation}
+\label{eq:order2-ondes-facto}
+\left( c \fpart{}{x} - \fpart{}{t} \right) \left( c \fpart{}{x} + \fpart{}{t} \right) \phi = 0
+\end{equation}
+De quel droit peut-on faire ça ? Du droit que l'on a de considérer les opérateurs de dérivation comme des opérateurs linéaires (un peu spéciaux, mais tout à fait normaux), de considérer que $\fdpart{\phi}{x}{t}=\fdpart{\phi}{t}{x}$, et de notre droit à la rapidité.
+
+Cette réécriture nous informe d'une propriété que l'on avait déjà relevé lors de la méthode des caractéristiques : les quantités $x-ct$ et $x+ct$ sont particulières, elles semblent être conservées. Posons $\xi(x, t) = x-ct$ et $\eta(x, t) = x+ct$, ce qui donne également $x = \frac{\xi+\eta}{2}$ et $t=\frac{\eta-\xi}{2c}$, et calculons un peu les opérateurs de dérivations basés sur ces nouvelles variables :
+\begin{subequations}
+\label{order2-ondes-dxi-deta}
+\begin{align}
+\fpart{}{\xi} &= \fpart{x}{\xi} \fpart{}{x} + \fpart{t}{\xi} \fpart{}{t} = \frac{1}{2c} \left( c \fpart{}{x} - \fpart{}{t} \right) \\
+\fpart{}{\eta} &= \fpart{x}{\eta} \fpart{}{x} + \fpart{t}{\eta} \fpart{}{t} = \frac{1}{2c} \left( c \fpart{}{x} + \fpart{}{t} \right)
+\end{align}
+\end{subequations}
+On constate que ce sont justement les deux opérateurs résultants de la factorisation, à un facteur $1/2c$ près. On peut donc réécrire l'équation \ref{eq:order2-ondes-facto} sous la \emph{forme canonique}
+\begin{equation}
+\label{eq:order2-ondes-canonique}
+\fpart{}{\xi} \fpart{}{\eta} \phi = \fdpart{\phi}{\xi}{\eta} = 0
+\end{equation}
+
+Cette forme canonique, en plus d'être relativement élégante, permet également de simplifier la résolution. En effet, écrivons-là sous cette forme :
+\[ \fpart{}{\xi} \left( \fpart{\phi}{\eta} \right) = 0 \]
+Cela nous dit que $\fpart{\phi}{\eta}$ est une fonction constante par rapport à $\xi$, vu que sa dérivée par rapport à $\xi$ est nulle. C'est donc, au plus, une fonction de $\eta$, et donc $\fpart{\phi}{\eta} = f_2'(\eta)$, pour une certaine fonction $f_2(\eta)$ encore à définir. En intégrant, on a donc $\phi(\xi, \eta) = f_2(\eta) + K(\xi)$, avec $K$ une constante (par rapport à $\eta$) pouvant dépendre de $\xi$. D'un autre côté, l'équation sous cette forme
+\[ \fpart{}{\eta} \left( \fpart{\phi}{\xi} \right) = 0 \]
+nous indique que $\fpart{\phi}{\xi}$ est une fonction constante par rapport à $\eta$, et donc est au plus une fonction de $\xi$, et donc $\fpart{\phi}{\xi} = f_1'(\xi)$ pour une fonction $f_1$ encore à définir. En intégrant, on a cette fois $\phi(\xi, \eta) = f_1(\xi) + L(\eta)$, où $L$ est une constante pouvant dépendre de $\eta$. Sauf que les deux fonctions $K$ et $L$ ressemblent étrangement à $f_1$ et $f_2$ respectivement. Disons que ce sont ces fonctions, et notre solution devient
+\[ \phi(\xi, \eta) = f_1(\xi) + f_2(\eta) \]
+c'est-à-dire
+\begin{equation}
+\label{order2-ondes-solution-canonique1}
+\phi(x, t) = f_1(x-ct) + f_2(x+ct)
+\end{equation}
+
+Même si les fonctions $f_1$ et $f_2$ sont pour le moment inconnues, cette solution indique une propriété fondamental de l'équation d'onde en une dimension : une onde est composée de deux parties, définies chacune par leur fonction respective ($f_1$ et $f_2$), qui se propagent chacune dans des directions opposées ; la partie liée à $f_1$ se propage dans la direction des $x$ croissants au fur et à mesure du temps (car $x-ct=$ constante implique que $x$ et $t$ augmentent dans le même sens), et la partie liée à $f_2$ se propage dans la direction des $x$ décroissants. Cela rejoint l'intuition de ce qu'est une onde : elle se propage dans les deux sens de l'espace unidimensionnel, à la même vitesse au signe près.
 
 \section{Avant de conclure}
 
@@ -754,10 +819,15 @@ La classification peut aussi être faite à partir de l'étude de l'opérateur l
 	\item L'EDP est elliptique si ses valeurs propres sont toutes strictement positives ou toutes strictement négatives.
 	\item L'EDP est parabolique si les valeurs propres sont toutes strictement positives ou toutes strictement négatives, à part une seule qui vaut zéro.
 	\item L'EDP est hyperbolique si toutes les valeurs propres sont strictement positives sauf une qui est strictement négative, ou l'inverse.
-	\item L'EDP est dite \emph{ultrahyperbolique} si il y a plus d'une valeur propre qui n'est pas du même signe, et aucune valeur propre n'est négative. Ce type d'équation est très rare.
+	\item L'EDP est dite \emph{ultrahyperbolique} si il y a plus d'une valeur propre qui n'est pas du même signe, et aucune valeur propre n'est négative. Ce type d'équation est très rare, et n'aura droit qu'à une mention honorable dans ces notes.
 \end{itemize}
 
-%TODO Systèmes d'EDP du premier ordre
+\chapter{L'équation de diffusion}
+
+L'archétype de l'équation du second ordre parabolique est \emph{l'équation de diffusion} :
+\begin{equation}
+\label{eq:diffusion-genequa}
+\end{equation}
 
 \chapter{Méthode de séparation des variables}
 
