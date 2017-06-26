@@ -1,0 +1,209 @@
+%	\documentclass{report}
+%	\usepackage[francais]{babel}
+%	\usepackage[utf8]{inputenc}
+%	\usepackage[T1]{fontenc}
+%	\usepackage{amsmath}
+%	\usepackage{amssymb}
+%	\usepackage{amsthm}
+%	\usepackage{layout}
+%	\usepackage{geometry}
+%	%\usepackage{mathtools}
+%	\usepackage{tensor}
+%	
+%	\newcommand{\R}{\mathbb{R}}
+%	\newcommand{\K}{\mathbf{K}} % new command, ajouter à index.tex
+%	\newcommand{\Sy}{\mathcal{S}}
+%	\newcommand{\Col}{\mathrm{Col}}
+%	%\newcommand{\scal}[2]{\left( #1 \; | \; #2 \right)}
+%	\newcommand{\scal}[2]{\left( #1 \mid #2 \right)}
+%	\newcommand{\dist}{\mathrm{dist}}
+%	\newcommand{\dx}[1]{\mathrm{d}#1}
+%	\newcommand{\norme}[1]{\| #1 \|}
+%	\newcommand{\vect}[1]{\overrightarrow{#1}}
+%	\newcommand{\paral}{\mathbin{\!/\mkern-3mu/\!}}
+%	%\newcommand{\basedmatrix}[3]{\prescript{1}{#1}{(#2)}_{#3}^1 }
+%	% using tensors because it has the good alignment
+%	% http://tex.stackexchange.com/questions/109694/the-prescript-command-from-the-mathtools-package-gives-incorrect-alignment
+%	% http://tex.stackexchange.com/questions/11542/left-and-right-subscript
+%	\newcommand{\elfbase}[3]{\tensor*[_{#1}]{(#2)}{_{#3}}}
+%	\newcommand{\rang}{\mathrm{rang}}
+%	
+%	% pour le package amsthm, voir
+%	% http://tex.stackexchange.com/questions/45817/theorem-definition-lemma-problem-numbering
+%	% http://tex.stackexchange.com/questions/2160/how-to-make-theorems-and-equations-share-numbering
+%	
+%	\theoremstyle{definition}
+%	\newtheorem{defn}{Définition}[chapter]
+%	\newtheorem{thm}{Théorème}[chapter]
+%	\newtheorem{lemme}[thm]{Lemme}
+%	\newtheorem{corol}[thm]{Corollaire}
+%	\newtheorem*{exemple}{Exemple}
+%	\newtheorem{propriete}[thm]{Propriété}
+%	
+%	\author{Jean-Martin Vlaeminck}
+%	\date{\today}
+%	\title{LFSAB1102 - Formes quadratiques}
+%	
+%	\begin{document}
+%	
+%	\maketitle
+
+\chapter{Formes quadratiques}
+
+Dans ce chapitre\marginpar{CM4 \\ 17/02/2016}, nous allons voir les formes quadratiques, utilisées entre autre en analyse et en géométrie analytique.
+
+\section{Problème introductif}
+
+Comme indiqué dans le syllabus, un des problèmes nécessitant l'utilisation de formes quadratiques est l'étude des extremas d'une fonction en $n$ variables. Cette fonction a $n$ dérivées premières, et $n^2$ dérivées secondes, données dans la matrice hessienne de $f$ :
+\[ H(f(x_1, \ldots, x_n)) = \begin{pmatrix}
+\frac{\partial^2}{\partial x_1^2} f & \frac{\partial^2}{\partial x_2 \partial x_1} f & \ldots & \frac{\partial^2}{\partial x_n \partial x_1} f \\
+\frac{\partial^2}{\partial x_1 \partial x_2} f & \frac{\partial^2}{\partial x_2^2} f & \ldots & \frac{\partial^2}{\partial x_n \partial x_2} f \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^2}{\partial x_1 \partial x_n} f & \frac{\partial^2}{\partial x_2 \partial x_n} f & \ldots & \frac{\partial^2}{\partial x_n^2} f \\
+\end{pmatrix} \]
+
+La question de trouver les extremas devient alors la question de déterminer le \emph{signe} de cette matrice. C'est ce que permettent de faire les formes quadratiques, en définissant ce que c'est ainsi qu'une méthode de calcul.
+
+\section{Préliminaires}
+
+Avant de pouvoir parler de formes quadratiques, il faut parler de deux conclusions venant des chapitres 4 et 5 du syllabus : les matrices symétriques et les matrice orthogonales.
+
+\subsection{Matrices orthogonales et matrices symétriques}
+
+Grâce au chapitre 4, on connait la propriété suivante :
+\begin{propriete}
+Si $A$ est une matrice diagonalisable, alors la somme des valeurs propres est nommée la \emph{trace}, et le produit des valeurs propres est égal au déterminant.
+\end{propriete}
+
+\begin{defn}
+Soit $Q \in \R^{n \times n}$. $Q$ est orthogonale ssi $Q^t \cdot Q = I$.
+\end{defn}
+
+\paragraph{Remarques}
+\begin{itemize}
+\item Pourquoi dit-on qu'elle est orthogonale ? Parce que les colonnes sont alors normées et orthogonales par rapport au produit scalaire canonique ; elles forment une base de $\R^n$.
+\item Si $Q$ est orthogonale, alors elle est inversible, et $Q^{-1} = Q^t$.
+\end{itemize}
+
+On peut maintenant parler du \emph{théorème spectrale}.
+
+\begin{thm}
+Soit $A$ une matrice carrée réelle. Les trois conditions suivantes sont équivalentes :
+\begin{itemize}
+\item $\R^n$ admet une base orthonormée (par rapport au produit scalaire canonique) formée des vecteurs propres de $A$.
+\item $\exists Q, D \in \R^{n \times n}$ avec $Q$ orthogonale et $D$ diagonale, telles que
+\[ A = Q \cdot D \cdot Q^{-1} = Q \cdot D \cdot Q^t \]
+\item A est symétrique.
+\end{itemize}
+\end{thm}
+
+En conséquence, toute matrice symétrique est diagonalisable.
+
+\paragraph{Remarques}
+\begin{itemize}
+\item Si $A \in \R^{n \times n}_S$, alors les valeurs propres de $A$ sont réelles.
+\item Soient $A \in \R^{n \times n}$, $\lambda_1, \ldots, \lambda_r$ les valeurs propres distinctes, et $x_1 \in E(\lambda_1), \ldots, x_r \in E(\lambda_r)$ des vecteurs propres correspondant. On sait déjà que $x_1,\ldots,x_r$ sont indépendants, mais si $A$ est symétrique, alors ces vecteurs sont orthogonaux.
+\item Il fallait faire la preuve du point 2 vers le point 3 ; c'est abordable.
+\end{itemize}
+
+\section{Formes quadratiques}
+
+Définition plus courte que celle du syllabus :
+\begin{defn}
+Soit $V$ un espace vectoriel réel. Une forme quadratique est une fonction $q \colon V \mapsto \R$ telle que
+\begin{enumerate}
+\item $q(\lambda x) = \lambda^2 q(x)$. Elle n'est donc pas linéaire.
+\item $\bar{q} \colon V \times V \mapsto \R$, définie par
+\[ \bar{q}(x, y) = \frac{1}{2}(q(x+y)-q(x)-q(y)) \quad \forall x, y \in E \]
+, est bilinéaire.
+\end{enumerate}
+\end{defn}
+
+L'exemple donné dans le syllabus est assez spécial ; en effet, si on part de $q(x)=x^2$, on définit en fait le produit de deux nombres à partir du carré d'un nombre.
+
+\section{Formes quadratiques et matrices symétriques}
+
+Soit $V$ un espace vectoriel avec $\dim V = n$ fini, et soit $e=(e_1,\ldots,e_n)$ une base de $V$. On a alors une bijection entre l'ensemble des formes quadratiques sur $V$ et l'ensemble des matrices symétriques de genre $(n, n)$.
+
+Étant donné $q$, on construit
+\[ A_{q,e} = (\bar{q}(e_i, e_j))_{i, j} \]
+Étant donné $A$, on construit
+\[ q_{A,e} \colon V \mapsto \R \colon q_{A,e}(x)= \elfbase{e}{x}{}^t \cdot A \cdot \elfbase{e}{x}{} \]
+De même, ces matrices et ces formes quadratiques sont uniques.
+
+\begin{exemple}
+Soient $A=\begin{pmatrix} 1 & 2 \\ 2 & 3 \end{pmatrix}$, $V=\R^2$, $e$ quelconque.
+\begin{align*}
+q_{A,e}(x_1, x_2) &= \begin{pmatrix} x_1 & x_2 \end{pmatrix} \cdot \begin{pmatrix} 1 & 2 \\ 2 & 3 \end{pmatrix} \cdot \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
+&= \begin{pmatrix} x_1 + 2x_2 \\ 2x_1 + 3x_2 \end{pmatrix} \cdot \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
+&= x_1^2 + 2x_1x_2 + 2x_1x_2 + 3x_2^2 \\
+&= x_1^2 + 4x_1x_2 + 3x_2^2
+\end{align*}
+On tombe sur un polynôme du second degré. C'est d'ailleurs toujours le cas, peut importe la aille de la matrice. Seul le nombre de variables change.
+\end{exemple}
+
+On dispose aussi d'une propriété de changement de la base $e$, similaire au changement de base d'une application linéaire.
+
+\section{Caractère}
+
+\begin{defn}
+Une forme quadratique $q \colon V \mapsto \R$ est
+\begin{enumerate}
+\item définie positive si $q(x)>0 \quad \forall x\neq 0\in V$ ;
+\item semi-définie positive si $q(x)\ge 0\quad\forall x\in V$ ;
+\item définie négative si $q(x)<0 \quad \forall x\neq 0\in V$ ;
+\item semi-définie négative si $q(x)\le 0\quad\forall x\in V$ ;
+\item indéfinie si $\exists x, y \neq 0$ tels que $q(x)>0$ et $q(y)<0$.
+\end{enumerate}
+Les semi-définitions signifient que la forme quadratique peut envoyer un vecteur non nul sur 0, alors que les définitions pleines ne le permettent pas.
+\end{defn}
+\begin{defn}
+Soient $A \in \R^{n \times n}_S$ et $e$ une base de $\R^n$. Le caractère de $A$ est le caractère de la forme quadratique associée.
+
+Par exemple, $A$est définie positive si $\elfbase{e}{x}{}^t \cdot A \cdot \elfbase{e}{x}{} > 0$ pour tout $x \in \R^n$.
+\end{defn}
+
+\paragraph{Remarques}
+
+\begin{enumerate}
+\item Le caractère de $A$ est bien défini quelle que soit la base. Si $e$ et $f$ sont deux bases de $\R^n$, $q_{A,e}$ et $q_{A,f}$ ont même caractère.
+\item La réciproque est vraie aussi : $q$ et $A_{q,e}$ ont même caractère.
+\item Si $A$ est symétrique et $P$ inversible, alors $A$ et $P^t \cdot A \cdot P$ ont même caractère.
+\item On peut définir un nouveau produit scalaire,
+\[ \scal{-}{-} \colon \R^n \times \R^n \mapsto \R \colon \scal{x}{y} = x^t \cdot A \cdot y \]
+à condition que $A$ est elle-même définie positive.
+\end{enumerate}
+
+Le problème, pour le moment, est que le caractère dépend d'un $\forall$ infini. Nous allons le transformer en un $\forall$ fini :
+\begin{propriete}
+Soient $\lambda_1, \ldots, \lambda_n$ les valeurs propres de $A \in \R^{n \times n}_S$, associée à la forme quadratique $q$ par la base $e$.
+\begin{enumerate}
+\item $q$ définie positive ssi $\lambda_1\ldots,\lambda_n > 0$ ;
+\item $q$ semi-définie positive ssi $\lambda_1\ldots,\lambda_n \ge 0$ ;
+\item $q$ définie négative ssi $\lambda_1\ldots,\lambda_n < 0$ ;
+\item $q$ semi-définie négative ssi $\lambda_1\ldots,\lambda_n \le 0$ ;
+\item $q$ indéfinie si $\lambda_i >0$ et $\lambda_j <0$ pour certains $i, j$.
+\end{enumerate}
+\end{propriete}
+
+La preuve découle du théorème spectral. On aboutit à une formule plutôt sympa :
+\[ q(x) = \lambda_1 x_1^2 + \ldots + \lambda_n x_n^2 \]
+avec $x_1,\ldots,x_n$ les coordonnées de $x$ dans $e$. On peut alors montrer que ces conditions s'appliquent à la formule.
+
+\section{Loi d'inertie de Sylvester}
+
+\begin{propriete}
+Soient $q$ une forme quadratique sur $V$ avec $\dim V=n$ fini, $e$ et $f$ deux bases de $V$. Alors,
+\begin{enumerate}
+\item Le nombre de valeurs propres strictement positives de $A_{q,f}$ est le même que celui de $A_{q,e}$, et est appelé indice de positivité de $q$, $\mathrm{ind}_+ q$ ;
+\item Le nombre de valeurs propres strictement négatives de $A_{q,f}$ est le même que celui de $A_{q,e}$, et est appelé indice de négativité de $q$, $\mathrm{ind}_- q$ ;
+\item Le nombre de valeurs propres nulles de $A_{q,f}$ est le même que celui de $A_{q,e}$ ;
+\item Enfin, $\rang A_{q,e} = \mathrm{ind}_+ q + \mathrm{ind}_- q$. On pose $\rang q = \rang A_{q,e}$.
+\end{enumerate}
+\end{propriete}
+
+Le dernier point est valable pour tout matrice diagonalisable en fait, et les indices peuvent être généralisés à n'importe quelles matrices. Le \og théorème du rang \fg{} n'est cependant valable que si $\dim E(0) = m_a(0)$ et
+\[ m_a(0) + m_a(\lambda_1) + \ldots + m_a(\lambda_r) = n \]
+soit une presque condition de diagonalisabilité.
+
+% \end{document}

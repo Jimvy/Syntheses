@@ -1,0 +1,468 @@
+%\documentclass{report}
+%\usepackage{geninclude}
+%\usepackage{mathsinclude}
+%\usepackage[francais]{babel}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{amsthm}
+%\usepackage{layout}
+%\usepackage{geometry}
+
+%\newcommand{\R}{\mathbb{R}}
+%\newcommand{\Sy}{\mathcal{S}}
+%\newcommand{\Col}{\mathrm{Col}}
+%%\newcommand{\scal}[2]{\left( #1 \; | \; #2 \right)}
+%\newcommand{\scal}[2]{\left( #1 \mid #2 \right)}
+%\newcommand{\dist}{\mathrm{dist}}
+%\newcommand{\dx}[1]{\mathrm{d}#1}
+%\newcommand{\norme}[1]{\| #1 \|}
+%\newcommand{\vect}[1]{\overrightarrow{#1}}
+%
+%% pour le package amsthm, voir
+%% http://tex.stackexchange.com/questions/45817/theorem-definition-lemma-problem-numbering
+%% http://tex.stackexchange.com/questions/2160/how-to-make-theorems-and-equations-share-numbering
+%
+%\theoremstyle{definition}
+%\newtheorem{defn}{Définition}[chapter]
+%\newtheorem{thm}{Théorème}[chapter]
+%\newtheorem{lemme}[thm]{Lemme}
+%\newtheorem*{exemple}{Exemple}
+%\newtheorem{propriete}[thm]{Propriété}
+
+%\title{LFSAB1102 - Algèbre}
+%\date{\today}
+%\author{Jean-Martin Vlaeminck}
+
+%\begin{document}
+
+%\maketitle
+
+%\tableofcontents
+
+%\layout
+
+\chapter{Espaces vectoriels}
+
+Dans cette partie\marginpar{CM1 \\ 3/02/2016}, nous allons voir le concept d'espace euclidien, associé à la notion de produit scalaire, de norme de vecteur et de distance entre deux vecteurs.
+
+Une petite note concernant les notations : au début, le document se conformait aux notes écrites par le prof, aux notes prises sur le vif et au syllabus, en notant les vecteurs avec une petite flèche par-dessus. Une grande partie du document a été écrit avec cette notation. Mais, comme cette notation est (très) lourde, elle a été abandonnée au bout d'un moment.
+
+Aussi, certaines conventions ont été prises, qui doivent encore être respectées :
+\begin{itemize}
+\item les vecteurs sont symbolisés par des lettres latines minuscules, sans indice.
+\item les scalaires sont symbolisés par des lettres latines minuscules, avec indice, ou par des lettres grecques minuscules.
+\item les matrices sont représentées par les lettres latines majuscules.
+\item les familles de vecteurs (dont font partie les bases) sont symbolisées par une lettre latine minuscule, et les vecteurs contenus par des lettres minuscules avec indice. Afin d'éviter de confondre, ceux-ci sont toujours $e$, $f$ ou $b$. Si nécessaire, la notation sera précisée en début de section.
+\end{itemize}
+Ces conventions n'engagent que moi, et peuvent être révoquées à tout moment.
+
+\section{Retour sur l'APP}
+
+L'APP consistait à résoudre un système d'équations, du type $\Sy \colon A \cdot x = b$, 
+avec $A \in \R^{m \times n}$, 
+$x = \begin{pmatrix} x_1 \\ \ldots \\ x_n \end{pmatrix} \in \R^{n}$ et 
+$b = \begin{pmatrix} b_1 \\ \ldots \\ b_m \end{pmatrix} \in \R^{m}$, avec $n=3$ et $m=501$.
+
+Comme on peut s'en douter, il y a très peu de chances de trouver une solution à ce système, à cause du trop grand nombre de conditions que doivent respecter $x_1$, $x_2$ et $x_3$, et du fait qu'il s'agit de mesures approximatives.
+
+On sait que le système $\Sy$ admet une solution ssi $b$ est une combinaison linéaire des colonnes de $A$, c'est-à-dire ssi $b \in \Col(A)$, l'espace colonne de $A$.
+
+Le but de l'APP était de se poser la question : que se passe-t-il si $b \not \in \Col(A)$ ? Dans ce cas, on aimerait trouver une solution approchée du système. Mais une nouvelle question apparait : \emph{qu'est-ce qu'une solution approchée} ?
+
+L'idée proposée pendant l'APP est la suivante : on va remplacer $b$ par $b' \in \R^{m}$ et donc $\Sy$ par $\Sy'$, avec deux conditions :
+\begin{itemize}
+\item $b \in \Col(A)$. De la sorte, $\Sy'$ a une solution.
+\item $b'$ est, de tous les vecteurs de $\Col(A)$, le plus proche de $b$.
+\end{itemize}
+
+Et là, nous avons un problème : en effet, la seconde condition est en fait une inégalité, qui peut s'écrire :
+%\begin{equation}
+\[ \dist(b, b') \leq \dist(b, y) \quad \forall y \in E \]
+%\end{equation}
+
+De même, il s'agit de définir rigoureusement ce qu'est la \emph{distance} entre deux vecteurs. Et c'est justement l'intérêt des espaces euclidiens.
+
+\section{Espace euclidien}
+
+%\paragraph{Espace euclidien}
+\begin{defn}
+
+Un espace euclidien est un espace vectoriel muni d'un produit scalaire, c'est-à-dire d'une fonction à deux variables $\scal{-}{-} \colon E \times E \mapsto \R$ qui est :
+\begin{itemize}
+\item symétrique, c'est-à-dire que $\forall x, y \in E$, $\scal{x}{y} = \scal{y}{x}$ ;
+\item bilinéaire, c'est-à-dire linéaire par rapport aux deux variables : $\forall x, y, z \in E$, $\forall a, b \in \R$, $\scal{ax+by}{z} = a \scal{x}{z} + b \scal{y}{z}$ et $ \scal{z}{ax+by} = a \scal{z}{x} + b \scal{z}{y}$ ;
+\item définie positive, c'est-à-dire $\forall x \in E, x \neq 0$, $\scal{x}{x} > 0$.
+\end{itemize}
+
+\end{defn}
+
+\paragraph{Remarques}
+
+\begin{enumerate}
+\item quel est le rapport entre les espaces euclidiens et le problème posé lors de l'APP1 ?
+\item $\forall x \in E, \scal{0}{x} = \scal{x}{0} =0$
+\item Pourquoi faut-il que $E$ soit un espace vectoriel \emph{réel} ?
+
+Parce qu'il faut que l'espace vectoriel puisse subir des comparaisons. Or, il n'y a pas de telle comparaison dans les complexes. Donc il faut travailler dans un espace sur $\R$.
+\end{enumerate}
+%\begin{exemple}
+
+%\end{exemple}
+\paragraph{Exemples}
+
+\begin{enumerate}
+\item Soit $E = \R^n$, on prend $x = \begin{pmatrix} x_1 \\ \ldots \\ x_n \end{pmatrix}$ et $y = \begin{pmatrix} y_1 \\ \ldots \\ x_n \end{pmatrix}$. On pose $\scal{x}{y} = x^t \cdot y = \sum_{i=0}^{n} x_iy_i$. Il s'agit du \emph{produit scalaire canonique}, le premier auquel on pense.
+
+\item Soit $E=\R^n$, $A \in \R^{n \times n}_S$, l'ensemble des matrices symétriques. On définit alors $\scal{x}{y} = x^t \cdot A \cdot y$. Si $A=I_n$, on retombe sur le produit scalaire canonique, qui est clairement un produit scalaire. On peut alors vérifier que cette fonction est un produit scalaire : elle est bilinéaire car le produit matriciel lui-même est bilinéaire ; symétrique, car la matrice $A$ est symétrique. Mais, de manière générale, la fonction ci-dessus n'est pas définie positive. C'est le cas si la matrice est \og définie positive \fg{}, dans un sens qui sera énoncé dans un chapitre ultérieur (chapitre 4). Dans le cas d'une matrice positive, la fonction définie ci-dessus est alors un produit scalaire de $\R^n \times \R^n$ vers $\R$.
+
+\item Soit $E=\R[x]_n$, l'ensemble des polynômes en $x$ de degré inférieur ou égal à $n$. Soient $a_1, \ldots, a_n$ des nombres réels différents deux à deux. Alors, la fonction
+$$\scal{p}{q} = p(a_0)q(a_0) + \ldots + p(a_n)q(a_n) \quad \forall p, q \in \R[x]_n$$
+est un produit scalaire. On peut démontrer que ce produit est bilinéaire, symétrique et défini positif (il s'agit d'ailleurs de l'exercice 3 de l'APE 1).
+
+\item Prenons maintenant l'ensemble des fonctions intégrables $f \colon [a, b] \mapsto \R$, que l'on notera $F$ (je ne connais pas la notation exacte). Alors, la fonction suivante est aussi un produit scalaire de $F \times F \mapsto \R$ :
+\[ \scal{f}{g} = \int_{a}^{b} f(x)\cdot g(x) \dx{x} \]
+\end{enumerate}
+
+%\end{exemple}
+
+\begin{defn}
+Soit $E$ un espace euclidien, $x \in E$. La \emph{norme} de $x$ est
+\[ \| x \| = \sqrt{ \scal{x}{x}} \]
+\end{defn}
+
+\begin{defn}
+Soit $E$ un espace euclidien, $x, y \in E$. La distance entre les vecteurs $x$ et $y$ est
+\[ \dist(x, y) = \| x-y \| \]
+\end{defn}
+
+\paragraph{Remarques}
+\begin{enumerate}
+\item $\norme{x} \geq 0$ et $\dist(x, y) \ge 0$ ;
+\item si $x \neq 0$, $\norme{x} > 0$ et si $x \neq y$, $\dist(x, y) > 0$ ;
+\item On dispose de l'inégalité de Cauchy :
+\[ | \scal{x}{y} | \leq \norme{x} \cdot \norme{y} \]
+\item On dispose aussi de l'inégalité triangulaire :
+%$$ \| \vec{x} + \vec{y} \| \leq \| \vec{x} \| + \| \vec{y} \|$$
+\[ \norme{x + y} \leq \norme{x} + \norme{y} \]
+\item Dans $\R^n$, si on utilise le produit scalaire canonique, on retrouve exactement les formules pour la distance et la norme \og normales \fg{}.
+\end{enumerate}
+
+\begin{defn}
+Soit $E$ un espace euclidien, et $x, y \in E$.
+\begin{enumerate}
+\item $x$ et $y$ sont orthogonaux, noté $x \perp y$, ssi $\scal{x}{y} = 0$.
+\item Si $V$ est un sous-ensemble de $E$, alors $V^{\perp}$, l'espace orthogonal à $V$, est l'ensemble des vecteurs de $E$ qui sont orthogonaux à chaque vecteur de $V$ :
+\[V^\perp = \{ x \in E \mid x \perp v \quad \forall v \in E \} \]
+\end{enumerate}
+\end{defn}
+
+\begin{exemple}
+Si l'on prend le produit scalaire canonique, dans $E=\R^2$, et $V=\{ (a, b)\}$ la droite engendrée par le vecteur $(a, b)$, alors $V^{\perp}$ est la droite perpendiculaire à $V$ et passant par l'origine. La preuve est dans le syllabus.
+\end{exemple}
+
+\paragraph{Propriétés}
+%\begin{propriete}
+
+\begin{enumerate}
+\item $V^\perp$ est un sev de $E$, même si $V$ n'est pas un sev.
+\item $V \in \left( V^\perp \right)^\perp$ comme $V$ n'est pas spécialement un sev. Mieux : $\left( V^\perp \right)^\perp$ est le sev sous-tendu par $V$.
+\item Si $V=E$ alors $V^\perp = \{ 0 \}$.
+\item Si $x \in V \cap V^\perp$ alors $x=0$. En effet, comme $x \in V$, on peut prendre $v=x$ ; $x$ doit donc être orthogonal à lui-même, ce qui n'arrive que si $x=0$.
+\end{enumerate}
+
+%\end{propriete}
+
+\section{Projection orthogonale}
+
+\begin{defn}
+Soit $V$ un sous-ensemble de $E$, un espace euclidien. La \emph{projection orthogonale} de $E$ sur $V$ est une application $P_V \colon E \mapsto V$ telle que $\forall x \in E$,
+\begin{enumerate}
+\item $P_V(x) \in V$.
+\item $x - P_V(x) \in V^\perp$.
+\end{enumerate}
+Ceci est la définition correcte et générale de la projection orthogonale.
+\end{defn}
+
+Néanmoins, on peut se demander la signification de ces conditions, et tout particulièrement de $x - P_V(x) \in V^\perp$. Pour cela, considérons l'espace euclidien $\R^2$ muni du produit scalaire canonique, et donc de la distance euclidienne, et prenons $V$ une droite. Alors, la projection orthogonale d'un point $x$ sur cette droite est le pied de la perpendiculaire à $V$ abaissée de $x$. Clairement, il faut que cette projection appartienne à $V$. Quant à $x-P_V(x)$, il s'agit de la composante du vecteur $x$ qui est perpendiculaire à $V$, soit la composante de $x$ selon $V^\perp$.
+
+Cette définition nous dit ce qu'une prétendue projection orthogonale doit respecter comme condition pour être une projection orthogonale de plein droit. Mais, cette définition ne nous dit pas \emph{comment} obtenir la projection orthogonale.
+
+Pour cela, on dispose d'un \og algorithme \fg{} valable pour des espaces à dimensions finies, qui permet de créer une projection orthogonale. Cet algorithme sera expliqué plus tard, lors du CM2.
+
+\subsection{Existence et unicité de la projection orthogonale}
+
+Même si pour le moment nous ne savons pas ce qu'est une projection orthogonale, nous pouvons nous poser certaines questions, en particulier son existence et son unicité. Pour cela, nous allons utiliser une approche \emph{axiomatique}, en n'utilisant que la définition de la projection orthogonale.
+
+La première propriété est si la projection orthogonale existe, alors elle est unique. En effet, supposons qu'il existe deux fonctions $f, g : E \rightarrow V$ qui respectent les conditions d'une projection orthogonale. On a donc
+\begin{center}
+\begin{tabular}{cc}
+$f(x) \in V$ & $g(x) \in V$ \\
+$x-f(x) \in V^\perp$ & $x-g(x) \in V^\perp$ \\
+\end{tabular}
+\end{center}
+
+On peut alors calculer $f(x)-g(x)$ $\forall x \in E$ :
+\[ f(x)-g(x) = f(x) - x + x - g(x) \]
+Or, le membre de gauche est dans $V$, tandis que le membre de droite est dans $V^\perp$. Par conséquent, $f(x)-g(x) \in V \cap V^\perp = \{ 0 \}$ et donc $f(x)=g(x) \quad \forall x$. $\square$
+
+L'\emph{existence} de la projection orthogonal, quant à elle, n'est pas garantie. Mais on peut au moins en dire quelque chose :
+
+\begin{propriete}
+\label{projortho_exist_Vperp}
+Si $P_V$ existe, alors
+\begin{enumerate}
+\item $E=V \oplus V^\perp$
+\item $V=\left( V^\perp \right)^\perp$
+\end{enumerate}
+\end{propriete}
+
+Cela se comprend aisément, via une comparaison avec la projection orthogonale classique dans $\R^2$. Dans ce cas, la projection orthogonale n'existe que si elle est sur un point, une droite ou tout le plan. De même, on peut alors décomposer $\R^2$ suivant deux nouveaux \og système d'axes \fg{} : un axe constitué par $V$, et un autre par $V^\perp$. On peut alors trouver une unique décomposition de chaque vecteur en somme d'un vecteur de $V$ et d'un vecteur de $V^\perp$.
+%todo : petit double espace avec \fg{} à corriger. (en fait c'est comme ça)
+
+\subsection{Lien avec l'APP : minimisation de la distance}
+
+Pour le moment, nous n'avons vu que les notions d'espace euclidien, de produit scalaire et de projection orthogonale, mais cela reste assez éloigné de notre objectif initial et de l'APP, qui est de calculer une solution approchée d'un système insoluble.
+
+En fait, c'est parce que nous n'avons pas encore relié les notions de normes et de distances à la notion de projection orthogonale. C'est ce que nous allons établir ici.
+
+\begin{propriete}
+Soient $E$ un espace euclidien, $V$ est sev de $E$, et $P_V \colon E \mapsto \R$ la projection orthogonale de $E$ sur $V$, supposée existante. Soient $x \in E$, $y \in V$ tel que $y \neq P_V(x)$. Alors,
+\[ \dist(x, P_V(x)) < \dist(x, y) \]
+\end{propriete}
+
+Rappelons notre problème : nous recherchons les solutions approchées d'un système d'équation $A\cdot x = b$ avec $b \not\in \Col(A)$. Pour cela, nous recherchons un vecteur $b' \in \Col(A)$ qui soit le plus proche de $b$ parmi tous les vecteurs de $\Col(A)$.
+
+Jusqu'à présent, nous n'avions aucune idée de comment obtenir ce plus proche vecteur. Maintenant, la notion de projection orthogonale nous fournit (enfin) la solution : \emph{le vecteur $b'$ est la projection orthogonale de $b$ sur $\Col(A)$}. En effet, la propriété précédente nous indique que $P_{\Col(A)}(b)$ est plus proche de $b$ que tout autre vecteur de $\Col(A)$.
+
+%\paragraph{Preuve}
+\begin{proof}
+La démonstration complète se trouve dans le syllabus.
+\end{proof}
+
+Ainsi, notre problème trouve enfin sa réponse. Il ne nous reste plus qu'à déterminer cette projection orthogonale, et nous aurons notre réponse.
+
+\subsection{Calcul de la projection orthogonale}
+
+Rappelons l'état des faits à la fin du CM1\marginpar{CM2 \\ 8/02/2016} : le problème de l'APP a été transformé en un calcul d'un vecteur $b' \in \Col(A)$ le plus proche de $b$, qui est devenu le calcul de la projection orthogonale de ce vecteur $b$ sur $\Col(A)$.
+
+La détermination de la projection orthogonale impose de se poser 3 questions à son sujet :
+\begin{enumerate}
+\item existe-t-elle ?
+\item est-elle unique ?
+\item comment la calculer ?
+\end{enumerate}
+
+La deuxième question a été répondue par l'affirmative, et une condition nécessaire pour son existence a été établie (\ref{projortho_exist_Vperp}).
+
+Néanmoins, pour le moment aucune condition suffisante d'existence n'a été fournie, et nous ne savons toujours pas calculer une projection orthogonale.
+
+L'objectif de cette section est de concevoir un \og algorithme \fg{} permettant de déterminer la projection orthogonale d'un vecteur. Cet algorithme, basé sur la définition axiomatique, n'est néanmoins valide que pour des espaces à dimension finie. De même, comme chaque notion clé, elle nécessite une préparation, dans laquelle nous verrons les notions de famille orthogonale et orthonormée.
+
+%\subsubsection{Familles et bases orthogonales et orthonormées}
+
+\begin{defn}
+Soient $E$ un espace euclidien, et $x_1, \ldots, x_n$ des vecteurs $\in E$.
+\begin{enumerate}
+\item $(x_1, \ldots, x_n)$ est une famille orthogonale ssi
+\begin{itemize}
+\item $x_i \neq 0 \quad \forall i$ ;
+\item $x_i \perp x_j$, $i \neq j$.
+\end{itemize}
+
+\item $(x_1, \ldots, x_n)$ est une famille orthonormée ssi
+\begin{itemize}
+\item $\norme{x_i} = 1$ ;
+\item $x_i \perp x_j$, $i \neq j$.
+\end{itemize}
+\end{enumerate}
+\end{defn}
+
+\paragraph{Remarques}
+\begin{enumerate}
+\item La condition orthogonale est nécessaire pour avoir une famille orthonormée.
+\item Une \emph{base orthogonale (ou orthonormée)} de $E$ est une base de $E$ qui est aussi une famille orthogonale (ou orthonormée).
+\end{enumerate}
+
+\begin{exemple}
+Si $E=\R^n$, et qu'on considère le produit scalaire canonique, alors la base canonique est une base orthonormée.
+\end{exemple}
+
+\begin{propriete}
+Soit $e=(e_1, \ldots, e_n)$ une base orthonormée de $E$. Soient $x, y \in E$. Comme $e$ est une base, on peut écrire $x=x_1 \cdot e_1 + \ldots x_n \cdot e_n$ et $y=y_1 \cdot e_1+\ldots + x_n \cdot e_n$, avec $x_1, \ldots, x_n$ et $y_1, \ldots, y_n$ des réels. Alors,
+\[ \scal{x}{y} = x_1y_1 + \ldots x_ny_n \]
+\end{propriete}
+
+\begin{proof}
+La preuve (cachée) se trouve juste en dessous de la propriété dans le syllabus.
+\end{proof}
+%\end{propriete}
+
+Maintenant que les notions de familles et bases orthonormées sont définies, elles permettent de définir une méthode de construction de la projection orthogonale.
+
+\begin{propriete}
+Soient $E$ un espace euclidien et $V$ un sev de $E$.
+S'il existe une base orthonormée $(e_1, \ldots, e_n)$ de $V$, alors la projection orthogonale $P_V \colon E \mapsto \R$ existe et est :
+\[ P_V(x) = \scal{x}{e_1} \cdot e_1 + \ldots + \scal{x}{e_n} \cdot e_n \]
+\end{propriete}
+
+Il s'agit donc d'une recette donnant la projection orthogonale de $E$ sur $V$, à condition néanmoins que l'on ait une base orthonormée (ou orthogonale) de $V$.
+
+\begin{proof}
+Il s'agit de montrer que cette fonction est bien une projection orthogonale, c'est-à-dire que, $\forall x \in E$,
+\begin{enumerate}
+\item $\scal{x}{e_1} \cdot e_1 + \ldots + \scal{x}{e_n} \in V$ ;
+\item $x - \left( \scal{x}{e_1} \cdot e_1 + \ldots + \scal{x}{e_n} \right) \in V^\perp$.
+\end{enumerate}
+
+La démonstration complète est dans le syllabus. Initialement, le professeur n'avait écrit la preuve que pour le vecteur $e_1$ de la base. Même si la preuve est la même, nous la faisons pour un $e_i$ quelconque.
+% A partir de cette démo, les vecteurs ne sont plus symbolisés par \vec{truc} mais par truc tout court, avec tentatives de ne pas confondre les notations.
+\end{proof}
+
+Revenons un peu aux questions que nous nous posions au début de cette section :
+\begin{enumerate}
+\item La projection orthogonale existe-t-elle ?
+\item Est-elle unique ?
+\item Comment la calculer ?
+\end{enumerate}
+
+À présent, nous avons une réponse à chacune de nos questions : il suffit de connaitre une base orthonormée de $V$ pour connaitre la projection orthogonale de $E$ sur $V$. La question devient maintenant : y a-t-il une base orthonormée ?
+
+Pour répondre à cette question, il va falloir établir une série de propriétés et de lemmes.
+
+\begin{lemme}
+Tout famille orthogonale est libre.
+\end{lemme}
+\begin{proof}
+Démonstration dans le syllabus.
+\end{proof}
+\begin{propriete}
+Soient $E$ un espace euclidien, $V$ un sev de $E$.
+
+Si $V$ est de dimension finie alors $V$ admet une base orthonormée.
+\end{propriete}
+\begin{propriete}{Corollaire}
+Soient $E$ un espace vectoriel de dimension finie, $V$ un sev de $E$.
+\begin{enumerate}
+\item $P_V \colon E \mapsto \R$ existe ;
+\item $V = \left( V^\perp \right)^\perp$ ;
+\item $E = V \oplus V^\perp$.
+\end{enumerate}
+\end{propriete}
+
+Notons que l'hypothèse d'espaces à dimension finie s'applique sur $V$ uniquement : la dimension de $E$ n'influence pas.
+
+\begin{proof}
+Il va s'agir d'une preuve par induction sur la dimension de $V$. Démonstration dans le syllabus (eh oui).
+\end{proof}
+
+\subsection{Construction de bases orthonormées}
+
+La démonstration précédente propose une méthode de construction de la projection orthogonale, en réitérant le principe de calculer $e_i = b_i - P_{Wi}(b_i)$ pour $i=1 -- n$. Cette méthode est connue comme la \emph{méthode de Gram-Schmidt}. Elle part d'une base $b = (b_1, \ldots, b_n)$ de $V$ et calcule
+\[ e_1 = \frac{b_1}{\norme{b_1}} \]
+puis, pour $2 \leq i \leq n$ :
+\begin{align*}
+e_i &= \frac{b_i - P_{\mathrm{sev} \langle e_1, \ldots, e_{i-1} \rangle }(b_i)}{\norme{b_i - P_{\mathrm{sev} \langle e_1, \ldots, e_{i-1} \rangle (b_i)}}} \\
+&= \frac{
+	b_i - \sum_{k=1}^{i-1} \scal{b_i}{e_k} \cdot e_k
+}{
+	\norme{ b_i - \sum_{k=1}^{i-1} \scal{b_i}{e_k} \cdot e_k }
+}
+\end{align*}
+
+La seule différence avec les vecteurs obtenus lors de la démonstration est que les vecteurs sont normés (divisés par leur norme).
+
+La famille $e=(e_1, \ldots, e_n)$ ainsi obtenue est une famille libre, génératrice, orthogonale, et dont tous les éléments sont normés. Il s'agit donc d'une base orthonormée.
+
+\begin{exemple}
+Cet exemple va enfin montrer l'utilité de la théorie des espaces euclidiens, en revenant à notre point de départ : la résolution approchée d'une système d'équations.
+
+Considérons le système $S \colon A\cdot x = b$, avec $A = \begin{pmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \\ \end{pmatrix}$ et $b=\begin{pmatrix} 1 \\ 2 \\ 3 \\ \end{pmatrix}$. On peut vérifier aisément que ce système n'a pas de solutions, et nous aimerions trouver une solution approchée.
+
+Pour la simplicité, nous allons choisir comme produit scalaire le produit canonique, pour avoir la distance classique. L'objectif est donc de déterminer la projection orthogonale de $b$ sur $V=\Col(A)$, et donc il faut déterminer une base orthonormée (car $V$ a une dimension finie).
+
+\subparagraph{Base de $\Col(A)$}
+Simplifions-nous la vie : prenons $c_1 = \begin{pmatrix} 1 & 1 & 1 \\ \end{pmatrix}$ et $c_2 = \begin{pmatrix} 1 & 2 & 1 \\ \end{pmatrix}$
+
+\subparagraph{Base orthonormée de $\Col(A)$}
+Utilisons la méthode de Gram-Schmidt :
+\[ e_1 = \frac{c_1}{\norme{c_1}} = \begin{pmatrix}
+\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}}
+\end{pmatrix} \]
+
+\begin{align*}
+e_2 &= \frac{
+  \begin{pmatrix} 1 & 2 & 3 \end{pmatrix} - \left(
+    \scal{
+      \begin{pmatrix} 1 & 2 & 3 \end{pmatrix}
+    }{
+      \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix}
+    }
+    \cdot \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix}
+\right)
+}{
+\norme{\text{le truc du dessus}}
+} \\
+&= \frac{
+  \begin{pmatrix} 1 & 2 & 3 \end{pmatrix}
+  - 2 \sqrt{3} \cdot \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix}
+}{
+\norme{\text{le truc du dessus}}
+} \\
+&= \frac{
+  \begin{pmatrix} 1 & 2 & 3 \end{pmatrix}
+  - \begin{pmatrix} 2 & 2 & 2 \end{pmatrix}
+}{
+\norme{\text{le truc du dessus}}
+} \\
+&= \frac{
+\begin{pmatrix} -1 & 0 & 1 \end{pmatrix}
+}{
+\norme{\begin{pmatrix} -1 & 0 & 1 \end{pmatrix}}
+} \\
+&= \frac{ \begin{pmatrix} -1 & 0 & 1 \end{pmatrix} }{\sqrt{2}} \\
+&= \begin{pmatrix} -\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}} \end{pmatrix}
+\end{align*}
+
+\subparagraph{Projection orthogonale}
+Il ne reste plus qu'à calculer la projection orthogonale de $b$ sur $\Col(A)$ :
+\begin{align*}
+b' &= P_{\Col(A)}(b) \\
+&= \scal{b}{e_1} \cdot e_1 + \scal{b}{e_2} \cdot e_2 \\
+&= \scal{ \begin{pmatrix} 1 & 2 & 1 \end{pmatrix}
+}{ \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix}
+} \cdot \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix} \\
+&+ \scal{ \begin{pmatrix} 1 & 2 & 1 \end{pmatrix}
+}{ \begin{pmatrix} - \frac{1}{\sqrt{2}} & 0 & - \frac{1}{\sqrt{2}} \end{pmatrix}
+} \cdot \begin{pmatrix} - \frac{1}{\sqrt{2}} & 0 & - \frac{1}{\sqrt{2}} \end{pmatrix} \\
+&= 4\sqrt{3} \cdot \begin{pmatrix} \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} \end{pmatrix} + \begin{pmatrix} 0 & 0 & 0 \end{pmatrix} \\
+&= \begin{pmatrix} \frac{4}{3} & \frac{4}{3} & \frac{4}{3} \end{pmatrix}
+\end{align*}
+
+\subparagraph{Résolution du nouveau système}
+Maintenant, il s'agit de résoudre le système $S' \colon A \cdot x = b'$ avec $A=\begin{pmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \end{pmatrix}^t$ et $b'=\begin{pmatrix} \frac{4}{3} & \frac{4}{3} & \frac{4}{3} \end{pmatrix}$. Après résolution, on obtient finalement $x=\begin{pmatrix} \frac{4}{3} & 0 \end{pmatrix}$.
+\end{exemple}
+
+\paragraph{Encore un autre problème d'approximation}
+Ce problème est présent en version beaucoup plus complète dans le syllabus. Nous ne faisons que esquisser le problème et sa solution.
+
+Soient $f \colon [a;c] \mapsto \R$, et $b \in [a;c]$. On suppose que $f$ est dérivable en $b$. On cherche la tangente au graphe de $f$ en $(b, f(b))$.
+
+En secondaire, nous avons appris que la pente de cette tangente vaut $f'(b)$. Mais en primaire, nous avons décrit la tangente comme étant la \og droite qui colle au mieux \fg à $f$.
+
+Sous cet aspect, il s'agit d'un calcul d'approximation avec une distance, qui peut donc se résoudre dans la théorie des espaces euclidiens. On prend $E=\{ \text{fonctions dérivables en } b \}$ et $V=\{ \text{droites} \}$. Le problème devient alors de trouver la projection orthogonale de $f$ sur l'ensemble des droites, pour le produit scalaire suivant :
+\[ \scal{f}{g} = f(b) \cdot g(b) + f'(b) \cdot g'(b) \]
+
+Si on effectue les calculs, on trouve exactement que la meilleure tangente à $f$ a $f'(b)$ comme pente.
+
+%\section{Résumé}
+
+%Une partie de ce résumé fut présenté comme des rappels lors du cours CM2. L'autre partie a été complétée par l'auteur de ce document.
+
+
+
+%todo : insérer ledit rappel (jusqu'au bas de la page)
+
+
+%\end{document}

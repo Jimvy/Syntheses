@@ -1,0 +1,36 @@
+% maths-include
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mathsinclude}[2016/02/16 Maths package utility]
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{tensor}
+
+%déclaration de quelques commandes utiles
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\Sy}{\mathcal{S}}
+\newcommand{\Col}{\mathrm{Col}}
+\newcommand{\scal}[2]{\left( #1 \mid #2 \right)}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\dx}[1]{\mathrm{d}#1}
+\newcommand{\norme}[1]{\| #1 \|}
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\newcommand{\paral}{\mathbin{\!/\mkern-3mu/\!}}
+\newcommand{\elfbase}[3]{\tensor*[_{#1}]{(#2)}{_{#3}}}
+\newcommand{\rang}{\mathrm{rang}}
+
+%déclarations des commandes pour les théorèmes.
+%todo rendre la numérotation optionnelle
+
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[chapter]
+\newtheorem{thm}{Théorème}[chapter]
+\newtheorem{lemme}[thm]{Lemme}
+\newtheorem{corol}[thm]{Corollaire}
+\newtheorem*{exemple}{Exemple}
+\newtheorem{propriete}[thm]{Propriété}
+
+
+\endinput

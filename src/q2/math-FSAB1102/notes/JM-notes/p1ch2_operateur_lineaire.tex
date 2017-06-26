@@ -1,0 +1,288 @@
+%comment all the lines below for use in index
+%	\documentclass{report}
+%	%\usepackage{geninclude}
+%	%\usepackage{mathsinclude}
+%	\usepackage[francais]{babel}
+%	\usepackage[utf8]{inputenc}
+%	\usepackage[T1]{fontenc}
+%	\usepackage{amsmath}
+%	\usepackage{amssymb}
+%	\usepackage{amsthm}
+%	\usepackage{layout}
+%	\usepackage{geometry}
+%	%\usepackage{mathtools}
+%	\usepackage{tensor}
+%	
+%	\newcommand{\R}{\mathbb{R}}
+%	\newcommand{\K}{\mathbf{K}} % new command, ajouter à index.tex
+%	\newcommand{\Sy}{\mathcal{S}}
+%	\newcommand{\Col}{\mathrm{Col}}
+%	%\newcommand{\scal}[2]{\left( #1 \; | \; #2 \right)}
+%	\newcommand{\scal}[2]{\left( #1 \mid #2 \right)}
+%	\newcommand{\dist}{\mathrm{dist}}
+%	\newcommand{\dx}[1]{\mathrm{d}#1}
+%	\newcommand{\norme}[1]{\| #1 \|}
+%	\newcommand{\vect}[1]{\overrightarrow{#1}}
+%	\newcommand{\paral}{\mathbin{\!/\mkern-3mu/\!}}
+%	%\newcommand{\basedmatrix}[3]{\prescript{1}{#1}{(#2)}_{#3}^1 }
+%	% using tensors because it has the good alignment
+%	% http://tex.stackexchange.com/questions/109694/the-prescript-command-from-the-mathtools-package-gives-incorrect-alignment
+%	% http://tex.stackexchange.com/questions/11542/left-and-right-subscript
+%	\newcommand{\elfbase}[3]{\tensor*[_{#1}]{(#2)}{_{#3}}}
+%	\newcommand{\rang}{\mathrm{rang}}
+%	
+%	% pour le package amsthm, voir
+%	% http://tex.stackexchange.com/questions/45817/theorem-definition-lemma-problem-numbering
+%	% http://tex.stackexchange.com/questions/2160/how-to-make-theorems-and-equations-share-numbering
+%	
+%	\theoremstyle{definition}
+%	\newtheorem{defn}{Définition}[chapter]
+%	\newtheorem{thm}{Théorème}[chapter]
+%	\newtheorem{lemme}[thm]{Lemme}
+%	\newtheorem{corol}[thm]{Corollaire}
+%	\newtheorem*{exemple}{Exemple}
+%	\newtheorem{propriete}[thm]{Propriété}
+%	
+%	\title{LFSAB1102 - Algèbre}
+%	\date{\today}
+%	\author{Jean-Martin Vlaeminck}
+%	
+%	\begin{document}
+%	
+%	\maketitle
+%	
+%	\tableofcontents
+%	
+%	\reversemarginpar
+
+\chapter{Opérateurs linéaires}
+
+Dans ce chapitre\marginpar{CM3 \\ 15/02/2016}, nous allons voir le concept d'opérateur linéaire et de vecteurs, valeurs et espaces propres. Les applications de cette théorie permettent de résoudre un problème similaire à celui posé en APP.
+
+\section{Retour sur l'APP}
+
+L'APP consistait à étudier une population de scarabée, qui était régie par des lois simples et linéaires. On étudiait cette population par tranche d'âge (1, 2 ou 3 ans), en connaissant l population initiale $P_0 \in \R^3$. A partir de là, on déduisait que la population après $k$ années est donnée par la formule $P_k = A^k \cdot P_0$, avec $A \in\R^{3 \times 3}$. La difficulté consistait alors à calculer efficacement la puissance$k$-ième d'une matrice, opération assez lourde.
+
+Il y a néanmoins 2 cas où ce calcul est facile :
+\begin{enumerate}
+\item lorsque la matrice $A$ est diagonale ; dans ce cas,
+\[ \left( a_{ij} \right)^k = \left( a_{ij}^k \right) \]
+\item lorsque $A = P \cdot D \cdot P^{-1}$, avec $D \in \R^{3\times 3}$ une matrice diagonale, et $P \in \R^{3\times 3}$ une matrice inversible. Dans ce cas, comme on l'a montré au premier quadri, $A^k = P \cdot D^k \cdot P^{-1}$. On se ramène alors au calcul de la puissance d'une matrice diagonale, abordé au point 1. On dit alors que $A$ est \emph{diagonalisable} ; $A$ est alors, à un changement de base près, égale à $D$
+\end{enumerate}
+
+Les questions qui vont dès lors nous intéresser est de déterminer
+\begin{itemize}
+\item Si $A$ est diagonalisable, et dans ce cas, que vaut $P$ et $D$ ?
+\item Comment peut-on utiliser cela pour étudier à long terme notre population de scarabées ?
+\end{itemize}
+
+La deuxième question a été abordée en APP, mais nous y reviendrons.
+
+\section{Opérateurs linéaires}
+
+Pour répondre à la première question, nous allons changer de point de vue : nous allons quitter l'étude des matrices pour passer à l'examen des \emph{opérateurs linéaires}.
+
+\begin{defn}
+Un opérateur linéaire est une application linéaire où l'espace de départ et l'espace d'arrivée sont identiques.
+\end{defn}
+
+\paragraph{Remarque}
+
+Rappelons que l'on peut associer à toute matrice carrée $A \in \K^{n\times n}$ une application linéaire $L_A \colon \K^n \mapsto \K^n$ définie par $L_A(x) = A \cdot x$ pour tout vecteur $x \in \K^n$.
+
+\subsection{Valeurs et vecteurs propres}
+
+\begin{defn}
+Soient $V$ un espace vectoriel sur $\K$, et $L \colon V \mapsto V$ un opérateur linéaire.
+\begin{enumerate}
+\item Un vecteur $x \in \K$ est \emph{vecteur propre} de $L$ si
+	\begin{itemize}
+	\item $x \neq 0$
+	\item $\exists \lambda \in \K$ tel que $L(x) = \lambda \cdot x$.
+	\end{itemize}
+\item $\lambda \in \K$ est \emph{valeur propre} de $L$ si $\exists x\neq 0 \in \K^n$ tel que $L(x)=\lambda \cdot x$. On dit alors que $x$ est un vecteur propre associé à $\lambda$, et que $\lambda$ est valeur propre associée à $x$.
+\item Soit $\lambda \in \K$, on définit $E(\lambda)$ \emph{l'espace propre} de $\lambda$ comme étant l'ensemble des vecteurs $x$ tels que $L(x)=\lambda \cdot x$ ; c'est donc l'ensemble des vecteurs propres associés à $\lambda$, auquel on ajoute le vecteur nul.
+\end{enumerate}
+\end{defn}
+
+\paragraph{Remarque}
+
+\begin{itemize}
+\item $E(\lambda)$ est un sev de $E$ car $L(x)=\lambda x$ et donc $(L-\lambda I)(x)=0$ : $E(\lambda)$ est le noyau de $L-\lambda I$.
+\item Si $x\neq 0$ est tel que $L(x)=\lambda x$, alors $L^2(x)=L(L(x)) = L(\lambda x) = \lambda^2 x$. On peut montrer que
+\begin{equation}
+\label{oplin_puiss_vecteur_propre}
+L^k(x)=\lambda^k x
+\end{equation}
+\end{itemize}
+
+\section{Opérateurs diagonalisables}
+
+Maintenant, nous sommes prêt à aborder la notion d'opérateur linéaire diagonalisable.
+
+(Petite phase d'effacement de tableau.)
+
+\begin{defn}
+$L \colon V \mapsto V$ est un opérateur linéaire \emph{diagonalisable} si $V$ admet une base formée par des vecteurs propres de $L$.
+\end{defn}
+
+Cette notion est tout sauf clair ; mais nous verrons qu'elle est liée à la diagonalisabilité d'une matrice.
+
+\paragraph{Remarques}
+Si $L$ est diagonalisable, soit $V$ de dimension finie, et soit $f=(f_1, \ldots, f_n)$ une telle base de $V$ formée par des vecteurs propres de $L$. Soit $x\in V$. On peut alors écrire $x=x_1 \cdot f_1 + \ldots + x_n \cdot f_n$. Et donc,
+
+\begin{align*}
+L(x) &= L(x_1 \cdot f_1 + \ldots + x_n \cdot f_n) \\
+&= x_1 L(f_1) + \ldots + x_n L(f_n) \\
+&= x_1 \lambda_1 \cdot f_1 + \ldots x_n \lambda_n \cdot f_n
+\end{align*}
+Et, en itérant plusieurs fois,
+\begin{equation}
+\label{oplin_puiss_opdiag}
+L^k(x) = x_1 \lambda_1^k \cdot f_1 + \ldots x_n \lambda_n^k \cdot f_n
+\end{equation}
+
+Qu'est-ce qu'on a gagné ? Maintenant, quel que soit $x$, nous disposons d'une formule similaire à \ref{oplin_puiss_vecteur_propre}, à la condition que $L$ soit diagonalisable.
+
+Désormais, il reste à trouver des méthodes pour déterminer si
+\begin{itemize}
+\item un opérateur linéaire est diagonalisable ;
+\item une matrice est diagonalisable ;
+\item un vecteur $x$ est un vecteur propre (de $L$ ou de $A$).
+\end{itemize}
+
+Pour mieux comprendre, on peut s'intéresser à deux exemples dans $\R^2$. Ces deux exemples figurent dans le syllabus, nous ne les détaillons pas plus ici.
+
+\begin{exemple}
+Prenons $L \colon \R^2 \mapsto \R^2$, et deux droites $\alpha$ et $\beta$, tels que $L$ soit la projection parallèlement à $\beta$ d'un point sur $\alpha$.
+
+Des vecteurs propres de $L$ sont alors des vecteurs $x$ tels que $x$ et $L(x)$ sont colinéaires. On trouve alors deux familles de vecteurs propres, linéairement indépendants : d'un côté les vecteurs $\vec{a} \paral \alpha$, avec $L(\vec{a}) = 1 \cdot \vec{a}$ car ces vecteurs restent les mêmes ; et de l'autre, les vecteurs $\vec{b} \paral \beta$, avec $L(\vec{b})=0\cdot \vec{b}$ qui sont envoyés sur l'origine.
+
+$0$ et $1$ sont donc valeurs propres de $L$, avec $\vec{a}$ et $\vec{b}$ des vecteurs propres associés, linéairement indépendants si $\alpha$ et $\beta$ sont sécantes. Ces deux vecteurs forment une base de $\R^2$, et $L$ est diagonalisable, avec $f=(\vec{a}, \vec{b})$.
+
+Nous pouvons écrire $L(\vec{a}) = 1\cdot \vec{a} + 0\cdot\vec{b}$ et $L(\vec{b})=0\cdot\vec{a}+0\cdot\vec{b}$. On a donc
+\[ \elfbase{f}{L}{f} = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \]
+
+On peut d'ailleurs voir que les éléments de la diagonale sont justement les valeurs propres de $L$.
+\end{exemple}
+
+\begin{exemple}
+Soit $L \colon \R^2 \mapsto \R^2$ l'opérateur linéaire qui effectue une rotation de 30\degres autour de l'origine.
+
+Dans ce cas, il n'y a aucune valeur propre ni de vecteur propre, car $L(\vec{x})$ et $x$ seront toujours non alignés. Et donc, $L$ n'est pas diagonalisable.
+\end{exemple}
+
+\section{Matrice et opérateur diagonalisables}
+
+Maintenant, nous aimerions bien lier les opérateurs diagonalisables avec les matrices diagonalisables.
+
+Rappelons d'abord qu'une matrice $A$ est diagonalisable s'il existe $P, D \in \K^{n\times n}$ tels que $A=P\cdot D\cdot P^{-1}$.
+
+\begin{propriete}
+\begin{enumerate}
+\item Soit $L\colon V\mapsto V$ opérateur linéaire sur $V$ (à dimension) finie, et soit $e$ une base de $V$.
+
+$L$ est diagonalisable ssi $\elfbase{e}{L}{e}$ est diagonalisable.
+\item Soient $A\in \K^{n\times n}$ et $L_A\colon \K^n\mapsto \K^n$ l'application linéaire associée.
+
+$A$ est diagonalisable ssi $L_A$ est diagonalisable.
+\end{enumerate}
+\end{propriete}
+
+C'est le chainon manquant pour trouver un critère de diagonalisation.
+
+\begin{proof}
+La démonstration complète se trouve dans le syllabus. Nous n'avions fait que la démonstration du 1) et uniquement dans le sens $\Rightarrow$.
+\end{proof}
+
+\paragraph{Remarques}
+
+\begin{enumerate}
+\item Si $A$ est une matrice carrée, alors $x\neq 0$ est un vecteur propre si $\exists \lambda$ tel que $A\cdot x = \lambda \cdot x$. $\lambda$ est alors valeur propre de $A$. Il s'agit de l'application des définitions de \og la propreté \fg{} aux matrices.
+\item Si $A$ est diagonalisable, la preuve nous fournit $D$ et $P$ :
+\begin{itemize}
+\item $D$ est la matrice diagonale ayant les valeurs propres sur la diagonale ;
+\item $P$ est la matrice de changement de base $\elfbase{e}{I}{f}$, dont les colonnes sont des vecteurs propres de $A$, associés à la valeur propre de la colonne correspondante de $D$.
+\end{itemize}
+\item Comment calculer les valeurs propres ?
+
+Comme on l'a vu en APP, il suffit de calculer les racines du polynôme $\det(A-\lambda I)=0$, avec $A=\elfbase{e}{L}{e}$, en tenant compte de la multiplicité. Ce polynôme est le \emph{polynôme caractéristique}.
+\end{enumerate}
+
+\begin{exemple}
+Un petit exemple ne fera pas de mal. Pour cela, considérons la matrice
+\[ \begin{pmatrix} 0 & 5 \\ -10 & 15 \end{pmatrix} \]
+
+On commence par calculer les valeurs propres, racines de :
+\begin{align*}
+\det(A-\lambda I) &= 0 \\
+&= \det \left( \begin{pmatrix} 0 & 5 \\ -10 & 15 \end{pmatrix} - \begin{pmatrix} -\lambda & 0 \\ 0 & -\lambda \end{pmatrix} \right) \\
+&= \det \left( \begin{pmatrix} -\lambda & 5 \\ -10 & 15-\lambda \end{pmatrix} \right) \\
+&= \lambda^2 -15\lambda + 50 = 0
+\end{align*}
+On trouve comme racines $\lambda_1=5$ et $\lambda_2=10$. D'où :
+\[ D = \begin{pmatrix} 5 & 0 \\ 0 & 10 \end{pmatrix} \]
+
+Commentaires :
+\begin{itemize}
+\item le choix de l'ordre est libre ; on aura juste un $P$ qui change ;
+\item les valeurs propres sont différents des éléments de la matrice $A$. Néanmoins, leur somme (\emph{la trace}) est égale, de même que les déterminants. Si $A$ est triangulaire par contre, les valeurs propres sont de fait les mêmes.
+\end{itemize}
+
+Il reste ensuite à déterminer une base propre $\{ f_1, f_2 \}$. Pour cela, regardons l'espace propre de chacune des valeurs propres trouvées :
+\begin{enumerate}
+\item $\lambda_1 = 5$
+Il s'agit d'une solution non triviale à $f_1 \in E(5) \Rightarrow A\cdot f_1 = 5f_1$ et donc $(A-5I)f_1=0$. En posant $f_1 = (x, y)$, on obtient
+\[ \begin{pmatrix} -5 & 5 \\ -10 & 10 \end{pmatrix} \cdot \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \]
+On trouve que $x=y$ sans plus et donc que $E(5)=\mathrm{sev} \langle (1, 1) \rangle$ et donc $f_1 = (1,1)$ convient.
+\item $\lambda_2 = 10$
+Pareillement, on trouve le système
+\begin{align*}
+-10x + 5y &= 0 \\
+-10x+5y &= 0
+\end{align*}
+et don le vecteur $f_2=(1,2)$ convient.
+\end{enumerate}
+
+Notre base est donc $f=((1, 1), (1, 2))$, et
+\[ P = \begin{pmatrix}
+1 & 1 \\ 1 & 2
+\end{pmatrix} \]
+On peut vérifier que $A\cdot P = P\cdot D$, avec $P$ inversible et $D$ diagonale.
+\end{exemple}
+
+\section{Critère de diagonalisation}
+
+Après tous ces calculs, on peut se demander s'il existe un raccourcis pour déterminer si une matrice ou un opérateur sont diagonalisables. Nous nous proposons de trouver un tel raccourcis dans cette section.
+
+\begin{lemme}
+Soit $L \colon V \mapsto V$ un opérateur linéaire ayant $\lambda_1, \ldots, \lambda_n$ comme valeurs propres \emph{distinctes}. Soient $x_1 \neq 0 \in E(\lambda_1), \ldots, x_n \neq 0 \in E(\lambda_n)$. Alors, $x_1, \ldots, x_n$ sont linéairement indépendants.
+\end{lemme}
+
+\begin{corol}
+Si $\dim V=n$, et si $L$ admet $n$ valeurs propres, alors $L$ est diagonalisable. Dans ce cas, $x_1,\ldots,x_n$ forment une base de $V$.
+\end{corol}
+
+Le lemme est une condition nécessaire à la diagonalisabilité, tandis que le corollaire est une condition suffisante. Pour le corollaire, cela signifie que $L$ peut être diagonalisable tout en ayant moins de $n$ valeurs propres distinctes.
+
+Par contre, la propriété suivante constitue un critère efficace de la diagonalisabilité :
+
+\begin{propriete}
+Soient $L \colon V \mapsto V$, $\dim V=n$, $\lambda_1,\ldots,\lambda_n$ des valeurs propres distinctes de $L$. Les quatre conditions suivantes sont équivalentes :
+\begin{enumerate}
+\item $L$ est diagonalisable ;
+\item $V = E(\lambda_1) \oplus \ldots \oplus E(\lambda_n)$
+\item $n=\dim E(\lambda_1) + \ldots + \dim E(\lambda_n)$
+\item $n=\mathrm{m_a}(\lambda_1) + \ldots + \mathrm{m_a}(\lambda_n)$ et $\forall i \in 1, \ldots, n$, $\dim E(\lambda_i) = \mathrm{m_a}(\lambda_i)$ ($\mathrm{m_a}$ désigne la multiplicité algébrique).
+\end{enumerate}
+\end{propriete}
+
+\paragraph{Remarques}
+Au niveau de la praticité, la propriété 4 est la plus utile. De même, cette propriété est valide car
+
+\begin{enumerate}
+\item Si $\lambda$ valeur propre alors $1 \le \dim E(\lambda) \le \mathrm{m_a}(\lambda) \le n$. La propriété consiste à vérifier l'égalité de la relation centrale.
+\item $\dim E(\lambda) = n - \rang(A-\lambda I)$. C'est le théorème du rang et de la nullité.
+\end{enumerate}
+
+% \end{document}

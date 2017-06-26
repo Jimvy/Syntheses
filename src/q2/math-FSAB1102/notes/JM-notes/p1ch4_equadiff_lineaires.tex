@@ -1,0 +1,60 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{amsmath}
+%\usepackage{geninclude}
+%\usepackage{mathsinclude}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{layout}
+\usepackage{geometry}
+%\usepackage{mathtools}
+\usepackage{tensor}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbf{K}} % new command, ajouter à index.tex
+\newcommand{\Sy}{\mathcal{S}}
+\newcommand{\Col}{\mathrm{Col}}
+%\newcommand{\scal}[2]{\left( #1 \; | \; #2 \right)}
+\newcommand{\scal}[2]{\left( #1 \mid #2 \right)}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\dx}[1]{\mathrm{d}#1}
+\newcommand{\norme}[1]{\| #1 \|}
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\newcommand{\paral}{\mathbin{\!/\mkern-3mu/\!}}
+%\newcommand{\basedmatrix}[3]{\prescript{1}{#1}{(#2)}_{#3}^1 }
+% using tensors because it has the good alignment
+% http://tex.stackexchange.com/questions/109694/the-prescript-command-from-the-mathtools-package-gives-incorrect-alignment
+% http://tex.stackexchange.com/questions/11542/left-and-right-subscript
+\newcommand{\elfbase}[3]{\tensor*[_{#1}]{(#2)}{_{#3}}}
+\newcommand{\rang}{\mathrm{rang}}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[chapter]
+\newtheorem{thm}{Théorème}[chapter]
+\newtheorem{lemme}[thm]{Lemme}
+\newtheorem{corol}[thm]{Corollaire}
+\newtheorem*{exemple}{Exemple}
+\newtheorem{propriete}[thm]{Propriété}
+
+\title{Truc}
+\author{JMV}
+\date{\today}
+
+\begin{document}
+
+\chapter{Equations différentielles linéaires}
+
+Dans ce chapitre, nous allons surtout parler du \emph{problème de Cauchy}, qui consiste à résoudre une équation différentielle linéaire, en tenant compte de conditions initiales.
+
+\section{Introduction}
+
+Un \emph{problème de Cauchy} est un problème du type
+\[ \mathcal{P} = \begin{cases}
+\star \quad y^{(n)}(t) + a_{n-1} y^{(n-1)} (t) + \ldots + a_1y'(t) + a_0y(t) = f(t) \\
+\phantom{\star \quad} y(0)=\alpha_0 \quad , \quad \ldots \quad, \quad y^{n-1}(0) = \alpha_{n-1}
+\end{cases} \]
+
+\end{document}
