@@ -9,6 +9,9 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage[frenchb]{babel}
+\usepackage[l2tabu, orthodox]{nag}
+\usepackage{todonotes}
+%\usepackage{biblatex}
 
 \makeatletter % from http://tex.stackexchange.com/questions/75831/how-do-i-show-the-equation-formula-again-instead-of-its-number-of-ref
 % alternative : http://latex-community.org/forum/viewtopic.php?f=46&t=8275
@@ -282,7 +285,53 @@ Les EDP du 1\ier{} ordre (avec des fonctions réelles) ont toutes la propriété
 
 Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation \ref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{} ordre. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
 
+%TODO les paragraphes suivants (jusqu'au prochain TODO) vont devoir être insérés quelque part de cohérent
+
+\subsection{Un autre point de vue sur la méthode des caractéristiques}
+
+La démarche utilisée ici a quelques particularités : elle part de ce que l'on connait déjà (l'EDP et les conditions initiales) et construit tout un raisonnement sur la base de ces connaissances pour finalement arriver à la solution ; c'est un raisonnement \emph{bottom-up}. Elle est également assez analytique et algébrique, et assez peu visuelle. Pourrait-on avoir une vision plus visuelle % ah ah
+de la méthode des caractéristiques ?
+
+Bien entendu, la réponse est oui\footnote{Mais il y aura toujours des calculs. Désolé}. Rappelons-nous de l'objectif de la méthode : déterminer une solution à une EDP. Cette solution est généralement une surface (à deux dimensions dans le cas des EDP à deux variables), la \emph{surface intégrale}, que l'on notera $\mathcal{S}$. Cette surface, définie par $(x, y, u(x, y))$, respecte certaines relations, notamment notre EDP
+\[ P(x, y, u) \fpart{u}{x} + Q(x, y, u) \fpart{u}{y} = R(x, y, u) \]
+que l'on peut réécrire comme
+\[ P(x, y, u) \fpart{u}{x} + Q(x, y, u) \fpart{u}{y} - R(x, y, u) = 0 \]
+ou encore
+\[ (P(x, y, u), Q(x, y, u), R(x, y, u)) \cdot \left(\fpart{u}{x}, \fpart{u}{y}, -1\right) = 0 \]
+où l'on reconnait un produit scalaire nul entre deux vecteurs qui sont donc orthogonaux. Le vecteur de droite rappelle des souvenirs du cours de Maths 2 : il s'agit du vecteur normal à la surface. L'autre vecteur est donc orthogonal au vecteur normal, et donc est contenu dans le plan tangent à $\mathcal{S}$. La surface intégrale solution de l'EDP a donc la propriété assez forte que le vecteur $(P(x, y, u), Q(x, y, u), R(x, y, u)$ est contenu dans le plan tangent à $\mathcal{S}$ $(x, y, u(x, y))$.
+
+Analysons un peu les surfaces qui ont cette propriété. Considérons une courbe $\mathcal{C}$ contenue dans cette surface et qui passe justement par le point $(x, y, z = u(x, y))$, et ajoutons la contrainte que cette courbe soit non seulement tangente au plan tangent (trivial), mais que le vecteur $(P(x, y, u), Q(x, y; u), R(x, y, u)$ soit \emph{aussi} tangent à $\mathcal{C}$, en chaque point de la courbe (qui existe nécessairement s'il y a une solution ; il suffit de suivre le vecteur). Cette courbe, que l'on va paramétriser par $r$, a dès lors des contraintes supplémentaires, dues à sa tangence : elle respecte le système d'équation
+%\begin{equation} % Fun : mettre les deux provoque "Erroneous nesting of equation structures;(amsmath) trying to recover with `aligned'.
+\begin{align*}
+\fdif{x}{r} &= P(x(r), y(r), u(r)) \\
+\fdif{y}{r} &= Q(x(r), y(r), u(r)) \\
+\fdif{z}{r} &= R(x(r), y(r), u(r))
+\end{align*}
+%\end{equation}
+Chacune des équations est devenu une simple EDO, et on qualifie la courbe de \emph{courbe intégrale}.%parce que pourquoi pas.
+La surface intégrale de l'EDP, sa solution, $\mathcal{S}$, est alors l'union de chacune des courbes intégrales $\mathcal{C}$ du \emph{champ de vecteur}\footnote{Coucou math 2, encore.} $(P(x, y), Q(x, y), R(x, y)$.
+
+Ces courbes intégrales, nous les avons déjà croisées avant. Ou plutôt, nous avons croiser leurs ombres : les projections des courbes intégrales sur le plan $Oxy$ sont les courbes caractéristiques.
+\footnote{En réalité, dans la majorité de la littérature, les courbes intégrales sont nommées courbes caractéristiques, et ce qu'on a appelé courbes caractéristiques sont les projections, sur le plan des variables indépendantes, des courbes caractéristiques. Dans la suite, on gardera la mauvaise appellation.}
+En réécrivant ce système, on obtient
+\begin{align*}
+\dif{r} &= \frac{\dif{x}}{P(x(r), y(r))} \\
+\dif{r} &= \frac{\dif{y}}{Q(x(r), y(r))} \\
+\dif{r} &= \frac{\dif{z}}{R(x(r), y(r))}
+\end{align*}
+et comme les $\dif{r}$ sont égaux,
+\[\frac{\dif{x}}{P(x, y)} = \frac{\dif{y}}{Q(x, y)} = \frac{\dif{z}}{R(x, y)}\]
+soit exactement le moyen mnémotechnique de retenir les équations caractéristiques.
+
+Nous pouvons également décrire d'une autre manière encore ce que signifie un problème bien posé : la courbe de Cauchy
+\footnote{Pour le coup, il s'agit bien de la courbe dans le plan $Oxy$, et pas de la courbe $(x(s), y(s), f(s)$, qui n'a pas de nom précis.}
+ne doit, en aucun point de $\mathcal{S}$, être tangente à (avoir la même direction que) la projection de la courbe caractéristique en ce point. En effet, si elles sont tangentes, la courbe de Cauchy, d'équation $\Gamma \equiv (\gamma_x(s), \gamma_y(s))$, a alors la même propriété que les courbes caractéristiques, qui font que ça marche pas. %FIXME
+
+%TODO fin de la section à déplacer
+
 \section{Exemples}
+
+\subsection{Premier exemple}
 
 Afin d'illustrer la méthode des caractéristiques, considérons l'EDP suivante
 \[y\fpart{u}{x} - x\fpart{u}{y} = R\]
@@ -349,6 +398,50 @@ u_0 \left( \arcsin\left(\frac{x}{\sqrt{x^2+y^2}}\right) - \frac{\pi}{2} \right),
 \]
 Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer $x$ en fonction de $y$ (car nous intégrons par rapport à $y$, et $s$ est une constante sur la caractéristique). Ensuite, il faut tenir compte des deux signes possibles pour $x$, et donc bien définir la fonction.
 %FIXME : il est possible que j'aie fait une ou deux erreurs
+
+\subsection{Deuxième exemple}
+
+Considérons une EDP un peu plus générale\footnote{Fortement inspirée de \ref{petersdorff}},
+\[ \fpart{u}{t} + x \fpart{u}{x} + u = 3x \]
+avec la condition initiale \( u(x, 0) = \arctan(x) \)
+
+Le problème ne donne pas directement la courbe $\Gamma$, mais comme on sait que c'est sur celle-ci que la condition \og initiale\fg{} est donnée, on sait que $\Gamma \equiv x(s) = s \wedge t(s) = 0$, avec $f(s) = u(s, 0) = \arctan(s)$.
+
+Les courbes caractéristiques s'obtiennent de nouveau par l'intégration de $P\dif{y} = Q\dif{x}$ ou, dans notre cas et avec les bonnes variables,
+\begin{align*}
+x \dif{t} &= \dif{x} \\
+\int_{x(s)}^{x} \frac{1}{x'} \dif{x'} &= \int_{t(s)}^{t} \dif{t'} \\
+\ln(x) - \ln(s) &= t \\
+x &= s \cdot e^t \\
+\end{align*}
+et donc $s = x e^{-t}$. Une autre manière de faire est
+\begin{align*}
+x \dif{t} &= \dif{x} \\
+\fdif{x}{t}(t) &= x(t) \\
+x(t) &= C e^t \\
+\end{align*}
+et comme, en $t=0$, on a $x=s$, on en déduit que $C = s$. Les caractéristiques sont donc une séries de courbes exponentielles (ou logarithme, selon le point de vue). Chaque exponentielle est bien caractérisée par le paramètre $s$, et elles ne se coupent pas : le problème est bien posé.
+
+Il ne reste plus qu'à résoudre l'équation générale, sachant que l'on a les relations de compatibilités
+\[ x \dif{u} = (3x - u) \dif{x} \]
+et
+\[ \dif{u} = (3x - u) \dif{t} \]
+Malheureusement, aucune des relations n'est sympathiques, mais on va pouvoir se débrouiller avec la deuxième équation. En effet, rappelons que les caractéristiques sont données par $x_s(t) = s e^t$. On va tenter de résoudre l'EDO en considérant que le paramètre $s$ est fixé, ce qui donnera une solution $u_s(x, t)$ (au lieu d'une solution $u(x, t)$). En considérant $s$ fixe, on résout alors réellement l'EDO sur la caractéristique elle-même.
+
+En injectant $x(t)$ dans l'EDO, on obtient
+\[ \fdif{u}{t} = 3s e^t - u \]
+qui est une EDO non homogène.  La solution de l'EDO homogène $\fdif{u_h}{t} = -u_h$ est $u_h(t) = C e^{-t}$. Une solution particulière est $\frac{3}{2}s e^t$ (pour la trouver, on cherche une solution $u_p(t) = a e^t$). Dès lors, la solution générale est $u_s(t) = C e^{-t} + \frac{3}{2} s e^t$. Il ne reste plus qu'à appliquer la condition initiale\dots, oui, mais quelle est-elle ?
+
+Rappelons que l'on cherche une solution $u_s(t)$ à une EDO paramétrisée par $s$, avec comme objectif de généraliser $u_s(t)$ à $u(x, t)$. Vraisemblablement, en $t=0$, la fonction $u_s(t)$ est connue : c'est tout simplement $u(s, 0)=f(s)$. Dès lors, on a $u_s(0) = u(s, 0) = \arctan(s)$, et en remplaçant dans la solution générale,
+\[ C + \frac{3}{2} s = \arctan(s) \Rightarrow C = \arctan(s) - \frac{3}{2} s \]
+On a donc
+\[ u_s(t) = \left( \arctan(s) - \frac{3}{2} s \right) e^{-t} + \frac{3}{2} s e^t = \arctan(s) e^{-t} + 3 s \sinh(t) \]
+et, en revenant à $u(x, t)$,
+\begin{align*}
+u(x, t) &= \arctan(xe^{-t}) e^{-t} - \frac{3}{2} x e^{-t} e^{-t} + \frac{3}{2} x e^{-t} e^t \\
+&= \arctan(x e^{-t}) e^{-t} - \frac{3}{2} x e^{-2t} + \frac{3}{2} x
+\end{align*}
+%TODO trouver une manière "math3-ienne" de résoudre cette EDP
 
 \section{Équation de transport}
 % TODO rajouter des graphes, et encore des graphes.
