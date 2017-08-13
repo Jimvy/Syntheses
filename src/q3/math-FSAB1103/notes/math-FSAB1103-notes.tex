@@ -153,7 +153,7 @@ Une EDP seule n'est pas résoluble. De la même manière qu'il faut, dans le cas
 
 Pour résoudre les EDP du 1er ordre, une méthode particulièrement utile et puissance est la \emph{méthode des caractéristiques}. Le principe de cette méthode est la suivante : comme nous connaissons la valeur de $u$ sur $\Gamma$, ainsi que la variation de $u$ dans un voisinage de $\Gamma$ (grâce à l'EDP), il doit être possible de déterminer $u$ dans un voisinage de $\Gamma$, et d'appliquer à nouveau ce principe pour déterminer $u$ en n'importe quel point. On détermine donc $u(x, y)$ de proche en proche, en partant de la courbe $\Gamma$ et en utilisant l'équation différentielle pour obtenir les solutions intermédiaires entre $\Gamma$ et $(x, y)$, ce qui nous permet alors de bien calculer $u$.
 
-Tout le problème devient à présent de déterminer s'il est possible, et à quelles conditions, de déterminer $u$ dans un voisinage d'une courbe, étant donné l'EDP. De même, nous aimerions une méthode générique, dépendant le moins possible de la courbe $\Gamma$ donnée, et de la valeur de $u$ sur cette courbe (la fonction $f(s)$, généralement donnée). Voyons donc ce que l'on peut faire.
+Tout le problème devient à présent de déterminer s'il est possible, et à quelles conditions, de déterminer $u$ dans un voisinage d'une courbe, étant donné l'EDP. De même, nous aimerions une méthode générique, dépendant le moins possible de la courbe $\Gamma$ donnée, et de la valeur de $u$ sur cette courbe (la fonction $f(s)$, généralement donnée). Idéalement, les données liées à $\Gamma$ ne devraient avoir un impact qu'à la fin de la résolution. Voyons donc ce que l'on peut faire.
 
 Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la dérivée partielle de $u$ par rapport au paramètre $s$ est également connu (c'est $f'(s)$), et donc
 \footnote{Pour ceux qui se le demanderaient, l'utilisation de la notation avec $\partial$ dans les dérivées partielles est généralement utilisée quand la fonction dépend de plusieurs variables. Si la fonction est à une seule variable, on utilise généralement $\mathrm{d}$ à la place de $\partial$.}
@@ -189,7 +189,7 @@ On peut donc déterminer $u$ un peu plus loin de $\Gamma$, et réitérer le proc
 Cette méthode ne fonctionne que si le déterminant ne s'annule pas. Si le déterminant s'annule, il est impossible de déterminer les dérivées partielles, et toute la résolution s'écroule. On dira que \emph{le problème de Cauchy est \strong{bien posé}} ssi le déterminant du système ne s'annule en aucun des points de la courbe. Il est donc important, lorsqu'on pose un problème de Cauchy, de spécifier $\Gamma$ de telle sorte que le problème résultant soit bien posé.
 
 Voyons maintenant ce qu'il se passe si on tente de propager l'équation selon une direction $(\dif{x}, \dif{y})$. Cette direction doit, bien évidemment, être non parallèle à la courbe (sinon on n'avance pas). Autrement dit,
-\[ (\dif{x}, \dif{y}) \neq \alpha (\fdif{x}{s}, \fdif{y}{s}) \quad \alpha \in \mathrm{R} \]
+\[ (\dif{x}, \dif{y}) \neq \alpha \left(\fdif{x}{s}, \fdif{y}{s}\right) \quad \alpha \in \mathrm{R} \]
 La variation de $u$, le long de cette direction, peut être exprimée par la différentielle
 \begin{equation}
 \label{eq:order1-diffdu}
@@ -216,7 +216,7 @@ P\dif{y} = Q \dif{x}
 soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \propto (P, Q)$ ; la direction $(\dif{x}, \dif{y})$ est, en quelque sorte, parallèle à la direction définie par $P$ et $Q$.
 
 Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé
-\footnote{Si $(\dif{x}, \dif{y}) = k \cdot (\fdif{x}{s}, \fdif{y}{s})$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
+\footnote{Si $(\dif{x}, \dif{y}) = k \cdot \left(\fdif{x}{s}, \fdif{y}{s}\right)$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
 
 Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques} (figure \ref{fig:order1-reseau-caract})
 
@@ -240,7 +240,8 @@ Si le problème est bien posé, alors cette direction particulière n'est jamais
 	\label{fig:order1-reseau-caract}
 \end{figure}
 
-Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités. Également, si l'on peut imposer n'importe quelle valeur pour $u$ sur $\Gamma$, on ne peut pas imposer $u$ sur une caractéristique : la valeur de $u$ est dictée par l'EDP et par la courbe de Cauchy.
+Chaque courbe caractéristique doit croiser une seule fois la courbe de Cauchy $\Gamma$, pour que le problème soit bien posé ; en effet, la courbe caractéristique issue d'un point $P$ sur $\Gamma$ va nous permettre de calculer $u$ sur l'ensemble des points de cette caractéristique. Il est donc important que la courbe caractéristique ne croise qu'une seule fois la courbe de Cauchy ; sinon, on imposerait plusieurs conditions sur cette courbe, ce qui donne généralement des incompatibilités. Également, si l'on peut imposer n'importe quelle valeur pour $u$ sur $\Gamma$, on ne peut pas imposer $u$ sur une caractéristique : la valeur de $u$ est dictée par l'EDP, qui dicte les caractéristiques et par la courbe de Cauchy.
+%TODO montrer (si c'est possible) que nécessairement, si le problème est bien posé au sens matriciel, alors le problème est bien posé au sens du croisement des caractéristiques
 
 Comment obtenir l'équation d'une des courbes caractéristiques ? En intégrant la direction caractéristique, depuis un point de $\Gamma$ $(x(s), y(s))$ jusqu'à un point $(x, y)$. Plus précisément\footnote{Dans cette équation, $P'$ et $Q'$ sont deux fonctions, dépendant uniquement respectivement de $y$ et de $x$ ; elles peuvent obtenues à partir de $P(x, y)$ et $Q(x, y)$ en isolant $x$ et $y$ de chaque côté. Les variables $x'$ et $y'$ sont les mêmes que $x$ et $y$, mais ces symboles sont déjà utilisées dans les bornes de l'intégrale (les fameuses \emph{dummy variables}).} :
 \begin{equation}
@@ -269,6 +270,7 @@ Notons qu'une seule des deux relations de compatibilité est requise pour l'int�
 \label{eq:order1-diffeqnmemo}
 \frac{\dif{x}}{P} = \frac{\dif{y}}{Q} = \frac{\dif{u}}{R}
 \end{equation}
+(relation connue comme les équations de Lagrange-Charpit).
 Néanmoins, comme $P$, $Q$ ou $R$ peuvent s'annuler, il vaut mieux revenir à la forme normale de ces équations lors de l'intégration. C'est essentiellement un moyen mnémotechnique. De même, il vaut mieux choisir la relation la plus simple à intégrer.
 
 Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = R\dif{l}$ ; celle-ci relie la variation de $u$ avec la variation $\dif{l}$ directement le long de la caractéristique (dans l'axe de la caractéristique), de sorte que $\dif{l}^2 = \dif{x}^2 + \dif{y}^2$. La démonstration est simplement une règle de la chaine sur $\fdif{u}{l}$, avec quelques manipulations à partir des relation \ref{eq:order1-diffeqnmemo}.
@@ -305,7 +307,7 @@ Ensuite, il ne reste plus qu'à calculer $u$ en chaque point. Pour cela, on util
 ou
 \[\int_{u(x(s), y(s))}^{u(x, y)} Q \dif{u'} = \int_{y(s)}^{y} R\dif{y'}\]
 
-Considérons le cas où $R=0$. L'équation est alors homogène, et les relations de compatibilité deviennent $\dif{u}=0$ ($P$ et $Q$ ne sont pas nuls en général). Cela signifie que $u$ a la même valeur, partout sur la caractéristique. De fait, si on effectue l'intégrale,
+Considérons le cas où $R=0$. L'équation est alors homogène, et les relations de compatibilité deviennent $\dif{u}=0$ ($P$ et $Q$ ne sont pas nuls en général). Cela signifie que $u$ a la même valeur sur toute la caractéristique. De fait, si on effectue l'intégrale,
 \begin{align*}
 \int_{u(x(s), y(s))}^{u(x, y)} P \dif{u'} &= \int_{x(s)}^{x} R\dif{x'} \\
 \int_{u(x(s), y(s))}^{u(x, y)} y \dif{u'} &= \int_{x(s)}^{x} 0 \dif{x'} \\
@@ -313,7 +315,7 @@ Considérons le cas où $R=0$. L'équation est alors homogène, et les relations
 \Rightarrow u(x, y) &= u(x(s), y(s))
 \end{align*}
 Et comme, pour $x$ et $y$ donnés, on a $x^2+y^2=s^2$, on a $s=\sqrt{x^2+y^2}$ et donc,
-\[u(x, y) = f(\sqrt{x^2+y^2})\]
+\[u(x, y) = f\left(\sqrt{x^2+y^2}\right)\]
 
 Considérons un cas plus complexe, celui où $R=\frac{u_0xy}{l^2}$. On remarque tout de suite la présence du $l^2$ au dénominateur ; celui-ci sert à rendre adimensionnel le produit $xy$, de sorte que $R$ ait les mêmes dimensions que $u_0$ et donc $u$. Les dimensions sont très importantes dans ce cours.
 
@@ -322,8 +324,8 @@ En intégrant l'une des deux relations de compatibilité (par exemple la premiè
 \int_{u(x(s), y(s))}^{u(x, y)} P \dif{u'} &= \int_{x(s)}^{x} R \dif{x'} \\
 \int_{u(x(s), y(s))}^{u(x, y)} y \dif{u'} &= \int_{s}^{x} \frac{u_0x y }{l^2} \dif{x'} \\
 \int_{f(s)}^{u(x, y)} 1 \dif{u'} &= u_0 \int_{s}^{x} \frac{x}{l^2} \dif{x'} \\
-u(x, y) &= f(\sqrt{x^2+y^2}) + u_0 (\frac{x^2}{2l^2}  \frac{s^2}{2l^2}) \\
-&= f(\sqrt{x^2+y^2}) - u_0 \frac{y^2}{2l^2}
+u(x, y) &= f\left(\sqrt{x^2+y^2}\right) + u_0 \left(\frac{x^2}{2l^2} - \frac{s^2}{2l^2}\right) \\
+&= f\left(\sqrt{x^2+y^2}\right) - u_0 \frac{y^2}{2l^2}
 \end{align*}
 où nous avons utilisé le fait que $x^2+y^2=s^2$, afin d'éliminer $s$ de l'équation.
 
@@ -332,16 +334,17 @@ Considérons enfin le cas $R=u_0$. Il parait bien inoffensif, mais il ne l'est p
 Q \dif{u} &= R \dif{y} \\
 -x \dif{u} &= u_0 \dif{y} \quad \text{ or, } x=\pm \sqrt{s^2-y^2} \\
 \dif{u} &= -u_0 \frac{1}{ \pm \sqrt{s^2-y^2}} \dif{y} \\
-\int_{u(x(s), y(s))}^{u(x, y)} \dif{u'} &= \int_{y(s)}^{y} -u_0 \frac{1}{\pm \sqrt{s^2-y^2}} \dif{y'} \\
-\int_{f(s)}^{u(x, y)} 1 \dif{u'} &= -u_0 \int_{0}^{y} \pm \frac{1}{ \sqrt{s^2-y^2}} \dif{y'} \quad \quad + \text{ si } x>0 \; ; \, - \text{ sinon} \\
-u(x, y) - f(s) &= -u_0 \left[ \pm \arcsin(\frac{y}{s}) \right]_{0}^{y}\\
-&= \mp u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right)
+\int_{u(x(s), y(s))}^{u(x, y)} \dif{u'} &= \int_{y(s)}^{y} -u_0 \frac{1}{\pm \sqrt{s^2-y'^2}} \dif{y'} \\
+\int_{f(s)}^{u(x, y)} 1 \dif{u'} &= -u_0 \int_{0}^{y} \pm \frac{1}{ \sqrt{s^2-y'^2}} \dif{y'} \quad \quad + \text{ si } x>0 \; ; \, - \text{ sinon} \\
+u(x, y) - f(s) &= u_0 \left[ \pm \arccos\left(\frac{y}{s}\right) \right]_{0}^{y}\\
+&= \pm u_0 \left( \arccos\left(\frac{y}{\sqrt{x^2+y^2}}\right) - \frac{\pi}{2} \right) \quad \quad + \text{ si } x>0 \; ; \, - \text{ sinon} \\
+&= \pm u_0 \left( \arcsin\left(\frac{x}{\sqrt{x^2+y^2}}\right) - \frac{\pi}{2} \right) \quad \quad + \text{ si } y>0 \; ; \, - \text{ sinon} % TODO vérifier que tous ces changements de valeurs et de signe sont corrects, c'est pas garanti.
 \end{align*}
-et donc,
+\footnote{{Un peu de trigonométrie pour démontrer le passage entre les deux dernières équations ne fait jamais de mal.}}et donc,% TODO mettre le développement
 \[
-u(x, y) = f(\sqrt{x^2+y^2}) + \begin{cases}
-(-u_0) \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{si } x>0 \\
-u_0 \left( \arcsin(\frac{y}{\sqrt{x^2+y^2}}) - \frac{\pi}{2} \right), & \text{sinon} \\
+u(x, y) = f\left(\sqrt{x^2+y^2}\right) + \begin{cases}
+u_0 \left( \arcsin\left(\frac{x}{\sqrt{x^2+y^2}}\right) - \frac{\pi}{2} \right), & \text{si } y>0 \\
+(-u_0) \left( \arcsin\left(\frac{x}{\sqrt{x^2+y^2}}\right) - \frac{\pi}{2} \right), & \text{sinon} \\
 \end{cases}
 \]
 Quelques subtilités se cachent dans cet exemple. Tout d'abord, il faut exprimer $x$ en fonction de $y$ (car nous intégrons par rapport à $y$, et $s$ est une constante sur la caractéristique). Ensuite, il faut tenir compte des deux signes possibles pour $x$, et donc bien définir la fonction.
@@ -618,7 +621,7 @@ où $A, B, C, R$ sont fonctions au plus de $x$, $y$, $\phi$, $\fpart{\phi}{x}$ e
 
 Cette EDP est quasi-linéaire, c'est-à-dire linéaire par rapport aux dérivées du plus haut ordre en chacune des variables, et c'est le moment rêvé d'expliquer ce que cela signifie. La linéarité signifie que toute combinaison linéaire de deux solutions $\phi_1$ et $\phi_2$ est également une solution, lorsqu'on l'injecte dans l'équation : comme les opérateurs de dérivation sont linéaires, la linéarité doit s'appliquer à chaque terme de l'équation contenant la fonction $\phi$ ou ses dérivées, et les différentes apparitions de la fonction $\phi$ doivent être linéaires. La quasi-linéarité retire cette contrainte, en ignorant la linéarité de toutes les dérivées à part les plus élevées : en gros, les termes contenant les dérivées du plus haut ordre ($\ffpart{\phi}{x}$, $\fdpart{\phi}{x}{y}$ et $\ffpart{\phi}{y}$) sont linéaires, et on considère uniquement ceux-là. Cela signifie qu'une combinaison linéaire $a \cdot \left(\ffpart{\phi}{x}\right)_1 + b \cdot \left(\ffpart{\phi}{x}\right)_2$ est bien \og solution \fg{} de l'EDP, en ignorant les autres dérivées de $\phi$ comme s'il s'agissait de constantes ou d'autres fonctions.
 \footnote{Si le paragraphe n'est pas très clair, ne vous inquiétez pas : retenez juste la définition de la quasi-linéarité, ainsi que la forme générale de l'équation, et normalement tout ira bien.}
-Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions des dérivées d'ordre 2, mais bien des dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :\footnote{Les parenthèses après le $A$ servent à rappeler que c'est une fonction de ces paramètres.}
+Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions des dérivées d'ordre 2, mais bien des dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :\footnote{Le duo de parenthèses après le $A$ servent à rappeler que c'est une fonction de ces paramètres, le duo de parenthèses suivantes sont simplement pour délimiter un facteur.}
 \begin{align*}
 & A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \left(a \cdot \ffpart{\phi_1}{x} + b \cdot \ffpart{\phi_2}{x}\right) \\
 &= A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot a \cdot \ffpart{\phi_1}{x} + A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot b \cdot \ffpart{\phi_2}{x} \\
