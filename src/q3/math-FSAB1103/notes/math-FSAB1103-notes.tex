@@ -7,7 +7,9 @@
 \usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{booktabs}
 \usepackage[frenchb]{babel}
 \usepackage[l2tabu, orthodox]{nag}
 \usepackage{todonotes}
@@ -23,6 +25,8 @@
 	~\eqref{#1}
 }
 \makeatother
+
+%\allowdisplaybreaks % Pour permettre à align de couper les équations au niveau des pages
 
 \hypertitle{math-FSAB1103}{3}{FSAB}{1103}
 {Jean-Martin Vlaeminck} % narcissique ? Pas vraiment
@@ -722,6 +726,22 @@ Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 o
 &= a \cdot \left( A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \ffpart{\phi_1}{x}\right) + b \cdot \left( A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \ffpart{\phi_2}{x}\right) \\
 \end{align*}
 %FIXME si quelqu'un a une meilleure manière d'expliquer la quasi-linéarité, qu'il n'hésite pas à l'écrire ici !
+
+%TODO Donner un exemple d'EDP linéaire, puis d'EDP quasi-linéaire avec un terme carré, puis d'EDP quasi-linéaire avec un ou deux logarithmes
+
+Vous préférez un exemple ? Bien. L'EDP
+\[ x \ffpart{\phi}{x} + y \ln (\arctan x) \fdpart{\phi}{x}{y} + y \fpart{\phi}{x} - 5x^2 y \phi = 3e^x \]
+est linéaire et donc, quasi-linéaire. L'EDP
+\[ x \ffpart{\phi}{x} + \ln y \ffpart{\phi}{y} - x \left( \fpart{\phi}{x} \right)^2 = 0 \]
+est quasi-linéaire mais pas linéaire, à cause du terme en $\left(\fpart{\phi}{x}\right)^2$. L'EDP
+\[ \ffpart{\phi}{x} - \fpart{\phi}{x} \ffpart{\phi}{y} = \ln \fpart{\phi}{y} \]
+est également quais-linéaire : la fonction $C$ ne dépend pas des dérivées d'ordre $2$, mais uniquement d'ordre $1$. Enfin, l'EDP
+\[ \ffpart{\phi}{x} + \left(\fdpart{\phi}{x}{y}\right)^{-1} = x \phi + 5y \]
+n'est pas quasi-linéaire.
+
+Vous en voulez encore ? Reprenons alors la forme la plus générale possible pour une équation aux dérivées partielles d'ordre $n$ à deux variables (pour simplifier) :
+\[ \mathcal{F} \left( x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y}, \ffpart{\phi}{x}, \fdpart{\phi}{x}{y}, \ffpart{\phi}{y}, \ldots, \frac{\partial^n}{\partial x^n}, \ldots, \frac{\partial^n}{\partial y^n} \right) \]
+On dit alors que cette EDP est linéaire si $\mathcal{F}$ est une fonction linéaire par rapport à $\phi$ et ses dérivées, à savoir $\fpart{\phi}{x},\ffpart{\phi}{x},\ldots$. On dit que l'EDP est quasi-linéaire si $\mathcal{F}$ est une fonction linéaire par rapport aux dérivées d'ordre les plus élevées de $\phi$, à savoir $\frac{\partial^n \phi}{\partial x^n}, \frac{\partial^n \phi}{\partial x^{n-1} \partial y}, \ldots, \frac{\partial^n \phi}{\partial y^n}$ : on enlève la contrainte de linéarité pour les dérivées d'ordre inférieur.
 
 Traditionnellement, on utilise $\phi$ et non $u$ comme fonction inconnue pour les équations du second ordre. Notons que $R$ peut généralement décomposé en $R\left(x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y}\right) = F(x, y) + G\left( x, y, \phi, \fpart{\phi}{x}, \fpart{\phi}{y} \right)$ où $G$ dépend toujours de $\phi$ ; $G$ est \og homogène \fg{} en $\phi$.
 
