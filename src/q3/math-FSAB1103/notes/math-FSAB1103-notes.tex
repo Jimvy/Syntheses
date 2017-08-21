@@ -967,6 +967,833 @@ en plusieurs dimensions. Le coefficient $\alpha$, dépendant éventuellement de 
 
 Maintenant que \cite{haberman}, \cite{dawkinsnotes}.
 
+\chapter{L'équation d'onde}
+
+L'équation d'onde est une des équations les plus importantes de la physique. En effet, elle apparait dans de nombreux problèmes physiques, et a reçu de nombreuses variantes avec l'apparition de la mécanique quantique et l'équation d'onde de Schrödinger (entre autre).
+
+Dans le chapitre sur les EDP du second ordre, nous avions résolu l'équation d'onde à une dimension spatiale
+\[ c^2 \ffpart{u}{x} = \ffpart{u}{t} \]
+avec la méthode des caractéristiques, qui avait rapidement montrer ses limites. Nous avions alors utilisé une astuce algébrique pour la résoudre avec la méthode de d'Alembert. Cette solution nous avait montré qu'une onde en une dimension comporte toujours deux morceaux, se déplaçant à la vitesse $c$ dans des sens différents, et respectant l'équation de transport.
+
+En dimension spatiale $n \ge 2$, l'équation d'onde s'écrit
+\[ \ffpart{u}{t} = c^2 \nabla^2 u = c^2 \left( \ffpart{u}{x_1} + \dots + \ffpart{u}{x_n} \right)  \]
+avec $\nabla^2 = \Delta$ le laplacien. On utilise parfois la notation
+\[ \Box u = 0 \]
+où $\Box = \frac{1}{c^2} \ffpart{}{t} - \nabla^2$ est un opérateur nommé \emph{d'Alembertien}.
+
+Cette équation est difficilement résoluble par la méthode des caractéristiques. Dans ce chapitre, nous allons voir comment résoudre cette équation, à deux dimensions spatiales, avec des géométries simples. Et ce ne sera pas évident\dots
+
+\section{Équation d'onde sur un rectangle}
+
+Commençons par le plus simple : une membrane rectangulaire qui vibre selon l'équation d'onde
+\[ \ffpart{u}{t} = c^2 \left(\ffpart{u}{x} + \ffpart{u}{y}\right) \]
+Nous avons alors une équation à 3 dimensions, qui possèdent chacune une dérivée d'ordre 2. Cela signifie qu'il va nous falloir un grand nombre de conditions limites et de conditions initiales pour aboutir à une solution. En général, on spécifie des conditions limites sur la frontière du domaine (par exemple, la membrane est fixée) et on spécifie deux conditions initiales : la forme initiale de la membrane, et la vitesse initiale de chacun de ses points.
+
+Pour commencer, on va supposer que le problème a des conditions limites homogènes de Dirichlet, qui spécifient que la membrane est fixée sur son pourtour $\Gamma$\footnote{Qui n'a rien à voir avec la courbe de Cauchy},
+\[ u(x, y, t) = 0 \quad (x, y) \in \Gamma \]
+ou, de manière un peu plus explicite,
+\begin{align*}
+u(0, y, t) &= 0 & u(x, 0, t) &= 0 \\
+u(L, y, t) &= 0 & u(x, H, t) &= 0 \\
+\end{align*}
+De même, la membrane a pour conditions initiales
+\[ u(x, y, 0) = u_0(x, y) \]
+et
+\[ \fpart{u}{t}(x, y, 0) = \dot{u}_0(x, y) \]
+avec $u(x, y)$ et $\dot{u}(x, y)$ deux fonctions. La figure~\ref{fig:wave_rectangle_ex1_domain} illustre notre problème.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+	\draw[thin, -latex] (0, 0) -- (5, 0);
+	\draw[thin, -latex] (0, 0) -- (0, 4);
+	\draw[thick, Green] (0, 0) rectangle (4, 3);
+	\draw (0, 0) node[below left] {$(0, 0)$}
+	      (4, 0) node[below] {$L$}
+	      (0, 3) node[left] {$H$};
+	\draw (4, 0) -- (4, -0.1)
+	      (0, 3) -- (-0.1, 3);
+	\draw[->] (2, 0) to[bend right] ++(1, -1) node[right] {$u=0$};
+	\draw[->] (0, 2) to[bend right] ++(-1, -1) node[below left] {$u=0$};
+	\draw[->] (4, 1) to[bend right] ++(1, 1) node[above right] {$u=0$};
+	\draw [->](2, 3) to[bend left] ++(1, 1) node[right] {$u=0$};
+	\draw (2, 2) node {$u(x, y, 0) = u_0(x, y)$}
+	      (2, 1) node {$\dot{u}(x, y, 0) = \dot{u}_0(x, y)$};
+	\end{tikzpicture}
+	\caption{Membrane rectangulaire et ses conditions limites et initiales}
+	\label{fig:wave_rectangle_ex1_domain}
+\end{figure}
+
+Pour commencer, nous allons séparer le temps et l'espace, en posant $u(x, y, t) = T(t) \cdot \phi(x, y)$, ce qui donne
+\begin{align*}
+\phi(x, y) \ffpart{T(t)}{t} &= c^2 T(t) \left( \ffpart{\phi(x, y)}{x} + \ffpart{\phi(x, y)}{y} \right) \\
+\phi(x, y) \ffdif{T}{t}(t) &= c^2 T(t) \nabla^2 \phi(x, y) \\
+\shortintertext{et en divisant par $c^2 T(t) \phi(x, y)$,}
+\frac{1}{c^2} \frac{T''(t)}{T(t)} &= \frac{\nabla^2 \phi(x, y)}{\phi(x, y)}
+\end{align*}
+et on constate qu'on a pu de nouveau séparer les variables. Par un raisonnement analogue à celui utilisé pour Laplace, les deux membres sont nécessairement constants et égaux, donc on écrit
+\begin{equation}
+\frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(x, y)}{\phi(x, y)} = \lambda
+\label{eq:wave_ex1_separated_one_lambda}
+\end{equation}
+De nouveau, il va falloir choisir un signe pour le $\lambda$. De notre expérience précédente, et comme nous souhaitons avoir une solution non nulle (afin de pouvoir satisfaire les conditions initiales et les conditions limites homogènes), nous allons prendre $\lambda = -k^2$ (et montrer que c'est bon). Et donc,
+\begin{equation}
+\frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(x, y)}{\phi(x, y)} = -k^2
+\label{eq:wave_separated_one_k}
+\end{equation}
+d'où on tire deux équations,
+\begin{align*}
+T''(t) + k^2 c^2 T(t) &= 0 & \nabla^2 \phi(x, y) + k^2 \phi(x, y) &= 0 \\
+u(x, y, 0) = T(0) \phi(x, y) &= u_0(x, y) & u(0, y, t) = T(t) \phi(0, y) = 0 &\Rightarrow \phi(0, y) = 0 \\
+\fdif{u}{t}(x, y, 0) = T'(0) \phi(x, y) &= \dot{u}_0(x, y) & u(L, y, t) = T(t) \phi(L, y) = 0 &\Rightarrow \phi(L, y) = 0 \\
+& & u(x, 0, t) = T(t) \phi(0, y) = 0 &\Rightarrow \phi(x, 0) = 0 \\
+& & u(x, H, t) = T(t) \phi(x, H) = 0 &\Rightarrow \phi(x, H) = 0
+\end{align*}
+La première équation se résout immédiatement en
+\[ T(t) = A \sin(k c t) + B \cos(k c t) \]
+avec $A$ et $B$ des constantes à déterminer par les conditions initiales, et qui dépendront sûrement de $k$.
+Commençons par résoudre la deuxième,
+\begin{equation}
+\nabla^2 \phi(x, y) + k^2 \phi(x, y) = 0
+\label{eq:wave_helmholtz}
+\end{equation}
+qui est connue sous le nom d'\emph{équation de Helmholtz} qui, avec les conditions limites, forme le \emph{problème de Helmholz}.
+
+Le problème de Helmholtz a de nombreuses propriétés. On peut montrer (cf notes de cours) que l'opérateur $\nabla^2$, sur un domaine avec des conditions limites homogènes $\phi(x, y)=0$ sur la frontière, est auto-adjoint (cf math 2). Cela a pour conséquence que les fonctions propres liées à des valeurs propres différentes solution de l'équation sont orthogonales, ce qui est bien. Encore mieux, ce résultat est valable sur n'importe quel domaine et dans n'importe quelle dimension.%TODO compléter
+
+La seule limite de ces résultats est l'applicabilité à des géométries compliquées. En effet, le problème a été résolu pour des géométries simples (rectangle, triangle équilatéral, cercle, ellipse) ; toutes les autres géométries aboutissent à des solutions chaotiques, aussi bien théoriquement que numériquement. C'est un problème actif de recherche de déterminer comment résoudre cette équation sur des géométries compliquées, pour des ondes à fréquence élevée. % TODO sources ?
+
+Poursuivons notre résolution sur un rectangle, en séparant les variables $x$ et $y$ :
+\begin{align*}
+\nabla^2 (X(x) Y(y)) + k^2 X(x) Y(y) &= 0 \\
+X(x) Y''(y) + X''(x) Y(y) + k^2 X(x) Y(y) &= 0 \\
+\frac{X''(x)}{X(x)} + \frac{Y''(y)}{Y(y)} &= -k^2 \\
+\frac{X''(x)}{X(x)} &= -\frac{Y''(y)}{Y(y)} - k^2 \\
+\end{align*}
+De nouveau, chaque terme est nécessairement constant, et on écrit donc
+\begin{align*}
+\frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)} - k^2 = -\nu^2
+\end{align*}
+en notant que la constante ne peut être autre que strictement négative pour obtenir une solution non nulle avec des conditions limites homogènes\footnote{Si la constante vaut $+\nu^2>0$, la solution pour $X$ sera une combili d'exponentielles qui, avec les conditions homogènes, sera nulle. Et si la constante est nulle, la solution pour $X$ sera une droite, qui sera de nouveau nulle par les conditions homogènes.}.
+En effet, en $X$, le problème devient
+\begin{align*}
+X''(x) + \nu^2 X(x) &= 0 \\
+\phi(0, y) = X(0) Y(y) = 0 \forall y &\Rightarrow X(0) = 0 \\
+\phi(L, y) = X(L) Y(y) = 0 \forall y &\Rightarrow X(L) = 0
+\end{align*}
+ce qui nous amène à la même solution que pour Laplace, à savoir que
+\[ X_n(x) = C_n \sin\left(\frac{n \pi x}{L}\right) \quad n = 1, 2, \dots \]
+avec $\nu_n = \frac{n \pi}{L}$ et $n \in \mathbb{N}_{>0}$.
+
+Pour $Y$, on va changer de constantes : on pose $k^2 = \mu^2 + \nu_n^2$, avec une nouvelle constante $\mu^2$, et donc, en $Y$, le problème devient
+\begin{align*}
+-\frac{Y''(y)}{Y(y)} - \mu^2 - \nu^2 &= -\nu^2 \\
+\frac{Y''(y)}{Y(y)} &= -\mu^2 \\
+Y''(y) + \mu^2 Y(y) &= 0 \\
+\phi(x, 0) = X(x) Y(0) = 0 \forall x &\Rightarrow Y(0) = 0 \\
+\phi(x, H) = X(x) Y(H) = 0 \forall x &\Rightarrow Y(H) = 0
+\end{align*}
+où nous avons de nouveau choisi le signe de la constante de manière appropriée pour obtenir une solution non triviale,
+\[ Y_m(y) = D_m \sin\left(\frac{m \pi y}{H}\right) \quad m = 1, 2, \dots\]
+avec $\mu_m = \frac{m \pi}{H}$ et $m = 1, 2, \dots$.
+A vrai dire, les signes des constantes de $\frac{X''(x)}{X(x)}$ et $\frac{Y''(y)}{Y(y)}$, toutes les deux négatives et égales respectivement à $-\nu^2$ et à $-\mu^2$, nous impose le signe de la constante $\lambda = -k^2 = -\nu^2 - \mu^2$, qui ne peut être que négative.
+
+La constante $k$, qui était indéterminée, devient donc
+\begin{equation}
+k_{n, m} = \sqrt{\nu_n^2 + \mu_m^2} = \sqrt{\left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2}
+\label{eq:wave_ex1_knm}
+\end{equation}
+On a donc une constante qui dépend cette fois de deux paramètres, $n$ et $m$, qui sont complètement indépendants l'un de l'autre. Les $k_{n, m}$ sont les valeurs propres du problème d'Helmholtz\footnote{En fait, les $k_{n, m}$ sont plutôt les \emph{nombres d'ondes} (ou répétence, selon les normes ISO), et les $k^2_{n, m}$ sont les valeurs propres.},
+présents en double infinité, et les fonctions propres correspondantes sont
+\begin{equation}
+\phi_{n, m} = X_n^*(x) Y_m^*(y) = \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi y}{H}\right)
+\label{eq:wave_ex1_eigfunc}
+\end{equation}
+qui sont orthogonales entre elles, pour des valeurs de ${n, m}$ différentes. Autrement écrit, voire même démontré,
+\begin{equation}
+\begin{split}
+\langle \phi_{p, q}, \phi_{n, m} \rangle &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \phi_{p, q}(x, y) \phi_{n, m}(x, y) \\
+&= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{n \pi x}{L}\right) \sin\left(\frac{m \pi y}{H}\right) \\
+&= \int_{0}^{L} \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{n \pi x}{L}\right) \dif{x} \cdot \int_{0}^{H} \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{m \pi y}{H}\right) \\
+&= \begin{cases}
+\frac{L}{2} \cdot \frac{H}{2} = \frac{HL}{4} & \text{si } n = p \text{ et } m = q \\
+0 & \text{sinon} \\
+\end{cases} \\
+\end{split}
+\label{eq:wave_rectangle_orthogonality_phi}
+\end{equation}
+
+Maintenant que l'on connait $k_{n, m}$, nous pouvons revenir à l'expression de $T(t)$, qui devient
+\begin{align*}T_{n, m}(t) &= A_{n, m} \sin\left( \sqrt{\left( \frac{n \pi}{L} \right)^2 + \left( \frac{m \pi}{H} \right)^2} c t \right) + B_{n, m} \cos\left( \sqrt{\left( \frac{n \pi}{L} \right)^2 + \left( \frac{m \pi}{H} \right)^2} c t \right) \\
+&= A_{n, m} \sin(\omega_{n, m} t) + B_{n, m} \cos(\omega_{n, m} t)
+\end{align*}
+où $\omega_{n, m} = k_{n, m} c$ sont les \emph{fréquences propres} de la membrane qui vibre. Et donc, la solution générale du problème de l'équation d'onde sur une membrane rectangulaire fixée sur les bords (conditions limites homogènes de Dirichlet) est
+\begin{align*}
+u(x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} u_{n, m} (x, y, t) \\
+&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} T_{n, m}(t) X_n{x} Y_m{y} \\
+&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} \sin\left( k_{n, m} c t \right) + B_{n, m} \cos\left( k_{n, m} c t\right)\right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\label{eq:wave_rectangle_solution_genequa}
+\end{align*}
+avec $k_{n, m}$ défini par~\ref{eq:wave_ex1_knm}. Les constantes $A_{n, m}$ et $B_{n, m}$\footnote{Inversées par rapport au syllabus} peuvent être calculées à partir des conditions initiales :
+\begin{align*}
+u(x, y, 0) = u_0(x, y) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} B_{n, m} \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\end{align*}
+En multipliant par $\phi_{i, j}$ et en intégrant sur toute la membrane,
+\begin{align*}
+\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} u_0(x, y) \phi_{i, j} &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} B_{n, m} \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \sin\left( \frac{i\pi}{L} x \right) \sin\left( \frac{j \pi}{H} \right)
+\end{align*}
+En utilisant l'orthogonalité des fonctions propres démontrée en~\ref{eq:wave_rectangle_orthogonality_phi}
+\begin{align*}
+\int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \phi_{i, j} \dif{x} \dif{y} &= B_{n, m} \cdot \begin{cases} 0 & \text{si } n \neq i \text{ ou } m \neq j \\ \frac{LH}{4} & \text{sinon} \\ \end{cases} \\
+B_{n, m} &= \frac{4}{HL} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y}
+\end{align*}
+
+Et similairement pour $A_{n, m}$ :
+\begin{align*}
+\fpart{u}{t} (x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} \fpart{\sin\left( k_{n, m} c t \right)}{t} + B_{n, m} \fpart{\cos\left( k_{n, m} c t\right)}{t} \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \\
+&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} k_{n, m} c \cos\left( k_{n, m} c t \right) - B_{n, m} k_{n, m} c \sin\left( k_{n, m} c t\right) \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\end{align*}
+\begin{align*}
+\fpart{u}{t} (x, y, 0) = \dot{u}_0(x, y) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\end{align*}
+En multipliant par $\phi_{i, j}$ et en intégrant sur toute la membrane,
+\begin{align*}
+\int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \; \dot{u}_0(x, y) \phi_{i, j} &= \int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \sin\left( \! \frac{n\pi x}{L} \right) \sin\left( \! \frac{m \pi y}{H} \right) \sin\left( \! \frac{i\pi x}{L} \right) \sin\left( \! \frac{j \pi y}{H} \right) % FIXME trouver une manière de la faire rentrer sur une seul ligne sans avoir besoin de faire des \! partout
+\end{align*}
+En utilisant l'orthogonalité des fonctions propres démontrée en~\ref{eq:wave_rectangle_orthogonality_phi}
+\begin{align*}
+\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \dot{u}_0(x, y) \phi_{i, j} &= A_{n, m} k_{n, m} c \cdot \begin{cases} 0 & \text{si } n \neq i \text{ ou } m \neq j \\ \frac{LH}{4} & \text{sinon} \\ \end{cases}
+\end{align*}
+\begin{align*}
+A_{n, m} &= \frac{4}{HLk_{n, m} c} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y} \\
+&= \frac{4}{HLc \sqrt{\left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2}} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y}
+\end{align*}
+qui montre que si la membrane a initialement une vitesse nulle, les coefficients $A_{n, m}$ sont tous nuls.
+
+Au vu de ces expressions complexes, si la fonction qui subit l'intégration n'est pas trop sympathique, on préfère les évaluer via des méthodes numériques.
+
+Avant de terminer cette section, il est utile de rappeler que nous avons résolu le problème de Helmholtz (et donc, l'équation d'onde) dans le cas d'une membrane rectangulaire fixée à $0$ sur chaque bord. Le problème de Helmholtz peut être généralisé à des conditions limites homogènes de Neumann (on spécifie $\fpart{u}{x}(0, y, t) = 0$ par exemple) ou de Robin (on spécifie $\fpart{u}{x}(0, y, t) + u(0, y, t) = 0$) sans problèmes particuliers. Et sur un domaine rectangulaire, il est aussi possible de mélanger les conditions limites. Toutes les techniques vues pour Laplace restent applicables, y compris la solution transcendante à base de tangente pour les conditions de Robin\footnote{Hein ? Quelles solutions de\dots Ah, ok, page 75 et suivantes.}.
+
+\section{Équation d'onde sur un cercle}
+
+Considérons maintenant l'équation d'onde sur une membrane circulaire de rayon $a$ (figure~\ref{fig:wave_circular_domain}),
+\begin{equation}
+\ffpart{u}{t} = c^2 \nabla^2 u = c^2 \left( \frac{1}{r} \fpart{}{r} \left( r \fpart{u}{r} \right) + \frac{1}{r^2} \ffpart{u}{theta} \right)
+\label{eq:wave_circular}
+\end{equation}
+avec la condition limite
+\[ u(a, \theta, t) = 0 \]
+et les conditions initiales
+\begin{align*}
+u(r, \theta, 0) &= u_0(r, \theta) \\
+\fpart{u}{t}(r, \theta, 0) &= \dot{u}_0(r, \theta)
+\end{align*}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+	\draw[thin, -latex] (-3, 0) -- (3, 0);
+	\draw[thin] (0, -3) -- (0, 0.2) (0, 0.8) -- (0, 1.2);
+	\draw[thin, -latex] (0, 1.8) -- (0, 3);
+	\draw[thick, Green] (0, 0) circle (2.5);
+	\draw (2.5, 0) node[below right] {$a$};
+	\draw (2.5, 0) -- (2.5, -0.1);
+	\draw[->] (-1.5, 2) to[bend right] ++(-1, 1) node[left] {$u=0$};
+	\draw (0.2, 1.5) node {$u(r, \theta, 0) = u_0(r, \theta)$}
+	      (0.2, 0.5) node {$\dot{u}(r, \theta, 0) = \dot{u}(r, \theta)$};
+	\end{tikzpicture}
+	\caption{Membrane circulaire vibrant selon l'équation d'onde}
+	\label{fig:wave_circular_domain}
+\end{figure}
+
+Comme d'habitude, on commencer par séparer espace et sol\dots euh, temps :
+\begin{align*}
+u(r, \theta, t) &= T(t) \phi(r, \theta) \\
+\phi(r, \theta) \ffpart{T(t)}{t} &= c^2 T(t) \left( \frac{1}{r} \fpart{\phi(r, \theta)}{r} + \ffpart{\phi(r, \theta)}{r} + \frac{1}{r^2} \ffpart{\phi(r, \theta)}{\theta} \right) \\
+&= c^2 T(t) \nabla^2 \phi(r, \theta) \\
+\shortintertext{En divisant par $c^2 T(t) \phi(r, \theta)$}
+\frac{1}{c^2} \frac{T''(t)}{T(t)} &= \frac{\nabla^2 \phi(r, \theta)}{\phi(r, \theta)}
+\end{align*}
+soit la même équation que dans le cas cartésien. De nouveau, les deux membres doivent être égaux à la même constante $- \lambda = -k^2$
+\[ \frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(r, \theta)}{\phi(r, \theta)} = - \lambda = - k^2 \]
+et on retombe sur l'équation de Helmholtz.
+
+À la section précédente, nous avions montré que l'équation de Helmholtz n'acceptait que des valeurs propres positives, en résolvant le problème sur un rectangle. Sur un domaine circulaire, le raisonnement précédent s'applique difficilement, et on ne connait pas à priori le signe de la constante. Néanmoins, le problème de Helmholtz étant un problème de Sturm-Liouville régulier,%FIXME il faut vraiment écrire cette section, elle est tellement utile
+nous pouvons déjà affirmer que les valeurs propres du problème de Helmholtz sont positives, et donc que $\lambda \ge 0$.
+
+Commençons par résoudre l'équation de Helmholtz. On pose $\phi(r, \theta) = R(r) \Theta(\theta)$, et donc
+\begin{align*}
+\nabla^2 \phi(r, \theta) &= -k^2 \phi(r, \theta) \\
+\frac{1}{r} \Theta(\theta) \fpart{R(r)}{r} + \Theta(\theta) \ffpart{R(r)}{r} + R(r) \frac{1}{r^2} \ffpart{\Theta(\theta)}{\theta} &= -k^2 R(r) \Theta(\theta) \\
+\frac{1}{r} \Theta(\theta) R'(r) + \Theta(\theta) R''(r) + R(r) \frac{1}{r^2} \Theta''(\theta) + k^2 R(r) \Theta(\theta) &= 0
+\end{align*}
+En divisant par $R(r)\Theta(\theta)$ et en multipliant par $r^2$,
+\begin{align*}
+r \frac{R'(r)}{R(r)} + r^2 \frac{R''(r)}{R(r)} + \frac{\Theta''(\theta)}{\Theta(\theta)} + k^2 r^2 &= 0 \\
+r \frac{\left(r R'(r)\right)'}{R(r)} + \frac{\Theta''(\theta)}{\Theta(\theta)} + k^2 r^2 &= 0 \\
+r \frac{\left(r R'(r)\right)'}{R(r)} + k^2 r^2 &= - \frac{\Theta''(\theta)}{\Theta(\theta)} = \mu
+\end{align*}
+les deux membres de la dernière équation devant être égaux à une constante.
+
+On considère donc l'équation en $\theta$ :
+\[ \Theta''(\theta) + \mu \Theta(\theta) = 0 \]
+ainsi que les conditions limites suivantes, traduisant la périodicité voulue de la solution :
+\begin{align*}
+\fpart{u}{\theta}(r, \theta, t) &= \fpart{u}{\theta}(r, \theta + 2\pi, t) & \fpart{u}{\theta}(r, \theta, t) &= \fpart{u}{\theta}(r, \theta + 2\pi, t) \quad \forall r, t \\
+\fpart{\phi}{\theta}(r, \theta) &= \fpart{\phi}{\theta}(r, \theta + 2\pi) & \fpart{\phi}{\theta}(r, \theta) &= \fpart{\phi}{\theta}(r, \theta + 2\pi) \quad \forall r \\
+\Theta(\theta) &= \Theta(\theta + 2\pi) & \Theta'(\theta) &= \Theta'(\theta + 2\pi)
+\end{align*}
+
+Pour $\mu = -m^2 < 0$, la solution générale est
+\[ \Theta(\theta) = A e^{m\theta} + B e^{m\theta} \]
+et l'application des conditions homogènes donne
+\begin{align*}
+Ae^{m \theta} + Be^{-m\theta} &= Ae^{m\theta} e^{2\pi m} + Be^{-m\theta}e^{-2\pi m} \\
+Ame^{m \theta} - B m e^{-m\theta} &= Ae^{m\theta}e^{2\pi m} - Bme^{-m\theta}e^{-2\pi m} \\
+\Rightarrow A e^{2\pi m} = 1 &\wedge B e^{2\pi m} = 1
+\end{align*}
+ce qui implique que $m = 0$, ce qui invalide la solution.
+
+Pour $\mu = 0$, la solution générale est
+\[ \Theta_0(\theta) = A_0 \theta + B_0 \]
+et c'est ce que l'on appelle le \emph{mode zéro}. Il est très pratique quand il y a des conditions non homogènes, mais ici il a une utilité plutôt réduite. Vérifions :
+\begin{align*}
+A_0 \theta + B_0 &= A_0 \theta + A_0 2 \pi + B_0 \\
+A_0 &= A_0 \\
+\Rightarrow A_0 &= 0
+\end{align*}
+ce qui donne comme solution
+\[ \Theta_0(\theta) = B_0 \]
+une solution constante, ce qui est logique pour un cercle complet. C'est notre mode zéro, et il correspond à une situation particulière où notre solution ne dépend pas de $\theta$ (on la qualifie d'\emph{axisymétrique}).
+
+Enfin, pour $\mu = -m^2 > 0$, la solution générale est
+\[ \Theta(\theta) = A\cos(m\theta) + B\sin(m\theta) \]
+et les conditions homogènes donnent
+\begin{gather*}
+\begin{split}
+A\cos(m\theta) + B\sin(m\theta) ={} & A\cos(m\theta)\cos(2m\pi) - A\sin(m\theta)\sin(2m\pi) \\*
+&+ B\sin(m\theta)\cos(2m\pi) + B\cos(m\theta)\sin(2m\pi) \quad \forall \theta
+\end{split} \\
+\begin{split}
+-A\sin(m\theta) + B\cos(m\theta) ={} & -A\sin(m\theta)\cos(2m\pi) - A\cos(m\theta)\sin(2m\pi) \\*
+&+ B\cos(m\theta)\cos(2m\pi) - B\sin(m\theta)\sin(2m\pi) \quad \forall \theta \\
+\end{split} \\
+\Rightarrow A \sin(2 m \pi) = 0 \\
+\cos(2m\pi) = 1
+\end{gather*}
+ce qui implique que $m$ est un entier ; gardons donc la notation. En prenant $m=0$, nous retombons sur notre mode zéro (il ne reste que $A$), qui peut être donc inclus dans ce cas ; on a donc
+\begin{equation}
+\Theta_m(\theta) = A_m\cos(m\theta) + B_m\sin(m\theta) \quad m=0, 1, 2, \dots
+\label{eq:wave_circular_Theta_m}
+\end{equation}
+
+Maintenant que $\Theta_m$ a été fait sans grande surprise, passons au $R_m$. L'équation devient
+\begin{align}
+r \frac{R_m'(r)}{R_m(r)} + r^2 \frac{R_m''(r)}{R_m(r)} - \lambda r^2 &= \mu = m^2 \nonumber \\
+r^2 R_m''(r) + r R_m'(r) + k^2 r^2 R(r) - m^2 R(r) &= 0 \nonumber \\
+r^2 R_m''(r) + r R_m'(r) + (k^2 r^2 - m^2) R(r) &= 0 \label{eq:wave_bessel_pre_equation}
+\end{align}
+avec la condition limite
+\begin{align*}
+u(a, \theta, t) &= 0 \quad \forall \theta, t \\
+\phi(a, \theta) &= 0 \quad \forall \theta \\
+R(a) &= 0
+\end{align*}
+L'équation~\ref{eq:wave_bessel_pre_equation} n'est pas l'équation d'Euler (à cause du $k^2 r^2$), mais elle porte un nom, lorsqu'elle est écrite sous une autre forme. En posant $z=kr$, on peut réécrire l'équation~\ref{eq:wave_bessel_pre_equation} sous la forme %FIXME étapes du développement ?
+\begin{equation}
+z^2 R_m''(z) + z R_m'(z) + (z^2 - m^2) R_m(z) = 0
+\label{eq:wave_bessel_equation}
+\end{equation}
+qui est connue sous le nom d'\emph{équation de Bessel}.
+
+Une simple inspection montre qu'il s'agit d'une équation différentielle ordinaire, à coefficients non constants. Il n'existe pas de méthode générale pour résoudre ces équations ; l'usage veut que l'on associe des fonctions solutions à ces équations. Dans le cas présent, pour un $m$ donné, cette équation d'ordre 2 a deux solutions, les \emph{fonctions de Bessel du premier type d'ordre $m$},
+\begin{equation}
+J_m (z)
+\label{eq:wave_bessel_first_kind_alone}
+\end{equation}
+et les \emph{fonctions de Bessel du second type d'ordre $m$},
+\begin{equation}
+Y_m (z)
+\label{eq:wave_bessel_second_kind_alone}
+\end{equation}
+
+Très bien, quelle est l'expression de ces fonctions de Bessel ? Eh bien, il n'y en a pas, ou presque. Ces fonctions ne peuvent pas être exprimées à partir des fonctions classiques (fonctions trigonométriques, hyperboliques, logarithmes, exponentielles\dots). Leur seule vraie définition est qu'elles respectent l'équation de Bessel, que les deux types de solutions sont linéairement indépendantes, et que le premier type n'a pas de singularité à l'origine pour des valeurs de $m$ entières ou positives, et diverge en $0$ pour des valeurs de $m$ négatives et non entières, tandis que le deuxième type est toujours singulier à l'origine et multiforme. Une définition très pratique, en somme.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{bessel_functions.png}
+	\caption{Quelques fonctions de Bessel}
+	\label{fig:wave_bessel_functions}
+\end{figure}
+
+En attendant de connaitre plus d'informations sur ces fonctions de Bessel, qui méritent toute une section, voyons déjà ce à quoi elles ressemblent. La figure~\ref{fig:wave_bessel_functions} présente les fonctions $J_0(z)$, $J_1(z)$ et $J_2(z)$, et $Y_0(z)$, $Y_1(z)$ et $Y_2(z)$. Les fonctions de Bessel du premier type sont toujours réguliers à l'origine pour des valeurs de $m$ entières positives ; $J_0(z)$ vaut $1$ à l'origine, tandis que les autres $J_m(z)$ y valent $0$. Les fonctions de Bessel du second type sont, à l'inverse, toujours singulières à l'origine : elles tendent vers $-\infty$ quand $z \Rightarrow 0^+$. On constate également que les fonctions de Bessel ressemblent à des (co)sinusoïdes amorties, avec des oscillations à intervalles réguliers et tendant vers $0$ quand $z \Rightarrow \infty$ (avec l'exception des fonctions $Y_m(z)$ qui divergent à l'origine).
+
+Maintenant que l'on en sait un peu plus sur les fonctions de Bessel, poursuivons notre résolution du problème de Helmholtz. Les solutions de l'équation de Bessel, que respecte notre fonction $R_m(r)$ pour $m$ entier, étant les deux types de fonctions de Bessel d'ordre $m$, on peut donc écrire
+\[ R_m(r) = C_m J_m(kr) + D_m Y_m(kr) \]
+Il reste à appliquer les conditions limites. Nous avons une seule condition limite, $R_m(a) = 0$. Il nous en manque donc une ; de la même manière qu'avec l'équation de Laplace, nous souhaitons avoir une solution qui soit régulière (finie) en $r=0$ (vu qu'on a une membrane circulaire). Comme $Y_m(kr)$ est singulier en $r=0$, il faut donc s'en débarrasser en imposant $D_m = 0$, ce qui nous donne
+\[ R_m(r) = C_m J_m(kr) \]
+
+Maintenant, on applique notre condition limite,
+\[ R_m(a) = C_m J_m(k a) = 0 \]
+Comme on souhaite avoir une solution non triviale, il faut que $J_m(k a) = 0$, ce qui signifie qu'il nous faut les zéros des fonctions de Bessel. Malheureusement, ces zéros ne peuvent pas être calculés analytiquement, et il faut donc recourir à des méthodes numériques pour les trouver. Le n\ieme{} zéro de la fonction $J_m(z)$ est noté $j_{m, n}$
+\footnote{En accord avec \href{http://mathworld.wolfram.com/BesselFunctionZeros.html}{Wolfram MathWorld} ; le cours utilise la notation $z_{m, n}$.} ;
+le zéro d'indice $0$, $j_{m, 0}$, est généralement considéré comme l'origine (sauf pour $J_0(z)$, qui n'a pas de zéro $j_{0, 0}$). Les tables~\ref{tab:bessel_first_kind_zeros} et~\ref{tab:bessel_second_kind_zeros} donnent quelques-uns des zéros des fonctions de Bessel. A noter que pour $i \neq j$, les fonctions de Bessel $J_i(z)$ et $J_j(z)$ n'ont aucun zéro en commun, à l'exception de celui à l'origine (c'est l'\emph{hypothèse de Bourget}).
+
+\begin{table}[t]
+	\caption{Table des zéros des fonctions de Bessel du premier type}
+	\label{tab:bessel_first_kind_zeros}
+	\centering
+	\begin{tabular}{ccccc}
+	\toprule
+	$k$ & $J_0(z)$ & $J_1(z)$ & $J_2(z)$ & $J_3(z)$ \\
+	\midrule
+	$1$ & $2.404826$ & $3.831706$ & $5.135622$ & $6.380162$ \\
+	$2$ & $5.520078$ & $7.015587$ & $8.417244$ & $9.761023$ \\
+	$3$ & $8.653728$ & $10.173468$ & $11.619841$ & $13.015201$ \\
+	$4$ & $11.791534$ & $13.323692$ & $14.795952$ & $16.223466$ \\
+	$5$ & $14.930918$ & $16.470630$ & $17.959819$ & $19.409415$ \\
+	\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[t]
+	\caption{Table des zéros des fonctions de Bessel du second type}
+	\label{tab:bessel_second_kind_zeros}
+	\centering
+	\begin{tabular}{ccccc}
+		\toprule
+		$k$ & $Y_0(z)$ & $Y_1(z)$ & $Y_2(z)$ & $Y_3(z)$ \\
+		\midrule
+		$1$ & $3.957678$ & $2.197141$ & $3.384242$ & $4.527025$ \\
+		$2$ & $7.086051$ & $5.429681$ & $6.793898$ & $8.097554$ \\
+		$3$ & $10.222345$ & $8.596006$ & $10.023478$ & $11.396467$ \\
+		$4$ & $13.361097$ & $11.749155$ & $13.209987$ & $14.623078$ \\
+		$5$ & $16.500922$ & $14.897442$ & $16.378967$ & $17.818455$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[t]
+	\caption{Table des zéros des dérivées des fonctions de Bessel du second type}
+	\label{tab:bessel_derivative_first_kind_zeros}
+	\centering
+	\begin{tabular}{ccccc}
+		\toprule
+		$k$ & $J'_0(z)$ & $J'_1(z)$ & $J'_2(z)$ & $J'_3(z)$ \\
+		\midrule
+		$1$ & $0$ & $1.841184$ & $3.054237$ & $4.201189$ \\
+		$2$ & $3.831706$ & $5.331443$ & $6.706133$ & $8.015237$ \\
+		$3$ & $7.015587$ & $8.536316$ & $9.969468$ & $11.345924$ \\
+		$4$ & $10.173468$ & $11.706005$ & $13.170371$ & $14.585848$ \\
+		$5$ & $13.323620$ & $14.863589$ & $16.347522$ & $17.788748$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Bref, en notant $j_{m, n}$ le n\ieme{} zéro de la fonction de Bessel d'ordre $m$ $J_m(z)$, on doit donc avoir que $k\cdot a$ doit être l'un de ces zéros ; on peut donc écrire
+\[ k a = j_{m, n} \]
+soit, en supposant que $a \neq 0$, et en souhaitant $k \neq 0$
+\begin{equation}
+k_{m, n} = \frac{j_{m, n}}{a} \quad n=1, 2, \dots
+\label{eq:wave_circular_kmn}
+\end{equation}
+et la constante $k$ dépend donc de nouveau de deux paramètres, $m = 0, 1, \dots$ qui décrit le nombre de périodes qu'accomplit $\Theta_m(\theta)$ lorsque $\theta$ varie de $0$ à $2\pi$ sur tout le cercle, et $n = 1, 2, \dots$, l'indice du n\ieme{} zéro de la fonction de Bessel $J_m(z)$, qui dépend elle-même du paramètre $m$.
+
+La solution pour $R_{m, n}$ est donc
+\[ R_{m, n} = C_{m, n} J_m(k_{m, n} r) = C_{m, n} J_m(z_{m, n} \frac{r}{a}) \]
+et la solution pour $\phi = \phi_{m, n}(r, \theta)$ est donc
+\begin{equation}
+\begin{split}
+\phi_{m, n} (r, \theta) = {} & C_{m, n} J_m(k_{m, n} r) \left( A_m \cos(m\theta) + B_m \sin(m \theta) \right) \\
+= {} & A_{m, n}^* \cos(m\theta) J_{m}\left( j_{m, n} \frac{r}{a} \right) \\*
+&+ B_{m, n}^* \sin(m\theta) J_{m}\left( j_{m, n} \frac{r}{a} \right)
+\end{split}
+\label{eq:wave_circular_phi_mn}
+\end{equation}
+avec $A_{m, n}^*=A_{m}C_{m, n}$ et $B_{m, n}^*=B_{m}C_{m, n}$. Les deux fonctions qui apparaissent (sans les constantes $A$ et $B$) sont dénommées \emph{modes propres de vibration d'une membrane circulaire}. Elles ont la propriété d'être orthogonales entre elles (problème de Helmholtz oblige).
+%TODO regarder http://www.math.usm.edu/lambers/mat415/lecture15.pdf, téléchargé
+
+Notre constante $k_{m, n}$ étant déterminée, on peut maintenant enfin résoudre la deuxième équation de notre première séparation de variables, celle du temps :
+\[ \frac{1}{c^2} \frac{T''(t)}{T(t)} = -k_{m, n}^2 \]
+dont la solution générale est bien entendue
+\[ T_{m, n}(t) = C_{m, n}^* \cos(k_{m, n} c t) + D_{m, n}^* \sin(k_{m, n} c t) \]
+
+Enfin, la solution générale de notre problème de vibration, sur un disque de rayon $a$, est
+\begin{align}
+u(r, \theta, t) &= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} u_{m,n} (r, \theta, t) \nonumber \\
+&= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} \left( T_{m, n}(t) R_{m, n} (r) \Theta_m(\theta) \right) \\
+&= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty}
+	\left( C_{m, n}^* \cos(k_{m, n} c t) + D_{m, n}^* \sin(k_{m, n} c t) \right)
+	J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right) \label{eq:wave_circular_gensolution}
+\end{align}
+
+Et nous avons donc quatre familles de constantes à déterminer : $A_{m, n}^*$, $B_{m, n}^*$, $C_{m, n}^*$ et $D_{m, n}^*$, à partir de nos conditions initiales $u_0(r, \theta, 0)$ et $\dot{u}_0(r, \theta, 0)$.
+
+Une remarque qui en vaut la peine : pour $m = 0$, nous trouvons le mode zéro en $\theta$, à qui correspond la fonction de Bessel $J_0(k_{0, n})$. On constate assez facilement que dans ce cas, le terme $\tilde{B}_{0, n} \sin(0 \cdot \theta)$ s'annule à cause du sinus, et donc le coefficient $\tilde{B}_{0, n}$ n'a aucune importance dans la solution, et on peut donc l'annuler. Quant à l'autre terme de la partie angulaire, il se simplifie en $\tilde{A}_{0, n}$, donnant une solution angulaire nulle. Du coup, la solution peut en fait s'écrire de manière équivalente en
+\begin{equation*}
+\begin{split}
+u(r, \theta, t) &= \sum_{n=1}^{\infty} \left( (A_{0, n}^* C_{0, n}^*) \cos(k_{0, n} c t) + (A_{0, n}^* D_{0, n}^*) \sin(k_{0, n} c t) \right)
+	J_{0}\left( j_{0, n} \frac{r}{a} \right) \\
+	&+ \sum_{m=1}^{\infty} \sum_{n=1}^{\infty}
+	\left( C_{m, n}^* \cos(k_{m, n} c t) + D_{m, n}^* \sin(k_{m, n} c t) \right)
+	J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right)
+\end{split}
+\end{equation*}
+
+Exprimons les conditions :
+\begin{align*}
+u_0(r, \theta) = u(r, \theta, 0) = {} & \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} C_{m, n}^* J_{m} \left( j_{m, n} \frac{r}{a} \right)
+	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right)
+\end{align*}
+et
+\begin{align*}
+\dot{u}_0(r, \theta) &= \fpart{u}{t}(r, \theta, 0) \\
+&= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} \Big( - C_{m, n}^* k_{m, n} c \sin(k_{m, n} c\cdot 0) + D_{m, n}^* k_{m, n} c \cos(k_{m, n} c\cdot 0) \Big) \\*
+&\quad \cdot J_{m}\left( \frac{j_{m, n} r}{a} \right) \left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right) \\ \displaybreak[2]
+&= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} D_{m, n}^* k_{m, n} c J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right)
+\end{align*} % FIXME corriger car c'est moche
+En supposant que $\dot{u}_0(r, \theta) = 0$ (vitesse initiale de la membrane nulle), nous devons avoir $D_{m, n}^* = 0$ pour avoir une solution non nulle. Si on avait $U_0(r, \theta) = 0$ à la place, c'était $C_{m, n}^* = 0$.
+
+Avec une constante de moins\footnote{On aurait pu garder cette constante et faire le développement en toute généralité ; ça prend juste beaucoup de temps},
+on peut à présent écrire notre solution sous la forme
+\begin{align}
+u(r, \theta, t) &= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} C_{m, n}^* \cos(k_{m, n} c t)
+	J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right) \label{eq:wave_circular_nullspeed_pre_solution} \\
+&= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} \cos(k_{m, n} c t) J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( \tilde{A}_{m, n} \cos(m\theta) + \tilde{B}_{m, n} \sin(m \theta) \right) \label{eq:wave_circular_nullspeed_solution}
+\end{align}
+et notre condition initiale devient (ou plutôt, reste)
+\begin{align}
+u_0(r, \theta) = u(r, \theta, 0) &= \sum_{n=1}^{\infty}
+	\underbrace{A_{0, n}^* C_{0, n}^*}_{=\tilde{A}_{0, n}}
+	J_{0}\left( j_{0, n} \frac{r}{a} \right) + \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} J_{m}\left( j_{m, n} \frac{r}{a} \right)
+	\left( \tilde{A}_{m, n} \cos(m\theta) + \tilde{B}_{m, n} \sin(m \theta) \right) \label{eq:wave_circular_nullspeed_initial}
+\end{align}
+
+Cette simplification faite, comment peut-on déterminer les coefficients $\tilde{A}_{0, n}$, $\tilde{A}_{m, n}$ et $\tilde{B}_{m, n}$ ? Il va falloir faire preuve d'imagination ou plutôt, d'astuce. L'idée va être d'utiliser les propriétés d'orthogonalité des fonctions propres afin d'éliminer une partie des coefficients, et en même temps d'éliminer les coefficients qui ne nous intéressent pas.
+
+Nous savons que\footnote{Rappelons que $\dif{S} = r \dif{r} \dif{\theta}$ et $\delta_{np}=0$ si $n\neq p$, $1$ sinon.}
+\begin{gather*}
+\int \phi_1(r, \theta) \phi_2(r, \theta) = \int_{0}^{a} \dif{r} \int_{0}^{2\pi} \dif{\theta} \; r \phi_1(r, \theta) \phi_2(r, \theta) = 0 \quad \text{par orthogonalité des fonctions propres} \\
+\int_{0}^{2\pi} \sin (m\theta) \sin(n\theta) \dif{\theta} = \pi \delta_{mn} \\
+\int_{0}^{2\pi} \cos(m\theta) \cos(n\theta) \dif{\theta} = \pi \delta_{mn} \\
+\int_{0}^{2\pi} \sin(m\theta) \cos(n\theta) \dif{\theta} = 0 \\
+\int_{0}^{a} J_m\left(\frac{j_{m, n} r}{a}\right) J_m\left(\frac{j_{m, p} r}{a}\right) r \dif{r} = \frac{a^2}{2} J_{m+1} (j_{m, n})^2 \delta_{np} \quad \text{par orthogonalité des fonctions de Bessel} \\ %TODO démontrer
+\end{gather*}
+La dernière relation sera démontrée dans la section suivante.
+
+Commençons par calculer les $\tilde{A}_{0, p}$. Pour cela, on multiplie~\eqref{eq:wave_circular_nullspeed_initial} par $r J_0(k_{0, p}r)$, et on intègre sur tout le cercle :
+\begin{align*}
+u_0(r, \theta) r J_0\left(\frac{j_{0, p} r}{a}\right) &= \sum_{n=1}^{\infty} \tilde{A}_{0, n} r J_0\left(\frac{j_{0, n} r}{a}\right) J_0\left(\frac{j_{0, p} r}{a}\right) \\*
+	&\quad + \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} r J_m\left(\frac{j_{m, n} r}{a}\right) J_0\left(\frac{j_{0, p} r}{a}\right) \left(\tilde{A}_{m, n}\cos m \theta + \tilde{B}_{m, n} \sin m \theta\right)
+\end{align*}
+\begin{align*}
+I_{0, p} &= \int_{0}^{2\pi} \dif{\theta} \int_{0}^{a} \dif{r} \; u_0(r, \theta) r J_0\left(\frac{j_{0, p} r}{a}\right) \\ \displaybreak[2]
+&= \sum_{n=1}^{\infty} \tilde{A}_{0, n} \underbrace{\int_{0}^{2\pi} \dif{\theta}}_{=2\pi}
+	\int_{0}^{a} \dif{r} \; r J_0\left(\frac{j_{0, n} r}{a}\right) J_0\left(\frac{j_{0, p} r}{a}\right) \\ \displaybreak[1]
+	&\quad + \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \Bigg(
+	\underbrace{\int_{0}^{2\pi} \left(\tilde{A}_{m, n}\cos m \theta + \tilde{B}_{m, n} \sin m \theta\right)\dif{\theta} }_{ = 0 \text{ car tour complet des (co)sinus}} \cdot \int_{0}^{a} r J_m\left(\frac{j_{m, n} r}{a}\right) J_0\left(\frac{j_{0, p} r}{a}\right) \dif{r} \Bigg) \\ \displaybreak[2]
+&= \sum_{n=1}^{\infty} \tilde{A}_{0, n} 2\pi \underbrace{\int_{0}^{a} r J_0\left(\frac{j_{0, n} r}{a}\right) J_0\left(\frac{j_{0, p} r}{a}\right) \dif{r}}_{= 0 \text{ si } p\neq n} \\
+&= \tilde{A}_{0, p} 2\pi \int_{0}^{a} r J_0\left(\frac{j_{0, p} r}{a}\right)^2 \dif{r} \\
+&= \tilde{A}_{0, p} \pi a^2 J_1(j_{0, p})^2
+\end{align*}
+soit
+\begin{equation}
+\tilde{A}_{0, p} = \frac{1}{\pi a^2 J_1(j_{0, p})^2} \int_{0}^{2\pi} \dif{\theta} \int_{0}^{a} \dif{r} \; u_0(r, \theta) r J_0\left(\frac{j_{0, p} r}{a}\right)
+\label{eq:wave_circular_nullspeed_Atilde0p}
+\end{equation}
+
+Pour déterminer les $\tilde{A}_{p, q}$, $p, q > 0$, on multiplie cette fois par $J_p(k_{p, q}) \cos p\theta$, et on intègre :
+\begin{align*}
+u_0(r, \theta) r J_p\left(\frac{j_{p, q} r}{a}\right) \cos p \theta &=
+	\sum_{n=1}^{\infty} \tilde{A}_{0, n} r J_0\left(\frac{j_{0, n} r}{a}\right) J_p\left(\frac{j_{p, q} r}{a}\right) \cos p \theta \\*
+	&\quad + \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} r J_m\left(\frac{j_{m, n} r}{a}\right) J_p\left(\frac{j_{p, q} r}{a}\right) \cos p \theta \left( \tilde{A}_{m, n}\cos m \theta + \tilde{B}_{m, n} \sin m \theta \right)
+\end{align*}
+\begin{align*}
+I_{p, q} &= \int_{0}^{2\pi} \dif{\theta} \int_{0}^{a} \dif{r} \; u_0(r, \theta) r J_p\left(\frac{j_{p, q} r}{a}\right) \cos p\theta \\
+&= \sum_{n=1}^{\infty} \tilde{A}_{0, n} \underbrace{\int_{0}^{2\pi} \cos p\theta \dif{\theta}}_{=0 \text{ car tour complet}}
+	\int_{0}^{a} r J_0\left(\frac{j_{0, n} r}{a}\right) J_p\left(\frac{j_{p, q} r}{a}\right) \dif{r} \\ \displaybreak[1]
+	&\quad + \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \Bigg(
+	\int_{0}^{2\pi} \left(\tilde{A}_{m, n}\cos m \theta \cos p\theta + \tilde{B}_{m, n} \sin m \theta \cos p\theta \right)\dif{\theta} \cdot \int_{0}^{a} r J_m\left(\frac{j_{m, n} r}{a}\right) J_p\left(\frac{j_{p, q} r}{a}\right) \dif{r} \Bigg) \\ \displaybreak[2]
+&= \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \Bigg(
+	\underbrace{\int_{0}^{2\pi} \tilde{A}_{m, n} \cos m\theta \cos p\theta \dif{\theta}}_{=0 \text{ si } m\neq p}
+	+ \underbrace{\int_{0}^{2\pi} \tilde{B}_{m, n} \sin m\theta \cos p\theta \dif{\theta}}_{=0} \Bigg) \cdot \qquad // \\%*
+	% &\quad \cdot \int_{0}^{a} J_m\left(\frac{j_{m, n} r}{a}\right) J_p\left(\frac{j_{p, q} r}{a}\right) r \dif{r} \\
+	\displaybreak[2]
+&= \sum_{n=1}^{\infty} A_{p, n} \pi
+	\underbrace{\int_{0}^{a} J_p\left(\frac{j_{p, n}r}{a}\right) J_p\left(\frac{j_{p, q}r}{a}\right) r \dif{r}}_{=0 \text{ si } n \neq q} \\
+&= A_{p, q} \pi \int_{0}^{a} J_p\left(\frac{j_{p, q}r}{a}\right)^2 r \dif{r} \\
+&= A_{p, q} \pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2
+\end{align*}
+soit
+\begin{equation}
+\tilde{A}_{p, q} = \frac{1}{\pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2} \int_{0}^{2\pi} \dif{\theta} \int_{0}^{a} \dif{r} \; u_0(r, \theta) r J_p\left(\frac{j_{p, q}r}{a}\right) \cos p\theta
+\label{eq:wave_circular_nullspeed_Atildepq}
+\end{equation}
+
+Pour déterminer $\tilde{B}_{p, q}$, on multiplie cette fois par $J_p(k_{p, q}r) \sin p\theta$, et après un raisonnement similaire, on obtient
+\begin{equation}
+\tilde{B}_{p, q} = \frac{1}{\pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2} \int_{0}^{2\pi} \dif{\theta} \dif{r} \; \int_{0}^{a} u_0(r, \theta) r J_p\left(\frac{j_{p, q}r}{a}\right) \sin p\theta
+\label{eq:wave_circular_nullspeed_Btildepq}
+\end{equation}
+
+Comme on le voit, les expressions définissant les coefficients ne sont pas très gentils : ils requièrent de calculer l'intégrale du produit entre une fonction sur laquelle nous avons le contrôle (ou pas), $u_0(r, \theta)$, et une fonction de Bessel. En général, ces intégrales sont impossibles à calculer analytiquement. Mais il existe des cas particuliers, notamment les intégrales suivantes
+\begin{gather*}
+\int x^m J_0(x) \dif{x} = x^m J_1(x) + (m-1) x^{m-1} J_0(x) - (m-1)^2 \int x^{m-2} J_0(x) \dif{x} \\
+\int x J_0(x) \dif{x} = x J_1(x) \\
+\int x^2 J_0(x) \dif{x} = x^2 J_1(x) + x J_0(x) - \int J_0(x) \dif{x} \\
+\int x^3 J_0(x) \dif{x} = x^3 J_1(x) + 2 x^2 J_0(x) - 4 x J_1(x)
+\end{gather*}
+
+Ces intégrales sont particulièrement utile dans le cas particulier où $u_0(r, \theta)$ ne dépend pas de $\theta$ (problème axisymétrique). A titre d'exemple, supposons que $u_0(r, \theta) = f(r)$, et voyons ce qu'il devient de nos intégrales :
+\begin{align*}
+\tilde{A}_{p, q} &= \frac{1}{\pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2} \underbrace{\int_{0}^{2\pi} \cos p\theta \dif{\theta}}_{=0} \int_{0}^{a} f(r) r J_p\left(\frac{j_{p, q}r}{a}\right) \dif{r} \\
+&= 0
+\end{align*}
+et pareillement pour $\tilde{B}_{p, q}$. Quand à $\tilde{A}_{0, p}$ :
+\begin{align*}
+\tilde{A}_{0, p} &= \frac{1}{\pi a^2 J_1(j_{0, p})^2} \int_{0}^{2\pi} \dif{\theta} \int_{0}^{a} f(r) r J_0\left(\frac{j_{0, p} r}{a}\right) \dif{r} \\
+&= \frac{\int_{0}^{a} f(r) J_0\left(\frac{j_{0, p}r}{a}\right) \dif{r}}{\frac{a^2}{2} J_1(j_{0, p})^2}
+\end{align*}
+soit une expression un peu plus gentille. L'APE 7 utilise cette expression pour trouver les coefficients, vu que la fonction est connue.
+
+% Wolfram est plus précis :
+% int_0^a x J_n\left(\frac{j_{n, k}x}{a}\right)^2 \dif{x} =
+% \frac{a^2}{2} \left( J_n(j_{n, k})^2 - \frac{2 n J_{n+1}(j_{n, k}) J_n(j_{n, k})}{j_{n, k}} + J_{n+1}(j_{n, k})^2\right)
+
+% Au niveau de l'orthogonalité : les conditions donnant l'orthogonalité sont J_n(a)=J_n(b)=0, J'_n(a)=J'_n(b)=0, ou aJ'_n(a)/J_n(a) = bJ'_n(b)/J_n(b), qui permettent les conditions R(a)=0, R'(a)=0, et R'(a)=C*R(a).
+
+% Partie anneau (dépassement) :
+\subsection{Conclusion et complications possibles}
+
+Nous avons donc pu résoudre l'équation d'onde, sur une membrane circulaire fixée sur son bord, avec une vitesse initiale nulle, et avec une symétrie axiale au niveau de la condition initiale, et donc une solution avec une symétrie axiale. Il s'agit de beaucoup de conditions supplémentaires ; voyons ce qu'il se passe quand on enlève une à une les conditions.
+
+\subsubsection{Condition initiale non axisymétrique}
+
+Dans ce cas, les coefficients $\tilde{A}_{p, q}$ et $\tilde{B}_{p, q}$ ne seront pas forcément nuls.
+
+La condition axisymétrique imposait une symétrie axiale de la solution, similaire à la symétrie axiale de la situation initiale. Cela imposait que les termes de la solution~\ref{eq:wave_circular_nullspeed_solution} qui dépendaient de $\theta$ s'en aille, et c'est exactement ce qu'il s'est passé pour les $\tilde{A}_{p, q}$ et $\tilde{B}_{p, q}$ pour $p>0$ : ils se sont annulés.
+
+Dans le cas un peu plus générale d'une condition initiale non symétrique, il faudra calculer ces coefficients, avec du coup une double intégrale compliquée. Si $u_0(r, \theta) = f(r)g(\theta)$, et que $f(r)$ est une fonction sympathique, il est possible de séparer la double intégrale en deux intégrales, et de calculer ces deux intégrales, de manière classique pour $\theta$, de manière plus douloureuse pour $r$ (à cause des fonctions de Bessel). Malheureusement, il y a peu de fonctions gentilles lorsqu'on les intègre avec les fonctions de Bessel d'ordre supérieur à 0\dots
+
+\subsubsection{Vitesse initiale non nulle}
+
+Si la vitesse initiale n'est pas nulle, le coefficient $D^*_{m, n}$ ne sera pas non plus nul, et il y aura donc un total de 4 coefficients à calculer : $A^*_{m, n}C^*_{m, n}=\tilde{A}_{m, n}$, $B^*_{m, n}C^*_{m, n}=\tilde{B}_{m, n}$, $A^*_{m, n}D^*_{m, n}=\tilde{C}_{m, n}$ et $B^*_{m, n}D^*_{m, n}=\tilde{D}_{m, n}$. Heureusement, de la même manière que la condition initiale $u_0$ n'a besoin que des coefficients $\tilde{A}_{m, n}$ et $\tilde{B}_{m, n}$, la condition de vitesse initiale n'aura besoin que de $\tilde{C}_{m, n}$ et $\tilde{D}_{m, n}$ : il n'y a, pour chaque condition initiale, que deux familles de constantes à calculer\footnote{Ainsi que le mode zéro, $\tilde{A}_{0, n}$ ou $\tilde{C}_{0, n}$, qui engendre quelques petites simplifications à prendre en compte, et qui justifie de le séparer lors du calcul.}
+et donc, il y a largement moyen d'appliquer les mêmes méthodes que ci-dessus pour obtenir les coefficients.
+
+\subsubsection{Condition limite de Neumann ou de Robin}
+
+Lors de notre résolution, nous avons considéré que la membrane était fixé sur les bords, et donc qu'il y avait des conditions limites homogènes de Dirichlet sur les bords du domaine. Cela nous a permis d'exprimer la condition sur $R(a)$, qui a débouché sur la nécessité que $k_{m, n}=\frac{j_{m, n}}{a}$, et d'utiliser les zéros de $J_m$.
+
+Il est possible de généraliser ce procédé pour des conditions limites homogènes de Neumann $\dot{u}(a, \theta, t) = 0$ et de Robin $\dot{u}(a, \theta, t) = \mathcal{C}\cdot u(a, \theta, t)$. Dans le premier cas, il faudra utiliser des zéros des dérivées des fonctions de Bessel, et dans le second cas, quelque chose de plus compliqué. %TODO
+
+L'orthogonalité des fonctions de Bessel est toujours assuré pour ces zéros (démontré dans la section suivante), et on peut donc sereinement résoudre notre problème.
+
+\subsubsection{Domaine en forme d'anneau}
+
+Si notre domaine n'était pas un cercle mais un anneau, nous n'aurions pas pu éliminer $Y_m(z)$ de la solution car $r=0$ ne fait pas partie du domaine, et il aurait donc fallu tenir compte des deux fonctions de Bessel. Dans le cas de conditions aux limites de Dirichlet, il faut donc satisfaire une équation plus compliquée, qui malheureusement requiert des méthodes numériques. % TODO flemme de chercher.
+
+% Partie Bessel :
+
+\subsection{Les fonctions de Bessel}
+
+Dans cette section, les fonctions de Bessel jouent un rôle primordial. Il est donc intéressant d'en connaitre un peu plus sur ces fameuses fonctions.
+
+Comme indiqué lors de leur présentation, ces fonctions ne peuvent pas être exprimées à partir des fonctions classiques (fonctions trigonométriques, hyperboliques, logarithmes, exponentielles\dots). Leur seule vraie définition est qu'elles respectent l'équation de Bessel, que les deux types de solutions sont linéairement indépendantes, et que le premier type n'a pas de singularité à l'origine pour des valeurs de $m$ entières ou positives, et diverge en $0$ pour des valeurs de $m$ négatives et non entières, tandis que le deuxième type est toujours singulier à l'origine et multiforme. Il existe néanmoins des expressions analytiques non finies pour ces fonctions. Par exemple, l'expansion de $J_m(z)$ en série de Taylor autour de $z=0$ est
+\begin{equation}
+J_m(z) = \sum_{n=0}^{\infty} \frac{(-1)^n}{n! \Gamma(n+m+1)} \left( \frac{x}{2} \right)^{2n + m}
+\label{eq:wave_bessel_first_kind_series}
+\end{equation}
+où $\Gamma(x)$ désigne la fonction $\Gamma$, généralisation de la factorielle sur les complexes\footnote{La fonction n'a un comportement de factorielle que sur les réels positifs ; ailleurs ça devient n'importe quoi.}.
+
+Le lecteur intéressé se demande peut-être comment cette expression a été trouvée. Même si ce n'est pas nécessaire pour comprendre le cours, la méthode de résolution de ce type d'équation, la méthode de Frobenius, nous apprend beaucoup de chose. Cette méthode permet de résoudre les équations de la forme
+\[ z^2 u'' + p(z) u' + q(z) u = 0 \]
+lorsque les fonctions $\frac{p(z)}{z}$ ou $\frac{q(z)}{z^2}$ ne sont pas analytiques (finies) en $z=0$ (ce qui empêche de résoudre l'équation en déterminant la série de Taylor), mais que $p(z)$ et $q(z)$ sont analytiques en $z=0$\footnote{En fait, il suffit que $p(z)$ et $q(z)$ soient analytiques partout ailleurs que $0$, et que leur limite en $z=0$ existe et est finie.}.
+
+Pour cela, on suppose que notre solution a la forme
+\begin{equation}
+u(z) = \sum_{k=0}^{\infty} A_k z^{k + r}
+\label{eq:wave_bessel_frobenius_solpattern}
+\end{equation}
+où $r$ est un nombre, pas forcément entier, que nous allons devoir déterminer, et qui va nous permettre de calculer notre série (qui n'est pas de Taylor, car les exposants peuvent ne pas être entiers).
+
+Injectons donc dans notre équation de Bessel, pour un $m$ fixé (pas forcément entier) :
+\begin{align*}
+0 &= z^2 u''(z) + z u'(z) + (z^2 - m^2) u(z) \\
+&= z^2 \left( \sum_{k=0}^{\infty} A_k z^{k + r} \right)'' + z \left( \sum_{k=0}^{\infty} A_k z^{k + r} \right)' + (z^2 - m^2) \sum_{k=0}^{\infty} A_k z^{k + r} \\
+&= z^2 \left( \sum_{k=0}^{\infty} (k+r)(k+r-1) A_k z^{k + r - 2} \right) + z \left( \sum_{k=0}^{\infty} (k+r) A_k z^{k + r - 1} \right) + (z^2 - m^2) \sum_{k=0}^{\infty} A_k z^{k + r} \\
+&= \left( \sum_{k=0}^{\infty} (k+r)(k+r-1) A_k z^{k + r - 2} z^2 \right) + \left( \sum_{k=0}^{\infty} (k+r) A_k z^{k + r - 1} z \right) + (z^2 - m^2) \sum_{k=0}^{\infty} A_k z^{k + r} \\
+&= \sum_{k=0}^{\infty} (k+r)(k+r-1) A_k z^{k + r} + (k+r) A_k z^{k + r} + A_k z^{k + r + 2} - m^2 A_k z^{k+r} \\
+&= \sum_{k=0}^{\infty} z^{k+r} \left( (k+r)(k+r-1) A_k + (k+r) A_k - m^2 A_k \right) + \sum_{k'=0}^{\infty} A_{k'} z^{k' + r + 2} \\
+&= \sum_{k=0}^{\infty} z^{k+r} \left((k+r)^2 - m^2\right) A_k + \sum_{k=2}^{\infty} A_{k-2} z^{k + r} \\
+0 &= z^r (r^2-m^2)A_0 + z^{r+1} ((r+1)^2-m^2) A_1 \sum_{k=2}^{\infty} z^{k+r} \left( ((k+r)^2 - m^2) A_k + A_{k-2} \right)
+\end{align*}
+Pour que les deux membres soient nuls, il faut que chaque coefficient devant les puissances de $z$ soit nul. Il faut donc que
+\begin{gather}
+(r^2-m^2) A_0 = 0 \\
+((r+1)^2-m^2) A_1 = 0 \\
+((k+r)^2-m^2) A_k + A_{k-2} = 0 \quad \forall k>2 \label{eq:wave_bessel_frobenius_recurse}
+\end{gather}
+On s'impose $A_0 \neq 0$ pour garantir une seule représentation de l'équation, ce qui impose $r = \pm m$.
+
+Dans le cas où $r=m$, on a alors que $((r+1)^2-m^2)A_1 = (2m+1)A_1=0$, ce qui donne $A_1=0$, sauf si $m=\frac{-1}{2}$. Dans ce dernier cas, la relation~\ref{eq:wave_bessel_frobenius_recurse} devient
+\[ ((k-\frac{1}{2})^2-\frac{1}{4})A_k + A_{k-2} = (k^2-k)A_k + A_{k-2} = 0 \]
+soit la relation de récurrence
+\[ A_k = \frac{-A_{k-2}}{k(k-1)} \]
+qui donne, après un bref développement, les relations suivantes
+\begin{align*}
+A_{2l} &= \frac{(-1)^l}{(2l)!} A_0 \\
+A_{2l+1} &= \frac{(-1)^l}{(2l+1)!} A_1
+\end{align*}
+En réinjectant ces expressions dans l'équation~\ref{eq:wave_bessel_frobenius_solpattern}, on obtient
+\begin{align*}
+u(z) &= z^\frac{-1}{2} \sum_{k=0}^{\infty} A_k z^k \\
+&= z^\frac{-1}{2} \left( \sum_{l=0}^{\infty} A_{2l} z^{2l} + \sum_{l=0}^{\infty} A_{2l+1} z^{2l+1} \right) \\
+&= z^\frac{-1}{2} \left( A_0 \sum_{l=0}^{\infty} \frac{(-1)^l}{(2l)!} z^{2l} + A_1 \sum_{l=0}^{\infty} \frac{(-1)^l}{(2l+1)!} z^{2l+1} \right) \\
+&= z^\frac{-1}{2} (A_0 \cos(z) + A_1 \sin(z))
+\end{align*}
+ce qui donne une double famille de solution. Il se fait que si l'on avait regardé la solution pour $r=-m$, nous aurions eu exactement le même soucis avec $m=\frac{1}{2}$, et nous aurions obtenu, au signe près, la même expression. Pour des raisons de normalisation et de continuité de certaines fonctions, on définit les fonctions de Bessel associées à $\pm\frac{1}{2}$ comme
+\begin{align}
+J_{-1/2}(z) &= \sqrt{\frac{2}{\pi z}} \cos(z) \\
+J_{1/2}(z) &= \sqrt{\frac{2}{\pi z}} \sin(z)
+\end{align}
+et il s'agit des deux solutions indépendantes pour l'équation de Bessel avec $m=\pm\frac{1}{2}$.
+
+Dans le cas où $m\neq \pm\frac{1}{2}$ (mais on considère encore que $r=m$), on a nécessairement $A_1=0$, et comme l'équation~\ref{eq:wave_bessel_frobenius_recurse} est toujours valide, on a
+\begin{align*}
+0&= (k^2 + 2km) A_k + A_{k-2} \\
+A_k &= \frac{-1}{k(k+2m)} A_{k-2} \\
+\Rightarrow A_{2l+1} &= 0 \\
+\Rightarrow A_{2l} &= \frac{(-1)^l}{(2l)\cdot(2l-2)\cdot\dots\cdot(2) \cdot (2l+2m)\cdot(2l-2+2m)\cdot\dots\cdot(2+2m)\cdot(2m)} A_0 \\
+&= \frac{(-1)^l}{2^l \cdot l\cdot(l-1)\cdot\dots\cdot1 \cdot 2^l \cdot (m+1)\cdot(m+2)\cdot\dots\cdot(m+l-1)\cdot(m+l)} A_0 \\
+&= \frac{(-1)^l m!}{2^{2l} l! (m+l)!} A_0
+\end{align*}
+où $m!=m\cdot(m-1)\cdot\dots$, avec une limite encore incertaine (et non nécessaire car les coefficients se simplifie). On définit alors la fonction $\Gamma(m) = (m-1)!$, qui généralise la factorielle pour des nombres non entiers, et même complexes. On obtient alors
+\begin{align*}
+u(z) &= z^m \sum_{k=0}^{\infty} A_k z^{k} \\
+&= \sum_{l=0}^{\infty} \frac{(-1)^l \Gamma(m+1)}{2^{2l} l! \Gamma(m+l+1)} A_0 z^{2l+m}
+\end{align*}
+ce qui, nous des raisons évidentes de clarté, est multiplié par $\frac{1}{\Gamma(m+1) 2^{m} A_0}$, qui ne sont de toutes façons que des constantes, pour donner
+\begin{equation}
+J_m(z) = \sum_{l=0}^{\infty} \frac{(-1)^l}{l! \Gamma(m+l+1)} \left(\frac{z}{2}\right)^{2l+m}
+\end{equation}
+
+Et que dire du cas où $r=-m$ ? Dans ce cas, on a plutôt
+\begin{align*}
+0&= (k^2 - 2km) A_k + A_{k-2} \\
+A_k &= \frac{-1}{k(k-2m)} A_{k-2} \\
+\Rightarrow A_{2l+1} &= 0 \\
+\Rightarrow A_{2l} &= \frac{(-1)^l}{(2l)\cdot(2l-2)\cdot\dots\cdot(2) \cdot (2l-2m)\cdot(2l-2-2m)\cdot\dots\cdot(2-2m)\cdot(-2m)} A_0 \\
+&= \frac{(-1)^l}{2^l \cdot l\cdot(l-1)\cdot\dots\cdot1 \cdot 2^l \cdot (-m+1)\cdot(-m+2)\cdot\dots\cdot(-m+l-1)\cdot(-m+l)} A_0 \\
+&= \frac{(-1)^l (-m)!}{2^{2l} l! (-m+l)!} A_0
+\end{align*}
+soit la même forme de solution (malgré l'étrangeté de la factorielle). C'est normal : le signe de $m$ n'intervient pas dans l'équation de Bessel. Les fonctions $J_m(z)$ et $J_{-m}(z)$ sont donc toutes les deux des solutions valides, et différentes (à cause de la fonction $\Gamma$). On peut montrer que si $m$ n'est pas un entier, ces deux fonctions sont effectivement linéairement indépendantes, et donc sont les deux solutions de l'équation de Bessel. % TODO rechercher pourquoi
+
+Quand $m$ est entier par contre, les choses se gâtent : en effet, la fonction $\Gamma$ diverge vers l'infini aux entiers négatifs ou nuls. Pour $m\ge 0$, cela ne pose pas de problème, l'argument de $\Gamma$ reste supérieur à $0$. Mais pour $m < 0$, certains termes sont nuls. Pour $m>0$, calculons $J_{-m}(z)$ :
+\begin{align*}
+J_{-m}(z) &= \sum_{l=0}^{\infty} \frac{(-1)^l}{l! \Gamma(l+1-m)} \left(\frac{z}{2}\right)^{2l-m} \\
+&= \sum_{l'=-m}^{\infty} \frac{(-1)^{l'+m}}{(l'+m)!\Gamma(l'+1)} \left(\frac{z}{2}\right)^{2l'+m} \\
+&= \sum_{l'=-m}^{-1} \frac{(-1)^{l'+m}}{(l'+m)!\underbrace{\Gamma(l'+1)}_{=\infty}} \left(\frac{z}{2}\right)^{2l'+m} + \sum_{l'=0}^{\infty} \frac{(-1)^{l'+m}}{(l'+m)!\Gamma(l'+1)} \left(\frac{z}{2}\right)^{2l'+m} \\
+&= (-1)^m \sum_{l'=0}^{\infty} \frac{(-1)^{l'}}{(l'+m)!l'!} \left(\frac{z}{2}\right)^{2l'+m} \\
+&= (-1)^m J_m(z)
+\end{align*}
+et donc, les deux solutions potentielles ne sont pas linéairement indépendantes : il en manque une !
+
+Pour la trouver, on définit une combinaison linéaire bizarre de $J_m(z)$, la fonction de Bessel du second type $Y_m(z)$ :
+\begin{equation}
+Y_m(z) = \frac{J_m(z)\cos(m z) - J_{-m}}{\sin(m z)}
+\label{eq:wave_bessel_second_kind_from_first_nonint}
+\end{equation}
+Pour $m$ non entier, tout va bien, il s'agit bien d'une combinaison linéaire de deux fonctions linéairement indépendantes. Pour $m$ entier en revanche, il faut prendre la limite :
+\begin{equation}
+Y_m(z) = \lim\limits_{\alpha \to m} Y_\alpha(z) \quad m \in \mathbb{Z}, \alpha\not\in\mathbb{Z}
+\label{eq:wave_bessel_second_kind_from_first_intm}
+\end{equation}
+ce qui permet de définir par des séries la valeur de $Y_m(z)$, mais difficilement : toutes les fonctions de Bessel du deuxième type divergent en $0$.
+
+À partir de ces expressions et de l'équation de Bessel, on peut montrer que pour des valeurs entières de $m$ (ce qui nous intéresse généralement), la fonction de Bessel du premier type est une \emph{fonction entière}\footnote{La partie sur les fonctions complexes définit les fonctions holomorphiques et les fonctions entières ; pour le moment, une approximation est qu'il s'agit d'une fonction qui est égale à sa série de Fourier en tout point du plan complexe.},
+et que pour des valeurs de $m$ non entières, elle est multiforme\footnote{De nouveau, on verra dans la partie complexe ce que ça signifie.}.
+
+Pour des valeurs entières de $m$\footnote{On peut même généraliser à des valeurs non entières, via
+\begin{equation}
+J_m(z) = \frac{1}{\pi} \int_{0}^{\pi} \cos(m\tau - z\sin\tau) \dif{\tau} - \frac{\sin(m\pi)}{\pi} \int_{0}^{\infty} e^{-z\sinh(\tau) - m\tau} \dif{\tau}
+\label{eq:wave_bessel_first_kind_overintegral}
+\end{equation}},
+on a aussi
+\begin{equation}
+J_m(z) = \frac{1}{\pi} \int_{0}^{\pi} \cos(m \tau - z\sin(\tau)) \dif{\tau} = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{i(m\tau - z\sin(\tau))} \dif{\tau}
+\label{eq:wave_bessel_first_kind_integral}
+\end{equation}
+
+A la différence de $J_m(z)$, qui est régulier (fini) en $z=0$ pour des valeurs entières de $m$, $Y_m(z)$ a une singularité en $z=0$ (elle diverge) et est multiforme\footnote{Promis, dans la deuxième partie du syllabus, vous comprendrez tout !}. À la ressemblance de $Y_m(z)$, pour $m$ entier, on a $Y_{-m}(z)=(-1)^m Y_m(z)$. $J_m(z)$ et $Y_m(z)$ ont également la propriété d'être holomorphiques sur tout le plan complexe à l'exception des réels négatifs.
+
+Tout ceci est intéressant, mais en pratique, à quoi ressemblent ces fonctions ? La figure~\ref{fig:wave_bessel_functions} montre un graphique des fonctions de Bessel $J_0(z)$, $J_1(z)$, $J_2(z)$, $Y_0(z)$, $Y_1(z)$ et $Y_2(z)$. On peut constater les propriétés suivantes :
+\begin{itemize}
+	\item Les fonctions de Bessel ressemblent à des sinusoïdales, avec des oscillations à intervalles réguliers, amorties par un facteur, qui s'avère être égal à $1/\sqrt{z}$ (on peut l'obtenir à partir de la série).
+	\item La fonction de Bessel $J_0(z)$ vaut $1$ à l'origine, tandis que les autres fonctions de Bessel $J_m(z)$ pour $m>0$ entier valent $0$ à l'origine.
+	\item Toutes les fonctions de Bessel $Y_m(z)$ tendent vers $-\infty$ lorsque $x\Rightarrow 0^+$, et sont donc singulières à l'origine.
+\end{itemize}
+
+Il est aussi possible de définir un comportement asymptotique à nos fonctions de Bessel :
+\begin{itemize}
+	\item Pour $m$ naturel non nul et pour $0 < z \ll \sqrt{m+1}$, on a
+	\begin{align}
+	J_m(z) &\approx \frac{z^m}{m!2^m}
+	\label{eq:wave_bessel_first_kind_asymp0_intm} \\
+	Y_m(z) &\approx \frac{-2^m (m-1)!}{\pi} z^{-m} \quad m\in \mathbb{C} \text{ aussi}
+	\label{eq:wave_bessel_second_kind_asymp0_intm}
+	\end{align}
+	\item Pour $m=0$ et $0 < z < 1$, on a
+	\begin{align}
+	J_0(z) &\approx 1 \label{eq:wave_bessel_first_kind_asymp0_0} \\
+	Y_0(z) &\approx \frac{2}{\pi}\left(\ln\left(\frac{z}{2}\right) - \gamma\right)
+	\label{eq:wave_bessel_second_kind_asymp0_0gamma}
+	\end{align}
+	\item Pour $m$ naturel non nul et pour $z \gg 0$, on a
+	\begin{align}
+	J_m(z) &\approx \sqrt{\frac{2}{\pi z}} \cos\left( z-\frac{m\pi}{2} - \frac{\pi}{4} \right) \quad z\gg \abs{m^2-\frac{1}{4}}
+	Y_m(z) &\approx \sqrt{\frac{2}{\pi z}} \sin\left( z-\frac{m\pi}{2} - \frac{\pi}{4} \right)
+	\end{align}
+\end{itemize}
+Quel est ce $\gamma$ ? Il s'agit de la constante d'Euler-Mascheroni\footnote{Les deux premiers mathématiciens à avoir explicitement écrit des expressions utilisant cette constante sont Leonhard Euler et Lorenzo Mascheroni, et la première personne à avoir écrit cette constante sous le nom de $\gamma$ est Carl Anton Bretschneider. Parfois, les mathématiques pourraient être plus simples.}, qui est définie par
+\[ \gamma = \lim\limits_{n\to\infty} \left( -\ln(n) +\sum_{k=0}^{n} \frac{1}{k} \right) = \int_{0}^{\infty} \frac{1}{\lfloor x \rfloor} - \frac{1}{x} \dif{x} \]
+En pratique, on peut encore écrire
+\begin{equation}
+Y_0(z) \approx \frac{2}{\pi} \ln(z) \label{eq:wave_bessel_second_kind_asymp0_0nogamma}
+\end{equation}
+
+Une autre propriété sympathique des fonctions de Bessel sont les relations de récurrence
+\begin{align}
+\frac{2m}{z} Z_m(z) &= Z_{m-1}(z) + Z_{m+1}(z)
+\label{eq:wave_bessel_recursive_normal} \\
+2 \fdif{Z_m}{z}(z) &= Z_{m-1}(z) - Z_{m+1}(z)
+\label{eq:wave_bessel_recursive_derivative}
+\end{align}
+où $Z_m$ désigne $Y_m$ ou $J_m$.
+
+Ou encore, des relations d'intégration et de dérivation :
+\begin{gather}
+\fdif{}{z} (z^m J_m(z)) = z^m J_{m-1}(z) \\
+\int_{0}^{a} z J_0(z) \dif{z} = z J_1(z)
+\end{gather}
+
+Notons enfin qu'il existe une \emph{équation modifiée de Bessel},
+\[ z^2 R_m''(z) + z R_m'(z) - (z^2 + m^2) R(z) = 0 \]
+dont les solutions sont les \emph{fonctions modifiées de Bessel},
+\begin{align*}
+I_m(z) &= i^{-m} J_m(i z) \\
+K_m(z) &= \lim\limits_{\alpha \Rightarrow m} \frac{\pi}{2} \frac{I_{-\alpha}(z) - I_\alpha(z)}{\sin(\alpha z)}
+\end{align*}
+et qui ont la propriété de croitre et de décroitre de manière exponentielle ; c'est une des raisons pour lesquelles nous ne pouvions pas choisir une valeur négative pour $\lambda$.%En fait, I_m(0)=0 sauf I_0(0)=1, exponentiel, et K_m(0) se comporte comme -ln(z)
+
+% TODO fonctions de Bessel sphériques ?
+% TODO on retrouve les fonctions de Bessel avec Laplace dans un cylindre : on nomme d'ailleurs les fonctions de Bessel les fonctions cylindriques ou les harmoniques cylindriques.
+
+
 %\addbibresource{biblio.bib}
 \biblio
 
