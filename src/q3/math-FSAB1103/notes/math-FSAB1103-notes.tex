@@ -15,6 +15,8 @@
 \usepackage{todonotes}
 %\usepackage{biblatex}
 
+\pgfplotsset{compat=1.15}
+
 \makeatletter % from http://tex.stackexchange.com/questions/75831/how-do-i-show-the-equation-formula-again-instead-of-its-number-of-ref
 % alternative : http://latex-community.org/forum/viewtopic.php?f=46&t=8275
 \newcommand{\repeatable}[2]{
@@ -973,7 +975,7 @@ L'équation d'onde est une des équations les plus importantes de la physique. E
 
 Dans le chapitre sur les EDP du second ordre, nous avions résolu l'équation d'onde à une dimension spatiale
 \[ c^2 \ffpart{u}{x} = \ffpart{u}{t} \]
-avec la méthode des caractéristiques, qui avait rapidement montrer ses limites. Nous avions alors utilisé une astuce algébrique pour la résoudre avec la méthode de d'Alembert. Cette solution nous avait montré qu'une onde en une dimension comporte toujours deux morceaux, se déplaçant à la vitesse $c$ dans des sens différents, et respectant l'équation de transport.
+avec la méthode des caractéristiques, qui avait rapidement montré ses limites. Nous avions alors utilisé une astuce algébrique pour la résoudre avec la méthode de d'Alembert. Cette solution nous avait montré qu'une onde en une dimension comporte toujours deux morceaux, se déplaçant à la vitesse $c$ dans des sens différents, et respectant l'équation de transport.
 
 En dimension spatiale $n \ge 2$, l'équation d'onde s'écrit
 \[ \ffpart{u}{t} = c^2 \nabla^2 u = c^2 \left( \ffpart{u}{x_1} + \dots + \ffpart{u}{x_n} \right)  \]
@@ -987,20 +989,21 @@ Cette équation est difficilement résoluble par la méthode des caractéristiqu
 
 Commençons par le plus simple : une membrane rectangulaire qui vibre selon l'équation d'onde
 \[ \ffpart{u}{t} = c^2 \left(\ffpart{u}{x} + \ffpart{u}{y}\right) \]
-Nous avons alors une équation à 3 dimensions, qui possèdent chacune une dérivée d'ordre 2. Cela signifie qu'il va nous falloir un grand nombre de conditions limites et de conditions initiales pour aboutir à une solution. En général, on spécifie des conditions limites sur la frontière du domaine (par exemple, la membrane est fixée) et on spécifie deux conditions initiales : la forme initiale de la membrane, et la vitesse initiale de chacun de ses points.
+Nous avons alors une équation à 3 dimensions, qui possèdent chacune une dérivée d'ordre 2. Cela signifie qu'il va nous falloir un grand nombre de conditions limites et de conditions initiales pour aboutir à une solution. %FIXME donner le nombre précis de conditions de chaque type qu'il faut pour résoudre l'équation
+En général, on spécifie des conditions limites sur la frontière du domaine (par exemple, la membrane est fixée) et on spécifie deux conditions initiales : la forme initiale de la membrane, et la vitesse initiale de chacun de ses points.
 
 Pour commencer, on va supposer que le problème a des conditions limites homogènes de Dirichlet, qui spécifient que la membrane est fixée sur son pourtour $\Gamma$\footnote{Qui n'a rien à voir avec la courbe de Cauchy},
 \[ u(x, y, t) = 0 \quad (x, y) \in \Gamma \]
 ou, de manière un peu plus explicite,
 \begin{align*}
 u(0, y, t) &= 0 & u(x, 0, t) &= 0 \\
-u(L, y, t) &= 0 & u(x, H, t) &= 0 \\
+u(L, y, t) &= 0 & u(x, H, t) &= 0
 \end{align*}
 De même, la membrane a pour conditions initiales
 \[ u(x, y, 0) = u_0(x, y) \]
 et
 \[ \fpart{u}{t}(x, y, 0) = \dot{u}_0(x, y) \]
-avec $u(x, y)$ et $\dot{u}(x, y)$ deux fonctions. La figure~\ref{fig:wave_rectangle_ex1_domain} illustre notre problème.
+avec $u(x, y)$ et $\dot{u}(x, y)$ deux fonctions données. La figure~\ref{fig:wave_rectangle_ex1_domain} illustre notre problème.
 
 \begin{figure}
 	\centering
@@ -1034,42 +1037,42 @@ Pour commencer, nous allons séparer le temps et l'espace, en posant $u(x, y, t)
 et on constate qu'on a pu de nouveau séparer les variables. Par un raisonnement analogue à celui utilisé pour Laplace, les deux membres sont nécessairement constants et égaux, donc on écrit
 \begin{equation}
 \frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(x, y)}{\phi(x, y)} = \lambda
-\label{eq:wave_ex1_separated_one_lambda}
+\label{eq:wave_rectangle_separated_one_lambda}
 \end{equation}
 De nouveau, il va falloir choisir un signe pour le $\lambda$. De notre expérience précédente, et comme nous souhaitons avoir une solution non nulle (afin de pouvoir satisfaire les conditions initiales et les conditions limites homogènes), nous allons prendre $\lambda = -k^2$ (et montrer que c'est bon). Et donc,
 \begin{equation}
 \frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(x, y)}{\phi(x, y)} = -k^2
-\label{eq:wave_separated_one_k}
+\label{eq:wave_rectangle_separated_one_k}
 \end{equation}
 d'où on tire deux équations,
 \begin{align*}
 T''(t) + k^2 c^2 T(t) &= 0 & \nabla^2 \phi(x, y) + k^2 \phi(x, y) &= 0 \\
 u(x, y, 0) = T(0) \phi(x, y) &= u_0(x, y) & u(0, y, t) = T(t) \phi(0, y) = 0 &\Rightarrow \phi(0, y) = 0 \\
-\fdif{u}{t}(x, y, 0) = T'(0) \phi(x, y) &= \dot{u}_0(x, y) & u(L, y, t) = T(t) \phi(L, y) = 0 &\Rightarrow \phi(L, y) = 0 \\
+\fpart{u}{t}(x, y, 0) = T'(0) \phi(x, y) &= \dot{u}_0(x, y) & u(L, y, t) = T(t) \phi(L, y) = 0 &\Rightarrow \phi(L, y) = 0 \\
 & & u(x, 0, t) = T(t) \phi(0, y) = 0 &\Rightarrow \phi(x, 0) = 0 \\
 & & u(x, H, t) = T(t) \phi(x, H) = 0 &\Rightarrow \phi(x, H) = 0
 \end{align*}
 La première équation se résout immédiatement en
 \[ T(t) = A \sin(k c t) + B \cos(k c t) \]
 avec $A$ et $B$ des constantes à déterminer par les conditions initiales, et qui dépendront sûrement de $k$.
-Commençons par résoudre la deuxième,
+Résolvons donc la deuxième,
 \begin{equation}
 \nabla^2 \phi(x, y) + k^2 \phi(x, y) = 0
 \label{eq:wave_helmholtz}
 \end{equation}
 qui est connue sous le nom d'\emph{équation de Helmholtz} qui, avec les conditions limites, forme le \emph{problème de Helmholz}.
 
-Le problème de Helmholtz a de nombreuses propriétés. On peut montrer (cf notes de cours) que l'opérateur $\nabla^2$, sur un domaine avec des conditions limites homogènes $\phi(x, y)=0$ sur la frontière, est auto-adjoint (cf math 2). Cela a pour conséquence que les fonctions propres liées à des valeurs propres différentes solution de l'équation sont orthogonales, ce qui est bien. Encore mieux, ce résultat est valable sur n'importe quel domaine et dans n'importe quelle dimension.%TODO compléter
+Le problème de Helmholtz a de nombreuses propriétés. On peut montrer (cf notes de cours) que l'opérateur $\nabla^2$, sur un domaine avec des conditions limites homogènes $\phi(x, y)=0$ sur la frontière, est auto-adjoint (cf math 2). Cela a pour conséquence que les fonctions propres liées à des valeurs propres différentes solution de l'équation sont orthogonales, ce qui est bien. Encore mieux, ce résultat est valable sur n'importe quel domaine et dans n'importe quelle dimension.%TODO compléter par la section du syllabus
 
-La seule limite de ces résultats est l'applicabilité à des géométries compliquées. En effet, le problème a été résolu pour des géométries simples (rectangle, triangle équilatéral, cercle, ellipse) ; toutes les autres géométries aboutissent à des solutions chaotiques, aussi bien théoriquement que numériquement. C'est un problème actif de recherche de déterminer comment résoudre cette équation sur des géométries compliquées, pour des ondes à fréquence élevée. % TODO sources ?
+La seule limite de ces résultats est l'applicabilité à des géométries compliquées. En effet, le problème a été résolu pour des géométries simples (rectangle, triangle équilatéral, cercle, ellipse) ; toutes les autres géométries aboutissent à des solutions chaotiques, aussi bien théoriquement que numériquement. C'est un problème actif de recherche de déterminer comment résoudre cette équation sur des géométries compliquées, pour des ondes à fréquence élevée. % FIXME sources ?
 
 Poursuivons notre résolution sur un rectangle, en séparant les variables $x$ et $y$ :
-\begin{align*}
-\nabla^2 (X(x) Y(y)) + k^2 X(x) Y(y) &= 0 \\
-X(x) Y''(y) + X''(x) Y(y) + k^2 X(x) Y(y) &= 0 \\
-\frac{X''(x)}{X(x)} + \frac{Y''(y)}{Y(y)} &= -k^2 \\
-\frac{X''(x)}{X(x)} &= -\frac{Y''(y)}{Y(y)} - k^2 \\
-\end{align*}
+\begin{gather*}
+\nabla^2 (X(x) Y(y)) + k^2 X(x) Y(y) = 0 \\
+X(x) Y''(y) + X''(x) Y(y) + k^2 X(x) Y(y) = 0 \\
+\frac{X''(x)}{X(x)} + \frac{Y''(y)}{Y(y)} = -k^2 \\
+\frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)} - k^2
+\end{gather*}
 De nouveau, chaque terme est nécessairement constant, et on écrit donc
 \begin{align*}
 \frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)} - k^2 = -\nu^2
@@ -1078,8 +1081,8 @@ en notant que la constante ne peut être autre que strictement négative pour ob
 En effet, en $X$, le problème devient
 \begin{align*}
 X''(x) + \nu^2 X(x) &= 0 \\
-\phi(0, y) = X(0) Y(y) = 0 \forall y &\Rightarrow X(0) = 0 \\
-\phi(L, y) = X(L) Y(y) = 0 \forall y &\Rightarrow X(L) = 0
+\phi(0, y) = X(0) Y(y) = 0 \quad \forall y &\Longrightarrow X(0) = 0 \\
+\phi(L, y) = X(L) Y(y) = 0 \quad \forall y &\Longrightarrow X(L) = 0
 \end{align*}
 ce qui nous amène à la même solution que pour Laplace, à savoir que
 \[ X_n(x) = C_n \sin\left(\frac{n \pi x}{L}\right) \quad n = 1, 2, \dots \]
@@ -1098,27 +1101,28 @@ où nous avons de nouveau choisi le signe de la constante de manière approprié
 avec $\mu_m = \frac{m \pi}{H}$ et $m = 1, 2, \dots$.
 A vrai dire, les signes des constantes de $\frac{X''(x)}{X(x)}$ et $\frac{Y''(y)}{Y(y)}$, toutes les deux négatives et égales respectivement à $-\nu^2$ et à $-\mu^2$, nous impose le signe de la constante $\lambda = -k^2 = -\nu^2 - \mu^2$, qui ne peut être que négative.
 
-La constante $k$, qui était indéterminée, devient donc
+La constante $k$, qui était indéterminée, devient
 \begin{equation}
 k_{n, m} = \sqrt{\nu_n^2 + \mu_m^2} = \sqrt{\left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2}
-\label{eq:wave_ex1_knm}
+\label{eq:wave_rectangle_ex1_knm}
 \end{equation}
 On a donc une constante qui dépend cette fois de deux paramètres, $n$ et $m$, qui sont complètement indépendants l'un de l'autre. Les $k_{n, m}$ sont les valeurs propres du problème d'Helmholtz\footnote{En fait, les $k_{n, m}$ sont plutôt les \emph{nombres d'ondes} (ou répétence, selon les normes ISO), et les $k^2_{n, m}$ sont les valeurs propres.},
 présents en double infinité, et les fonctions propres correspondantes sont
 \begin{equation}
 \phi_{n, m} = X_n^*(x) Y_m^*(y) = \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi y}{H}\right)
-\label{eq:wave_ex1_eigfunc}
+\label{eq:wave_rectangle_ex1_eigfunc}
 \end{equation}
 qui sont orthogonales entre elles, pour des valeurs de ${n, m}$ différentes. Autrement écrit, voire même démontré,
 \begin{equation}
 \begin{split}
-\langle \phi_{p, q}, \phi_{n, m} \rangle &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \phi_{p, q}(x, y) \phi_{n, m}(x, y) \\
-&= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{n \pi x}{L}\right) \sin\left(\frac{m \pi y}{H}\right) \\
-&= \int_{0}^{L} \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{n \pi x}{L}\right) \dif{x} \cdot \int_{0}^{H} \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{m \pi y}{H}\right) \\
-&= \begin{cases}
-\frac{L}{2} \cdot \frac{H}{2} = \frac{HL}{4} & \text{si } n = p \text{ et } m = q \\
-0 & \text{sinon} \\
-\end{cases} \\
+\langle \phi_{p, q}, \phi_{n, m} \rangle &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \; \phi_{p, q}(x, y) \phi_{n, m}(x, y) \\
+&= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \; \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{n \pi x}{L}\right) \sin\left(\frac{m \pi y}{H}\right) \\
+&= \int_{0}^{L} \sin\left(\frac{p \pi x}{L}\right) \sin\left(\frac{n \pi x}{L}\right) \dif{x} \cdot \int_{0}^{H} \sin\left(\frac{q \pi y}{H}\right) \sin\left(\frac{m \pi y}{H}\right) \dif{y} \\
+&= \frac{LH}{4} \delta_{np} \delta_{mq}
+	= \begin{cases}
+		\frac{L}{2} \cdot \frac{H}{2} = \frac{HL}{4} & \text{si } n = p \text{ et } m = q \\
+		0 & \text{sinon} \\
+	\end{cases} \\
 \end{split}
 \label{eq:wave_rectangle_orthogonality_phi}
 \end{equation}
@@ -1128,41 +1132,40 @@ Maintenant que l'on connait $k_{n, m}$, nous pouvons revenir à l'expression de 
 &= A_{n, m} \sin(\omega_{n, m} t) + B_{n, m} \cos(\omega_{n, m} t)
 \end{align*}
 où $\omega_{n, m} = k_{n, m} c$ sont les \emph{fréquences propres} de la membrane qui vibre. Et donc, la solution générale du problème de l'équation d'onde sur une membrane rectangulaire fixée sur les bords (conditions limites homogènes de Dirichlet) est
-\begin{align*}
-u(x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} u_{n, m} (x, y, t) \\
-&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} T_{n, m}(t) X_n{x} Y_m{y} \\
+\begin{equation}
+\begin{split}
+u(x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} u_{n, m} (x, y, t) = \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} T_{n, m}(t) X_n{x} Y_m{y} \\
 &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} \sin\left( k_{n, m} c t \right) + B_{n, m} \cos\left( k_{n, m} c t\right)\right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\end{split}
 \label{eq:wave_rectangle_solution_genequa}
-\end{align*}
-avec $k_{n, m}$ défini par~\ref{eq:wave_ex1_knm}. Les constantes $A_{n, m}$ et $B_{n, m}$\footnote{Inversées par rapport au syllabus} peuvent être calculées à partir des conditions initiales :
+\end{equation}
+avec $k_{n, m}$ défini par~\eqref{eq:wave_rectangle_ex1_knm}. Les constantes $A_{n, m}$ et $B_{n, m}$\footnote{Inversées par rapport au syllabus} peuvent être calculées à partir des conditions initiales :
 \begin{align*}
 u(x, y, 0) = u_0(x, y) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} B_{n, m} \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
 \end{align*}
 En multipliant par $\phi_{i, j}$ et en intégrant sur toute la membrane,
 \begin{align*}
-\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} u_0(x, y) \phi_{i, j} &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} B_{n, m} \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \sin\left( \frac{i\pi}{L} x \right) \sin\left( \frac{j \pi}{H} \right)
+\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} u_0(x, y) \phi_{i, j} &= \int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} B_{n, m} \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \sin\left( \frac{i\pi}{L} x \right) \sin\left( \frac{j \pi}{H} y \right)
 \end{align*}
-En utilisant l'orthogonalité des fonctions propres démontrée en~\ref{eq:wave_rectangle_orthogonality_phi}
+En utilisant l'orthogonalité des fonctions propres démontrée en~\eqref{eq:wave_rectangle_orthogonality_phi}
 \begin{align*}
 \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \phi_{i, j} \dif{x} \dif{y} &= B_{n, m} \cdot \begin{cases} 0 & \text{si } n \neq i \text{ ou } m \neq j \\ \frac{LH}{4} & \text{sinon} \\ \end{cases} \\
-B_{n, m} &= \frac{4}{HL} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y}
+\Rightarrow B_{n, m} &= \frac{4}{HL} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y}
 \end{align*}
 
 Et similairement pour $A_{n, m}$ :
 \begin{align*}
-\fpart{u}{t} (x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} \fpart{\sin\left( k_{n, m} c t \right)}{t} + B_{n, m} \fpart{\cos\left( k_{n, m} c t\right)}{t} \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \\
-&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} k_{n, m} c \cos\left( k_{n, m} c t \right) - B_{n, m} k_{n, m} c \sin\left( k_{n, m} c t\right) \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
-\end{align*}
-\begin{align*}
-\fpart{u}{t} (x, y, 0) = \dot{u}_0(x, y) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
+\fpart{u}{t} (x, y, t) &= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} \fdif{\sin\left( k_{n, m} c t \right)}{t} + B_{n, m} \fdif{\cos\left( k_{n, m} c t\right)}{t} \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \\
+&= \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \left( A_{n, m} k_{n, m} c \cos\left( k_{n, m} c t \right) - B_{n, m} k_{n, m} c \sin\left( k_{n, m} c t\right) \right) \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right) \\
+\fpart{u}{t} (x, y, 0) &= \dot{u}_0(x, y) = \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \sin\left( \frac{n\pi}{L} x \right) \sin\left( \frac{m \pi}{H} y \right)
 \end{align*}
 En multipliant par $\phi_{i, j}$ et en intégrant sur toute la membrane,
 \begin{align*}
-\int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \; \dot{u}_0(x, y) \phi_{i, j} &= \int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \sin\left( \! \frac{n\pi x}{L} \right) \sin\left( \! \frac{m \pi y}{H} \right) \sin\left( \! \frac{i\pi x}{L} \right) \sin\left( \! \frac{j \pi y}{H} \right) % FIXME trouver une manière de la faire rentrer sur une seul ligne sans avoir besoin de faire des \! partout
+\int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \; \dot{u}_0(x, y) \phi_{i, j} &= \int_{0}^{L} \! \dif{x} \int_{0}^{H} \! \dif{y} \sum_{n=1}^{\infty} \sum_{m=1}^{\infty} A_{n, m} k_{n, m} c \phi_{n, m}(x, y) \phi_{i, j}(x, y)
 \end{align*}
-En utilisant l'orthogonalité des fonctions propres démontrée en~\ref{eq:wave_rectangle_orthogonality_phi}
+En utilisant l'orthogonalité des fonctions propres démontrée en~\eqref{eq:wave_rectangle_orthogonality_phi}
 \begin{align*}
-\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \dot{u}_0(x, y) \phi_{i, j} &= A_{n, m} k_{n, m} c \cdot \begin{cases} 0 & \text{si } n \neq i \text{ ou } m \neq j \\ \frac{LH}{4} & \text{sinon} \\ \end{cases}
+\int_{0}^{L} \dif{x} \int_{0}^{H} \dif{y} \; \dot{u}_0(x, y) \phi_{i, j} &= A_{n, m} k_{n, m} c \frac{LH}{4}
 \end{align*}
 \begin{align*}
 A_{n, m} &= \frac{4}{HLk_{n, m} c} \int_{x=0}^{x=L} \int_{y=0}^{y=H} u_0(x, y) \sin\left( \frac{n\pi x}{L} \right) \sin\left( \frac{m\pi y}{H} \right) \dif{x} \dif{y} \\
@@ -1172,7 +1175,7 @@ qui montre que si la membrane a initialement une vitesse nulle, les coefficients
 
 Au vu de ces expressions complexes, si la fonction qui subit l'intégration n'est pas trop sympathique, on préfère les évaluer via des méthodes numériques.
 
-Avant de terminer cette section, il est utile de rappeler que nous avons résolu le problème de Helmholtz (et donc, l'équation d'onde) dans le cas d'une membrane rectangulaire fixée à $0$ sur chaque bord. Le problème de Helmholtz peut être généralisé à des conditions limites homogènes de Neumann (on spécifie $\fpart{u}{x}(0, y, t) = 0$ par exemple) ou de Robin (on spécifie $\fpart{u}{x}(0, y, t) + u(0, y, t) = 0$) sans problèmes particuliers. Et sur un domaine rectangulaire, il est aussi possible de mélanger les conditions limites. Toutes les techniques vues pour Laplace restent applicables, y compris la solution transcendante à base de tangente pour les conditions de Robin\footnote{Hein ? Quelles solutions de\dots Ah, ok, page 75 et suivantes.}.
+Avant de terminer cette section, il est utile de rappeler que nous avons résolu le problème de Helmholtz (et donc, l'équation d'onde) dans le cas d'une membrane rectangulaire fixée à $0$ sur chaque bord. Le problème de Helmholtz peut être généralisé à des conditions limites homogènes de Neumann (on spécifie $\fpart{u}{x}(0, y, t) = 0$ par exemple) ou de Robin (on spécifie $\fpart{u}{x}(0, y, t) + u(0, y, t) = 0$) sans problèmes particuliers : on retombe sur des raisonnements similaires à ceux utilisés pour résoudre l'équation de Laplace. Et sur un domaine rectangulaire, il est aussi possible de mélanger les conditions limites. Toutes les techniques vues pour Laplace restent applicables, y compris la solution transcendante à base de tangente pour les conditions de Robin\footnote{Hein ? Quelles solutions de\dots Ah, ok, page 75 et suivantes du syllabus officiel.}.
 
 \section{Équation d'onde sur un cercle}
 
@@ -1218,8 +1221,9 @@ soit la même équation que dans le cas cartésien. De nouveau, les deux membres
 \[ \frac{1}{c^2} \frac{T''(t)}{T(t)} = \frac{\nabla^2 \phi(r, \theta)}{\phi(r, \theta)} = - \lambda = - k^2 \]
 et on retombe sur l'équation de Helmholtz.
 
-À la section précédente, nous avions montré que l'équation de Helmholtz n'acceptait que des valeurs propres positives, en résolvant le problème sur un rectangle. Sur un domaine circulaire, le raisonnement précédent s'applique difficilement, et on ne connait pas à priori le signe de la constante. Néanmoins, le problème de Helmholtz étant un problème de Sturm-Liouville régulier,%FIXME il faut vraiment écrire cette section, elle est tellement utile
+À la section précédente, nous avions montré que l'équation de Helmholtz n'acceptait que des valeurs propres positives, en résolvant le problème sur un rectangle. Sur un domaine circulaire, le raisonnement précédent s'applique difficilement, et on ne connait pas à priori le signe de la constante. Néanmoins, le problème de Helmholtz étant un problème de Sturm-Liouville régulier, %FIXME il faut vraiment écrire cette section, elle est tellement utile
 nous pouvons déjà affirmer que les valeurs propres du problème de Helmholtz sont positives, et donc que $\lambda \ge 0$.
+% TODO en fait il n'est pas si régulier que ça ce problème, il souffre de quelques défauts.
 
 Commençons par résoudre l'équation de Helmholtz. On pose $\phi(r, \theta) = R(r) \Theta(\theta)$, et donc
 \begin{align*}
@@ -1287,7 +1291,7 @@ ce qui implique que $m$ est un entier ; gardons donc la notation. En prenant $m=
 \label{eq:wave_circular_Theta_m}
 \end{equation}
 
-Maintenant que $\Theta_m$ a été fait sans grande surprise, passons au $R_m$. L'équation devient
+Maintenant que $\Theta_m$ a été fait sans grande surprise, passons aux $R_m$. L'équation devient
 \begin{align}
 r \frac{R_m'(r)}{R_m(r)} + r^2 \frac{R_m''(r)}{R_m(r)} - \lambda r^2 &= \mu = m^2 \nonumber \\
 r^2 R_m''(r) + r R_m'(r) + k^2 r^2 R(r) - m^2 R(r) &= 0 \nonumber \\
@@ -1352,6 +1356,7 @@ le zéro d'indice $0$, $j_{m, 0}$, est généralement considéré comme l'origin
 	$3$ & $8.653728$ & $10.173468$ & $11.619841$ & $13.015201$ \\
 	$4$ & $11.791534$ & $13.323692$ & $14.795952$ & $16.223466$ \\
 	$5$ & $14.930918$ & $16.470630$ & $17.959819$ & $19.409415$ \\
+	$\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ \\
 	\bottomrule
 	\end{tabular}
 \end{table}
@@ -1369,6 +1374,7 @@ le zéro d'indice $0$, $j_{m, 0}$, est généralement considéré comme l'origin
 		$3$ & $10.222345$ & $8.596006$ & $10.023478$ & $11.396467$ \\
 		$4$ & $13.361097$ & $11.749155$ & $13.209987$ & $14.623078$ \\
 		$5$ & $16.500922$ & $14.897442$ & $16.378967$ & $17.818455$ \\
+		$\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -1386,6 +1392,7 @@ le zéro d'indice $0$, $j_{m, 0}$, est généralement considéré comme l'origin
 		$3$ & $7.015587$ & $8.536316$ & $9.969468$ & $11.345924$ \\
 		$4$ & $10.173468$ & $11.706005$ & $13.170371$ & $14.585848$ \\
 		$5$ & $13.323620$ & $14.863589$ & $16.347522$ & $17.788748$ \\
+		$\dots$ & $\dots$ & $\dots$ & $\dots$ & $\dots$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -1411,11 +1418,10 @@ et la solution pour $\phi = \phi_{m, n}(r, \theta)$ est donc
 \label{eq:wave_circular_phi_mn}
 \end{equation}
 avec $A_{m, n}^*=A_{m}C_{m, n}$ et $B_{m, n}^*=B_{m}C_{m, n}$. Les deux fonctions qui apparaissent (sans les constantes $A$ et $B$) sont dénommées \emph{modes propres de vibration d'une membrane circulaire}. Elles ont la propriété d'être orthogonales entre elles (problème de Helmholtz oblige).
-%TODO regarder http://www.math.usm.edu/lambers/mat415/lecture15.pdf, téléchargé
 
 Notre constante $k_{m, n}$ étant déterminée, on peut maintenant enfin résoudre la deuxième équation de notre première séparation de variables, celle du temps :
 \[ \frac{1}{c^2} \frac{T''(t)}{T(t)} = -k_{m, n}^2 \]
-dont la solution générale est bien entendue
+dont la solution générale est bien entendu
 \[ T_{m, n}(t) = C_{m, n}^* \cos(k_{m, n} c t) + D_{m, n}^* \sin(k_{m, n} c t) \]
 
 Enfin, la solution générale de notre problème de vibration, sur un disque de rayon $a$, est
@@ -1430,7 +1436,7 @@ u(r, \theta, t) &= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} u_{m,n} (r, \theta, t
 
 Et nous avons donc quatre familles de constantes à déterminer : $A_{m, n}^*$, $B_{m, n}^*$, $C_{m, n}^*$ et $D_{m, n}^*$, à partir de nos conditions initiales $u_0(r, \theta, 0)$ et $\dot{u}_0(r, \theta, 0)$.
 
-Une remarque qui en vaut la peine : pour $m = 0$, nous trouvons le mode zéro en $\theta$, à qui correspond la fonction de Bessel $J_0(k_{0, n})$. On constate assez facilement que dans ce cas, le terme $\tilde{B}_{0, n} \sin(0 \cdot \theta)$ s'annule à cause du sinus, et donc le coefficient $\tilde{B}_{0, n}$ n'a aucune importance dans la solution, et on peut donc l'annuler. Quant à l'autre terme de la partie angulaire, il se simplifie en $\tilde{A}_{0, n}$, donnant une solution angulaire nulle. Du coup, la solution peut en fait s'écrire de manière équivalente en
+Une remarque qui en vaut la peine : pour $m = 0$, nous trouvons le mode zéro en $\theta$, à qui correspond la fonction de Bessel $J_0(k_{0, n})$. On constate assez facilement que dans ce cas, le terme $\tilde{B}_{0, n} \sin(0 \cdot \theta)$ s'annule à cause du sinus, et donc le coefficient $\tilde{B}_{0, n}$ n'a aucune importance dans la solution, et on peut donc l'annuler. Quant à l'autre terme de la partie angulaire, il se simplifie en $\tilde{A}_{0, n}$, donnant une solution ne dépendant pas de l'angle $\theta$. Du coup, la solution peut en fait s'écrire de manière équivalente en
 \begin{equation*}
 \begin{split}
 u(r, \theta, t) &= \sum_{n=1}^{\infty} \left( (A_{0, n}^* C_{0, n}^*) \cos(k_{0, n} c t) + (A_{0, n}^* D_{0, n}^*) \sin(k_{0, n} c t) \right)
@@ -1454,7 +1460,7 @@ et
 &\quad \cdot J_{m}\left( \frac{j_{m, n} r}{a} \right) \left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right) \\ \displaybreak[2]
 &= \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} D_{m, n}^* k_{m, n} c J_{m}\left( j_{m, n} \frac{r}{a} \right)
 	\left( A_{m, n}^* \cos(m\theta) + B_{m, n}^* \sin(m \theta) \right)
-\end{align*} % FIXME corriger car c'est moche
+\end{align*}
 En supposant que $\dot{u}_0(r, \theta) = 0$ (vitesse initiale de la membrane nulle), nous devons avoir $D_{m, n}^* = 0$ pour avoir une solution non nulle. Si on avait $U_0(r, \theta) = 0$ à la place, c'était $C_{m, n}^* = 0$.
 
 Avec une constante de moins\footnote{On aurait pu garder cette constante et faire le développement en toute généralité ; ça prend juste beaucoup de temps},
@@ -1477,14 +1483,16 @@ u_0(r, \theta) = u(r, \theta, 0) &= \sum_{n=1}^{\infty}
 Cette simplification faite, comment peut-on déterminer les coefficients $\tilde{A}_{0, n}$, $\tilde{A}_{m, n}$ et $\tilde{B}_{m, n}$ ? Il va falloir faire preuve d'imagination ou plutôt, d'astuce. L'idée va être d'utiliser les propriétés d'orthogonalité des fonctions propres afin d'éliminer une partie des coefficients, et en même temps d'éliminer les coefficients qui ne nous intéressent pas.
 
 Nous savons que\footnote{Rappelons que $\dif{S} = r \dif{r} \dif{\theta}$ et $\delta_{np}=0$ si $n\neq p$, $1$ sinon.}
-\begin{gather*}
-\int \phi_1(r, \theta) \phi_2(r, \theta) = \int_{0}^{a} \dif{r} \int_{0}^{2\pi} \dif{\theta} \; r \phi_1(r, \theta) \phi_2(r, \theta) = 0 \quad \text{par orthogonalité des fonctions propres} \\
-\int_{0}^{2\pi} \sin (m\theta) \sin(n\theta) \dif{\theta} = \pi \delta_{mn} \\
-\int_{0}^{2\pi} \cos(m\theta) \cos(n\theta) \dif{\theta} = \pi \delta_{mn} \\
-\int_{0}^{2\pi} \sin(m\theta) \cos(n\theta) \dif{\theta} = 0 \\
-\int_{0}^{a} J_m\left(\frac{j_{m, n} r}{a}\right) J_m\left(\frac{j_{m, p} r}{a}\right) r \dif{r} = \frac{a^2}{2} J_{m+1} (j_{m, n})^2 \delta_{np} \quad \text{par orthogonalité des fonctions de Bessel} \\ %TODO démontrer
-\end{gather*}
-La dernière relation sera démontrée dans la section suivante.
+\begin{gather}
+\int \phi_1(r, \theta) \phi_2(r, \theta) = \int_{0}^{a} \dif{r} \int_{0}^{2\pi} \dif{\theta} \; r \phi_1(r, \theta) \phi_2(r, \theta) = 0 \label{eq:wave_circular_ortho_proper_functions} \\
+\shortintertext{par orthogonalité des fonctions propres,}
+\int_{0}^{2\pi} \sin (m\theta) \sin(n\theta) \dif{\theta} = \pi \delta_{mn} \label{eq:wave_circular_orthogonal_sinus} \\
+\int_{0}^{2\pi} \cos(m\theta) \cos(n\theta) \dif{\theta} = \pi \delta_{mn} \label{eq:wave_circular_orthogonal_cos} \\
+\int_{0}^{2\pi} \sin(m\theta) \cos(n\theta) \dif{\theta} = 0 \label{eq:wave_circular_orthogonal_sincos} \\
+\shortintertext{et}
+\int_{0}^{a} J_m\left(\frac{j_{m, n} r}{a}\right) J_m\left(\frac{j_{m, p} r}{a}\right) r \dif{r} = \frac{a^2}{2} J_{m+1} (j_{m, n})^2 \delta_{np} \label{eq:wave_circular_orthogonal_bessel}
+\end{gather}
+par orthogonalité des fonctions de Bessel. Cette dernière relation sera démontrée dans la section suivante.
 
 Commençons par calculer les $\tilde{A}_{0, p}$. Pour cela, on multiplie~\eqref{eq:wave_circular_nullspeed_initial} par $r J_0(k_{0, p}r)$, et on intègre sur tout le cercle :
 \begin{align*}
@@ -1537,7 +1545,7 @@ soit
 
 Pour déterminer $\tilde{B}_{p, q}$, on multiplie cette fois par $J_p(k_{p, q}r) \sin p\theta$, et après un raisonnement similaire, on obtient
 \begin{equation}
-\tilde{B}_{p, q} = \frac{1}{\pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2} \int_{0}^{2\pi} \dif{\theta} \dif{r} \; \int_{0}^{a} u_0(r, \theta) r J_p\left(\frac{j_{p, q}r}{a}\right) \sin p\theta
+\tilde{B}_{p, q} = \frac{1}{\pi \frac{a^2}{2} J_{p+1}(j_{p, q})^2} \int_{0}^{2\pi} \dif{\theta} \dif{r} \int_{0}^{a} u_0(r, \theta) r J_p\left(\frac{j_{p, q}r}{a}\right) \sin p\theta
 \label{eq:wave_circular_nullspeed_Btildepq}
 \end{equation}
 
@@ -1561,13 +1569,6 @@ et pareillement pour $\tilde{B}_{p, q}$. Quand à $\tilde{A}_{0, p}$ :
 \end{align*}
 soit une expression un peu plus gentille. L'APE 7 utilise cette expression pour trouver les coefficients, vu que la fonction est connue.
 
-% Wolfram est plus précis :
-% int_0^a x J_n\left(\frac{j_{n, k}x}{a}\right)^2 \dif{x} =
-% \frac{a^2}{2} \left( J_n(j_{n, k})^2 - \frac{2 n J_{n+1}(j_{n, k}) J_n(j_{n, k})}{j_{n, k}} + J_{n+1}(j_{n, k})^2\right)
-
-% Au niveau de l'orthogonalité : les conditions donnant l'orthogonalité sont J_n(a)=J_n(b)=0, J'_n(a)=J'_n(b)=0, ou aJ'_n(a)/J_n(a) = bJ'_n(b)/J_n(b), qui permettent les conditions R(a)=0, R'(a)=0, et R'(a)=C*R(a).
-
-% Partie anneau (dépassement) :
 \subsection{Conclusion et complications possibles}
 
 Nous avons donc pu résoudre l'équation d'onde, sur une membrane circulaire fixée sur son bord, avec une vitesse initiale nulle, et avec une symétrie axiale au niveau de la condition initiale, et donc une solution avec une symétrie axiale. Il s'agit de beaucoup de conditions supplémentaires ; voyons ce qu'il se passe quand on enlève une à une les conditions.
@@ -1595,11 +1596,9 @@ L'orthogonalité des fonctions de Bessel est toujours assuré pour ces zéros (d
 
 \subsubsection{Domaine en forme d'anneau}
 
-Si notre domaine n'était pas un cercle mais un anneau, nous n'aurions pas pu éliminer $Y_m(z)$ de la solution car $r=0$ ne fait pas partie du domaine, et il aurait donc fallu tenir compte des deux fonctions de Bessel. Dans le cas de conditions aux limites de Dirichlet, il faut donc satisfaire une équation plus compliquée, qui malheureusement requiert des méthodes numériques. % TODO flemme de chercher.
+Si notre domaine n'était pas un cercle mais un anneau, nous n'aurions pas pu éliminer $Y_m(z)$ de la solution car $r=0$ ne fait pas partie du domaine, et il aurait donc fallu tenir compte des deux fonctions de Bessel. Dans le cas de conditions aux limites de Dirichlet, il faut donc satisfaire une équation plus compliquée, qui malheureusement requiert des méthodes numériques. % TODO flemme de chercher, mais ça peut être utile de voir ce qu'il se passe sur un anneau
 
-% Partie Bessel :
-
-\subsection{Les fonctions de Bessel}
+\section{Les fonctions de Bessel}
 
 Dans cette section, les fonctions de Bessel jouent un rôle primordial. Il est donc intéressant d'en connaitre un peu plus sur ces fameuses fonctions.
 
@@ -1677,7 +1676,7 @@ où $m!=m\cdot(m-1)\cdot\dots$, avec une limite encore incertaine (et non néces
 u(z) &= z^m \sum_{k=0}^{\infty} A_k z^{k} \\
 &= \sum_{l=0}^{\infty} \frac{(-1)^l \Gamma(m+1)}{2^{2l} l! \Gamma(m+l+1)} A_0 z^{2l+m}
 \end{align*}
-ce qui, nous des raisons évidentes de clarté, est multiplié par $\frac{1}{\Gamma(m+1) 2^{m} A_0}$, qui ne sont de toutes façons que des constantes, pour donner
+ce qui, pour des raisons évidentes de clarté, est multiplié par $\frac{1}{\Gamma(m+1) 2^{m} A_0}$, qui ne sont de toutes façons que des constantes, pour donner la définition générale des fonctions de Bessel du premier type
 \begin{equation}
 J_m(z) = \sum_{l=0}^{\infty} \frac{(-1)^l}{l! \Gamma(m+l+1)} \left(\frac{z}{2}\right)^{2l+m}
 \end{equation}
@@ -1789,6 +1788,65 @@ I_m(z) &= i^{-m} J_m(i z) \\
 K_m(z) &= \lim\limits_{\alpha \Rightarrow m} \frac{\pi}{2} \frac{I_{-\alpha}(z) - I_\alpha(z)}{\sin(\alpha z)}
 \end{align*}
 et qui ont la propriété de croitre et de décroitre de manière exponentielle ; c'est une des raisons pour lesquelles nous ne pouvions pas choisir une valeur négative pour $\lambda$.%En fait, I_m(0)=0 sauf I_0(0)=1, exponentiel, et K_m(0) se comporte comme -ln(z)
+
+\subsection{Orthogonalité des fonctions de Bessel}
+
+A la section précédente, nous avons utilisé, sans le prouver formellement, que les fonctions de Bessel d'ordre $m$ associées à des valeurs propres différentes sont orthogonales. Il est temps de combler ce manque.\footnote{Cette section s'inspire fortement de~\cite{lambers}}
+
+Rappelons l'équation de Bessel, ou plutôt une de ses variantes,
+\[ r^2\ffdif{J_m}{r}(kr) + r\fdif{J_m}{r}(kr) + (k^2r^2-m^2)J_m(kr) \]
+$k^2$ étant sensé être une valeur propre, on réarrange les termes pour faire apparaitre la notation $A(x)=\lambda x$ :
+\[ \left( -\ffdif{}{r} - \frac{1}{r} \fdif{}{r} + \frac{m^2}{r^2} \right)(J_m(kr)) = k^2 J_m(kr) \]
+ce qui signifie que $k^2$ sera une valeur propre de l'opérateur
+\[ \mathcal{L} = \left( -\ffdif{}{r} - \frac{1}{r} \fdif{}{r} + \frac{m^2}{r^2} \right) \]
+avec comme fonction propre associée $J_m(kr)$.
+
+Si notre problème de Helmholtz était bien auto-adjoint par rapport au produit scalaire habituel (l'intégrale du produit de deux fonctions), cet opérateur ne l'est pas ; en effet, $p_0(r) = -1$ et $p_1(r)=-\frac{1}{r}$. Néanmoins, on peut sauver la mise en utilisant un produit scalaire différent,
+\[ \langle f_1, f_2 \rangle = \int_{0}^{a} w(r) f_1(r) F_2(r) \dif{r} \]
+où $w(r)$ est une fonction de pondération de l'intégrale. Cette fonction se trouve en calculant
+\[ \frac{1}{p_0(r)} e^{\int \frac{p_1(r)}{p_0(r)}\dif{r}} = -e^{\int \frac{1}{r} \dif{r}} = -e^{\ln(r) + k} = -e^k r \]
+soit $w(r)=r$, pour simplifier les notations.
+
+On calcule alors le produit scalaire de deux fonctions propres $J_m(kr)$ et $J_m(k'r)$, pour $k\neq k'$ :
+\begin{align*}
+\langle J_m(kr), J_m(k'r) \rangle &= \int_{0}^{a} w(r) J_m(kr) J_m(k'r) \dif{r} \\
+&= \frac{1}{k^2 - k'^2} \left[ w(r) p_0(r) \Big(J_m(kr) J'_m(k'r) k' - J'_m(kr) k J_m(k'r)\Big) \right]_0^a \\
+&= \frac{-a}{k^2 - k'^2} \Big(k' J_m(ka) J'_m(k'a) - k J'_m(ka) J_m(k'a)\Big)
+\end{align*}
+et donc, pour avoir l'orthogonalité, il faut que $k' J_m(ka) J'_m(k'a) = k J_m(k'a) J'_m(ka)$. Cela arrive dans les cas suivants :
+\begin{itemize}
+	\item $ka$ et $k'a$ sont des zéros de $J_m(z)$. C'est le cas que l'on utilise quand on résout le problème de Helmholtz sur une membrane circulaire fixée sur les bords, avec une condition de Dirichlet.
+	\item $ka$ et $k'a$ sont des zéros de la dérivée, $J'_m(z)$. C'est le cas que l'on utiliserait si la membrane n'était pas fixée sur les bords, mais que l'on imposait une membrane horizontale au niveau des bords, avec des conditions de Neumann.
+	\item $ka$ est un zéro de $J_m(z)$, et $k'a$ est un zéro de $J'_m(z)$ (ou inversement). Ce cas est rarement utilisé. % Vraiment ?
+	\item On a juste $\frac{J_m(ka)}{k J'_m(ka)} = \frac{J_m(k'a)}{k' J'_m(k'a)} = C$. C'est le cas que l'on utiliserait si on avait une condition de Robin sur les bords, avec une relation de proportionnalité entre la pente de la fonction et sa hauteur sur le bord.
+\end{itemize}
+
+Dans ces 4 cas, on a bien orthogonalité des fonctions propres (fonctions de Bessel du même ordre mais reliées à des zéros différents), ce qui nous permet d'utiliser l'orthogonalité dans~\eqref{eq:wave_circular_orthogonal_bessel}.
+
+% Wolfram est plus précis :
+% int_0^a x J_n\left(\frac{j_{n, k}x}{a}\right)^2 \dif{x} =
+% $\frac{a^2}{2} \left( J_n(j_{n, k})^2 - \frac{2 n J_{n+1}(j_{n, k}) J_n(j_{n, k})}{j_{n, k}} + J_{n+1}(j_{n, k})^2\right)$
+
+Il est important de remarquer que la relation d'orthogonalité obtenue ici est légèrement différente des relations habituelles d'orthogonalité : ici, l'intégrale utilisée pour le produit scalaire requiert une fonction de pondération. En pratique, comme l'équation de Bessel apparait plutôt dans des problèmes à géométrie circulaire, et que la fonction de pondération est exactement le jacobien du changement de variable de rectangulaire à polaire\footnote{Voir annexe. TODO},%TODO
+on utilise toujours cette expression du produit scalaire quand on doit utiliser l'orthogonalité des fonctions de Bessel.
+
+Maintenant que l'on a démontré que les fonctions de Bessel $J_m(kr)$ et $J'_m(k'r)$, avec des $k$ et $k'$ associés à des zéros différents, déterminons la valeur du produit scalaire d'une fonction de Bessel avec elle-même.
+\begin{align*}
+\langle J_m(kr), J_m(kr) \rangle &= \int_{0}^{a} J_m(kr)^2 r \dif{r} \\
+&= \lim\limits_{k' \to k} \frac{a\left(k' J_m(ka) J'_m(k'a) - k J_m(k'a) J'_m(ka) \right)}{k^2-k'^2} \\
+\shortintertext{Le numérateur et le dénominateur s'annulent ; utilisons la règle de l'Hospital-Bernoulli :}
+&= \lim\limits_{k' \to k} \frac{a\left(k' J_m(ka) J'_m(k'a) - k J_m(k'a) J'_m(ka) \right)'}{-2k'} \\
+\shortintertext{En faisant l'hypothèse que $J_m(ka)=0$ (ce qui est le cas dans nos exemples),}
+&= \lim\limits_{k' \to k} \frac{- a k (J_m(k'a) J'_m(ka))'}{-2k'} \\
+&= \lim\limits_{k' \to k} \frac{- a k J'_m(k'a) a J'_m(ka)}{-2k'} \\
+&= \frac{a^2 (J'_m(ka))^2}{2} = \frac{a^2}{2} (J'_m(ka))^2 \addtocounter{equation}{1} \tag{\theequation} \label{eq:wave_bessel_orthogonal_norm_1}
+\end{align*}
+ce que l'on peut encore simplifier en utilisant l'équation~\ref{eq:wave_bessel_recursive_derivative} :
+\begin{align}
+\int_{0}^{a} J_m(kr)^2 r \dif{r} &= \frac{a^2}{2} (J'_m(ka))^2 \nonumber \\
+&= \frac{a^2}{2} \left( \frac{m}{z}J_m(ka) - J_{m+1} (ka) \right) \nonumber \\
+&= \frac{a^2}{2} (J_{m+1}(ka))^2 \label{eq:wave_bessel_orthogonal_norm_2}
+\end{align}
 
 % TODO fonctions de Bessel sphériques ?
 % TODO on retrouve les fonctions de Bessel avec Laplace dans un cylindre : on nomme d'ailleurs les fonctions de Bessel les fonctions cylindriques ou les harmoniques cylindriques.
