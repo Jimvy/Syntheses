@@ -1388,6 +1388,57 @@ Ce phénomène est nommé \emph{phénomène de Gibbs} et survient lorsque l'on c
 
 % The formulas for the V_n are a little messy this time in comparison to the other problems we’ve done but they aren’t really all that messy.
 
+% Partie équation d'Euler
+
+\subsubsection{L'équation d'Euler}
+
+L'équation
+\[ r^2 R''(r) + b r R'(r) + c R(r) = 0 \]
+avec $r>0$, est nommé \emph{équation d'Euler}. Il s'agit d'une équation du second ordre à coefficients non constants ; aucune méthode de résolution générale ne marche pour ce type d'équation.
+
+Ne nous laissons pas abattre et tentons de trouver une solution de la forme $R(r) = r^n$, avec $n$ à déterminer. Cette solution est totalement arbitraire, mais nous allons voir qu'elle fonctionne malgré tout. En injectant dans l'équation, on obtient
+\begin{align*}
+0 &= r^2 (r^n)'' + b r (r^n)' + c r^n \\
+&= r^2 n (n-1) r^{n-2} + b r n r^{n-1} + c r^n \\
+&= r^n \left( n(n-1) + b n + c \right) \\
+0 &= n^2 + (b-1) n + c
+\end{align*}
+Et donc, $n$ doit être solution d'une équation du deuxième degré. Analysons les 3 connus.
+
+\paragraph{2 racines réelles}
+Cela survient si $\Delta = (b-1)^2 - 4c >0$. Dans ce cas, on a deux solutions réelles, $n_1$ et $n_2$, et la solution générale de l'équation d'Euler est
+\[ R(r) = c_1 r^{n_1} + c_2 r^{n_2} \]
+avec $c_1$ et $c_2$ deux constantes à déterminer avec les conditions limites.
+
+\paragraph{1 racine double}
+Cela survient quand $\Delta = (b-1)^2 - 4c = 0$. Dans ce cas, nous n'avons à priori qu'une seule solution $n_0=\frac{1-b}{2}$, or il nous en faut deux. La deuxième solution sera dans ce cas $R_2(r) = r^{n_0} \ln(r)$, ce qui donne la solution générale
+\[ R(r) = c_1 r^{n_0} + c_2 r^{n_0} \ln(r) = r^{n_0} (c_1 + c_2\ln(r)) \]
+Pourquoi $r^{n_0}\ln(r)$ ? Supposons pendant un instant que $R(r)=v(r) r^{n_0}$ soit une solution de l'équation, et regardons quelles conditions doivent être appliquées à $v(r)$ :
+\begin{align*}
+0 &= r^2 \Big(v(r) r^{n_0}\Big)'' + b r \Big(v(r) r^{n_0}\Big)' + c v(r) r^{n_0} \\
+&= r^2 \Big( v''(r) r^{n_0} + v'(r) n_0 r^{n_0-1} + n_0 v'(r) r^{n_0-1} + n_0(n_0-1) v(r) r^{n_0-2} \Big) \\
+	&\qquad + b r \Big( v'(r) r^{n_0} + v(r) n_0 r^{n_0-1} \Big)
+	+ c v(r) r^{n_0} \\
+&= v(r) r^{n_0} \Big( n_0(n_0-1) + b n_0 + c \Big)
+	+ v'(r) r^{n_0+1} \Big( 2 n_0 + b \Big)
+	+ v''(r) r^{n_0+2} \\
+&= 0 + v'(r) r^{n_0+1} + v''(r) r^{n_0+2} \\
+&= r^{n_0+1} \Big( v'(r) + r v''(r) \Big)
+\end{align*}
+ce qui implique que $v'(r) = -r v''(r)$, équation différentielle ordinaire séparable qui a comme solution $v(r) = c_1 \ln(r) + c_2$, ce qui confirme bien notre solution (aux constantes près).
+
+\paragraph{2 racines complexes}
+Pour ce dernier cas, supposons que nos solutions soient de la forme $n_1 = \lambda + i\mu$ et $n_2 = \lambda - i\mu$ ; c'est le cas si nos coefficients $b$ et $c$ sont réels. On a alors la solution générale
+\begin{align*}
+R(r) &= c_1 r^{\lambda + i\mu} + c_2 r^{\lambda - i\mu} \\
+&= c_1 e^{(\lambda + i\mu)\ln(r)} + c_2 r^{(\lambda - i\mu)\ln(r)} \\
+&= c_1 e^{\lambda\ln(r)} e^{i\mu\ln(r)} + c_2 e^{\lambda\ln(r)} e^{-i\mu\ln(r)} \\
+&= c_1 r^\lambda (\cos(\mu\ln(r)) + i\sin(\mu\ln(r))) + c_2 r^\lambda (\cos(\mu\ln(r)) - i\sin(\mu\ln(r))) \\
+&= r^\lambda \Big( (c_1 + c_2) r^\lambda\cos(\mu\ln(r)) + (c_1 - c_2)i r^\lambda\sin(\mu\ln(r)) \Big)
+\end{align*}
+
+Il est à noter que les développements ci-dessus restent valides pour $x<0$, en effectuant un changement de variable ; il suffit de remplacer $r$ par $\abs{r}$.
+
 \chapter{L'équation d'onde}
 
 L'équation d'onde est une des équations les plus importantes de la physique. En effet, elle apparait dans de nombreux problèmes physiques, et a reçu de nombreuses variantes avec l'apparition de la mécanique quantique et l'équation d'onde de Schrödinger (entre autre).
