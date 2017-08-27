@@ -85,11 +85,11 @@ L'équation suivante, avec $A, B, C, D$ et $F$ des fonctions de $x$, $y$ et $u$
 \end{equation}
 est une équation d'ordre 2, et à deux variables ; $m=2$ et $n=2$. Les fonctions $A, B, C, D, F$ sont les coefficients des dérivées partielles. S'il s'agit de fonctions constantes, on parle d'\emph{EDP à coefficients constants}.
 
-Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles : la relation $\mathcal{F}$ est linéaire par rapport à $u$ et à ses dérivées, mais pas par rapport aux $x_i$. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente \ref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires \emph{homogènes} est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution. C'est d'ailleurs une manière de vérifier la (quasi)-linéarité : on vérifie le principe de superposition pour cette EDP (en enlevant toutefois les termes non homogènes).
+Une EDP est dite \emph{linéaire} quand elle l'est par rapport à $u$ et à toutes ses dérivées partielles : la relation $\mathcal{F}$ est linéaire par rapport à $u$ et à ses dérivées, mais pas par rapport aux $x_i$. Par exemple, si les fonctions $A, B, C, D, F$ de l'équation précédente~\eqref{eq:intro-exemple1} sont des fonctions de $x$ et $y$, mais pas de $u$ ou d'une de ses dérivées partielles, alors l'équation est linéaire. Une propriété importante des équations linéaires \emph{homogènes} est le \emph{principe de superposition} : si $u(x, y)$ et $v(x, y)$ sont solutions de l'équation, alors toute combinaison linéaire de $u$ et $v$ est aussi solution. C'est d'ailleurs une manière de vérifier la (quasi)-linéarité : on vérifie le principe de superposition pour cette EDP (en enlevant toutefois les termes non homogènes).
 
 Une EDP est dite \emph{quasi-linéaire} quand elle est linéaire par rapport aux dérivées partielles d'ordre le plus élevé en chacune des variables, c'est-à-dire que les coefficients devant les dérivées partielles d'ordre les plus élevés ne dépendent pas de $u$. Les équations quasi-linéaire se résolvent avec des techniques fort similaires aux techniques utilisées pour les équations linéaires. Elles sont très fréquentes en physique, bien plus que les équations linéaires, et obéissent aux mêmes schémas de \emph{stabilité} numériques que les équations linéaires. Parfois, elles peuvent être écrites sous une forme que l'on qualifie de \emph{forme conservative}.
 
-Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation \ref{eq:intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
+Une EDP est dite \emph{homogène} quand elle ne contient que des termes ne faisant intervenir $u$ ou ses dérivées partielles. Par exemple, l'équation~\eqref{eq:intro-exemple1} est homogène si $F=0$. Une équation homogène admet toujours la solution nulle $u=0$. Une EDP linéaire mais non-homogène a comme solution générale la somme d'une solution particulière de l'équation non-homogène et de la solution générale de l'équation homogène correspondante, tout comme leurs cousins EDO.
 
 Enfin, la solution d'une équation aux dérivées partielles, $u=f(x_1, \ldots, x_m)$, est qualifiée de \emph{surface intégrale} ou simplement une intégrale de l'EDP.
 
@@ -148,7 +148,7 @@ La solution de cette EDP, notée $u(x, y)$, est alors une surface dans l'espace 
 
 \section{Méthode des caractéristiques}
 
-Une EDP seule n'est pas résoluble. De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de l'EDP et de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc ou courbe de Cauchy}), constitue le \emph{problème de Cauchy} (figure \ref{fig:order1-Cauchy}).
+Une EDP seule n'est pas résoluble. De la même manière qu'il faut, dans le cas des équations différentielles ordinaires, donner un certain nombre de conditions afin d'obtenir une solution unique, il va falloir donner une sorte de condition initiale afin de pouvoir résoudre le problème. Cette condition initiale sera, dans le cas des EDP à deux variables, une courbe paramétrée $\Gamma(s) \equiv (x(s), y(s))$ sur laquelle on donne la valeur de $u$ : $u(x(s), y(s)) = f(s)$. Le problème de déterminer $u$ sur l'ensemble du domaine, à partir de l'EDP et de la valeur de $u$ sur la courbe $\Gamma$ (nommé \emph{arc ou courbe de Cauchy}), constitue le \emph{problème de Cauchy} (figure~\ref{fig:order1-Cauchy}).
 
 \begin{figure}
 	\centering
@@ -178,7 +178,7 @@ Tout d'abord, comme $u(x(s), y(s))=f(s)$ est connu sur la courbe de Cauchy, la d
 \label{eq:order1-duds}
 f'(s) = \fdif{u}{s} = \fpart{u}{x} \cdot \fdif{x}{s} + \fpart{u}{y} \cdot \fdif{y}{s}
 \end{equation}
-C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire, à partir de cette équation et notre EDP (équation \ref{eq:order1-genequa}), le système
+C'est une équation supplémentaire qui relie $\fpart{u}{x}$ et $\fpart{u}{y}$ ; on peut donc écrire, à partir de cette équation et notre EDP (équation~\eqref{eq:order1-genequa}), le système
 \begin{equation}
 \label{eq:order1-bienpose-edp-duds}
 \begin{pmatrix}
@@ -232,10 +232,10 @@ P\dif{y} = Q \dif{x}
 \end{equation}
 soit $\frac{P}{Q} = \frac{\dif{x}}{\dif{y}}$, ou encore $(\dif{x}, \dif{y}) \propto (P, Q)$ ; la direction $(\dif{x}, \dif{y})$ est, en quelque sorte, parallèle à la direction définie par $P$ et $Q$.
 
-Le système \ref{eq:order1-dirpart} ne doit pas être confondu avec le système \ref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système \ref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de \ref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé
-\footnote{Si $(\dif{x}, \dif{y}) = k \cdot \left(\fdif{x}{s}, \fdif{y}{s}\right)$, autrement dit s'ils sont parallèles, alors le déterminant de \ref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
+Le système~\eqref{eq:order1-dirpart} ne doit pas être confondu avec le système~\eqref{eq:order1-bienpose-edp-duds}. Ce dernier exprime une condition sur $\Gamma$, telle que le problème est bien posée ; tandis que le système~\eqref{eq:order1-dirpart} permet de déterminer une direction locale intéressante, parallèle à $(P, Q)$. Cette direction n'est jamais parallèle à la direction de la courbe de Cauchy ; si tel était le cas, le déterminant de~\eqref{eq:order1-bienpose-edp-duds} serait nul, et le problème serait mal posé
+\footnote{Si $(\dif{x}, \dif{y}) = k \cdot \left(\fdif{x}{s}, \fdif{y}{s}\right)$, autrement dit s'ils sont parallèles, alors le déterminant de~\eqref{eq:order1-bienpose-edp-duds} devient \[ \begin{vmatrix} P & Q \\ \fdif{x}{s} & \fdif{y}{s} \\ \end{vmatrix} = \frac{1}{k} \begin{vmatrix} P & Q \\ \dif{x} & \dif{y} \\ \end{vmatrix} =0 \] et donc, le problème serait déjà mal posé à la base.}.
 
-Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques} (figure \ref{fig:order1-reseau-caract})
+Si le problème est bien posé, alors cette direction particulière n'est jamais parallèle à la courbe $\Gamma$, et définit, en tout point du plan, ce que l'on appelle la \emph{direction caractéristique}. Et en suivant, à partir d'un point donné de $\Gamma$, les différentes directions caractéristiques, on obtient la \emph{courbe caractéristique} : une courbe qui suit, qui est tangente à la direction caractéristique en tout point. On obtient donc, à partir de l'équation $P\dif{y} = Q\dif{x}$, un \emph{réseau de courbes caractéristiques} (figure~\ref{fig:order1-reseau-caract})
 
 \begin{figure} % TODO improve
 	\centering
@@ -270,7 +270,7 @@ P \dif{y} &= Q \dif{x} \\
 \end{equation}
 L'idée est que, pour déterminer les points $x$ et $y$ qui seront atteignables par la caractéristique issue d'un point de la courbe de Cauchy en $(x(s), y(s))$ pour un $s$ donné, on va suivre et intégrer la direction caractéristique, et donc parcourir la courbe, depuis ce point de la courbe de Cauchy jusqu'à un point $(x, y)$ que l'on suppose appartenir à la caractéristique. Cela donne donc une relation entre $x$ et $y$ pour un $s$ donné, et également une relation qui donne $s$ en fonction de $x$ et $y$. $s$ est une constante dans cette relation, et paramétrise la courbe : pour un $s$ donné, on obtient une courbe caractéristique précise.
 
-Maintenant que l'on connait une direction caractéristique, comment peut-on propager notre solution $u$ le long de cette caractéristique ? Tout simplement en utilisant le système \ref{eq:order1-dirpart}. Comme le déterminant principal s'annule, la seule manière d'avoir encore une solution est que le déterminant formé en remplaçant une colonne de la matrice principale, par la colonne des termes indépendants, s'annule également (un peu à la Kramer). C'est-à-dire :
+Maintenant que l'on connait une direction caractéristique, comment peut-on propager notre solution $u$ le long de cette caractéristique ? Tout simplement en utilisant le système~\eqref{eq:order1-dirpart}. Comme le déterminant principal s'annule, la seule manière d'avoir encore une solution est que le déterminant formé en remplaçant une colonne de la matrice principale, par la colonne des termes indépendants, s'annule également (un peu à la Kramer). C'est-à-dire :
 \[ \begin{vmatrix} P & R \\ \dif{x} & \dif{u} \\ \end{vmatrix} = 0 \quad \quad \begin{vmatrix} R & Q \\ \dif{u} & \dif{y} \\ \end{vmatrix} = 0 \]
 \begin{equation}
 \label{eq:order1-compatode}
@@ -282,7 +282,7 @@ Les deux relations obtenues sont des \emph{relations de compatibilité}, ou rela
 Désormais, pour déterminer $u$ à un point $A$ donné, il ne reste plus qu'à intégrer la relation de compatibilité le long de la caractéristique, depuis un point $B$ sur la courbe de Cauchy (où l'on connait $u$) jusqu'à notre point $A$ (où l'on veut connaitre $u$)
 \footnote{Le point $B$ peut être déterminé, vu que s'il y a une caractéristique qui passe par $A$, alors cette caractéristique croise une seule fois la courbe de Cauchy. Il est néanmoins possible que l'on ne puisse pas calculer $u$ à un certain point, si la courbe de Cauchy ou si les caractéristiques empêchent la propagation de $u$ en ce point : caractéristiques absentes, $\Gamma$ trop courte.}.
 
-Notons qu'une seule des deux relations de compatibilité est requise pour l'intégration ; l'autre relation peut directement être obtenue à partir de l'une et de \ref{eq:order1-caractode}. Une manière de retenir ces relations est
+Notons qu'une seule des deux relations de compatibilité est requise pour l'intégration ; l'autre relation peut directement être obtenue à partir de l'une et de~\eqref{eq:order1-caractode}. Une manière de retenir ces relations est
 \begin{equation}
 \label{eq:order1-diffeqnmemo}
 \frac{\dif{x}}{P} = \frac{\dif{y}}{Q} = \frac{\dif{u}}{R}
@@ -290,14 +290,14 @@ Notons qu'une seule des deux relations de compatibilité est requise pour l'int�
 (relation connue comme les équations de Lagrange-Charpit).
 Néanmoins, comme $P$, $Q$ ou $R$ peuvent s'annuler, il vaut mieux revenir à la forme normale de ces équations lors de l'intégration. C'est essentiellement un moyen mnémotechnique. De même, il vaut mieux choisir la relation la plus simple à intégrer.
 
-Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = R\dif{l}$ ; celle-ci relie la variation de $u$ avec la variation $\dif{l}$ directement le long de la caractéristique (dans l'axe de la caractéristique), de sorte que $\dif{l}^2 = \dif{x}^2 + \dif{y}^2$. La démonstration est simplement une règle de la chaine sur $\fdif{u}{l}$, avec quelques manipulations à partir des relation \ref{eq:order1-diffeqnmemo}.
+Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = R\dif{l}$ ; celle-ci relie la variation de $u$ avec la variation $\dif{l}$ directement le long de la caractéristique (dans l'axe de la caractéristique), de sorte que $\dif{l}^2 = \dif{x}^2 + \dif{y}^2$. La démonstration est simplement une règle de la chaine sur $\fdif{u}{l}$, avec quelques manipulations à partir des relation~\eqref{eq:order1-diffeqnmemo}.
 
 Le cas où $R=0$ donne $\dif{u}=0$ le long de la caractéristique : $u$ est alors constant le long de la caractéristique. On appelle ça un \emph{invariant de Riemann}.
 
 Les EDP du 1\ier{} ordre (avec des fonctions réelles) ont toutes la propriété d'être \emph{à caractère hyperbolique}. Cette propriété peut être résumée, de manière informelle, par le fait qu'elles ont toutes la particularité de pouvoir être résolues par une sorte de propagation de la solution le long de caractéristiques.
 \footnote{Le concept sera éclairci lorsqu'on abordera les EDP du second ordre.}
 
-Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation \ref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{} ordre. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
+Une dernière remarque avant de passer à des exemples. Une certaine EDP du premier ordre, de la forme de l'équation~\eqref{eq:order1-genequa}, définit un réseau de caractéristiques, via la relation $P\dif{y}=Q\dif{x}$. L'inverse est aussi vrai : un réseau de caractéristiques définit une unique relation de la forme $P\dif{y}=Q\dif{x}$, et donc une EDP du 1\ier{} ordre. Il y a une bijection entre les EDP du 1\ier{} ordre et les réseaux de caractéristiques, et il faut donc être préparé à travailler dans les deux sens (l'examen de septembre 2016 en est un parfait exemple...).
 
 %TODO les paragraphes suivants (jusqu'au prochain TODO) vont devoir être insérés quelque part de cohérent
 
@@ -351,7 +351,7 @@ Afin d'illustrer la méthode des caractéristiques, considérons l'EDP suivante
 \[y\fpart{u}{x} - x\fpart{u}{y} = R\]
 et la courbe $\Gamma$ définie par $x(s)=s$ et $y(s)=0$, pour $s$ strictement positif (on verra pourquoi). Il s'agit du demi-axe des x strictement positifs. On spécifie sur cette courbe une fonction $f(s)$ donnée (ici, peu importe sa définition).
 
-On commence par déterminer le réseau des caractéristiques. Puisque $P=y$ et $Q=-x$, les caractéristiques sont déterminées par l'intégration suivante (équation \ref{eq:order1-caractcurve_integral}) :
+On commence par déterminer le réseau des caractéristiques. Puisque $P=y$ et $Q=-x$, les caractéristiques sont déterminées par l'intégration suivante (équation~\eqref{eq:order1-caractcurve_integral}) :
 \begin{align*}
 P \dif{y} &= Q \dif{x} \\
 y \dif{y} &= -x \dif{x} \\
@@ -626,11 +626,11 @@ La vitesse présente un minimum en $x=0$. La fonction $u$ est alors déformée l
 \section{Le problème inverse de Cauchy : à la recherche de l'EDP (ou l'examen de septembre 2016)}
 % TODO rajouter des graphes
 
-Lors de ce chapitre, nous avons vu comment résoudre les EDP du 1\ier{} ordre à l'aide de la méthode des caractéristiques. À partir de l'équation \ref{eq:order1-genequa}, nous avons développé la méthode des caractéristiques qui nous permet de résoudre ces EDP, lorsqu'une condition est donnée sur une courbe $\Gamma$. Le c\oe{}ur de cette méthode est le calcul de l'équation des caractéristiques, à partir de la relation caractéristique
+Lors de ce chapitre, nous avons vu comment résoudre les EDP du 1\ier{} ordre à l'aide de la méthode des caractéristiques. À partir de l'équation~\eqref{eq:order1-genequa}, nous avons développé la méthode des caractéristiques qui nous permet de résoudre ces EDP, lorsqu'une condition est donnée sur une courbe $\Gamma$. Le c\oe{}ur de cette méthode est le calcul de l'équation des caractéristiques, à partir de la relation caractéristique
 \begin{equation*}
 P \dif{y} = Q \dif{x} \tag{\ref{eq:order1-caractode}}
 \end{equation*}
-et en intégrant la relation, selon l'équation \ref{eq:order1-caractcurve_integral}.
+et en intégrant la relation, selon l'équation~\eqref{eq:order1-caractcurve_integral}.
 
 À partir d'une EDP, on peut donc construire un réseau de courbes caractéristiques, qui peuvent être utilisées pour propager la valeur de $u$ dans l'ensemble du plan, à partir de la courbe de Cauchy. Cela semble assez vraisemblable. Néanmoins, par le plus grand des hasards, serait-il possible d'emprunter le chemin inverse, de partir d'un réseau de caractéristiques et obtenir une EDP valable ? Cela semble invraisemblable et peu probable. Et pourtant, la réponse est oui !
 
@@ -703,7 +703,7 @@ et donc, on obtient la valeur de $P$ et $Q$ :
 P=\frac{xL}{\sqrt{x^2+y^2}} - y \quad \text{et} \quad Q=\frac{yL}{\sqrt{x^2+y^2}} + x
 \end{equation}
 
-On connait dès lors l'ensemble du problème de Cauchy, et il ne reste plus qu'à calculer la solution quand $R=0$. Il suffit d'exprimer $s$ en fonction de $r$ et $\theta$ à l'aide de \ref{eq:order1-2016sept-caractequafinal}, d'utiliser la valeur de $u(s)$, et de voir ce qu'il se passe quand $r=2r_0$ et $\theta=\frac{\pi}{4}$ (équivalents polaires des coordonnées cartésiennes que l'on nous demande ; les calculs sont plus simples en coordonnées polaires).
+On connait dès lors l'ensemble du problème de Cauchy, et il ne reste plus qu'à calculer la solution quand $R=0$. Il suffit d'exprimer $s$ en fonction de $r$ et $\theta$ à l'aide de~\eqref{eq:order1-2016sept-caractequafinal}, d'utiliser la valeur de $u(s)$, et de voir ce qu'il se passe quand $r=2r_0$ et $\theta=\frac{\pi}{4}$ (équivalents polaires des coordonnées cartésiennes que l'on nous demande ; les calculs sont plus simples en coordonnées polaires).
 
 Que retenir de tout cela ? Une caractéristique pour une valeur $s_1$ croise la courbe de Cauchy en un seul point, qui est le point de la courbe de Cauchy pour $s=s_1$ ; cela permet de compléter l'équation des caractéristiques, si elle est incomplète. Ensuite, à partir de l'équation des caractéristiques, on différencie et on utilise au besoin la règle de la chaine ou d'autre relations pour finalement arriver à $P$ et $Q$. Le problème étant alors complet, on peut terminer sa résolution de manière classique.
 
@@ -729,7 +729,7 @@ où $A, B, C, R$ sont fonctions au plus de $x$, $y$, $\phi$, $\fpart{\phi}{x}$ e
 
 Cette EDP est quasi-linéaire, c'est-à-dire linéaire par rapport aux dérivées du plus haut ordre en chacune des variables, et c'est le moment rêvé d'expliquer ce que cela signifie. La linéarité signifie que toute combinaison linéaire de deux solutions $\phi_1$ et $\phi_2$ est également une solution, lorsqu'on l'injecte dans l'équation : comme les opérateurs de dérivation sont linéaires, la linéarité doit s'appliquer à chaque terme de l'équation contenant la fonction $\phi$ ou ses dérivées, et les différentes apparitions de la fonction $\phi$ doivent être linéaires. La quasi-linéarité retire cette contrainte, en ignorant la linéarité de toutes les dérivées à part les plus élevées : en gros, les termes contenant les dérivées du plus haut ordre ($\ffpart{\phi}{x}$, $\fdpart{\phi}{x}{y}$ et $\ffpart{\phi}{y}$) sont linéaires, et on considère uniquement ceux-là. Cela signifie qu'une combinaison linéaire $a \cdot \left(\ffpart{\phi}{x}\right)_1 + b \cdot \left(\ffpart{\phi}{x}\right)_2$ est bien \og solution \fg{} de l'EDP, en ignorant les autres dérivées de $\phi$ comme s'il s'agissait de constantes ou d'autres fonctions.
 \footnote{Si le paragraphe n'est pas très clair, ne vous inquiétez pas : retenez juste la définition de la quasi-linéarité, ainsi que la forme générale de l'équation, et normalement tout ira bien.}
-Dans notre équation \ref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions des dérivées d'ordre 2, mais bien des dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :\footnote{Le duo de parenthèses après le $A$ servent à rappeler que c'est une fonction de ces paramètres, le duo de parenthèses suivantes sont simplement pour délimiter un facteur.}
+Dans notre équation~\eqref{eq:order2-genequa}, on voit que les termes d'ordre 2 ont comme coefficients des fonctions $A, B, C, R$ qui ne sont pas fonctions des dérivées d'ordre 2, mais bien des dérivées d'ordre 1 au plus. En supposant que l'on considère les fonctions $\phi$, $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ comme constantes ou comme fonctions indépendantes des dérivées secondes, alors une combinaison linéaire des dérivées secondes sera décomposée comme étant linéaire. Encore en d'autres symboles, considérons $\phi_0$, $\phi_1$ et $\phi_2$, et considérons uniquement le terme en $\ffpart{\phi}{x}$ :\footnote{Le duo de parenthèses après le $A$ servent à rappeler que c'est une fonction de ces paramètres, le duo de parenthèses suivantes sont simplement pour délimiter un facteur.}
 \begin{align*}
 & A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot \left(a \cdot \ffpart{\phi_1}{x} + b \cdot \ffpart{\phi_2}{x}\right) \\
 &= A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot a \cdot \ffpart{\phi_1}{x} + A\left(x, y, \phi_0, \fpart{\phi_0}{x}, \fpart{\phi_0}{y}\right) \cdot b \cdot \ffpart{\phi_2}{x} \\
@@ -772,7 +772,7 @@ Pour cela, posons de nouveau notre \emph{problème de Cauchy} : on se donne une 
 La question désormais est de savoir si l'on peut construire, à partir de ces informations, la solution de l'EDP au voisinage de la courbe $\Gamma$. Si c'est le cas, on pourra étendre cette construction pour couvrir l'ensemble du plan et donc, déterminer la solution $\phi$. Cela ressemble à la méthode vue pour les EDP du premier ordre. Et comme on va le voir, ce sera beaucoup plus difficile...
 
 Commençons par établir la liste des relations que l'on connait au sujet de notre courbe et de notre fonction. On connait $\phi(s) = f(s)$ le long de la courbe $\Gamma(s) \equiv (x(s), y(s))$, et donc on connait $\fpart{\phi}{s}(s) = f'(s)$. Grâce à $\fpart{\phi}{n}(s)$, la dérivée normale à la courbe, on connait $\grad \phi(s) = \left(\fpart{\phi}{x}(s), \fpart{\phi}{y}(s)\right)$ (le gradient de $\phi$ le long de $\Gamma$). %\footnote{Plus en détail, \[ \fpart{\phi}{x}(x(s)) = \fpart{\phi}{s}(s) \fpart{s}{x}(x) \]}.
-Enfin, les dérivées de chaque terme du gradient, $\fpart{}{s} \left(\fpart{\phi}{x}\right)$ et $\fpart{}{s} \left(\fpart{\phi}{y}\right)$ sont également connus le long de $\Gamma$. On peut ainsi écrire (similairement à l'équation \ref{eq:order1-duds}) :
+Enfin, les dérivées de chaque terme du gradient, $\fpart{}{s} \left(\fpart{\phi}{x}\right)$ et $\fpart{}{s} \left(\fpart{\phi}{y}\right)$ sont également connus le long de $\Gamma$. On peut ainsi écrire (similairement à l'équation~\eqref{eq:order1-duds}) :
 \begin{equation}
 \label{eq:order2-dphidxs}
 \fpart{}{x} \left(\fpart{\phi}{x}\right) \cdot \fdif{x}{s} + \fpart{}{y} \left(\fpart{\phi}{x}\right) \cdot \fdif{y}{s} = \fdif{}{s} \left(\fpart{\phi}{x}\right)
@@ -782,7 +782,7 @@ et
 \label{eq:order2-dphidys}
 \fpart{}{x} \left(\fpart{\phi}{y}\right) \cdot \fdif{x}{s} + \fpart{}{y} \left(\fpart{\phi}{y}\right) \cdot \fdif{y}{s} = \fdif{}{s} \left(\fpart{\phi}{y}\right)
 \end{equation}
-et de la même manière, on peut tout mettre en notation matricielle (similaire à \ref{eq:order1-bienpose-edp-duds})
+et de la même manière, on peut tout mettre en notation matricielle (similaire à~\eqref{eq:order1-bienpose-edp-duds})
 \begin{equation}
 \label{eq:order2-bienpose-edp-dphidxys}
 \begin{pmatrix}
@@ -805,7 +805,7 @@ Tant que le déterminant de ce système ne s'annule pas, on peut le résoudre et
 \fpart{\phi}{y} (x+\dif{x}, y+\dif{y}) &= \fpart{\phi}{y} (x, y) + \dif{x} \left( \fpart{}{x} \fpart{\phi}{y}\right) (x, y) + \dif{y} \left( \fpart{}{y} \fpart{\phi}{y}\right) (x, y) \label{eq:order2-propag-dphidy}
 \end{align}
 \end{subequations}
-et donc, on peut propager la solution sur tout le plan. Pour que cela fonctionne, il faut que le déterminant de la matrice de \ref{eq:order2-bienpose-edp-dphidxys} ne s'annule pas -- cela définit un \emph{problème bien posé}.
+et donc, on peut propager la solution sur tout le plan. Pour que cela fonctionne, il faut que le déterminant de la matrice de~\eqref{eq:order2-bienpose-edp-dphidxys} ne s'annule pas -- cela définit un \emph{problème bien posé}.
 
 Il reste désormais à déterminer des directions de propagations, $(\dif{x}, \dif{y})$. Considérons donc une telle direction non parallèle à $\Gamma$, qui va nous permettre (du moins, on l'espère) de propager la solution. Les variations de $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ peuvent être décrites par les différentielles suivantes :
 \begin{subequations}
@@ -828,7 +828,7 @@ A & B & C \\ \dif{x} & \dif{y} & 0 \\ 0 & \dif{x} & \dif{y} \\
 R \\[0.5em] \dif{\left(\fpart{\phi}{x}\right)} \\[0.5em] \dif{\left(\fpart{\phi}{y}\right)} \\
 \end{pmatrix}
 \end{equation}
-Notons la similarité entre les équations \ref{eq:order1-propag} et \ref{eq:order2-propag-all}, \ref{eq:order1-diffdu} et \ref{eq:order2-diffdphi-all}, et \ref{eq:order1-dirpart} et \ref{eq:order2-dirpart} -- elles expriment les mêmes idées concernant la propagation. De la même manière qu'on a souhaité, dans les EDP d'ordre 1, trouver une direction facile à utiliser, nous allons imposer que le déterminant de ce système soit nul, afin de trouver des directions caractéristiques particulières. Ces directions sont donc solutions de
+Notons la similarité entre les équations~\eqref{eq:order1-propag} et~\eqref{eq:order2-propag-all}, \eqref{eq:order1-diffdu} et~\eqref{eq:order2-diffdphi-all}, et~\eqref{eq:order1-dirpart} et~\eqref{eq:order2-dirpart} -- elles expriment les mêmes idées concernant la propagation. De la même manière qu'on a souhaité, dans les EDP d'ordre 1, trouver une direction facile à utiliser, nous allons imposer que le déterminant de ce système soit nul, afin de trouver des directions caractéristiques particulières. Ces directions sont donc solutions de
 \[A \dif{y}^2 - B \dif{y} \dif{x} + C \dif{x}^2=0\]
 soit, en divisant par $\dif{x}$ :
 \footnote{Si $\dif{x}$ est nul, il suffit de diviser par $\dif{y}$ -- cela ne change strictement rien pour la suite.}
@@ -846,9 +846,9 @@ Comme toute équation du second degré, les racines peuvent être réelles et di
 
 Les trois cas que nous avons relevé ci-dessus ne sont pas anodin, et sont l'objet de théories particulières pour chacune :
 \begin{itemize}
-	\item Lorsque $B^2-4AC>0$, l'EDP est qualifiée \emph{hyperbolique}. L'équation \ref{eq:order2-caractequa} possède deux solution distinctes, et la méthode des caractéristiques est applicable. Un exemple est l'équation d'onde.
-	\item Lorsque $B^2-4AC=0$, l'EDP est dite \emph{parabolique}. L'équation \ref{eq:order2-caractequa} ne possède qu'une seule solution, et la méthode des caractéristiques n'est pas applicable. Un exemple est l'équation de diffusion, qui doit être résolue en partant d'une condition initiale.
-	\item Lorsque $B^2-4AC<0$, l'EDP est \emph{elliptique}. Les solutions de \ref{eq:order2-caractequa} sont complexes, la méthode des caractéristiques n'est plus applicable. Un exemple est l'équation de Poisson, qui doit être résolue de manière globale.
+	\item Lorsque $B^2-4AC>0$, l'EDP est qualifiée \emph{hyperbolique}. L'équation~\eqref{eq:order2-caractequa} possède deux solution distinctes, et la méthode des caractéristiques est applicable. Un exemple est l'équation d'onde.
+	\item Lorsque $B^2-4AC=0$, l'EDP est dite \emph{parabolique}. L'équation~\eqref{eq:order2-caractequa} ne possède qu'une seule solution, et la méthode des caractéristiques n'est pas applicable. Un exemple est l'équation de diffusion, qui doit être résolue en partant d'une condition initiale.
+	\item Lorsque $B^2-4AC<0$, l'EDP est \emph{elliptique}. Les solutions de~\eqref{eq:order2-caractequa} sont complexes, la méthode des caractéristiques n'est plus applicable. Un exemple est l'équation de Poisson, qui doit être résolue de manière globale.
 \end{itemize}
 
 Les types d'EDP sont ainsi nommés par analogie avec les différentes coniques, et aux conditions permettant de les différencier : l'hyperbole, la parabole et l'ellipse (le cercle en étant un cas particulier).
@@ -857,9 +857,9 @@ Le premier type peut être résolu par la méthode des caractéristiques, même 
 
 \section{EDP hyperboliques : équation d'onde et méthode des caractéristiques}
 
-Dans le cas des EDP hyperboliques, l'équation \ref{eq:order2-caractequa} a deux solutions réelles, et définit donc deux directions caractéristiques. La méthode des caractéristiques est alors utilisable, et on peut propager la solution $u$ de la courbe de Cauchy sur l'ensemble du plan.
+Dans le cas des EDP hyperboliques, l'équation~\eqref{eq:order2-caractequa} a deux solutions réelles, et définit donc deux directions caractéristiques. La méthode des caractéristiques est alors utilisable, et on peut propager la solution $u$ de la courbe de Cauchy sur l'ensemble du plan.
 
-Les caractéristiques peuvent être obtenues en intégrant les deux EDO obtenues à partir de la relation caractéristique, d'une manière assez similaire à celle utilisée lors des EDP du 1\ier{} ordre. Ensuite, la valeur de $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ peuvent être obtenues en intégrant les relations obtenues en remplaçant le terme indépendant de \ref{eq:order2-dirpart} dans une colonne de la matrice. Cela fait donc deux EDO le long de deux caractéristiques. Enfin, la valeur de $\phi$ peut être évaluée à partir des relations \ref{eq:order2-propag-all}.
+Les caractéristiques peuvent être obtenues en intégrant les deux EDO obtenues à partir de la relation caractéristique, d'une manière assez similaire à celle utilisée lors des EDP du 1\ier{} ordre. Ensuite, la valeur de $\fpart{\phi}{x}$ et $\fpart{\phi}{y}$ peuvent être obtenues en intégrant les relations obtenues en remplaçant le terme indépendant de~\eqref{eq:order2-dirpart} dans une colonne de la matrice. Cela fait donc deux EDO le long de deux caractéristiques. Enfin, la valeur de $\phi$ peut être évaluée à partir des relations~\eqref{eq:order2-propag-all}.
 Nous vous redirigeons vers le syllabus officiel et vers l'APE 3 pour de plus amples informations. %La flemme
 
 %TODO mettre le développement des caractéristiques : copy-paste 1er ordre
@@ -905,7 +905,7 @@ Cette réécriture nous informe d'une propriété que l'on avait déjà relevé 
 \fpart{}{\eta} &= \fpart{x}{\eta} \fpart{}{x} + \fpart{t}{\eta} \fpart{}{t} = \frac{1}{2c} \left( c \fpart{}{x} + \fpart{}{t} \right)
 \end{align}
 \end{subequations}
-On constate que ce sont justement les deux opérateurs résultants de la factorisation, à un facteur $1/2c$ près. On peut donc réécrire l'équation \ref{eq:order2-ondes-facto} sous la \emph{forme canonique}
+On constate que ce sont justement les deux opérateurs résultants de la factorisation, à un facteur $1/2c$ près. On peut donc réécrire l'équation~\eqref{eq:order2-ondes-facto} sous la \emph{forme canonique}
 \begin{equation}
 \label{eq:order2-ondes-canonique}
 \fpart{}{\xi} \fpart{}{\eta} \phi = \fdpart{\phi}{\xi}{\eta} = 0
@@ -1116,7 +1116,7 @@ et
 0 &= g'(y) \\
 \Rightarrow g(y) &= l = k
 \end{align*}
-et donc, $f(x) = g(y) = k$. Par conséquent,  notre équation \ref{eq:separ_laplace_separated_one} se réécrit
+et donc, $f(x) = g(y) = k$. Par conséquent,  notre équation~\eqref{eq:separ_laplace_separated_one} se réécrit
 \[\frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)} = \lambda \]
 \begin{equation}
 \frac{X''(x)}{X(x)} = \lambda \quad \text{ et } \quad \frac{Y''(y)}{Y'(y)} = -\lambda
@@ -1165,7 +1165,7 @@ X(x) &= (\alpha - \beta) \frac{e^{kx} - e^{-kx}}{2} + (\alpha + \beta) \frac{e^{
 &= (\alpha - \beta) \sinh(kx) + (\alpha + \beta) \cosh(kx) \\
 &= A \sinh(kx) + B \cosh(kx)
 \end{align*}
-avec de nouvelles constantes. En pratique, on réécrira souvent la solution à l'équation \ref{eq:separ_laplace_Xcases_pkk} sous cette forme.
+avec de nouvelles constantes. En pratique, on réécrira souvent la solution à l'équation~\eqref{eq:separ_laplace_Xcases_pkk} sous cette forme.
 Appliquons maintenant les conditions limites :
 \begin{align*}
 X(0) &= A \sinh(0) + B \cosh(0) = B = 0
@@ -1213,9 +1213,9 @@ X(x) &= \alpha (\cos(kx) + i \sin(kx)) + \beta (\cos(kx) - i \sin(kx)) \\
 &= (\alpha + \beta) \cos(kx) + (\alpha - \beta) i \sin(kx) \\
 &= A \cos(kx) + B \sin(kx)
 \end{align*}
-avec de nouveaux noms de constantes. On écrira généralement la solution à l'équation \ref{eq:separ_laplace_Xcases_mkk} sous cette forme.
+avec de nouveaux noms de constantes. On écrira généralement la solution à l'équation~\eqref{eq:separ_laplace_Xcases_mkk} sous cette forme.
 
-Cette solution, nous allons la rencontrer très souvent dans les résolutions avec la méthode des caractéristiques. À vrai dire, le signe et la valeur de $\lambda$ pourra souvent être déterminée à partir de \eqref{eq:separ_laplace_separated_lambda} en déterminant quel signe de $\lambda$ aboutit à l'équation \eqref{eq:separ_laplace_Xcases_mkk}, lorsque la variable pour laquelle nous disposons de deux conditions homogènes est la variable indépendante de cette équation (ici, $x$). Ce sera plus clair après un deuxième exemple.
+Cette solution, nous allons la rencontrer très souvent dans les résolutions avec la méthode des caractéristiques. À vrai dire, le signe et la valeur de $\lambda$ pourra souvent être déterminée à partir de~\eqref{eq:separ_laplace_separated_lambda} en déterminant quel signe de $\lambda$ aboutit à l'équation~\eqref{eq:separ_laplace_Xcases_mkk}, lorsque la variable pour laquelle nous disposons de deux conditions homogènes est la variable indépendante de cette équation (ici, $x$). Ce sera plus clair après un deuxième exemple.
 
 Utilisons à nouveau nos conditions limites :
 \[ X(0) = A \cos(0) + B \sin(0) = A = 0 \]
@@ -1238,14 +1238,14 @@ Pour avoir une solution non triviale, la constante $k$ ne peut pas prendre n'imp
 ces valeurs sont les \emph{valeurs propres} du problème, pour une raison qui sera expliquée plus loin\footnote{Plus exactement, les $k^2$ sont les valeurs propres du problème, comme on verra plus loin.}.% FIXME indiquer l'identifiant de ce plus loin
 Et elles ne sont pas uniques : il y en a une infinité, qui sont quantifiées\footnote{Coucou la mécanique quantique !}.
 
-Nous avons donc, pour chaque $n$ et chaque $k_n$, une solution $X_n(x)$ à \ref{eq:separ_laplace_Xcases_mkk} qui vaut
+Nous avons donc, pour chaque $n$ et chaque $k_n$, une solution $X_n(x)$ à~\eqref{eq:separ_laplace_Xcases_mkk} qui vaut
 \begin{equation}
 X_n(x) = B_n \sin\left(\frac{n \pi x}{L}\right) = B_n \sin(k_n x) \quad \text{ avec } k_n = \frac{n \pi}{L} \text{ , } n\in\mathbb{N}
 \label{eq:separ_laplace_ex1_xn}
 \end{equation}
 et qui s'avère être une \emph{fonction propre} associée à la valeur propre $k_n$.
 
-Revenons à~\ref{eq:separ_laplace_separated_lambda}, et passons à la résolution de l'équation en $Y$. Nous savons donc que
+Revenons à~\eqref{eq:separ_laplace_separated_lambda}, et passons à la résolution de l'équation en $Y$. Nous savons donc que
 \[ \frac{Y''(y)}{Y(y)} = -\lambda = -(-k_n^2) = k_n^2 \]
 et donc, la solution de cette équation sera exactement celle de la section~\ref{sec:separ_laplace_rectangle_solving_positivelambda} :
 \begin{equation}
@@ -1773,7 +1773,7 @@ u(a, \theta, t) &= 0 \quad \forall \theta, t \\
 \phi(a, \theta) &= 0 \quad \forall \theta \\
 R(a) &= 0
 \end{align*}
-L'équation~\ref{eq:wave_bessel_pre_equation} n'est pas l'équation d'Euler (à cause du $k^2 r^2$), mais elle porte un nom, lorsqu'elle est écrite sous une autre forme. En posant $z=kr$, on peut réécrire l'équation~\ref{eq:wave_bessel_pre_equation} sous la forme %FIXME étapes du développement ?
+L'équation~\eqref{eq:wave_bessel_pre_equation} n'est pas l'équation d'Euler (à cause du $k^2 r^2$), mais elle porte un nom, lorsqu'elle est écrite sous une autre forme. En posant $z=kr$, on peut réécrire l'équation~\eqref{eq:wave_bessel_pre_equation} sous la forme %FIXME étapes du développement ?
 \begin{equation}
 z^2 R_m''(z) + z R_m'(z) + (z^2 - m^2) R_m(z) = 0
 \label{eq:wave_bessel_equation}
@@ -2047,7 +2047,7 @@ Nous avons donc pu résoudre l'équation d'onde, sur une membrane circulaire fix
 
 Dans ce cas, les coefficients $\tilde{A}_{p, q}$ et $\tilde{B}_{p, q}$ ne seront pas forcément nuls.
 
-La condition axisymétrique imposait une symétrie axiale de la solution, similaire à la symétrie axiale de la situation initiale. Cela imposait que les termes de la solution~\ref{eq:wave_circular_nullspeed_solution} qui dépendaient de $\theta$ s'en aille, et c'est exactement ce qu'il s'est passé pour les $\tilde{A}_{p, q}$ et $\tilde{B}_{p, q}$ pour $p>0$ : ils se sont annulés.
+La condition axisymétrique imposait une symétrie axiale de la solution, similaire à la symétrie axiale de la situation initiale. Cela imposait que les termes de la solution~\eqref{eq:wave_circular_nullspeed_solution} qui dépendaient de $\theta$ s'en aille, et c'est exactement ce qu'il s'est passé pour les $\tilde{A}_{p, q}$ et $\tilde{B}_{p, q}$ pour $p>0$ : ils se sont annulés.
 
 Dans le cas un peu plus générale d'une condition initiale non symétrique, il faudra calculer ces coefficients, avec du coup une double intégrale compliquée. Si $u_0(r, \theta) = f(r)g(\theta)$, et que $f(r)$ est une fonction sympathique, il est possible de séparer la double intégrale en deux intégrales, et de calculer ces deux intégrales, de manière classique pour $\theta$, de manière plus douloureuse pour $r$ (à cause des fonctions de Bessel). Malheureusement, il y a peu de fonctions gentilles lorsqu'on les intègre avec les fonctions de Bessel d'ordre supérieur à 0\dots
 
@@ -2109,7 +2109,7 @@ Pour que les deux membres soient nuls, il faut que chaque coefficient devant les
 \end{gather}
 On s'impose $A_0 \neq 0$ pour garantir une seule représentation de l'équation, ce qui impose $r = \pm m$.
 
-Dans le cas où $r=m$, on a alors que $((r+1)^2-m^2)A_1 = (2m+1)A_1=0$, ce qui donne $A_1=0$, sauf si $m=\frac{-1}{2}$. Dans ce dernier cas, la relation~\ref{eq:wave_bessel_frobenius_recurse} devient
+Dans le cas où $r=m$, on a alors que $((r+1)^2-m^2)A_1 = (2m+1)A_1=0$, ce qui donne $A_1=0$, sauf si $m=\frac{-1}{2}$. Dans ce dernier cas, la relation~\eqref{eq:wave_bessel_frobenius_recurse} devient
 \[ ((k-\frac{1}{2})^2-\frac{1}{4})A_k + A_{k-2} = (k^2-k)A_k + A_{k-2} = 0 \]
 soit la relation de récurrence
 \[ A_k = \frac{-A_{k-2}}{k(k-1)} \]
@@ -2118,7 +2118,7 @@ qui donne, après un bref développement, les relations suivantes
 A_{2l} &= \frac{(-1)^l}{(2l)!} A_0 \\
 A_{2l+1} &= \frac{(-1)^l}{(2l+1)!} A_1
 \end{align*}
-En réinjectant ces expressions dans l'équation~\ref{eq:wave_bessel_frobenius_solpattern}, on obtient
+En réinjectant ces expressions dans l'équation~\eqref{eq:wave_bessel_frobenius_solpattern}, on obtient
 \begin{align*}
 u(z) &= z^\frac{-1}{2} \sum_{k=0}^{\infty} A_k z^k \\
 &= z^\frac{-1}{2} \left( \sum_{l=0}^{\infty} A_{2l} z^{2l} + \sum_{l=0}^{\infty} A_{2l+1} z^{2l+1} \right) \\
@@ -2132,7 +2132,7 @@ J_{1/2}(z) &= \sqrt{\frac{2}{\pi z}} \sin(z)
 \end{align}
 et il s'agit des deux solutions indépendantes pour l'équation de Bessel avec $m=\pm\frac{1}{2}$.
 
-Dans le cas où $m\neq \pm\frac{1}{2}$ (mais on considère encore que $r=m$), on a nécessairement $A_1=0$, et comme l'équation~\ref{eq:wave_bessel_frobenius_recurse} est toujours valide, on a
+Dans le cas où $m\neq \pm\frac{1}{2}$ (mais on considère encore que $r=m$), on a nécessairement $A_1=0$, et comme l'équation~\eqref{eq:wave_bessel_frobenius_recurse} est toujours valide, on a
 \begin{align*}
 0&= (k^2 + 2km) A_k + A_{k-2} \\
 A_k &= \frac{-1}{k(k+2m)} A_{k-2} \\
@@ -2311,7 +2311,7 @@ Maintenant que l'on a démontré que les fonctions de Bessel $J_m(kr)$ et $J'_m(
 &= \lim\limits_{k' \to k} \frac{- a k J'_m(k'a) a J'_m(ka)}{-2k'} \\
 &= \frac{a^2 (J'_m(ka))^2}{2} = \frac{a^2}{2} (J'_m(ka))^2 \addtocounter{equation}{1} \tag{\theequation} \label{eq:wave_bessel_orthogonal_norm_1}
 \end{align*}
-ce que l'on peut encore simplifier en utilisant l'équation~\ref{eq:wave_bessel_recursive_derivative} :
+ce que l'on peut encore simplifier en utilisant l'équation~\eqref{eq:wave_bessel_recursive_derivative} :
 \begin{align}
 \int_{0}^{a} J_m(kr)^2 r \dif{r} &= \frac{a^2}{2} (J'_m(ka))^2 \nonumber \\
 &= \frac{a^2}{2} \left( \frac{m}{z}J_m(ka) - J_{m+1} (ka) \right) \nonumber \\
