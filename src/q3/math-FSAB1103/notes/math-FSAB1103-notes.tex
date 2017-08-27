@@ -17,6 +17,14 @@
 
 \pgfplotsset{compat=1.15}
 
+\setcounter{secnumdepth}{3}
+% 0 : uniquement part et chapter
+% 1 : uniquement section
+% 2 : section et subsection
+% 3 : section, subsection, subsubsection ; défaut
+% 4 : {sub}section, paragraph
+% 5 : {sub}section, paragraph, subparagraph
+
 \makeatletter % from http://tex.stackexchange.com/questions/75831/how-do-i-show-the-equation-formula-again-instead-of-its-number-of-ref
 % alternative : http://latex-community.org/forum/viewtopic.php?f=46&t=8275
 \newcommand{\repeatable}[2]{
@@ -967,7 +975,418 @@ en plusieurs dimensions. Le coefficient $\alpha$, dépendant éventuellement de 
 
 \chapter{Méthode de séparation des variables}
 
-Maintenant que \cite{haberman}, \cite{dawkinsnotes}.
+Maintenant que l'on connait un peu mieux les différentes familles d'équations du second ordre, il serait temps de trouver un moyen de les résoudre. En effet, nous avons vu que la méthode des caractéristiques n'est applicable qu'à l'équation d'onde ; les équations de diffusion, de Laplace et de Poisson résistent à ses assauts. De même, la méthode des caractéristiques est très lourde, et elle n'est utilisable en pratique que sur les équations d'ordre 1. Il faut donc trouver une autre approche.
+
+Cette approche viendra d'une astuce de résolution et d'un pari : parvenir à trouver une solution un peu particulière d'une équation, qui a \textit{a priori} peu de chance de fonctionner, mais qui aboutit quand même à une solution dans des cas simples. Cette méthode, c'est la méthode de séparation des variables.
+
+Même si elle échoue lorsque le domaine étudié est différent d'un rectangle ou de certains cercles, la méthode de séparation des variables va quand même nous permettre de découvrir un grand nombre de nouvelles propriétés concernant les EDP du second ordre. %FIXME rendre ça plus attrayant
+Avant de présenter et d'illustrer cette méthode sur l'équation de Laplace, la plus simple, il va néanmoins falloir définir ou rappeler un certain nombre de notions.
+
+\section{Avant de commencer, quelques notions}
+
+\subsection{Linéarité, homogénéité, principe de superposition}
+
+Toutes les EDP que nous avons vu jusqu'à présent peuvent être écrites sous une forme spéciale, comme étant l'application d'un \emph{opérateur différentiel} à notre fonction $u$ ou $\phi$. Par exemple, l'équation d'onde
+\[ c^2 \ffpart{\phi}{x} = \ffpart{\phi}{t} \]
+avait pu être réécrit sous la forme
+\[ \left( c^2 \ffpart{}{x} - \ffpart{}{t} \right) (\phi) = 0 \]
+où le terme entre parenthèses est un opérateur différentiel : c'est une sorte de fonction\footnote{Pour rappel, un opérateur est simplement une application d'un espace $V$ sur lui-même, $V$ pouvant être à peu près n'importe quoi : espace vectoriel, espace des fonctions, espace de vecteurs, espace des matrices\dots}
+qui prend une fonction $\phi$ en argument et qui retourne une autre fonction $\varphi$, qui aura subi les dérivations partielles ainsi que le facteur $c^2$. De même, l'équation de diffusion
+\[ \alpha(x, t) \ffpart{\phi}{x} = \fpart{\phi}{t} \]
+peut être réécrit sous la forme
+\[ \left( \alpha(x, t) \ffpart{}{x} - \fpart{}{t} \right) (\phi) = 0 \]
+
+Les opérateurs différentiels étudiés dans ce cours ont la propriété d'être des opérateurs \emph{linéaires} : un opérateur $L$ est linéaire si, $u$ et $v$ étant deux fonctions différentiables quelconques et $a$ et $b$ des réels (voire même des complexes) quelconques, on a
+\[ L(a u + b v) = a L(u) + b L(v) \]
+On peut vérifier que les deux opérateurs différentiels ci-dessus sont linéaires. Un exemple d'opérateur différentiel non linéaire est, par exemple,
+\[ c^2 \ffpart{}{x} - (\fpart{}{t})^2 \]
+à cause du carré de $\fpart{}{t}$.
+
+Ensuite, une EDP $L(\phi) = f$ est linéaire si $L$ est un opérateur différentiel linéaire et $f$ est une fonction connue, ne dépendant pas de $\phi$ ou de ses dérivées.
+
+Si $f = 0$, l'EDP est alors non seulement linéaire mais aussi \emph{homogène}. On a alors
+\[ L(\phi) = 0 \]
+Comme $L$ est un opérateur linéaire, zéro, ou dans ce cas, la fonction nulle $\phi=0$, est solution des EDP linéaires et homogènes.
+De même, comme $L$ est un opérateur linéaire, si $u$ et $v$ sont deux solutions de l'EDP homogène, on a
+\[ L(a u + b v) = a L(u) + b L(v) = a \cdot 0 + b \cdot 0 = 0 \]
+et donc, toute combinaison linéaire $a u + b v$ des deux solutions est \emph{également} une solution de l'EDP linéaire et homogène, résultat connu sous le nom de \emph{principe de superposition}\footnote{Encore lui. Il vous pourchassera toujours.}.
+C'est un principe extrêmement important, car il est à la base de la méthode de séparation des variables.
+
+Une EDP ne serait rien sans ses conditions limites et conditions initiales. Celles-ci peuvent généralement être écrites sous la forme d'un opérateur différentiel simple, et on peut donc aussi leur appliquer les définitions de linéarité et d'homogénéité. Par exemple, la condition limite de Dirichlet
+\[ u(x, 0) = 0 \]
+est linéaire et homogène ; la condition limite de Neumann
+\[ \fpart{\phi}{\theta}(r, \theta_0) = g(r) \neq 0 \]
+est linéaire mais pas homogène ; la condition de Robin
+\[ c \fpart{\phi}{y}(x, H) + \phi(x, H) = \phi_\infty \]
+est linéaire et homogène, quand on l'écrit sous la forme
+\[ c \fpart{\phi - \phi_\infty}{y}(x, H) + (\phi(x, H) - \phi_\infty) = 0 \]
+et que l'on considère le changement de variable $\phi'=\phi-\phi_\infty$ ;la condition limite de Dirichlet
+\[ u(y, 0) = y^2 \]
+est linéaire mais pas homogène ; la condition limite de Neumann (sur le bord d'un cercle)
+\[ \nabla\phi \cdot \vec{n} = \fpart{\phi}{x} \cdot \frac{x}{\sqrt{x^2+y^2}} + \fpart{\phi}{y} \cdot \frac{y}{\sqrt{x^2+y^2}} = \fpart{\phi}{r} = \frac{\phi_0}{r_0} \]
+est linéaire mais pas homogène ; et la condition limite de Robin
+\[ \fpart{\phi}{x}(y, 0) + (\phi(y, 0))^2 = 0 \]
+est homogène mais pas linéaire. % FIXME not sure
+% En fait, les EDP homogènes ont un opérateur qui est une fonction homogène, et une fonction homogène est telle que f(a*x) = a^k * f(x), avec k une constante indépendante de x.
+
+\section{Méthode de séparation des variables : équation de Laplace}
+
+Armés de cette théorie, nous pouvons enfin passer à la résolution d'une EDP par la séparation des variables. L'exemple utilisé sera une EDP de Laplace, qui survient dans les situations d'équilibre thermiques quand aucune source n'est présente dans le domaine.
+
+\subsection{Présentation du problème}
+
+Voici notre problème :
+
+\begin{quotation}
+	On cherche toutes les fonctions $u(x, y)$ solutions de l'équation de Laplace
+	\[ \ffpart{u}{x} + \ffpart{u}{y} = 0 \]
+	sur le domaine $\Omega = \{ x, y \suchthat 0 < x < L, 0 < y < H \}$, c'est-à-dire un rectangle compris entre les droites $x=0$, $x=L$, $y=0$ et $y=H$.
+
+	On impose des conditions limites linéaires et homogènes en $x=0$ et $x=L$, ainsi qu'en $y=0$. On impose des conditions limites linéaires et non homogènes en $y=H$.
+\end{quotation}
+
+C'est à peu près le problème le plus général que l'on puisse avoir à résoudre, au point que les conditions limites ne sont pas complètes (Dirichlet, Neumann, fonction de la condition non homogène ?).
+
+Pour avoir un premier exemple concret, on va dire que toutes les conditions sont de Dirichlet, et que la condition non homogène est $u(x, H) = f(x)$, avec $f(x)$ une fonction donnée. Nos conditions sont donc (figure~\ref{fig:separ_laplace_bvp1_pb})
+\begin{align*}
+u(0, y) &= 0 \quad \text{sur le bord $x=0$} \\
+u(L, y) &= 0 \quad \text{sur le bord $x=L$} \\
+u(x, 0) &= 0 \quad \text{sur le bord $y=0$} \\
+u(x, H) &= f(x) \quad \text{sur le bord $y=H$}
+\end{align*}
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+	\draw[thin, -latex] (0, 0) -- (5, 0);
+	\draw[thin, -latex] (0, 0) -- (0, 4);
+	\draw[thick, Green] (0, 0) rectangle (4, 3);
+	\draw (0, 0) node[below left] {$(0, 0)$}
+	      (4, 0) node[below] {$L$}
+	      (0, 3) node[left] {$H$};
+	\draw (4, 0) -- (4, -0.1) (0, 3) -- (-0.1, 3);
+	\draw[->] (2, 0) to[bend right] ++(1, -1) node[right] {$u=0$};
+	\draw[->] (0, 2) to[bend right] ++(-1, -1) node[below left] {$u=0$};
+	\draw[->] (4, 1) to[bend right] ++(1, 1) node[above right] {$u=0$};
+	\draw [->](2, 3) to[bend left] ++(1, 1) node[right] {$u(x, H)=f(x)$};
+	\end{tikzpicture}
+	\caption{Domaine et conditions limites du premier problème}
+	\label{fig:separ_laplace_bvp1_pb}
+\end{figure}
+
+\subsection{Résolution du problème}
+
+Maintenant que le problème est posé, nous pouvons passer aux choses sérieuses. Comment commencer ? Quelle astuce utiliser pour parvenir à résoudre cette équation ?
+
+L'idée de la méthode de séparation des variables va être de rechercher des solutions particulières, sous la forme d'un produit, par exemple
+\[ u(x, y) = X(x)\cdot Y(y) \]
+et de voir à quelles conditions sur $X$ et $Y$ ces fonctions sont solutions de l'équation. En apparence, cette idée est débile : il n'y a aucune raison que la solution d'une équation ressemble à ça. Néanmoins, deux propriétés que l'on va mettre en évidence le long de cette démonstration vont confirmer que ce n'est pas une idée aussi débile :
+\begin{itemize}
+	\item Nous allons non pas trouver une seule solution à cette équation, mais une famille de solutions $u_n(x, y) = X_n(x) \cdot Y_n(y)$, et nous allons utiliser le principe de superposition ainsi que la décomposition des fonctions périodiques en \emph{séries de Fourier} pour montrer qu'une somme correctement pondérée de ces solutions satisfait l'équation ainsi que les conditions limites.
+	\item Nous allons démontrer que, pour certaines équations et pour certains problèmes sur un domaine borné, la solution au problème est unique. Ainsi, si la solution \og somme pondérée de solutions produits $u_n(x, y) = X_n(x) \cdot Y_n(y)$ \fg{} respecte l'équation et les conditions limites, alors il s'agit de l'unique solution à notre problème. Il peut exister d'autres manières d'écrire la solution, qui sont en apparence d'autres solutions, mais toutes ces solutions seront égales.
+\end{itemize}
+En résumé, si notre méthode de résolution marche, c'est-à-dire qu'on aboutit à une solution, alors c'est bon, on a trouvé la solution du problème et donc, notre méthode de résolution marche. Ca peut sembler être une profession de foi, mais comme nous allons pouvoir démontrer que la solution est unique, une méthode qui aboutit à une solution aura trouvé \strong{la} solution. Malheureusement, les solutions trouvées par la méthode de séparation des variables sont moches et peu pratiques, mais au moins ce sont des solutions.
+
+\subsubsection{La séparation des variables}
+
+Cherchons donc les solutions de la forme $u(x, y) = X(x) Y(y)$ qui satisfont l'équation. On injecte notre solution candidate dans l'équation, et on regarde ce qu'il en sort.
+\begin{align*}
+\ffpart{u(x, y)}{x} + \ffpart{u(x, y)}{y} &= 0 \\
+\ffpart{(X(x)Y(y))}{x} + \ffpart{(X(x)Y(y))}{y} &= 0 \\
+Y(y) \ffpart{X(x)}{x} + X(x) \ffpart{Y(y)}{y} &= 0 \\
+\shortintertext{Comme $X(x)$ ne dépend que de $x$, la dérivée seconde partielle selon $x$ est exactement sa dérivée seconde, et similairement pour $Y(y)$}
+X''(x) Y(y) + X(x) Y''(y) &= 0
+\end{align*}
+Enfin, nous divisons par $X(x)Y(y)=u(x, y)$, notre solution. En effet, nous cherchons les solutions non triviales, qui apporteront de l'information et qui pourront notamment nous aider à satisfaire les conditions limites. Les solutions que l'on cherche sont donc non nulles. On obtient ainsi
+\[ \frac{X''(x)}{X(x)} + \frac{Y''(y)}{Y(y)} = 0 \]
+ou encore
+\begin{equation}
+\frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)}
+\label{eq:separ_laplace_separated_one}
+\end{equation}
+
+Observons un peu ce qu'on a obtenu. Le membre de gauche ne dépend que de $x$, tandis que le membre de droite ne dépend que de $y$. Les variables ont été \emph{séparées} : elles sont chacune situées d'un côté du signe égal, et comme elles sont indépendantes l'une de l'autre, chaque membre de l'équation est indépendant de l'autre. Mais elles sont égales ! Comment deux fonctions, dépendant de variables différentes, peuvent être égales ? La seule possibilité est qu'elles soient constantes. En effet, si on a deux fonctions, $f(x)$ et $g(y)$, qui sont telles que $f(x)=f(y)$ $\forall x, y$, alors
+\begin{align*}
+\fpart{}{x} \left( f(x) \right) &= \fpart{}{x} \left( g(y) \right) \\
+f'(x) &= 0 \\
+\Rightarrow f(x) &= k
+\end{align*}
+et
+\begin{align*}
+\fpart{}{y} \left( f(x) \right) &= \fpart{}{y} \left( g(y) \right) \\
+0 &= g'(y) \\
+\Rightarrow g(y) &= l = k
+\end{align*}
+et donc, $f(x) = g(y) = k$. Par conséquent,  notre équation \ref{eq:separ_laplace_separated_one} se réécrit
+\[\frac{X''(x)}{X(x)} = -\frac{Y''(y)}{Y(y)} = \lambda \]
+\begin{equation}
+\frac{X''(x)}{X(x)} = \lambda \quad \text{ et } \quad \frac{Y''(y)}{Y'(y)} = -\lambda
+\label{eq:separ_laplace_separated_lambda}
+\end{equation}
+
+Nous avons donc deux EDO du second ordre à résoudre, avec des conditions limites homogènes utiles. Ca doit être faisable. Néanmoins, une inconnue reste au tableau : la (ou les ?) valeur(s) de la constante $\lambda$. Pour cela, il va falloir résoudre l'une des deux équations. Par laquelle commencer ? Pour cela, il va falloir rappeler nos conditions limites
+\begin{align*}
+\frac{X''(x)}{X(x)} &= \lambda & \frac{Y''(y)}{Y(y)} &= -\lambda \\
+u(0, y) &= 0 & u(x, 0) &= 0 \\
+u(L, y) &= 0 & u(x, H) &= f(x)
+\end{align*}
+Nos conditions limites sont encore écrites en terme de $u$, et pas en terme de $X(x)$ et $Y(y)$. Injectons :
+\begin{align*}
+u(0, y) &= 0 \\
+X(0) Y(y) &= 0 \quad \forall y \\
+\Rightarrow X(0) = 0 &\vee Y(y) = 0 \forall y
+\end{align*}
+Or, nous souhaitons des solution non nulles, et donc nous devons rejeter $Y(y)=0$. Par conséquent, nous avons
+\[ X(0) = 0 \]
+et de manière similaire pour les deux autres conditions homogènes. On a donc
+\begin{align*}
+\frac{X''(x)}{X(x)} &= \lambda & \frac{Y''(y)}{Y(y)} &= -\lambda \\
+X(0) &= 0 & Y(0) &= 0 \\
+X(L) &= 0 & X(x) Y(H) &= f(x)
+\end{align*}
+On remarque alors que l'équation pour $X$ a deux conditions homogènes, alors que l'équation pour $Y$ n'a qu'une condition homogène et une condition non-homogène potentiellement compliquée. Nous allons donc commencer par résoudre l'équation pour $X$, qui est plus simple et qui nous donnera sans doute une valeur de $\lambda$.
+
+Résolvons donc l'équation
+\[ \frac{X''(x)}{X(x)} = \lambda \Longleftrightarrow X''(x) - \lambda X(x) = 0 \]
+Cette équation a une solution connue, à base d'exponentielles. Néanmoins, sa résolution dépend du signe de $\lambda$, qui donnera des exponentielles normales, des exponentielles complexes, ou même aucune exponentielle. Séparons donc la résolution en 3 cas.
+
+\paragraph{$\lambda = +k^2 > 0$ positif} \label{sec:separ_laplace_rectangle_solving_positivelambda}
+Dans ce cas, l'équation se réécrit
+\begin{equation}
+X''(x) - k^2 X(x) = 0
+\label{eq:separ_laplace_Xcases_pkk}
+\end{equation}
+qui a pour solution
+\[ X(x) = \alpha e^{kx} + \beta e^{-kx} \]
+pour des constantes $\alpha$ et $\beta$ à déterminer. Cette équation est néanmoins peu pratique à utiliser du point de vue des conditions aux limites que l'on rencontre (une en $0$ et une $\neq 0$), et donc on réécrit en utilisant les relations
+\[ \sinh(t) = \frac{e^{t} - e^{-t}}{2} \quad \text{et} \quad \cosh(t) = \frac{e^{t} + e^{-t}}{2} \]
+ce qui donne
+\begin{align*}
+X(x) &= (\alpha - \beta) \frac{e^{kx} - e^{-kx}}{2} + (\alpha + \beta) \frac{e^{kx} + e^{-kx}}{2} \\
+&= (\alpha - \beta) \sinh(kx) + (\alpha + \beta) \cosh(kx) \\
+&= A \sinh(kx) + B \cosh(kx)
+\end{align*}
+avec de nouvelles constantes. En pratique, on réécrira souvent la solution à l'équation \ref{eq:separ_laplace_Xcases_pkk} sous cette forme.
+Appliquons maintenant les conditions limites :
+\begin{align*}
+X(0) &= A \sinh(0) + B \cosh(0) = B = 0
+\end{align*}
+et
+\begin{align*}
+X(L) &= A \sinh(L) = 0
+\end{align*}
+or, comme la fonction $\sinh$ est croissante, on a nécessairement $A = 0$. Par conséquent, on obtient la solution nulle
+\[ X(x) = 0 \]
+qui ne nous intéresse pas. Considérer que $\lambda > 0$ ne nous amène, ici, à aucune solution intéressante.
+
+\paragraph{$\lambda = 0$ ; valeur propre nulle}
+Dans ce cas, l'équation se simplifie en
+\[ X''(x) = 0 \]
+qui a comme solution
+\[ X(x) = Ax + B \]
+En appliquant les conditions limites,
+\begin{align*}
+X(0) &= A\cdot + B = B = 0
+\end{align*}
+et
+\begin{align*}
+X(L) &= A\cdot L = 0 \Longrightarrow A = 0
+\end{align*}
+et on obtient de nouveau la solution nulle.
+
+\paragraph{$\lambda = -k^2 < 0$ négatif}
+Un $\lambda$ négatif est donc notre dernier espoir de résoudre l'équation de Laplace\footnote{Le lecteur attentif se demande peut-être si un $\lambda$ complexe ne pourrait pas convenir. Deux arguments montrent que c'est impossible :
+\begin{itemize}
+	\item Les solutions que l'on recherche sont réelles, car notre problème est défini sur un domaine réel, avec des conditions limites et initiales réelles, et qu'il représente un domaine réel.
+	\item Nous allons démontrer, dans une prochaine section,% FIXME indiquer le numéro de la section
+	que les problèmes qui nous intéressent font partie d'une classe de problèmes dits de Sturm-Liouville, qui ont la propriété sympathique de n'avoir que des valeurs propres réelles positives (quand on les exprime sous une certaine forme).
+\end{itemize}}.
+Notre équation devient
+\begin{equation}
+X''(x) + k^2 X(x) = 0
+\label{eq:separ_laplace_Xcases_mkk}
+\end{equation}
+qui a comme solution générale
+\[ X(x) = \alpha e^{i k x} + \beta e^{-i k x} \]
+ou, en utilisant les formules d'Euler,
+\begin{align*}
+X(x) &= \alpha (\cos(kx) + i \sin(kx)) + \beta (\cos(kx) - i \sin(kx)) \\
+&= (\alpha + \beta) \cos(kx) + (\alpha - \beta) i \sin(kx) \\
+&= A \cos(kx) + B \sin(kx)
+\end{align*}
+avec de nouveaux noms de constantes. On écrira généralement la solution à l'équation \ref{eq:separ_laplace_Xcases_mkk} sous cette forme.
+
+Cette solution, nous allons la rencontrer très souvent dans les résolutions avec la méthode des caractéristiques. À vrai dire, le signe et la valeur de $\lambda$ pourra souvent être déterminée à partir de \eqref{eq:separ_laplace_separated_lambda} en déterminant quel signe de $\lambda$ aboutit à l'équation \eqref{eq:separ_laplace_Xcases_mkk}, lorsque la variable pour laquelle nous disposons de deux conditions homogènes est la variable indépendante de cette équation (ici, $x$). Ce sera plus clair après un deuxième exemple.
+
+Utilisons à nouveau nos conditions limites :
+\[ X(0) = A \cos(0) + B \sin(0) = A = 0 \]
+ce qui donne $X(x) = B \sin(kx)$, et
+\[ X(L) = B \sin (kL) = 0 \]
+Là, nous sommes embêtés. Nous voulons que $B\neq 0$ pour éviter de retomber sur la solution triviale, donc nous devons avoir
+\begin{equation}
+\sin(kL) = 0
+\label{eq:separ_laplace_ex1_nulsin}
+\end{equation}
+Le sinus s'annulant lorsque son argument est un multiple de $\pi$, on a
+\[ k L = n \pi \] % FIXME lespacement entre les équations est très (trop) bizarre.
+soit
+\begin{equation}
+k = k_n = \frac{n\pi}{L} \quad n \in \mathbb{N}
+\label{eq:separ_laplace_ex1_eigenvalue}
+\end{equation}
+
+Pour avoir une solution non triviale, la constante $k$ ne peut pas prendre n'importe quelle valeur, uniquement celles de~\eqref{eq:separ_laplace_ex1_eigenvalue}\footnote{Comme nous avons vu que $k=0$ donnait une solution nulle, on impose $n>0$.};
+ces valeurs sont les \emph{valeurs propres} du problème, pour une raison qui sera expliquée plus loin\footnote{Plus exactement, les $k^2$ sont les valeurs propres du problème, comme on verra plus loin.}.% FIXME indiquer l'identifiant de ce plus loin
+Et elles ne sont pas uniques : il y en a une infinité, qui sont quantifiées\footnote{Coucou la mécanique quantique !}.
+
+Nous avons donc, pour chaque $n$ et chaque $k_n$, une solution $X_n(x)$ à \ref{eq:separ_laplace_Xcases_mkk} qui vaut
+\begin{equation}
+X_n(x) = B_n \sin\left(\frac{n \pi x}{L}\right) = B_n \sin(k_n x) \quad \text{ avec } k_n = \frac{n \pi}{L} \text{ , } n\in\mathbb{N}
+\label{eq:separ_laplace_ex1_xn}
+\end{equation}
+et qui s'avère être une \emph{fonction propre} associée à la valeur propre $k_n$.
+
+Revenons à~\ref{eq:separ_laplace_separated_lambda}, et passons à la résolution de l'équation en $Y$. Nous savons donc que
+\[ \frac{Y''(y)}{Y(y)} = -\lambda = -(-k_n^2) = k_n^2 \]
+et donc, la solution de cette équation sera exactement celle de la section~\ref{sec:separ_laplace_rectangle_solving_positivelambda} :
+\begin{equation}
+Y_n(y) = C_n \sinh(k_n y) + D_n \cosh(k_n y)
+\label{eq:separ_laplace_ex1_yn_pre}
+\end{equation}
+
+Pourquoi note-t-on $Y_n(y)$ ? Lors de notre résolution de $X(x)$, nous avons trouvé que la constante $\lambda$ ne pouvait pas prendre n'importe quelle valeur, mais uniquement celles définies par~\eqref{eq:separ_laplace_ex1_eigenvalue}. Dès lors, pour un $n$ donné, nous avons une constante $k_n$ donnée, à laquelle correspond une solution $X_n(x)$ donnée par~\eqref{eq:separ_laplace_ex1_xn}, et une solution $Y(y)$ qui doit dès lors dépendre de la constante $k_n$, donc une solution $Y_n(y)$. Et c'est réciproque : le quadruplet $(n, k_n, X_n(x), Y_n(y))$ est indissociable. Une fonction $Y_m(y)$ multipliée par une solution $X_n(x)$ ne sera pas solution de notre équation de Laplace homogène si $n\neq m$. Il y a une et une seule fonction $Y_n(y)$ pour chaque $k_n$.
+
+Ceci clarifié, il reste à appliquer notre seule condition homogène pour $Y_n(y)$, à savoir $Y_n(0)=0$. En remplaçant dans~\eqref{eq:separ_laplace_ex1_yn_pre}, on obtient
+\[ Y_n(0) = C_n\sinh(0) + D_n\cosh(0) = D_n = 0 \Longrightarrow D_n=0 \]
+et donc, notre solution se simplifie pour ce problème en
+\begin{equation}
+Y_n(y) = C_n \sinh(k_n y)
+\label{eq:separ_laplace_ex1_yn}
+\end{equation}
+
+Nous avons dès lors, pour chaque $n$, une solution $u_n(x, y)$ qui respecte l'équation de Laplace ainsi que les 3 conditions homogènes :
+\begin{equation}
+u_n(x, y) = X_n(x)Y_n(y)=B_n \sin\left(k_n x\right) C_n \sinh(k_n y) = D_n^* \sin(k_n x) \sinh(k_n y)
+\label{eq:separ_laplace_ex1_un}
+\end{equation}
+avec $D_n^*=B_nC_n$ une constante quelconque. Par le principe de superposition, nous pouvons additionner toutes nos solutions en $n$ pour finalement obtenir
+\begin{equation}
+u(x, y) = \sum_{n=1}^{\infty} D_n^* \sin(k_n x) \sinh(k_n y)
+\label{eq:separ_laplace_ex1_u_gen}
+\end{equation}
+Quel intérêt d'additionner une infinité de solutions ? Très simple : il nous reste à satisfaire notre condition non homogène, $u(x, H) = f(x)$.
+
+Cette condition n'est pas triviale à satisfaire, et clairement une seule des solutions $u_n(x, y)$ ne pourra pas permettre de résoudre cette condition : en effet, elle vaut
+\[ u_n(x, H) = \underbrace{D_n^* \sinh(k_n H)}_{=\text{constante}} \sin(k_n x) \]
+et donc, à moins que $f(x)$ soit une sinusoïdale, il est peu probable que $u_n(x, y)$ réussisse à satisfaire la condition toute seule. Par contre, il est possible qu'en utilisant une infinité de $u_n(x, y)$, on parvienne à satisfaire la condition. Cette intuition d'une \emph{décomposition en sinus} sera démontrée et précisée dans la section TODO.% FIXME lien de la section sur les séries de Fourier
+
+\subsubsection{Calcul des coefficients : orthogonalité des fonctions propres}
+
+Il reste à présent à déterminer les constantes $D_n^*$ qui apparaissent dans~\eqref{eq:separ_laplace_ex1_u_gen} en utilisant la condition non homogène. Pour cela, on écrit
+\begin{align}
+u(x, H) &= \sum_{n=1}^{\infty} \underbrace{D_n^* \sinh(k_n H)}_{E_n} \sin(k_n x) \\
+f(x) &= \sum_{n=1}^{\infty} E_n \sin(k_n x) \label{eq:separ_laplace_ex1_uxh_en}
+\end{align}
+
+Que peut-on faire à présent pour calculer $E_n$ ? Nous souhaiterions faire en sorte que, lors du calcul d'un certain $E_m$, tous les autres termes, pour $n\neq m$, s'annulent, afin que l'on ait uniquement le terme en $E_m$. Pour cela, il faudrait parvenir à annuler la partie en $\sin(k_n x)$.
+
+Pour une raison qui deviendra plus claire plus loin, nous allons multiplier les deux membres de~\eqref{eq:separ_laplace_ex1_uxh_en} par $\sin(k_m x)$, et nous allons intégrer les deux membres sur l'ensemble du bord supérieur, de $0$ à $L$, afin d'obtenir $E_m$. Cela donne
+\begin{align*}
+f(x) \sin(k_m x) &= \sum_{n=1}^{\infty} E_n \sin(k_n x) \sin(k_m x) \\
+\int_{0}^{L} f(x) \sin(k_m x) \dif{x} &= \int_{0}^{L} \sum_{n=1}^{\infty} E_n \sin(k_n x) \sin(k_m x) \dif{x} \\
+&= \sum_{n=1}^{\infty} E_n \int_{0}^{L} \sin(k_n x) \sin(k_m x) \dif{x}
+\end{align*}
+Calculons un peu cette dernière intégrale. Supposons pour commencer que $k_n\neq k_m$, ce qui est équivalent à dire que $n\neq m$ :
+\begin{align*}
+\int_{0}^{L} \sin(k_n x) \sin(k_m x) \dif{x} &= \int_{0}^{L} \frac{\cos(k_n x - k_m x) - \cos(k_n x + k_m x)}{2} \dif{x} \\
+&= \int_{0}^{L} \frac{\cos(k_n x - k_m x) - \cos(k_n x + k_m x)}{2} \dif{x} \\
+&= \frac{1}{2} \left[ \frac{\sin((k_n-k_m)x)}{k_n-k_m} - \frac{\sin((k_n+k_m)x)}{k_n+k_m} \right]_0^L \\
+&= \frac{1}{2} \left[ \frac{\sin\left((n-m)\pi \frac{x}{L}\right)}{(n-m)\frac{\pi}{L}} - \frac{\sin\left((n+k)\pi \frac{x}{L}\right)}{(n+m)\frac{\pi}{L}} \right]_0^L \\
+\shortintertext{où l'on voit pourquoi il faut que $n\neq \pm m$.}
+&= \frac{L}{2\pi} \Bigg( \underbrace{\frac{\sin((n-m)\pi)}{n-m}}_{=0} - \underbrace{\frac{\sin((n+m)\pi)}{n+m}}_{=0} - \frac{\sin((n-m) \cdot 0)}{n-m} + \frac{\sin((n+m) \cdot 0)}{n+m} \Bigg) \\
+&= \frac{L}{2\pi} \left( 0 - 0 - 0 + 0 \right) = 0
+\end{align*}
+et donc, ces intégrales disparaissent quand $n\neq m$. Comme on va le voir, cette propriété est l'\emph{orthogonalité des fonctions propres}, qui est une propriété très importante des problèmes que l'on va étudier : l'intégrale peut être assimilée à un produit scalaire, qui est nul si les fonctions sont orthogonales. En attendant, cette annulation d'intégrale signifie que
+\begin{align*}
+\int_{0}^{L} f(x) \sin(k_m x) \dif{x} &= \sum_{n=1}^{\infty} E_n \int_{0}^{L} \sin(k_n x) \sin(k_m x) \dif{x} \\
+&= E_m \int_{0}^{L} \sin(k_m x) \sin(k_m x) \dif{x} + \sum_{n=1, n\neq m}^{\infty} E_n \underbrace{\int_{0}^{L} \sin(k_n x) \sin(k_m x) \dif{x}}_{=0 \text{ car } n \neq m} \\
+&= E_m \int_{0}^{L} \sin(k_m x)^2 \dif{x} \\
+&= E_m \int_{0}^{L} \frac{1+\cos(2 k_m x)}{2} \dif{x} \\
+&= E_m \left[ \frac{x}{2} + \frac{\sin(2 k_m x)}{2\cdot 2 k_m}  \right]_0^L \\
+\int_{0}^{L} f(x) \sin(k_m x) \dif{x} &= E_m \left( \frac{L}{2} + 0-0 \right) = E_m \frac{L}{2}
+\end{align*}
+et donc,
+\begin{gather}
+E_m = \frac{2}{L} \int_{0}^{L} f(x) \sin(k_m x) \dif{x} \label{eq:separ_laplace_ex1_em} \\
+D_n^* = E_n \frac{1}{\sinh(k_n H)} \label{eq:separ_laplace_ex1_dn}
+\end{gather}
+et en réinjectant dans notre solution générale~\eqref{eq:separ_laplace_ex1_u_gen}, on obtient finalement
+\begin{equation}
+u(x, y) = \sum_{n=1}^{\infty} E_n \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} = \sum_{n=1}^{\infty} \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} \frac{2}{L} \int_{0}^{L} f(x) \sin(k_m x) \dif{x}
+\label{eq:separ_laplace_ex1_u_solved}
+\end{equation}
+qui est notre solution tant attendue à l'équation de Laplace.
+
+Je sens de la déception dans votre regard : vous auriez préféré une solution plus jolie, plus concise, plus \og mathématique\fg{}, qui ne s'embarrasse pas d'un calcul d'intégral dans sa formule et qui ne comporte pas une somme infinie de termes pas spécialement très simples. Malheureusement, il va falloir faire avec : d'une part, la méthode de séparation des variables nous fournira toujours une solution avec une somme infinie de termes oscillants, de fréquence de plus en plus élevée, et d'autre part, la majorité des problèmes n'auront pas d'autre écriture de solution que celle-là, étant trop complexes à résoudre analytiquement, et il faudra bien se satisfaire d'une solution avec une infinité de termes.
+
+\subsection{Quelques exemples de fonctions $f(x)$}
+
+Avant d'entamer une section bien complexe et bien théorique, mais bien intéressante, résolvons complètement un de ces problèmes de Laplace : en effet, nous n'avons toujours pas fixé $f(x)$, et nous avons toujours une intégrale à résoudre.
+
+Commençons par prendre $f(x) = u_0 \frac{x}{L} \left(1-\frac{x}{L}\right)$, une fonction du second ordre (une parabole quoi). En injectant dans~\eqref{eq:separ_laplace_ex1_em}, on obtient alors
+\begin{align*}
+E_n &= \frac{2}{L} \int_{0}^{L} u_0 \frac{x}{L} \left(1-\frac{x}{L}\right) \sin(k_n x) \dif{x} \\
+&= \frac{2u_0}{L^3} \int_{0}^{L} (Lx - x^2) \sin\left(k_n x\right) \dif{x} \\
+&= \frac{2u_0}{L^3} \left[ -\frac{L}{k_n} x\cos(k_n x) + \frac{L}{k_n^2} \sin(k_n x) + \frac{1}{k_n} x^2\cos(k_n x) - \frac{2}{k_n^2} x \sin(k_n x) - \frac{2}{k_n^3} \cos(k_n x) \right]_0^L \\
+&= \frac{2u_0}{n^3 \pi^3} \left[ -k_n^2 L x\cos(k_n x) + k_n L \sin(k_n x) + k_n^2 x^2\cos(k_n x) - 2k_n x \sin(k_n x) - 2 \cos(k_n x) \right]_0^L \\
+&= \frac{2u_0}{n^3 \pi^3} \Big(-k_n^2 L^2\cos(n\pi) + k_n L \sin(n\pi) + k_n^2 L^2\cos(n\pi) - 2k_n L \sin(n\pi) - 2 \cos(n\pi) \\
+&\qquad \qquad + k_n^2 L^2\cos(0) - k_n L \sin(0) - k_n^2 L^2\cos(0) + 2k_n \cdot 0 \cdot \sin(0) + 2 \cos(0) \Big) \\
+&= \frac{2u_0}{n^3 \pi^3} \left(-k_n^2 L^2 (-1)^n + k_n^2 L^2 (-1)^n - 2 \cdot (-1)^n + k_n^2 L^2 - k_n^2 L^2 + 2 \right) \\
+&= \frac{2u_0}{n^3 \pi^3} \left(2 - 2 \cdot (-1)^n \right) \\
+&= \frac{4u_0}{n^3 \pi^3} (1-(-1)^n)
+	= \begin{cases}
+		\frac{8u_0}{n^3\pi^3} & \text{si $n$ est impair} \\
+		0 & \text{si $n$ est pair} \\
+	\end{cases}
+\end{align*}
+où on a utilisé
+\[ \int x \sin(ax) \dif{x} = -x \frac{\cos(ax)}{a} + \int 1\cdot \frac{\cos(ax)}{a} \dif{x} = -\frac{x}{a}\cos(ax) + \frac{1}{a^2} \sin(ax)\]
+et
+\begin{align*}
+\int x^2 \sin(ax) \dif{x} &= -x^2 \frac{\cos(ax)}{a} + \frac{2}{a} \int x \cos(ax) \dif{x} \\
+&= -\frac{1}{a} x^2\cos(ax) + \frac{2}{a^2} x \sin(ax) - \frac{2}{a^2} \int \sin(ax) \dif{x} \\
+&= -\frac{1}{a} x^2\cos(ax) + \frac{2}{a^2} x \sin(ax) + \frac{2}{a^3} \cos(ax)
+\end{align*}
+On a donc, en injectant dans~\eqref{eq:separ_laplace_ex1_dn} et~\eqref{eq:separ_laplace_ex1_u_solved} :
+\begin{align*}
+u(x, y) &= \sum_{n=1}^{\infty} E_n \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} \\
+&= \frac{4u_0}{\pi^3} \sum_{n=1}^{\infty} \frac{1-(-1)^n}{n^3} \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} \\
+&= \frac{8u_0}{\pi^3} \sum_{n'=1}^{\infty} \frac{1}{(2n'-1)^3} \sin(k_{2n'-1} x) \frac{\sinh(k_{2n'-1} y)}{\sinh(k_{2n'-1} H)}
+\end{align*}
+La figure TODO montre cette fonction.
+
+Prenons un autre exemple, $f(x)=u_0$ ; une fonction constante. Ceci donne
+\begin{align*}
+E_n &= \frac{2}{L} \int_{0}^{L} u_0 \sin(k_n x) \dif{x} \\
+&= \frac{2u_0}{L} \left[ -\frac{\cos(k_n x)}{k_n} \right]_0^L \\
+&= \frac{2u_0}{Lk_n} \left( -\cos(\pi n) + \cos(0) \right) \\
+&= \frac{2u_0}{n\pi} (1-(-1)^n)
+\end{align*}
+ce qui donne finalement
+\begin{align*}
+u(x, y) &= \sum_{n=1}^{\infty} E_n \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} \\
+&= \frac{2u_0}{\pi} \sum_{n=1}^{\infty} \frac{1-(-1)^n}{n} \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)} \\
+&= \frac{4u_0}{\pi} \sum_{n=1, n \text{ impair}}^{\infty} \frac{1}{n} \sin(k_n x) \frac{\sinh(k_n y)}{\sinh(k_n H)}
+\end{align*}
+
+La figure TODO montre cette fonction, ainsi qu'une vue du bord $y=H$, en utilisant $10$ termes de cette solution. On constate tout de suite qu'un phénomène étrange se passe sur ce bord, avec des oscillations de la fonction lorsqu'on se rapproche des bords $x=0$ et $x=L$. Étrangement, notre fonction ne respecte pas la condition non homogène sur le bord $y=H$, vu qu'elle n'y est pas constante. L'origine de ces oscillations est pourtant simple à trouver : ce sont nos conditions limites qui provoquent ce phénomène. En effet, nous avons imposé les contraintes $u=0$ et $x=0$ et en $x=L$, et la contrainte $u=u_0$ en $y=H$, ce qui signifie que les coins $(0, H)$ et $(L, H)$ doivent respecter deux contraintes incompatibles, $u=0$ et $u=u_0$ : notre fonction doit passer de $0$ à $u_0$ instantanément quand on parcourt le bord supérieur. Or, notre solution est à base de sinus, et ne peut donc pas passer instantanément entre ces deux valeurs ; de manière similaire à un ressort, elle oscille.
+
+Ce phénomène est nommé \emph{phénomène de Gibbs} et survient lorsque l'on calcule la \emph{série de Fourier} (ici, la série de sinus) d'un signal présentant une discontinuité de saut (par exemple, le passage de $0$ à $u_0$). Chaque somme partielle de la série de sinus présente alors des oscillations quand on se rapproche de la discontinuité, et ces oscillations restent à peu près constantes\footnote{Pour notre fonction, aussi nommé \emph{signal carré}, ces oscillations dépassent d'environ 9\% de la hauteur de la fonction.}, peu importe le nombre de termes utilisés : seule l'étendue des oscillations diminue quand on rajoute des termes. Néanmoins, cela n'empêche pas la convergence de la fonction aux points \og éloignés\fg{} des discontinuité\footnote{En clair, pas aux discontinuités.} : la série converge bien vers la fonction quand on augmente le nombre de termes, avec des oscillations toujours plus confinées. La convergence est assurée pour chaque point $]0, 1[$, mais pas pour l'ensemble de la fonction en général, et la vitesse de convergence dépend du point.
+
+% TODO opérateurs auto-adjoint, conséquence sur l'orthogonalité, démonstration que notre problème a bien cette propriété, démonstration de l'orthogonalité, problème de Sturm-Liouville
+
+% Regarder Paul's online notes : Separation of variables, exemple 6, pour un cas avec terme source (simple)
+
+% The formulas for the V_n are a little messy this time in comparison to the other problems we’ve done but they aren’t really all that messy.
 
 \chapter{L'équation d'onde}
 
