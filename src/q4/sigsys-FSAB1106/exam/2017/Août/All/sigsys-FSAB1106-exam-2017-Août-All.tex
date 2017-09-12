@@ -1,0 +1,124 @@
+\documentclass[en]{../../../../../../eplexam}
+\usepackage{../../../../../../eplunits}
+
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{siunitx}
+
+\newcommand{\rang}{\mathrm{rang}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+\allowdisplaybreaks
+
+\usetikzlibrary{shapes,arrows,positioning,calc}
+\tikzset{
+	block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+	sum/.style = {draw, fill=white, circle, node distance=1cm},
+	input/.style = {coordinate},
+	output/.style = {coordinate},
+	pinstyle/.style = {pin edge={to-, thin, black}}
+}
+
+\hypertitle{sigsys-FSAB1106}{4}{FSAB}{1106}{2017}{Août}
+{Jean-Martin Vlaeminck}
+{Luc Vanderdorpe et Vincent Wertz}
+
+\section{LV1}
+Considérons le circuit électrique RLC suivant.
+% TODO
+On s'intéresse à la relation entre $x(t)$ et $y(t)$. L'équation différentielle qui les lie est
+\[ \ffdif{y}{t} + RC \fdif{y}{t} + LC y = \ffdif{x}{t} \]
+\begin{itemize}[label=(\alph*)]
+	\item Donner la fonction de transfert de ce système.
+	\item Donner la réponse impulsionnelle de ce système, pour $R=\SI{15}{\ohm}$, $L=\SI{0.5e-4}{\henry}$ et $C=\SI{1e-3}{\farad}$. % ou 1e-6 ?
+	\item Dessiner le diagramme de Bode de ce système pour ces mêmes paramètres.
+	\item Si l'on introduit dans le système un signal d'entrée donné par $x(t)=\cos(\omega_1 t + \phi_1) + 0.1 \sin(\omega_2 t + \phi_2)$, qu'obtient-on comme signal de sortie $y(t)$ ?
+\end{itemize}
+
+% Solution Grégory Creupelandt :
+% L (j\omega) / (R + L j\omega)
+% h(t) = delta(t) - 3000 e^{-3000t} u(t)
+% ???
+% Un graphe avec une droite à +20dB/dec (logiquement) qui passe par -60 en 1 et par 40 en 5, et qui devient alors une droite.
+% Le traditionnel ; remarquer la perversité du changement de fréquences, qui complexifie le tout.
+% Solution Nicolas Claux, Pauline de Crombrugghe et Basile Cassiers :
+% H(j\omega) = \frac{(j\omega)^2}{(j\omega)^2 + \frac{R}{L} j\omega + \frac{1}{LC}}
+% h(t) = delta(t) + 1000 (e^{-1000t} -4 e^{-2000t}) u(t)
+% Solution Basile Cassiers :
+% +40dB/dec jusque 1000 ; +20 jusque 2000 ; 0 après
+
+\section{LV2}
+Soient les signaux $x[n]$ et $y[n]$, l'entrée et la sortie d'un système LIT.
+\begin{center}
+	\begin{tikzpicture}
+	\draw[thin, -latex] (-1, 0) -- (4, 0);
+	\draw[thin, -latex] (0, -1) -- (0, 2);
+	\draw[thick, Green] (0, 0) -- (0, 1) node
+	\end{tikzpicture}
+\end{center}
+
+% Solution Grégory Creupelandt :
+% h[n] = \delta[n] + \delta[n+1]
+% H\left(e^{j\Omega}\right) = 1 + e^{-j \Omega}
+% y[n] = \cos[n\Omega_0] + \cos[(n-1)\Omega_0]
+
+\section{LV3}
+La figure suivante représente le spectre d'un signal échantillonné $x(t)$.
+% TODO
+% Figure constituée de triangles juxtaposés (façon figure illustrative du livre), avec des zéros aux multiples impairs de 1/T, des 1 aux multiples pairs de 1/T. Il est en fréquentiel habituelle (f)
+\begin{itemize}
+	\item Le signal de base est passe-bas. Comment peut-on le reconstituer ? Expliquer. Donner le signal reconstruit.
+	\item Le signal de base n'est pas passe-bas. Comment peut-on le reconstituer ? Expliquer. Donner le spectre de base sur un dessin, et donner l'expression du signal reconstruit.
+\end{itemize}
+
+% Solution Grégory Creupelandt :
+% Fuck it
+
+\section{VW1}
+Soit la fonction de transfert suivante
+\[ H(s) = \frac{s-1}{(s+1)(s-2)} \]
+\begin{itemize}[label=(\alph*)]
+	\item Quelles sont toutes les régions de convergence possibles pour cette fonction de transfert ?
+	\item Pour chacune de ces régions, donner la réponse impulsionnelle du système.
+	\item Pour chacune de ces régions, indiquer si elle est stable EBSB et si elle est causale.
+\end{itemize}
+
+% Solution Grégory Creupelandt :
+% Fonction de transfert (s-1)/((s+1)(s-2))
+% Si ROC = s<-1 : h(t) = -2/3 e^{-t} u(-t) - 1/3 e^{2t} u(-t)
+%          s> 2 : h(t) = 2/3 e^{-t} u(t) + 1/3 e^{2t} u(t)
+%        -1<s<2 : h(t) = 2/3 e^{-t} u(t) - 1/3 e^{2t} u(-t)
+% Seul le 3e est BIBO-stable, le 1er et le 3 sont non causaux, le 2 est causal
+
+\section{VW2}
+Voir APE stabilité, question avec $H_3 = -H_1/H_2$.
+
+\section{VW3}
+
+Soit le schéma bloc suivant.
+%\begin{center}
+%	\begin{tikzpicture}[auto, node distance=2cm, >=latex]
+%	\node [input, name=input] {$x$};
+%	\node [sum, right of=input] (){};
+%	\end{tikzpicture}
+%\end{center}
+% x -----------> + -> y
+%    |
+%   -1
+%    |
+%
+
+\begin{itemize}[label=(\alph*)]
+	\item Donner une représentation d'état du système.
+	\item Étudier la stabilité interne et la stabilité BIBO de ce système discret. Expliquer les différences et critères.
+	\item Le système est-il complètement commandable ?
+	\item Le système est-il complètement observable ?
+\end{itemize}
+
+% Solution Grégory Creupelandt
+% (Q_1'; Q_2') = (3/2, -1/2 ; 1, 0) (Q_1 ; Q_2) + (1 ; 0) x
+% y = (-3/2, 3/2) (Q_1 ; Q_2) + (-1) x
+% Commandable mais non observable
+
+\end{document}
