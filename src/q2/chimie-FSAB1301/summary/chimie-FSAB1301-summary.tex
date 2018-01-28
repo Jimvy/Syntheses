@@ -26,10 +26,10 @@
 \newcommand\calo{\mathrm{cal}}
 \newcommand\atm{\mathrm{atm}}
 \newcommand\ccal{\ensuremath{C_\mathrm{cal}}}
-\newcommand\qrev{\ensuremath{q_{\mathrm{rév}}}}
+\newcommand\qrev{\ensuremath{q_{\mathrm{rev}}}}
 \newcommand\kc{\ensuremath{K_{\mathrm{c}}}}
 \newcommand\kp{\ensuremath{K_{\mathrm{p}}}}
-\newcommand\keq{\ensuremath{K_{\mathrm{éq}}}}
+%\newcommand\keq{\ensuremath{K_{\text{éq}}}}
 \newcommand\pkb{\mathrm{p}\ensuremath{K_b}}
 \newcommand\pka{\mathrm{p}\ensuremath{K_a}}
 
@@ -749,7 +749,7 @@ mais ces combinaisons sont moins courantes.
 C'est donc le $\Delta H$ pour casser une liaison.
 Si des molécules sont déjà \textbf{à l'état gazeux},
 on a juste
-\[ \Delta H = \sum v_r{E_l}_\mathrm{réactifs} - \sum v_p{E_l}_\mathrm{produits} \]
+\[ \Delta H = \sum v_r{E_l}_\text{réactifs} - \sum v_p{E_l}_\text{produits} \]
 
 \paragraph{Obtention}
 Voir table.
@@ -1603,17 +1603,17 @@ Lorsque qu'on veut calculer l'entropie molaire à une certaine
 température $T_2$, on utilise l'équation générale suivante :
 \begin{align*}
     S\std_\mathrm{m}(T_2) = S\std_\mathrm{m}(T_\mathrm{ref})
-    &+ \int_{T_\mathrm{ref}}^{T_\mathrm{fusion}}
-    \frac{C^\mathrm{cristal}_\mathrm{p, m}}{T}\dif T
-    + \frac{\Delta H\std_\mathrm{fusion}}{T_\mathrm{fusion}}\\
-    &+  \int_{T_\mathrm{fusion}}^{T_\mathrm{ébullition}}
-    \frac{C^\mathrm{liquide}_\mathrm{p, m}}{T}\dif T
-    + \frac{\Delta H\std_\mathrm{vaporisation}}{T_\mathrm{ébullition}}\\
-    &+  \int_{T_\mathrm{ébullition}}^{T_2}
-    \frac{C^\mathrm{gaz}_\mathrm{p, m}}{T}\dif T
+    &+ \int_{T_\mathrm{ref}}^{T_\text{fusion}}
+    \frac{C^\text{cristal}_\mathrm{p, m}}{T}\dif T
+    + \frac{\Delta H\std_\text{fusion}}{T_\text{fusion}}\\
+    &+  \int_{T_\text{fusion}}^{T_\text{ébullition}}
+    \frac{C^\text{liquide}_\mathrm{p, m}}{T}\dif T
+    + \frac{\Delta H\std_\text{vaporisation}}{T_\text{ébullition}}\\
+    &+  \int_{T_\text{ébullition}}^{T_2}
+    \frac{C^\text{gaz}_\mathrm{p, m}}{T}\dif T
 \end{align*}
-où $\frac{\Delta H\std_\mathrm{fusion}}{T_\mathrm{fusion}}$ et
-$\frac{\Delta H\std_\mathrm{vaporisation}}{T_\mathrm{ebullition}}$ représentent
+où $\frac{\Delta H\std_\text{fusion}}{T_\text{fusion}}$ et
+$\frac{\Delta H\std_\text{vaporisation}}{T_\text{ebullition}}$ représentent
 les variations brusques d'entropie dues au changement de phase.
 Il s'agit en fait des entropies de fusion et de vaporisation.
 Il est important de remarquer que le changement de phase se produit
@@ -2601,14 +2601,14 @@ Voilà comment passer de l'un à l'autre,
 avec $v_p$ les coefficients des produits et
 $v_r$ les coefficients des réactifs,
 \begin{align*}
-  \Delta S\std &= \sum v_p S\std_\mathrm{produits}
-  - \sum v_r S\std_\mathrm{réactifs}\\
-  \Delta H &= \sum v_p \Delta {H_f}_\mathrm{produits}
-  - \sum v_r \Delta {H_f}_\mathrm{réactifs}
+  \Delta S\std &= \sum v_p S\std_\text{produits}
+  - \sum v_r S\std_\text{réactifs}\\
+  \Delta H &= \sum v_p \Delta {H_f}_\text{produits}
+  - \sum v_r \Delta {H_f}_\text{réactifs}
 \end{align*}
 Si des molécules sont déjà dans les états voulus,
 on a juste
-\[ \Delta H = \sum v_r{E_l}_\mathrm{réactifs} - \sum v_p{E_l}_\mathrm{produits} \]
+\[ \Delta H = \sum v_r{E_l}_\text{réactifs} - \sum v_p{E_l}_\text{produits} \]
 
 \section{Schéma de synthèse sur les liaisons chimiques}
 \label{sec:synthese_liaisons}
