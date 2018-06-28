@@ -203,11 +203,8 @@ Si en plus on ne garde que $N$ échantillons de la FS, obtenant ainsi la DTFS, a
 	\centering
 	\begin{tikzpicture}[x=0.4cm, y=1.2cm]
 	\draw[thick, -latex] (-15, 0) -- (15, 0);
-	\draw[thick, -latex] (0, -1) -- (0, 2);
+	\draw[thick, -latex] (0, -1) -- (0, 1.8);
 	\draw (16, -0.1) node[below] {$f$ (\si{\hertz})};
-	\draw[Green] (16, -0.5) node {$\omega$ (\si{\radian\per\second})};
-	\draw[Blue] (16, -0.8) node {$\Omega$};
-	\draw[Red] (16, -1.2) node {$k$};
 	\draw (0.1, 1) -- (-0.1, 1) node[left] {1};
 	\draw (-14, 0.1) -- (-14, -0.1) node[below] {-14};
 	\draw (-10, 0.1) -- (-10, -0.1) node[below] {-10};
@@ -219,23 +216,29 @@ Si en plus on ne garde que $N$ échantillons de la FS, obtenant ainsi la DTFS, a
 	\draw (10, 0.1) -- (10, -0.1) node[below] {$f_e=$10};
 	\draw (14, 0.1) -- (14, -0.1) node[below] {14};
 	\draw[Green]
-	(-10, -0.5) node {$-\omega_e=-20\pi$}
-	(-4, -0.5) node {$-M = -8\pi$}
-	(1, -0.5) node {$2\pi$}
-	(4, -0.5) node {$M = 8\pi$}
-	(10, -0.5) node {$\omega_e=2\pi f_e=20\pi$};
+	(-10, -0.7) node {$-\omega_e=-20\pi$}
+	(-4, -0.7) node {$-M = -8\pi$}
+	(1, -0.7) node {$2\pi$}
+	(4.1, -0.7) node {$M = 8\pi$}
+	(10, -0.7) node {$\omega_e=2\pi f_e=20\pi$};
+	\draw[Green] (16, -0.7) node {$\omega$ (\si{\radian\per\second})};
+
 	\draw[Blue]
-	(-10, -0.8) node {$-\Omega_e = -2\pi$}
-	(-4, -0.8) node {$-0.8\pi$}
-	(1, -0.8) node {$\frac{2\pi}{T_e}$}
-	(4, -0.8) node {$0.8\pi$}
-	(10, -0.8) node {$\Omega_e = 2\pi$};
+	(-10, -1.1) node {$-\Omega_e = -2\pi$}
+	(-4, -1.1) node {$-0.8\pi$}
+	(1, -1.1) node {$\frac{2\pi}{T_e}$}
+	(4, -1.1) node {$0.8\pi$}
+	(10, -1.1) node {$\Omega_e = 2\pi$};
+	\draw[Blue] (16, -1.1) node {$\Omega$};
+
 	\draw[Red]
-	(-10, -1.2) node {$k=-N=-10$}
-	(-4, -1.2) node {$k=-4$}
-	(1, -1.2) node {$k=1$}
-	(4, -1.2) node {$k=4$}
-	(10, -1.2) node {$k=N=10$};
+	(-10, -1.4) node {$k=-N=-10$}
+	(-4, -1.4) node {$k=-4$}
+	(1, -1.4) node {$k=1$}
+	(4, -1.4) node {$k=4$}
+	(10, -1.4) node {$k=N=10$};
+	\draw[Red] (16, -1.4) node {$k$};
+
 	\draw[very thick] (-4, 0) -- (0, 1) -- (4, 0);
 	\draw (-14, 0) -- (-10, 1) -- (-6, 0);
 	\draw (6, 0) -- (10, 1) -- (14, 0);
@@ -270,7 +273,7 @@ avec $M=2\pi \cdot 4$, dont la transformée est exactement
 \end{cases} \]
 ainsi que le signal $x_\delta(t)$, résultat de l'échantillonnage de $x(t)$ à une fréquence de $f_e = \SI{10}{\hertz}$. La figure~\ref{fig:spectra1} présente la transformée du signal de départ (en gras), ainsi que deux des répliques du signal $x_\delta(t)$ après échantillonnage.
 
-La DTFT de $x_e[n]$ et la FT de $x_\delta(t)$ ne diffèrent que par l'échelle en fréquence, et se superposent parfaitement quand on prend deux échelles telles que $\Omega = \omega T_e$.
+La DTFT de $x_e[n]$ et la FT de $x_\delta(t)$ ne diffèrent que par l'échelle en fréquence, et se superposent parfaitement quand on prend deux échelles telles que $\Omega = \omega T_e$. Pour information, le $2\pi$ vert en dessous de 1 provient de $\frac{2\pi}{N T_e}$ avec $N=10$ et $T_e=0.1$.
 
 \begin{figure}
 	\centering
