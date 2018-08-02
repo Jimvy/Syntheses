@@ -290,9 +290,9 @@ Notons qu'une seule des deux relations de compatibilité est requise pour l'int�
 (relation connue comme les équations de Lagrange-Charpit).
 Néanmoins, comme $P$, $Q$ ou $R$ peuvent s'annuler, il vaut mieux revenir à la forme normale de ces équations lors de l'intégration. C'est essentiellement un moyen mnémotechnique. De même, il vaut mieux choisir la relation la plus simple à intégrer.
 
-Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = R\dif{l}$ ; celle-ci relie la variation de $u$ avec la variation $\dif{l}$ directement le long de la caractéristique (dans l'axe de la caractéristique), de sorte que $\dif{l}^2 = \dif{x}^2 + \dif{y}^2$. La démonstration est simplement une règle de la chaine sur $\fdif{u}{l}$, avec quelques manipulations à partir des relation~\eqref{eq:order1-diffeqnmemo}.
+Une relation supplémentaire qui peut être utile est $\sqrt{P^2+Q^2} \dif{u} = R\dif{l}$; celle-ci relie la variation de $u$ avec la variation $\dif{l}$ directement le long de la caractéristique (dans l'axe de la caractéristique), de sorte que $\dif{l}^2 = \dif{x}^2 + \dif{y}^2$. La démonstration est simplement une règle de la chaine sur $\fdif{u}{l}$, avec quelques manipulations à partir des relation~\eqref{eq:order1-diffeqnmemo}.
 
-Le cas où $R=0$ donne $\dif{u}=0$ le long de la caractéristique : $u$ est alors constant le long de la caractéristique. On appelle ça un \emph{invariant de Riemann}.
+Le cas où $R=0$ donne $\dif{u}=0$ le long de la caractéristique: $u$ est alors constant le long de la caractéristique. On appelle ça un \emph{invariant de Riemann}.
 
 Les EDP du 1\ier{} ordre (avec des fonctions réelles) ont toutes la propriété d'être \emph{à caractère hyperbolique}. Cette propriété peut être résumée, de manière informelle, par le fait qu'elles ont toutes la particularité de pouvoir être résolues par une sorte de propagation de la solution le long de caractéristiques.
 \footnote{Le concept sera éclairci lorsqu'on abordera les EDP du second ordre.}
@@ -303,18 +303,18 @@ Une dernière remarque avant de passer à des exemples. Une certaine EDP du prem
 
 \subsection{Un autre point de vue sur la méthode des caractéristiques}
 
-La démarche utilisée ici a quelques particularités : elle part de ce que l'on connait déjà (l'EDP et les conditions initiales) et construit tout un raisonnement sur la base de ces connaissances pour finalement arriver à la solution ; c'est un raisonnement \emph{bottom-up}. Elle est également assez analytique et algébrique, et assez peu visuelle. Pourrait-on avoir une vision plus visuelle % ah ah
-de la méthode des caractéristiques ?
+La démarche utilisée ici a quelques particularités: elle part de ce que l'on connait déjà (l'EDP et les conditions initiales) et construit tout un raisonnement sur la base de ces connaissances pour finalement arriver à la solution; c'est un raisonnement \emph{bottom-up}. Elle est également assez analytique et algébrique, et assez peu visuelle. Pourrait-on avoir une vision plus visuelle % ah ah
+de la méthode des caractéristiques?
 
-Bien entendu, la réponse est oui\footnote{Mais il y aura toujours des calculs. Désolé}. Rappelons-nous de l'objectif de la méthode : déterminer une solution à une EDP. Cette solution est généralement une surface (à deux dimensions dans le cas des EDP à deux variables), la \emph{surface intégrale}, que l'on notera $\mathcal{S}$. Cette surface, définie par $(x, y, u(x, y))$, respecte certaines relations, notamment notre EDP
+Bien entendu, la réponse est oui\footnote{Mais il y aura toujours des calculs. Désolé}. Rappelons-nous de l'objectif de la méthode: déterminer une solution à une EDP. Cette solution est généralement une surface (à deux dimensions dans le cas des EDP à deux variables), la \emph{surface intégrale}, que l'on notera $\mathcal{S}$. Cette surface, définie par $(x, y, u(x, y))$, respecte certaines relations, notamment notre EDP
 \[ P(x, y, u) \fpart{u}{x} + Q(x, y, u) \fpart{u}{y} = R(x, y, u) \]
 que l'on peut réécrire comme
 \[ P(x, y, u) \fpart{u}{x} + Q(x, y, u) \fpart{u}{y} - R(x, y, u) = 0 \]
 ou encore
 \[ (P(x, y, u), Q(x, y, u), R(x, y, u)) \cdot \left(\fpart{u}{x}, \fpart{u}{y}, -1\right) = 0 \]
-où l'on reconnait un produit scalaire nul entre deux vecteurs qui sont donc orthogonaux. Le vecteur de droite rappelle des souvenirs du cours de Maths 2 : il s'agit du vecteur normal à la surface. L'autre vecteur est donc orthogonal au vecteur normal, et donc est contenu dans le plan tangent à $\mathcal{S}$. La surface intégrale solution de l'EDP a donc la propriété assez forte que le vecteur $(P(x, y, u), Q(x, y, u), R(x, y, u)$ est contenu dans le plan tangent à $\mathcal{S}$ $(x, y, u(x, y))$.
+où l'on reconnait un produit scalaire nul entre deux vecteurs qui sont donc orthogonaux. Le vecteur de droite rappelle des souvenirs du cours de Maths 2: il s'agit du vecteur normal à la surface. L'autre vecteur est donc orthogonal au vecteur normal, et donc est contenu dans le plan tangent à $\mathcal{S}$. La surface intégrale solution de l'EDP a donc la propriété assez forte que le vecteur $(P(x, y, u), Q(x, y, u), R(x, y, u))$ est contenu dans le plan tangent à $\mathcal{S}$ $(x, y, u(x, y))$.
 
-Analysons un peu les surfaces qui ont cette propriété. Considérons une courbe $\mathcal{C}$ contenue dans cette surface et qui passe justement par le point $(x, y, z = u(x, y))$, et ajoutons la contrainte que cette courbe soit non seulement tangente au plan tangent (trivial), mais que le vecteur $(P(x, y, u), Q(x, y; u), R(x, y, u)$ soit \emph{aussi} tangent à $\mathcal{C}$, en chaque point de la courbe (qui existe nécessairement s'il y a une solution ; il suffit de suivre le vecteur). Cette courbe, que l'on va paramétriser par $r$, a dès lors des contraintes supplémentaires, dues à sa tangence : elle respecte le système d'équation
+Analysons un peu les surfaces qui ont cette propriété. Considérons une courbe $\mathcal{C}$ contenue dans cette surface et qui passe justement par le point $(x, y, z = u(x, y))$, et ajoutons la contrainte que cette courbe soit non seulement tangente au plan tangent (trivial), mais que le vecteur $(P(x, y, u), Q(x, y; u), R(x, y, u))$ soit \emph{aussi} tangent à $\mathcal{C}$, en chaque point de la courbe (qui existe nécessairement s'il y a une solution ; il suffit de suivre le vecteur). Cette courbe, que l'on va paramétriser par $r$, a dès lors des contraintes supplémentaires, dues à sa tangence : elle respecte le système d'équation
 %\begin{equation} % Fun : mettre les deux provoque "Erroneous nesting of equation structures;(amsmath) trying to recover with `aligned'.
 \begin{align*}
 \fdif{x}{r} &= P(x(r), y(r), u(r)) \\
@@ -322,10 +322,10 @@ Analysons un peu les surfaces qui ont cette propriété. Considérons une courbe
 \fdif{z}{r} &= R(x(r), y(r), u(r))
 \end{align*}
 %\end{equation}
-Chacune des équations est devenu une simple EDO, et on qualifie la courbe de \emph{courbe intégrale}.%parce que pourquoi pas.
+Chacune des équations est devenu une simple EDO, et on qualifie la courbe de \emph{courbe intégrale}. %parce que pourquoi pas.
 La surface intégrale de l'EDP, sa solution, $\mathcal{S}$, est alors l'union de chacune des courbes intégrales $\mathcal{C}$ du \emph{champ de vecteur}\footnote{Coucou math 2, encore.} $(P(x, y), Q(x, y), R(x, y)$.
 
-Ces courbes intégrales, nous les avons déjà croisées avant. Ou plutôt, nous avons croiser leurs ombres : les projections des courbes intégrales sur le plan $Oxy$ sont les courbes caractéristiques.
+Ces courbes intégrales, nous les avons déjà croisées avant. Ou plutôt, nous avons croiser leurs ombres: les projections des courbes intégrales sur le plan $Oxy$ sont les courbes caractéristiques.
 \footnote{En réalité, dans la majorité de la littérature, les courbes intégrales sont nommées courbes caractéristiques, et ce qu'on a appelé courbes caractéristiques sont les projections, sur le plan des variables indépendantes, des courbes caractéristiques. Dans la suite, on gardera la mauvaise appellation.}
 En réécrivant ce système, on obtient
 \begin{align*}
@@ -337,8 +337,8 @@ et comme les $\dif{r}$ sont égaux,
 \[\frac{\dif{x}}{P(x, y)} = \frac{\dif{y}}{Q(x, y)} = \frac{\dif{z}}{R(x, y)}\]
 soit exactement le moyen mnémotechnique de retenir les équations caractéristiques.
 
-Nous pouvons également décrire d'une autre manière encore ce que signifie un problème bien posé : la courbe de Cauchy
-\footnote{Pour le coup, il s'agit bien de la courbe dans le plan $Oxy$, et pas de la courbe $(x(s), y(s), f(s)$, qui n'a pas de nom précis.}
+Nous pouvons également décrire d'une autre manière encore ce que signifie un problème bien posé: la courbe de Cauchy
+\footnote{Pour le coup, il s'agit bien de la courbe dans le plan $Oxy$, et pas de la courbe $(x(s), y(s), f(s))$, qui n'a pas de nom précis.}
 ne doit, en aucun point de $\mathcal{S}$, être tangente à (avoir la même direction que) la projection de la courbe caractéristique en ce point. En effet, si elles sont tangentes, la courbe de Cauchy, d'équation $\Gamma \equiv (\gamma_x(s), \gamma_y(s))$, a alors la même propriété que les courbes caractéristiques, qui font que ça marche pas. %FIXME
 
 %TODO fin de la section à déplacer
@@ -471,7 +471,7 @@ Il s'agit d'une EDP du premier ordre, avec $P=c$, $Q=1$ et $R=0$. La vitesse $c$
 
 Le domaine de l'équation de transport peut être borné ou non borné (ouvert) : un domaine borné est borné au niveau spatial, il y a des limites pour la valeur de $x$. Pour ce qui est de la \og condition initiale \fg{}\footnote{J'écris cette condition entre guillemets pour la différencier de la \og vraie \fg{} condition initiale, et qui est défini à la ligne d'après.} (la condition sur $u$ que l'on donne sur la courbe de Cauchy), on spécifie généralement $u$ sur la courbe de Cauchy définie par $\Gamma \equiv x(s)=s, t(s)=0$, et on donne $u(s, 0)=f(s)$. C'est alors une \emph{condition initiale}, une condition que l'on spécifie en un temps donné. L'intérêt des conditions initiales est avant tout pratique : lorsqu'on étudie un phénomène physique, on peut généralement déterminer ce phénomène à un instant donné (par des mesures par exemple), et on souhaite ensuite déterminer l'évolution de ce phénomène pour des instants ultérieurs.
 
-Il se fait que quelle que soit la vitesse $c$, une telle condition initiale est bien posée : la direction locale des caractéristiques est donnée par $\frac{\dif{t}}{\dif{x}}=\frac{1}{c}\neq 0$\footnote{Ici, il est bien plus simple d'écrire la direction comme étant une certaine \emph{pente}, afin d'aider l'interprétation.}, tandis que la direction locale de la courbe de Cauchy est $\frac{\dif{t}}{\dif{x}}=0$. Physiquement, si on donne une condition initiale ainsi que la vitesse de déplacement de la quantité étudiée, on peut toujours calculer (parfois difficilement, comme on verra) l'état de cette quantité pour un instant $t>0$, simplement en suivant la vitesse. Le seul cas où une telle détermination est impossible, et où le problème est mal posé, survient quand $c \rightarrow \infty$ : la caractéristique et la courbe de Cauchy sont parallèles et confondues.
+Il se fait que quelle que soit la vitesse $c$, une telle condition initiale est bien posée : la direction locale des caractéristiques\footnote{Ici, il est bien plus simple d'écrire la direction comme étant une certaine \emph{pente}, afin d'aider l'interprétation.} est donnée par $\frac{\dif{t}}{\dif{x}}=\frac{1}{c}\neq 0$, tandis que la direction locale de la courbe de Cauchy est $\frac{\dif{t}}{\dif{x}}=0$. Physiquement, si on donne une condition initiale ainsi que la vitesse de déplacement de la quantité étudiée, on peut toujours calculer (parfois difficilement, comme on verra) l'état de cette quantité pour un instant $t>0$, simplement en suivant la vitesse. Le seul cas où une telle détermination est impossible, et où le problème est mal posé, survient quand $c \rightarrow \infty$ : la caractéristique et la courbe de Cauchy sont parallèles et confondues.
 
 Commençons par étudier le cas le plus simple, avec $c$ constant. Dans ce cas, l'intégration des caractéristiques donne
 \[ \int_{s}^{x} \dif{x'} = c \int_{0}^{t} \Leftrightarrow x-s=ct\]
