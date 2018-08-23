@@ -19,14 +19,14 @@
    \path let \p1=(Q), \p2=(O) in (\x1,{(\y1-\y2)/2}) coordinate (M);%
    \path [excursus arrow, round cap-to]%
    ($(O)+(5em,0ex)$) -| (M) |- %
-   ($(Q)+(12em,0ex)$) .. controls +(0:16em) and +(185:6em) .. %
+   ($(Q)+(16em,0ex)$) .. controls +(0:16em) and +(185:6em) .. %
    ++(23em,2ex);%
  \node [excursus head] at ($(Q)+(2.5em,-0.75pt)$) {\SolutionLabel};},
   firstextra={%
    \path let \p1=(P), \p2=(O) in (\x2,\y1) coordinate (Q);
    \path [excursus arrow,-to]
    (O) |- %
-   ($(Q)+(12em,0ex)$) .. controls +(0:16em) and +(185:6em) .. %
+   ($(Q)+(12em,0ex)$) node[draw] {A} .. controls +(0:16em) and +(185:6em) .. %
     ++(23em,2ex);
     \node [excursus head] at ($(Q)+(2.5em,-2pt)$) {\SolutionLabel};
   },
