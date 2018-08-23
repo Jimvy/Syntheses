@@ -2,6 +2,7 @@
 \ProvidesPackage{eplcode}[2014/01/14 EPL code package]
 
 \DeclareOption{minted}{\newcommand{\mintedchosen}{}}
+\DeclareOption{rawlistings}{\newcommand{\rawlistings}{}}
 
 \ProcessOptions\relax
 
@@ -15,6 +16,8 @@
 % always put it after babel
 % http://tex.stackexchange.com/questions/100717/code-in-lstlisting-breaks-document-compile-error
 \RequirePackage{listings}
+% The following does not depend on the presence of the solution environment,
+% so we keep it as is.
 \lstset{
   numbers=left,
   numberstyle=\tiny\color{gray},
@@ -23,14 +26,12 @@
   frame=single,
   commentstyle=\color{gray}=small,
   stringstyle=\color{dkgreen},
-  %backgroundcolor=\color{gray!10},
+  showstringspaces=true, % Show _-like character for spaces inside strings
   %tabsize=8, % Thank you Papa Torvalds
   rulecolor=\color{black!30},
   %title=\lstname,
-  breaklines=true,
-  framextopmargin=2pt,
-  framexbottommargin=2pt,
-  extendedchars=true,
+  breaklines=true, % Break lines; rather dumb command
+  extendedchars=true, % The following three allow UTF-8 characters inside listings.
   inputencoding=utf8,
   literate=
   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
@@ -45,6 +46,28 @@
   {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
   {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
   {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+\lstset{
+	framextopmargin=2pt,
+	framexbottommargin=2pt,
+}
+\newlength{\curparindent}
+\newlength{\curscriptsize}
+\let\eplcode@oldlstlisting\lstlisting
+\let\eplcode@oldendlstlisting\endlstlisting
+\newenvironment{blisting}{%
+\setlength{\curparindent}{\parindent}
+\setlength{\curscriptsize}{\widthof{\tiny{x}}}
+}{%
+
+}
+\ifthenelse\isundefined{\rawlistings}{%
+% rawlistings undefined: we redefine lstlisting, lstinputlisting and lstinline.
+\renewenvironment{lstlisting}{%
+}{%
+}
+}{%
+% rawlistings defined: we don't redefined them, but we allow the user to call blistings
 }
 }{
   \usepackage{minted}

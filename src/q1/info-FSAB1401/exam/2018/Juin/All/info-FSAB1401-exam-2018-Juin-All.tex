@@ -1,0 +1,197 @@
+\documentclass[fr]{../../../../../../eplexam}
+\usepackage{../../../../../../eplcode}
+
+\usepackage{tikz}
+\usepackage{xparse}
+\usepackage{calc}
+%\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\lstset{
+	language=Java,
+	tabsize=4,
+%	xleftmargin=3ex,
+%	framexleftmargin=3ex,
+}
+
+\newlength{\scriptsizetypewriter}
+\newlength{\defaultparindent}
+%%\NewDocumentEnvironment{newlisting}{%
+%%	\setlength{\scriptsizetypewriter}{\widthof{\tiny{x}}}%
+%%	\setlength{\defaultparindent}{\parindent}%
+%%	\lstset{xleftmargin=\defaultparindent, framexleftmargin=\defaultparindent, numbersep=\scriptsizetypewriter, framesep=0pt}%
+%%	\begin{lstlisting}%
+%%	}{%
+%%	\end{lstlisting}%
+%%}%
+%\makeatletter
+%\let\oldlstlisting\lstlisting
+%\let\oldendlstlisting\endlstlisting
+%\def\newlisting{\@ifnextchar[\newlisting@i\newlisting@ii}
+%\def\newlisting@i[#1]{\oldlstlisting[#1]}
+%\def\newlisting@ii{\oldlstlisting}
+%\makeatother
+\makeatletter
+\let\old@lstlisting\lstlisting
+\let\old@endlstlisting\endlstlisting
+\renewenvironment{lstlisting}{%
+\setlength{\scriptsizetypewriter}{\widthof{\tiny{x}}}
+\setlength{\defaultparindent}{\parindent}
+\lstset{xleftmargin=\defaultparindent, framexleftmargin=\defaultparindent, numbersep=\scriptsizetypewriter, framesep=0pt}
+\old@lstlisting
+}{%
+\old@endlstlisting
+}
+\makeatother
+
+\hypertitle{info-FSAB1401 % Enter the right title here
+}{1}{FSAB}{1401}{2018}{Juin}{All}
+{Author1\and Author2\and Author3}
+{Professor}
+
+\section{What is the answer to life, the universe and everything?}
+
+\noindent Bonjour
+
+\begin{lstlisting}
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Hello in my program printing arguments");
+		int i = 1;
+		for (String arg: args) {
+			System.out.println("Hello, here is the " + (i++) + "-th argument: " + arg);
+		}
+		System.out.println("Goodbye from my program printing arguments.");
+		System.exit(0);
+	}
+}
+\end{lstlisting}
+
+\noindent Au revoir
+
+\begin{solution}
+
+\noindent Ajoutons maintenant un petit code suffisamment long que pour causer le bug:
+\begin{lstlisting}
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Hello in my program printing arguments");
+		int i = 1;
+		for (String arg: args) {
+			System.out.println("Hello, here is the " + (i++) + "-th argument: " + arg);
+		}
+		System.out.println("Goodbye from my program printing arguments.");
+		System.exit(0);
+	}
+}
+\end{lstlisting}
+
+Une variante:
+\begin{itemize}
+	\item Coucou
+	\begin{lstlisting}[gobble=4]
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("Hello in my program printing arguments");
+			int i = 1;
+			for (String arg: args) {
+				System.out.println("Hello, here is the " + (i++) + "-th argument: " + arg);
+			}
+			System.out.println("Goodbye from my program printing arguments.");
+			System.exit(0);
+		}
+	}
+	\end{lstlisting}
+\end{itemize}
+
+Et encore plus gros:
+\lstinputlisting{MinHeap.java}
+\end{solution}
+
+\section{}
+Bonjour indenté.
+
+\noindent Bonjour.
+%\setlength{\scriptsizetypewriter}{\widthof{\tiny{x}}}
+%\setlength{\defaultparindent}{\parindent}
+\begin{lstlisting}[firstnumber=987]
+print("Hello, world!")
+\end{lstlisting}
+\begingroup
+\setlength\parindent{10em}
+\begin{lstlisting}[firstnumber=987]
+print("Hello, world!")
+\end{lstlisting}
+\endgroup
+%\begin{lstlisting}[xleftmargin=\defaultparindent, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=2em, framexleftmargin=2em, numbersep=1em, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=2em, framexleftmargin=2em, numbersep=1em, framesep=0pt, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=\defaultparindent, framexleftmargin=\defaultparindent, numbersep=\scriptsizetypewriter, framesep=0pt, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=\parindent, framexleftmargin=\parindent, numbersep=\parindent, framesep=\parindent, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+\noindent Au revoir.
+
+Au revoir indenté.
+
+\begin{solution}
+
+\noindent Bonjour.
+
+Bonjour indenté.
+%\setlength{\scriptsizetypewriter}{\widthof{\tiny{x}}}
+%\setlength{\defaultparindent}{\parindent}
+\begin{lstlisting}[firstnumber=987]
+print("Hello, world!")
+\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=\defaultparindent, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=2em, framexleftmargin=2em, numbersep=1em, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=2em, framexleftmargin=2em, numbersep=1em, framesep=0pt, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+%\begin{lstlisting}[xleftmargin=\defaultparindent, framexleftmargin=\defaultparindent, numbersep=\scriptsizetypewriter, framesep=0pt, firstnumber=987]
+%print("Hello, world!")
+%\end{lstlisting}
+\noindent Au revoir.
+
+Au revoir indenté.
+\end{solution}
+
+\lipsum*[1-3]
+Ajoutons une petite figure:
+%\begin{solfig}{fig1}{Coucou}
+\begin{center}
+	\begin{tikzpicture}
+	\draw (0, 0) circle (4);
+	\end{tikzpicture}
+	\captionof{figure}{Coucou}
+	\label{fig:fig1}
+\end{center}
+%\end{solfig}
+
+Et une autre dans un itemize:
+\begin{itemize}
+	\item Lol
+	\begin{center}
+	\begin{tikzpicture}
+	\draw (0, 0) circle (4);
+	\end{tikzpicture}
+	\end{center}
+\end{itemize}
+\lipsum[1-3]
+
+Figure~\ref{fig:fig1}
+
+\end{document}
