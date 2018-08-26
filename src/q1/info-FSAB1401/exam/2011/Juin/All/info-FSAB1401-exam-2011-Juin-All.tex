@@ -2,20 +2,15 @@
 
 \usepackage{../../../../../../eplcode}
 
-\hypertitle{info-FSAB1401}{1}{FSAB}{1401}{2011}{Juin}{All}
+\hypertitle[']{Informatique}{1}{FSAB}{1401}{2011}{Juin}{All}
 {Sébastien Binard \and Jean-Martin Vlaeminck}
 {Olivier Bonaventure et Charles Pecheur}[
-	\paragraph{Remarque de l'auteur}
-	Ce document ne contient pas l'énoncé détaillé de l'examen ; il peut cependant être retrouvé à l'adresse suivante
-	\begin{center}
-		\url{https://drive.google.com/drive/folders/0B7aBBTDXcgqpZnZMdWYwS09lSHc}
-	\end{center}
-	Vous pouvez aussi consulter le dossier
-	\begin{center}
-		\url{https://drive.google.com/a/student.uclouvain.be/folderview?id=0B5WS2yn5sWqDZFFibHM2d0lQVEE&usp=sharing}
-	\end{center}
-	et chercher le Drive Q1 dans BACHELIER>Tronc commun>Q1.\newline
-	Le répertoire Github contient également un code complet et fonctionnel de chacune des classes de l'examen.
+\paragraph{Remarque de l'auteur}
+Le répertoire Github contient également, à l'adresse
+\begin{center}
+	\small{\url{https://github.com/Gp2mv3/Syntheses/tree/master/src/q1/info-FSAB1401/exam/2011/Juin/All/src}}
+\end{center}
+un code complet et fonctionnel de chacune des classes de l'examen.
 ]
 
 \lstset{
@@ -49,7 +44,7 @@
 
 % Question 3
 \section{}
-Écrivez complètement (y compris les spécifications) la classe \code{Process} qui représente un processus. Chaque processus a un nom (\code{String}), une capacité de stockage requise (\code{int}) et un identifiant de processus ou PID (\code{int}). \strong{Les PID sont attribués séquentiellement à la création de chaque nouveau processus} (1 pour le premier, 2 pour le deuxième, etc.) La classe doit définir :
+Écrivez complètement (y compris les spécifications) la classe \code{Process} qui représente un processus. Chaque processus a un nom (\code{String}), une capacité de stockage requise (\code{int}) et un identifiant de processus ou PID (\code{int}). \strong{Les PID sont attribués séquentiellement à la création de chaque nouveau processus} (1 pour le premier, 2 pour le deuxième, etc.) La classe doit définir:
 \begin{itemize}
 	\item Un constructeur avec le nom et la capacité comme paramètres.
 	\item Des méthodes \code{getName}, \code{getRequiredStorage} et \code{getPID} retournant respectivement le nom, la capacité et le PID.
@@ -58,11 +53,11 @@
 \end{itemize}
 
 \begin{solution}
-	Le code suivant présente la classe \code{Process}. Quelques remarques :
+	Le code suivant présente la classe \code{Process}. Quelques remarques:
 	\begin{itemize}
 		\item On retient le prochain PID libre dans la variable statique \code{nextPid}, initialisée à $1$ au chargement du programme. À chaque création d'un processus, on récupère la valeur de \code{nextPid}, qu'on stocke dans la propriété \code{pid} du nouveau processus, et on incrémente \code{nextPid} pour le prochain.
-		\item Comme \code{nextPid} est statique, on doit l'initialiser à sa déclaration, et non dans un constructeur !
-		\item \begin{sloppypar}La ligne 22 combine deux opérations : on récupère la valeur de \code{nextPid} que l'on met dans \code{pid}, puis on augmente \code{nextPid} (grâce à la post-incrémentation \code{++}). A noter que si on avait écrit \code{this.pid=++nextPid}, \code{nextPid} aurait été incrémenté d'abord, et le premier processus aurait un PID de 2.\end{sloppypar}
+		\item Comme \code{nextPid} est statique, on doit l'initialiser à sa déclaration, et non dans un constructeur!
+		\item \begin{sloppypar}La ligne 22 combine deux opérations: on récupère la valeur de \code{nextPid} que l'on met dans \code{pid}, puis on augmente \code{nextPid} (grâce à la post-incrémentation \code{++}). A noter que si on avait écrit \code{this.pid=++nextPid}, \code{nextPid} aurait été incrémenté d'abord, et le premier processus aurait un PID de 2.\end{sloppypar}
 	\end{itemize}
 	\lstinputlisting[linerange={3-57}]{src/Process.java}
 \end{solution}
@@ -83,7 +78,7 @@
 
 % Question 5
 \section{}
-Écrivez complètement la méthode \code{addProcess} de la classe \code{Cluster}. Aidez-vouz de l'exemple présenté en page 2. Indice : vou pouvez utiliser la valeur de \code{count}.
+Écrivez complètement la méthode \code{addProcess} de la classe \code{Cluster}. Aidez-vouz de l'exemple présenté en page 2. Indice: vous pouvez utiliser la valeur de \code{count}.
 \lstinputlisting[linerange={33-36}]{src/Cluster.java}
 
 \begin{solution}

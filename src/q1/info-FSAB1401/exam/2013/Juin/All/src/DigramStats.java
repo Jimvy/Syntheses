@@ -3,8 +3,7 @@
  */
 import java.io.*;
 
-public class DigramStats
-{
+public class DigramStats {
 	protected Node head; // premier noeud de la liste de digrammes
 	protected Dict dict; // dictionnaire contenant les mots à prendre en compte
 
@@ -12,10 +11,9 @@ public class DigramStats
 	 * @pre d!=null
 	 * @post a construit une structure vide avec {d} comme dictionnaire.
 	 */
-	public DigramStats(Dict d)
-	{
-		head=null;
-		this.dict=d;
+	public DigramStats(Dict d) {
+		head = null;
+		this.dict = d;
 	}
 
 	///// QUESTION 5 /////
@@ -40,11 +38,11 @@ public class DigramStats
 				if (tab.length <= 0) // pas de mot ; ligne vide
 					continue;
 				// tout d'abord, on check le premier mot et {precedent}
-				if ( dict.contains(precedent) && dict.contains(tab[0]) )
-					add( new Digram(precedent, tab[0]) );
-				for (int i=1; i<tab.length; i++)
-					if ( dict.contains(tab[i-1]) && dict.contains(tab[i]) )
-						add( new Digram(tab[i-1], tab[i]) );
+				if (dict.contains(precedent) && dict.contains(tab[0]))
+					add(new Digram(precedent, tab[0]));
+				for (int i = 1; i<tab.length; i++)
+					if (dict.contains(tab[i-1]) && dict.contains(tab[i]))
+						add(new Digram(tab[i-1], tab[i]));
 
 				precedent = tab[tab.length-1]; // dernier mot de la ligne
 				ligne = bf.readLine(); // on lit la nouvelle ligne ; throws IOException
@@ -86,7 +84,7 @@ public class DigramStats
 		if (!dict.contains(d.getWord1()) || !dict.contains(d.getWord2()))
 			return; // Digramme invalide ; sécurité supplémentaire, vu que c'est une méthode publique.
 		Node runner=head;
-		if (head==null) {// clairement on peut l'ajouter
+		if (head == null) {// clairement on peut l'ajouter
 			head = new Node(d, 1, null);
 			return;
 		}
@@ -94,10 +92,10 @@ public class DigramStats
 			head.count++;
 		}
 		else {
-			while(runner.next != null && !runner.next.digram.equals(d))
-				runner=runner.next;
-			if (runner.next==null)
-				runner.next=new Node(d, 1, null);
+			while (runner.next != null && !runner.next.digram.equals(d))
+				runner = runner.next;
+			if (runner.next == null)
+				runner.next = new Node(d, 1, null);
 			else // runner.next.digram.equals(d)
 				runner.next.count++;
 		}
@@ -111,7 +109,7 @@ public class DigramStats
 	 * @post Si le digramme {d} était présent dans la liste, son compteur a été diminué de 1. Sinon une {DigramNotFoundException} est lancée. Le digramme est retiré de la liste si son compteur tombe à zéro.
 	 */
 	public void remove(Digram d) throws DigramNotFoundException {
-		if (head==null) // la liste est vide
+		if (head == null) // la liste est vide
 			throw new DigramNotFoundException("Erreur : liste vide");
 		if (head.digram.equals(d)) {
 			if (head.count <= 1) // on supprime le digramme de la liste
@@ -122,16 +120,16 @@ public class DigramStats
 		}
 		// else : le digramme est ailleurs
 
-		Node runner=head;
-		while(runner.next !=null && runner.next.digram.equals(d))
-			runner=runner.next;
+		Node runner = head;
+		while (runner.next != null && runner.next.digram.equals(d))
+			runner = runner.next;
 
 		// deux possibilités de sortie
-		if (runner.next==null) // on est arrivé au bout de la liste
+		if (runner.next == null) // on est arrivé au bout de la liste
 			throw new DigramNotFoundException("Digramme non trouvé");
 		// else : runner.next.digram.equals(d)==true ; on a trouvé le digramme chez runner.next
 		if (runner.next.count <= 1) // si un seul, on le supprime de la liste
-			runner.next=runner.next.next; // en remplaçant runner.next (le bon noeud) par son suivant (.next)
+			runner.next = runner.next.next; // en remplaçant runner.next (le bon noeud) par son suivant (.next)
 			// traduction de l'instruction : (runner.next).next est affectée à la variable next de current
 		else // sinon, on décrémente
 			runner.next.count--;
@@ -143,10 +141,10 @@ public class DigramStats
 	 * @post retourne le compteur du digramme {d} et 0 si il n'est pas dans la liste.
 	 */
 	public int getCount(Digram d) {
-		Node runner=head;
+		Node runner = head;
 		while(runner != null && !runner.digram.equals(d)) // break if runner==null or if the digram is found
-			runner=runner.next;
-		if (runner==null)
+			runner = runner.next;
+		if (runner == null)
 			return 0;
 		else // runner.digram.equals(d)
 			return runner.count;
@@ -156,14 +154,14 @@ public class DigramStats
 	 * Imprime les statistiques sur {System.out}. Chaque digramme et son compteur sont imprimés.
 	 */
 	public void print() {
-		Node runner=head;
-		StringBuffer sb=new StringBuffer();
-		while(runner!=null) {
+		Node runner = head;
+		StringBuffer sb = new StringBuffer();
+		while(runner != null) {
 			sb.append(runner.digram);
 			sb.append(" : ");
 			sb.append(runner.count);
 			sb.append("\n");
-			runner=runner.next;
+			runner = runner.next;
 		}
 		System.out.print(sb.toString());
 	}
@@ -176,7 +174,7 @@ public class DigramStats
 		 * Construit un noeud pour le digramme {d} avec un compteur égal à {c} et {n} pour le noeud suivant.
 		 */
 		public Node(Digram d, int c, Node n) {
-			digram=d; count=c; next=n;
+			digram = d; count = c; next = n;
 		}
 	}
 }

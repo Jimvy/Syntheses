@@ -4,15 +4,9 @@
 \usepackage{tikz}
 \usepackage{array}
 
-\hypertitle{Informatique}{1}{FSAB}{1401}{2012}{Juin}{All}
+\hypertitle[']{Informatique}{1}{FSAB}{1401}{2012}{Juin}{All}
 {Mattéo Couplet \and Jean-Martin Vlaeminck}
-{Olivier Bonaventure et Charles Pecheur}[
-    \paragraph{Remarque de l'auteur}
-    Ce document ne contient pas l'énoncé détaillé de l'examen ; il peut cependant être retrouvé à l'adresse suivante
-    \begin{center}
-        \url{https://drive.google.com/a/student.uclouvain.be}
-    \end{center}
-]
+{Olivier Bonaventure et Charles Pecheur}
 
 %\begin{document}
 
@@ -51,13 +45,13 @@
 %\newpage
 % Question 2
 \section{}
-Dans la classe \code{Catalog}, écrivez le corps du constructeur dont la spécification est reprise ci-dessous :
+Dans la classe \code{Catalog}, écrivez le corps du constructeur dont la spécification est reprise ci-dessous:
 \lstinputlisting{src/q2_spec.java}
 
 \begin{solution}
     On crée un \code{BufferedReader} qui va lire le contenu du fichier. Après lecture de la première ligne qui contient le nombre de chansons, on instancie le tableau \code{contents}. On parcourt ensuite le fichier ligne par ligne en remplissant le tableau. Tout cela est englobé dans un \code{try catch} afin d'attraper une éventuelle \code{IOException}.
 
-    Il ne faut pas oublier de fermer le \code{BufferedReader} à la fin, ce qui implique de le fermer dans le \code{try} (si tout se passe bien) et le \code{catch} (s'il y a une erreur) ; un bloc \code{finally} ne s'exécuterait pas, en raison du \code{System.exit(-1)}.%FIXME utile pour l'examen, ou les profs s'en fichent ?
+    Il ne faut pas oublier de fermer le \code{BufferedReader} à la fin, ce qui implique de le fermer dans le \code{try} (si tout se passe bien) et le \code{catch} (s'il y a une erreur); un bloc \code{finally} ne s'exécuterait pas, en raison du \code{System.exit(-1)}.%FIXME utile pour l'examen, ou les profs s'en fichent ?
     \lstinputlisting{src/q2.java}
     % de 1 à 29 ; le catch amélioré : 20-28, le while 11-18
     Il est aussi possible de réaliser ces opérations avec une boucle \code{while}, en lisant tant qu'il y a des lignes. Le code suivant montre une solution alternative. De même, comme \code{br.close()} peut jeter une exception, il est mis dans un \code{try catch} (non requis à l'examen, mais requis pour un vrai projet).
@@ -67,7 +61,7 @@ Dans la classe \code{Catalog}, écrivez le corps du constructeur dont la spécif
 \newpage
 % Question 3
 \section{}
-La classe \code{PlayList} est une structure chainée permettant de stocker la liste des chansons qui doivent être jouées par le juke-box. Complétez le diagramme d'objets représentant la \code{Playlist plist} après l'exécution du programme suivant :
+La classe \code{PlayList} est une structure chainée permettant de stocker la liste des chansons qui doivent être jouées par le juke-box. Complétez le diagramme d'objets représentant la \code{Playlist plist} après l'exécution du programme suivant:
 \lstinputlisting{src/q3_spec.java}
 Représentez sur votre dessin la \code{PlayList plist} et ses différents n\oe{}uds (les trois instances de \code{Song} sont déjà dessinées) et les références entre ces objets.
 
@@ -180,7 +174,7 @@ Dans la classe \code{Catalog}, écrivez le corps de la méthode \code{NAuthors} 
 \lstinputlisting{src/q7_spec.java}
 
 \begin{solution}
-    Il s'agit de compter le nombre de chansons ayant des auteurs distincts ; pour cela, on stocke les auteurs déjà visités dans une \code{LinkedList}. On parcourt le tableau \code{contents}, et pour chaque chanson on parcourt la \code{LinkedList} pour voir si l'auteur est déjà présent ; sinon, on l'ajoute à la fin de la liste. Ainsi, le nombre d'auteurs distincts égale la taille de la liste.
+    Il s'agit de compter le nombre de chansons ayant des auteurs distincts; pour cela, on stocke les auteurs déjà visités dans une \code{LinkedList}. On parcourt le tableau \code{contents}, et pour chaque chanson on parcourt la \code{LinkedList} pour voir si l'auteur est déjà présent; sinon, on l'ajoute à la fin de la liste. Ainsi, le nombre d'auteurs distincts égale la taille de la liste.
     \lstinputlisting{src/q7.java}
 
     Néanmoins, comme la classe \code{LinkedList} n'est pas importée, il vaut mieux utiliser une solution avec un tableau intermédiaire, \code{auteurs}, qui contient les différents auteurs rencontrés jusqu'à présent. Pour chaque chanson, on regarde si son auteur est présent dans ce tableau. Si ce n'est pas le cas, on ajoute l'auteur à la fin du tableau (\code{compteur} est l'index de la première case libre) et on \og augmente \fg{} virtuellement la taille du tableau.

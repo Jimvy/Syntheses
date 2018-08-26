@@ -2,24 +2,20 @@
 
 \usepackage{../../../../../../eplcode}
 
-\hypertitle{info-FSAB1401}{1}{FSAB}{1401}{2013}{Juin}{All}
+\hypertitle[']{Informatique}{1}{FSAB}{1401}{2013}{Juin}{All}
 {Sébastien Binard \and Jean-Martin Vlaeminck}
 {Olivier Bonaventure et Charles Pecheur}[
-    \paragraph{Remarque de l'auteur}
-    Ce document ne contient pas l'énoncé détaillé de l'examen ; il peut cependant être retrouvé à l'adresse suivante
-    \begin{center}
-    \url{https://drive.google.com/drive/folders/0B7aBBTDXcgqpZnZMdWYwS09lSHc}
-    \end{center}
-    Il est néanmoins possible que le Drive disparaisse; dans ce cas, consultez
-    \begin{center}
-    \url{https://drive.google.com/a/student.uclouvain.be/folderview?id=0B5WS2yn5sWqDZFFibHM2d0lQVEE&usp=sharing}
-    \end{center}
-    et cherchez le Drive Q1 dans BACHELIER>Tronc commun>Q1.
-    \newline Le répertoire Github contient également des codes sources fonctionnels pour la majorité des classes de l'examen. Il est néanmoins probable que des erreurs soient encore présentes ; n'hésitez pas à nous les signaler !
+\paragraph{Remarque de l'auteur}
+Le répertoire Github contient également, à l'adresse
+\begin{center}
+	\small{\url{https://github.com/Gp2mv3/Syntheses/tree/master/src/q1/info-FSAB1401/exam/2013/Juin/All/src}}
+\end{center}
+des codes sources fonctionnels pour la majorité des classes de l'examen.
+Il est néanmoins probable que des erreurs soient encore présentes;
+n'hésitez pas à nous les signaler!
 ]
 
 \lstset{
-	%title=\lstname, %pour afficher le nom des fichiers, plein d'autres options à rajouter
 	language={Java},
 	tabsize=4,
 	escapechar=\$,
@@ -44,7 +40,7 @@
 % Question 2
 \section{}
 Dans la classe \code{Dict}, écrivez le corps de la méthode \code{contains} selon la spécification ci-dessous. Basez-vous sur le fait que \strong{le tableau est trié} pour faire une recherche plus efficace. Pour rappel, la classe \code{String} fournit la méthode
-\begin{quotation} %fixme qu'est-ce que ça va donner ? Ok
+\begin{quotation}
 	\code{public int compareTo(String other)}
 \end{quotation}
 qui retourne un nombre positif, nul ou négatif selon que la chaine courante est postérieure, égale ou inférieure à \code{other} dans l'ordre alphabétique.
@@ -94,10 +90,10 @@ Dans la classe \code{DigramStats}, écrivez le corps de la méthode \code{remove
 \begin{solution}
 	On commence par vérifier que la liste n'est pas vide (\code{head!=null}) auquel cas on jette une exception. Puis, on vérifie que le digramme ne se situe pas au début. Sinon, on commence à parcourir la liste.
 
-	\begin{sloppypar}Afin de pouvoir facilement enlever un n\oe{}ud dans la liste, on accède au n\oe{}ud actuel avec \code{current.next}, \code{current} référençant donc le n\oe{}ud précédent. La boucle \code{while} peut se terminer de deux façons : soit on a atteint la fin de la liste (cas où \code{current.next==null}) et on jette une exception car le digramme n'a pas été trouvé ; soit on a atteint le n\oe{}ud contenant le digramme.\end{sloppypar}%underfull box : tant pis, ça va comme ça
+	\begin{sloppypar}Afin de pouvoir facilement enlever un n\oe{}ud dans la liste, on accède au n\oe{}ud actuel avec \code{current.next}, \code{current} référençant donc le n\oe{}ud précédent. La boucle \code{while} peut se terminer de deux façons: soit on a atteint la fin de la liste (cas où \code{current.next==null}) et on jette une exception car le digramme n'a pas été trouvé; soit on a atteint le n\oe{}ud contenant le digramme.\end{sloppypar}%underfull box : tant pis, ça va comme ça
 
 	Dans le cas où on trouve le digramme, on décrémente le compteur du n\oe{}ud ou, s'il atteint 0, on enlève le n\oe{}ud de la liste (grâce à \code{current}, cette opération est aisée).
-	\lstinputlisting[linerange={113-138}]{src/DigramStats.java}
+	\lstinputlisting[linerange={111-136}]{src/DigramStats.java}
 \end{solution}
 \newpage
 
@@ -118,16 +114,14 @@ Dans la classe \code{DigramStats}, écrivez le corps de la méthode \code{analyz
 \end{lstlisting}
 
 \begin{solution}
-	% tomorrow ; version Sébastien
-	% Note : il y a un problème dans la page de garde : car la examen doit alors être mise à jour
-	On commence par déclarer notre \code{BufferedReader} en dehors du \code{try-catch}, afin d'y avoir accès par la suite. Dans le \code{try}, on crée notre \code{BufferedReader}, puis on lit la première ligne du fichier dans \code{ligne} ; \code{precedent} nous permettra de mémoriser le dernier mot de la ligne précédente.
+	On commence par déclarer notre \code{BufferedReader} en dehors du \code{try-catch}, afin d'y avoir accès par la suite. Dans le \code{try}, on crée notre \code{BufferedReader}, puis on lit la première ligne du fichier dans \code{ligne}; \code{precedent} nous permettra de mémoriser le dernier mot de la ligne précédente.
 
-	On sépare ensuite la ligne en mots valides grâce à \code{splitWords} et on s'assure que le tableau (et la ligne) n'est pas vide (on passe à la suivante). On commence par vérifier que le dernier mot de la ligne d'avant (\code{precedent}) et le premier mot de la ligne forment un digramme (sont-ils dans le dictionnaire ?), puis on vérifie, pour chaque duo de mots dans \code{tab}, s'ils forment un digramme. Enfin, on mémorise le dernier mot de la ligne dans \code{precedent} et on lit la nouvelle ligne. Ces opérations sont effectuées tant qu'il y a du texte  dans le fichier (la ligne renvoyée par \code{readLine()} est non-\code{null}).
+	On sépare ensuite la ligne en mots valides grâce à \code{splitWords} et on s'assure que le tableau (et la ligne) n'est pas vide (on passe à la suivante). On commence par vérifier que le dernier mot de la ligne d'avant (\code{precedent}) et le premier mot de la ligne forment un digramme (sont-ils dans le dictionnaire?), puis on vérifie, pour chaque duo de mots dans \code{tab}, s'ils forment un digramme. Enfin, on mémorise le dernier mot de la ligne dans \code{precedent} et on lit la nouvelle ligne. Ces opérations sont effectuées tant qu'il y a du texte  dans le fichier (la ligne renvoyée par \code{readLine()} est non-\code{null}).
 
 	Enfin, on ferme le fichier. Si une exception a eu lieu lors de la lecture, on affiche un message d'erreur et on retourne.
 
 	Si ce code suffit dans le cadre de l'examen, il n'est pas assez sûr dans la vie réelle: si une erreur a lieu lors de la lecture d'une ligne après l'ouverture du fichier, celui-ci ne sera pas refermé! Il faut donc, même après exécution du \code{catch}, fermer le fichier, et pour cela on utilise le bloc \code{finally}, qui s'exécutera à tous les coups. Il faut néanmoins vérifier que \code{bf!=null} (le fichier n'a pas été ouvert), et \code{close} peut envoyer une \code{IOException}.
-	\lstinputlisting[linerange={32-66}]{src/DigramStats.java}
+	\lstinputlisting[linerange={30-64}]{src/DigramStats.java}
 \end{solution}
 %\newpage
 
