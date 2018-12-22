@@ -44,6 +44,7 @@
 *.kate-swp
 *.backup
 *.tdo
+**.vscode/
 
 # Non-LaTeX compilation files (Java...)
 *.class
