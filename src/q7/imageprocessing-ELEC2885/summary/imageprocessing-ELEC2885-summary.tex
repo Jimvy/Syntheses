@@ -1,0 +1,85 @@
+\documentclass[en]{../../../eplsummary}
+\usepackage[siunitx]{../../../eplunits}
+
+\hypertitle{Image processing and computer version}{7}{ELEC}{2885}
+{Jean-Martin Vlaeminck}
+{Christophe De Vleeschouwer and Laurent Jacques}
+
+% Bold for vector notation
+\newcommand{\bv}[1]{\mathbf{#1}}
+\newcommand{\Hist}{\mathrm{Hist}}
+
+\section{Introduction and some definitions}
+A \emph{two-dimensional digital image} is a matrix of \emph{pixels},
+where each pixel has some discrete value in a finite interval
+(typically 0 to and including 255), and is defined by
+\begin{itemize}
+	\item its \emph{resolution}: the amount of pixels in the image,
+	and therefore the size of the matrix;
+	\item its \emph{depth}: the amount of potential values for each pixel of the image,
+	or each element of the matrix;
+	\item its \emph{palette} or color system: the way color is encoded
+	using the pixels of the matrix.
+\end{itemize}
+
+The \emph{resolution} of an image and the \emph{size} of an image
+are two different concepts:
+two images can have the same resolution (64x64 pixels) but a different size
+(e.g., on paper, one is 1 inch by 1 inch when the other is 2 inches by 2 inches),
+and two images can have the same size (on paper, 1 inch by 1 inch)
+but a different resolution (e.g., 64x64 and 32x32).
+The link between the two concepts is the \emph{pixel density}:
+the amount of pixels in a direction of a certain length
+(e.g., 401 pixels per inch or \SI{401}{ppi}).
+
+Two kinds of resolution:
+\begin{itemize}
+	\item \emph{resolution of vision (physical image)}:
+	the human can look at objects of very different sizes,
+	and its resolution can be adapted according to the size of the target object.
+	\item \emph{resolution of the digital image}:
+	the digital image has a fixed resolution determined by the amount of pixels
+\end{itemize}
+
+The \emph{depth} of an image is the amount of values (or \emph{levels}) a pixel can take.
+Most of the time, we encode the pixel values using a binary representation
+of $b$ bits, and there are $2^b$ levels. The greater the amount of bits $b$ is,
+the more (gray) levels a pixel can take.
+
+Example: with $b=8$, we have $256$ levels, ranging from $0$ (black) to $255$ (white).
+
+The human vision is limited to about $6$ to $8$ bits per color,
+and therefore maximum $24$ bits for the entire pixel.
+Digital images can have a depth much larger than that.
+
+The \emph{palette} gives the way color is represented using the pixels of the image.
+The human vision is limited to a palette in the visible spectrum.
+Digital images can use a wider spectrum (from \SI{0.0001}{nm} to \SI{100}{um}).
+
+\section{Basics of image processing}
+
+\subsection{Image histogram}
+
+Given an $N$ by $M$ image $I(\bv{x})$, where $I(\bv{x})$ gives the level of pixel $\bv{x}$,
+the histogram $\Hist(l)$ is defined by
+\begin{equation}
+\Hist(l) = \frac{1}{NM} \abs{\{\bv{x} \colon I(\bv{x}) = l\}}
+\label{eq:histogram}
+\end{equation}
+The histogram gives, for each level $l$,
+the amount of pixels of the image that has this level.
+
+\subsubsection{Contrast enhancement}
+Most of the time, the image uses only a small portion of the available range
+of levels. We can therefore improve the contrast by changing the histogram,
+and therefore the original values, so that the full range is used.
+
+\paragraph{Linear stretch}
+With $l_\mathrm{min}$ and $l_\mathrm{max}$ being the lower and upper bounds
+from the histogram (minimum and maximum brightness values),
+we stretch the range $[l_\mathrm{min}, l_\mathrm{max}]$ to fill the full range
+and we interpolate the values in-between.
+
+
+
+\end{document}
