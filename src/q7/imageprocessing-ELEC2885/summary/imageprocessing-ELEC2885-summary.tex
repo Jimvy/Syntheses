@@ -1,5 +1,8 @@
+% !TeX spellcheck = en_US
 \documentclass[en]{../../../eplsummary}
-\usepackage[siunitx]{../../../eplunits}
+\usepackage{../../../eplunits}
+
+\usepackage{amsmath, amssymb, amsfonts, esvect, mathtools, esdiff}
 
 \hypertitle{Image processing and computer version}{7}{ELEC}{2885}
 {Jean-Martin Vlaeminck}
@@ -9,7 +12,7 @@
 \newcommand{\bv}[1]{\mathbf{#1}}
 \newcommand{\Hist}{\mathrm{Hist}}
 
-\section{Introduction and some definitions}
+\part{Introduction and some definitions}
 A \emph{two-dimensional digital image} is a matrix of \emph{pixels},
 where each pixel has some discrete value in a finite interval
 (typically 0 to and including 255), and is defined by
@@ -56,9 +59,9 @@ The \emph{palette} gives the way color is represented using the pixels of the im
 The human vision is limited to a palette in the visible spectrum.
 Digital images can use a wider spectrum (from \SI{0.0001}{nm} to \SI{100}{um}).
 
-\section{Basics of image processing}
+\part{Basics of image processing}
 
-\subsection{Image histogram}
+\section{Image histogram}
 
 Given an $N$ by $M$ image $I(\bv{x})$, where $I(\bv{x})$ gives the level of pixel $\bv{x}$,
 the histogram $\Hist(l)$ is defined by
@@ -69,7 +72,7 @@ the histogram $\Hist(l)$ is defined by
 The histogram gives, for each level $l$,
 the amount of pixels of the image that has this level.
 
-\subsubsection{Contrast enhancement}
+\section{Contrast enhancement}
 Most of the time, the image uses only a small portion of the available range
 of levels. We can therefore improve the contrast by changing the histogram,
 and therefore the original values, so that the full range is used.
@@ -81,5 +84,541 @@ we stretch the range $[l_\mathrm{min}, l_\mathrm{max}]$ to fill the full range
 and we interpolate the values in-between.
 
 
+\part{Mathematical morphology and relatives}
+
+\begin{mydef}
+	Mathematical morphology is a theory and technique that applies concepts from set theory,
+	lattice theory\footnote{A lattice is a structure consisting of
+		a partially ordered set\footnote{A set where every pair of elements \emph{may} be compared}
+		where every two elements have a unique infimum or greatest lower bound or meet
+		and a unique supremum or least upper bound or join.
+		An example is the natural numbers, ordered by divisibility,
+		with the infimum being the GCD and the supremum being the LCM.
+	}, and topology, to the analysis and processing of geometrical structures.
+\end{mydef}
+In practice, we define a set of \emph{morphological operators} (typically set operators)
+between an image and a \emph{structuring element}, that will transform these images.
+
+A \emph{structuring element} is a simple, generic shape used to probe the image
+in order to draw conclusions on whether the shape fits in the image.
+Examples are $n$-by-$n$ matrices of ones, or crosses of ones, or disks of ones.
+The points inside these basic shapes can be either $1$ or ``don't care's''.
+We can also extend the definition to include sophisticated shapes which can contain $0$.
+
+For \emph{binary morphology}, we consider an image as being just a set of points
+belonging to the bright part of the image: there is only two levels in the quantized intensity.
+The morphological operators are only set operators and combinations of them.
+
+For \emph{grayscale morphology}, we consider the regular definition of an image,
+and the morphological operators can be interpreted as convolutions in a tropical geometry.
+
+\begin{mynota}
+	\begin{itemize}
+		\item $X$ defines a binary image as a set of pixel coordinates.
+		\item $K$ defines a set of pixel coordinates for the structuring element.
+		\item $K_x$ is the structuring element translated in $x$.
+		\item $K^s$ is the symmetrization of the structuring element: $\{ -x \suchthat x \in K\}$
+	\end{itemize}
+\end{mynota}
+
+\section{Basic operators}
+
+\subsection{Dilation}
+
+Dilation enlarges the boundaries of regions of foreground, white pixels on a binary image.
+
+\begin{equation}
+X \oplus K = \{ x \suchthat K_x \cap X \neq \emptyset \}
+\end{equation}
+
+\paragraph{Properties}
+\begin{itemize}
+	\item Commutativity: $A \oplus B = B \oplus A$.
+	\item Associativity: $A \oplus (B \oplus C) = (A \oplus B) \oplus C$.
+	\item Extensivity: if $0 \in B$, then $A \subseteq A \oplus B$.
+	\item Dilation is increasing: $A \subseteq B \implies A \oplus D \subseteq B \oplus D$.
+	\item When dilating by a disk-shaped structuring element,
+	convex boundaries will become rounded (i.e., outside corners become rounded),
+	and concave boundaries are preserved in shape but are translated towards
+	the empty inside space (i.e., inside corners are left as is).
+\end{itemize}
+
+Binary dilation can be used for edge detection: $(X \oplus K) \setminus X$ leaves the edges.
+
+Binary dilation can be used for region filling:
+with a structuring element $K$ and the complementary of the image $A^c$
+\footnote{This image contains the boundary of the region of interest.}
+starting from a unique point $X^{(0)}$ inside a region of interest,
+compute $X^{(k)} = (X^{(k-1)} \oplus K) \cap A^c$ iteratively.
+When the process converges, $X^{(k)} \cup A$ defines the filled region.
+
+\paragraph{Grayscale dilation}
+The grayscale dilation, for a regular image $f$ and a structuring element $b$
+defined over a region $E$, is
+\begin{equation}
+(f \oplus b)(x) = \sup_{y \in E} (f(y) + b(x - y))
+\end{equation}
+
+This equation can be interpreted as a convolution in tropical geometry:
+\begin{mydef}
+	Tropical geometry, or max-plus algebra\footnote{A min-plus algrebra is also
+		a tropical geometry, but is not used in this course},
+	is a version of geometric algebra using a \emph{tropical semiring} instead of a field.
+	A tropical semiring is a semiring of extended real numbers
+	$\R \cup \{+\infty, -\infty\}$ with the operations of maximum and addition
+	replacing the usual addition and multiplication operations.
+\end{mydef}
+
+The convolution $(f \star g)(x) = \int f(t) \times g(x-t) \dif{x}$ is thus transformed
+into $(f \oplus g)(x) = \sup f(t) + g(x-t)$.
+
+Grayscale dilation has the effect of brightening the image, as bright regions
+surrounded by dark regions grow in size, and dark regions surrounded by
+bright regions shrink in size.
+
+Grayscale dilation can also remove pepper noise: dark points in the image.
+
+\subsection{Erosion}
+
+Erosion is the dual of dilation: it erodes away the boundaries of regions
+of foreground, white pixels.
+
+\begin{equation}
+X \ominus K = \{ x \suchthat K_x \subseteq X \}
+\end{equation}
+
+\paragraph{Properties}
+\begin{itemize}
+	\item Erosion is \strong{not} commutative nor associative.
+	\item Extensivity: if $0 \in B$, then $A \ominus B \subseteq A$.
+	\item Dilation is increasing, but in the other direction:
+	$A \subseteq C \implies (A \ominus B \subseteq C \ominus B)$
+	and $B \supseteq C \implies (A \ominus B) \subseteq A \ominus C$.
+	\item Chain rule: $A \ominus (B \oplus C) = (A \ominus B) \ominus C$.
+	\item Translation invariance: $A_x \ominus B = (A \ominus B)_x$
+	and $A \ominus B_x = (A \ominus B)_{-x}$.
+	\item Linearity: $(A \cap B) \ominus C = (A \ominus C) \cap (B \ominus C)$.
+	\item Containment: $A \cup B) \ominus C \supseteq (A \ominus C) \cup (B \ominus C)$.
+	\item Decomposition of structuring elemnts:
+	$A \ominus (B \cup C) = (A \ominus B) \cap (A \ominus C)$.
+	\item When eroding by a disk-shaped structuring element,
+	convex boundaries will be preserved, and concave boundaries will be rounded.
+\end{itemize}
+
+\paragraph{Grayscale erosion}
+Using the same notation as for dilation,
+\begin{equation}
+(f \ominus g)(x) = \inf_{y \in E} (f(y) - b(x-y))
+\end{equation}
+which can be considered as a convolution in a min-minus algebra (still a tropical geometry).
+
+Grayscale erosion has the effect of darkening the image, as dark regions
+surrounded by bright regions grow in size, and bright regions surrounded by dark
+regions shrink in size.
+
+Example applications: separating objects that are initially touching each other,
+remove salt noise (white points on the image).
+
+\subsection{Opening}
+
+Opening is defined as an erosion followed by a dilation:
+\begin{equation}
+X \circ K = (X \ominus K) \oplus K
+\end{equation}
+
+The effect of binary opening is that regions matching the structuring shape are
+preserved, so that the resulting image could have been drawn from
+a structuring-element-shaped brush.
+Equivalently, the new foreground region will be such that the structuring
+element fits inside it.
+Similarly to erosion, the resulting image is included within the original image:
+it removes some of the foreground pixels.
+An important effect of opening is idempotence:
+$(X \circ K) \circ K = X \circ K$, meaning that subsequent applications of opening
+don't change the image.
+
+\paragraph{Examples}
+In the following example, with a disk-shaped structuring element
+of the same size as the disks, we can see that the lines were removed from
+the image while the circles have been mostly unaffected.
+\begin{center}
+	\includegraphics[width=\linewidth]{opening_example1.png}
+\end{center}
+
+In the following example, with a 5-by-5-square-shaped structuring element,
+we can see that the bright features smaller than the shape have been reduced
+in intensity.
+\begin{center}
+	\includegraphics[width=\linewidth]{opening_example2.png}
+\end{center}
+
+In the following example, opening removes the salt noise and doesn't degrade
+the image as much as a regular erosion.
+However, opening can't remove pepper noise: it will even increase the noise!
+\begin{center}
+	\includegraphics[width=\linewidth]{opening_example3.png}
+\end{center}
+
+\subsection{Closing}
+
+Closing is defined as a dilation followed by an erosion:
+\begin{equation}
+X \bullet K = (X \oplus K) \ominus K
+\end{equation}
+Similarly to dilation, the resulting image contains the original image:
+it grows the image boundaries. We also have idempotence for closing.
+The new background regions will be such that the structuring element can cover
+any point in the background without covering a point from the new foreground region.
+
+\paragraph{Properties of opening and closing}
+\begin{itemize}
+	\item Translation invariance: $A \circ B_x = A \circ B$
+	and $A \bullet B_x = A \bullet B$.
+	\item Antiextensivity of opening: $A \circ B \subseteq A$.
+	\item Extensivity of closing: $A \subseteq A \bullet B$.
+	\item Duality: $(A \bullet B)^c = A^c \circ B^s$.
+\end{itemize}
+
+\paragraph{Examples}
+In the following example, we can remove the small holes by closing.
+\begin{center}
+	\includegraphics[width=\linewidth]{closing_example_1.png}
+\end{center}
+
+In the following example, we can reduce the complexity of the skeleton
+by closing the thresholded image first
+\begin{center}
+	\includegraphics[width=\linewidth]{closing_example2.png}
+\end{center}
+
+And of course, closing can remove pepper noise, but fails to remove salt noise.
+
+\section{Morphological filtering}
+
+We can use the previous algorithms to identify various geometrical structures
+and properties of the image, by varying the shape and the size
+of the structuring elements.
+
+\section{Morphological pyramid}
+
+Idea: replace convolution (in the subsampling stage) by morphological dilation
+in the Gaussian/Laplacian pyramids.
+The equations and the construction of the pyramid is otherwise similar to that of a regular Laplacian pyramid.
+
+\section{Some more advanced concepts}
+
+Not seen in 2018-2019.
+
+\subsection{Hit-and-miss transform}
+
+Not seen in 2018-2019.
+
+\subsection{Thinning}
+
+Not seen in 2018-2019.
+
+\subsection{Thickening}
+
+Not seen in 2018-2019.
+
+\subsection{Skeletonization and Medial Axis Transform}
+
+Not seen in 2018-2019.
+
+\part{Image segmentation}
+
+\section{Edge detectors}
+
+\begin{mydef}
+	In 1-D, an edge is a point where the first derivative of the ``intensity''
+	is maximum. And thus, where the second derivative is zero.
+\end{mydef}
+\begin{mydef}
+	In 2-D, an edge is made of points where the first directional derivative
+	of the ``intensity'' is maximum along the direction of its gradient.
+\end{mydef}
+
+Given a point $\vv{x}=(x, y)^\Tr$, the gradient is
+\[\vv{\nabla} I(\vv{x}) = \left(\diffp{}{x}I(\vv{x}), \diffp{}{y}I(\vv{x})\right)^\Tr\],
+the directional derivative in unitary direction $\vv{u}=(u_x, u_y)^\Tr$ is
+\[\diff{I}{x}(\vv{x}) = u_x \diffp{I}{x}(\vv{x}) + u_y \diffp{I}{y}(\vv{y})\]
+
+If we define $\vv{u}=\frac{\vv{\nabla}I(\vv{x})}{\norm{\vv{\nabla}I(\vv{x})}}$,
+$J(\lambda) = I(\vv{x}+\lambda \vv{u})$, then $\vv{x}$ is part of an edge
+if $J'(\lambda)=\vv{\nabla}I(\vv{x}+\lambda \vv{u})\cdot \vv{u}$
+is locally maximum in $\lambda=0$. In other words, if
+\[ \vv{u}^\Tr \begin{pmatrix} \diffp{I}{{x^2}} & \diffp{I}{{x}{y}} \\ \diffp{I}{{x}{y}} & \diffp{I}{{y^2}} \end{pmatrix} \vv{u} = 0 \].
+
+However, this technique can't be used, as the image $I$ is a discontinuous function.
+
+General idea: smooth the image before applying the previous method.
+We define $g_\sigma$ as a Gaussian of scale $\sigma$, and we define
+$I_\sigma = I \ast g_\sigma$, and thus
+\[ \vv{\nabla}I_\sigma(\vv{x}) = I \ast \vv{\nabla} g_\sigma \].
+This gives the edges available at scale $\sigma$.
+
+\subsection{Canny-Lindeberg detector}
+
+The Canny-Lindeberg edge detector is a direct application of this principle,
+with the details worked out.
+There is a trade-off between the edge accuracy and the noise resistance:
+at finer scales $\sigma$, the edges are more accurately detected and tracked,
+but there are a lot of noisy edges due to the inherent noise;
+at large scale, there are less noisy edges and less noise, but the edges are
+inaccurate and often disconnected from each other.
+
+Lindeberg designed a method for automatically choosing the best value for the scale.
+
+\subsection{Watershed method}
+
+This is a pixel-based segmentation. The basic idea is that we have
+a rising ``water level'', that fills the various parts of the image under
+the image intensity surface, and each time two separate regions are merged
+together at a junction due to the rising water, we record the junction as part
+of an edge, that will end when another regions merges with the two first.
+
+This algorithm has the default of creating a lot of regions
+(due to irregularities within a single region), and we need to merge them.
+We can build a Region Adjacency Graph, and merge the regions based
+on similar size, similar mean color, the boundary length,
+\dots\footnote{Visually, the results are still pretty bad.}
+
+\section{Feature-based segmentation}
+
+A \emph{feature vector} is associated to each pixel and contains various types
+of information about this pixel. Examples include:
+\begin{itemize}
+	\item colors (in YUV, RGB, HSV, HSL systems);
+	\item spatial gradients (2 components);
+	\item velocity of the pixel on the image (2 components; only for video);
+	\item texture content around a pixel (stationarity, variance).
+\end{itemize}
+These features can be computed by image processing.
+
+Using these feature vectors and working in the feature space, we can
+segment our image, i.e., separate the image into regions, by assigning
+each pixel to a semantic descriptor as well as a confidence measure.
+
+Hypothesis: coherence and redundancy among features in a region (pixels
+in a region share similar feature vectors).
+
+\subsection{Clustering}
+
+Build clusters of similar feature vectors and assign them to the same region.
+
+Clusters are defined by a set of centroids, $\mathcal{C}$, with one centroid
+per cluster. And we want to find
+\[ \mathcal{C}^\mathrm{opt} = \arg \min_{\mathcal{C}} (\phi_\mathcal{C} = \sum_{x \in \mathcal{X}} \min_{c \in \mathcal{C}} \norm{x-c}^2) \]
+which is a NP-hard problem. We must thus find approximate methods.
+Examples are $K$-Means (or Lloyd-Max), with various different initializations
+like $K$-Means++.
+
+$K$-Means++ algorithm:
+\begin{enumerate}
+	\item set $\mathcal{C}^0 = \{c_1\} \in \mathcal{X}$ with $c_1$ picked
+	uniformly at random in $\mathcal{X}$ (initially one centroid).
+	\item for $k=2$ to $K$ do:
+	\begin{enumerate}
+		\item Compute the distances $D(u, A) = \min_{a \in A} \norm{u-a}$,
+		the sum of the squared distances $S=\sum_{x \in \mathcal{X}} D(x, \mathcal{C}^0)^2$,
+		and the probability mass function $p(x) = \frac{1}{S} D(x, \mathcal{C}^0)^2$.
+		\item Pick $c_k$ at random in $\mathcal{X}$ according to $p$.
+		\item $\mathcal{C}^0 \leftarrow \mathcal{C}^0 \cup \{c_k\}$.
+	\end{enumerate}
+	\item Run $K$-Means with initial cluster $\mathcal{C}^0$.
+	\item Repeat steps 1 to 3 several times and select the best $\mathcal{C}^0$.
+\end{enumerate}
+This algorithm can guarantee that
+\[ E_{\mathcal{C}^0} \phi(\mathcal{C}_{\text{K-Means++}}) \le 8 (\ln K + 2) \phi(\mathcal{C}^\mathrm{opt}) \]
+
+The thematic of clusters is reviewed in more details in the course of Machine Learning, LELEC2870.
+
+\subsection{Clustering in other geometries: spectral clustering}
+
+If the geometry of the feature space is not appropriately specified by
+a cluster of convex sets (e.g., one set is inside another set that is annular,
+with small inside-cluster distances and large inter-cluster distances),
+we have to do \emph{spectral clustering}.
+
+\begin{mydef}
+\emph{Spectral clustering}: Define a graph from data in order to learn
+intrinsic data geometry and cluster thanks to the frequencies of the graph.
+\end{mydef}
+
+\paragraph{Reminders about graphs}
+We can define a graph $\mathcal{G} = (V, E, W)$ by
+its vertices $V=\{v_i\}_{i=1}^N$,
+its edges $E=\{(v_i, v_j)\suchthat v_i \sim v_j\} \subset V \times V$
+and its weights $W=\{w_{ij}\suchthat w_{ij} \neq 0 \text{ if } (v_i, v_j) \in E\}$.
+
+An undirected graph has the additional properties that
+$(v_i,v_j) \in E \Leftrightarrow (v_j, v_i) \in E$ and $w_{ij} = w_{ji}$.
+
+We can define graphs using the \emph{adjacency matrix} containing $w_{ij}$.
+
+\paragraph{Laplacian of the graph and connected components}
+We first define the \emph{graph Laplacian}
+\[ L = D - W \]
+with $D$ being a diagonal matrix such that $D_{ii} = \sum_{j=1}^{N} w_{ij}$
+(the degree matrix).
+
+The motivation comes from the fact that, given a function $f\colon V \mapsto \R^k$,
+the Laplacian of $f$ is really $L$.
+
+Then, if we have a graph with $K$ disconnected groups $V_1$, \dots, $V_K$,
+we have $\forall 1 \le i \le K\colon L 1_{V_i} = 0$
+\footnote{$1_V$ is the function that returns $1$ for every element in $V$}.
+And thus, the kernel of $L$ is $K$-dimensional, and $1_{V_i}$ are
+the eigenvectors of $L$ for the eigenvalue $0$: these vectors define
+the connected components of the graph.
+
+We can perform a EVD\footnote{There seems to be a confusion between
+the SVD and the EVD in the course slides.} of $L=U \Sigma V$ with
+$\Sigma = \mathrm{diag}(\underbrace{0, \dots, 0}_{K}, \sigma_{K+1},\dots)$.
+The matrix $U$ then contains eigenvectors, with the first $K$ indicating
+the different potential clusters. The rows of the matrix $V$ formed by the first
+$K$ columns of $U$ then each correspond to a data point and each coordinate
+in the row indicates a measure of the belonging of the point to the cluster.
+In some sense, this can be interpreted as a kernel trick.
+
+\paragraph{Spectral clustering}
+We can therefore build an algorithm for spectral clustering:
+\begin{enumerate}
+	\item Build a similarity graph $\mathcal{G}$ by connecting all pairs
+	of points whose distance is less than a given value\footnote{
+	This is what we call an $\epsilon$-neighborhood graph.
+	Alternatives exist, like the $k$-nearest neighbor graph (with an edge
+	if either point is among the $k$ nearest of the other),
+	the mutual $k$-nearest neighbor graph (with an edge if both are among
+	the $k$ nearest of each other), and the fully connected graph.}.
+	Assign weight $w_{ij} = \exp\left(-\frac{\norm{v_i-v_j}^2}{2\sigma^2}\right)$.
+	\item Compute the Laplacian $L$.
+	\item Fix $K$, compute the $K$ first eigenvalue of $L$ and their
+	corresponding eigenvectors (the first $K$ columns of $U$).
+	\item Run $K$-means on the vectors $\{U_{i, 1:K}\}_{i=1}^{N}$.
+\end{enumerate}
+
+\subsection{Feature-based classification}
+
+When we have a segmentation of an image, or a set of images, based on features,
+we're often left with a set of clusters.
+\emph{Classification} is interested in classifying new pixels in the
+previously-determined clusters.
+
+\paragraph{Parallelepiped classifier}
+The basic classifier defines rectangular boxes by the range of each feature
+component. That is, for each feature component, we extract the minimum and
+the maximum of this feature component over the whole features within
+the cluster. The main problem with this approach is the possibility of overlaps
+between two adjacent clusters.
+
+A more advanced classifier can split the clusters into smaller rectangular boxes
+and define the cluster as the fusion of each of these subboxes.
+This can prevent some overlaps.
+
+\paragraph{Minimum distance classifier}
+We assign the pixel to the cluster whose centroid is closest to the feature
+vector of the newcoming pixel. This approach doesn't work when the cluster
+variances are different,
+even more if the variance depends on the feature component.
+
+\paragraph{Maximum likelihood classifier}
+We assume that each cluster is drawn from a near-Gaussian distribution
+whose parameters (mean, variance) can be estimated from the cluster points.
+The ML classifier then attempts to maximize the probability of
+cluster membership: cluster of $\vv{v}$ = $\arg \max_{i} p(\vv{v} \in \mathcal{C}_i$
+with $p(\vv{v} \in \mathcal{C}_i) \propto \mathcal{N}(\vv{c_i}, \Sigma_i)$.
+
+\begin{center}
+	\includegraphics[width=\linewidth]{ml_classifier.png}
+\end{center}
+
+\section{Active contours and level sets}
+
+One of the objective of image segmentation is to extract semantic objects
+from the background of the image, in order to process these objects further.
+In addition to the feature-based segmentation, other techniques exist.
+
+\subsection{Active contours}
+
+The idea is that we have a curve $\vv{C}(s, t)$ that we want to drive towards
+the object frontier in order to extract the object.
+
+In order to drive the movement of this \emph{active contour},
+we need an equation of motion:
+\begin{equation}
+\diffp{\vv{C}}{t}(s, t) = F(\vv{C}(s, t)) \vv{N}(\vv{C}(s, t))
+\end{equation}
+where $t$ is the time, $s$ is the coordinate of a point along the curve,
+$\vv{C}(s, t)$ gives the coordinate of the 1-D point $s$ at time $t$,
+$\vv{N}$ is the normal to the curve $\vv{C}$, and $F$ is the acceleration of
+(or the force acting on) the point $\vv{C}$ towards the object.
+The active contour stops when $F=0$ over all points $s$.
+
+We can decompose $F$ in two components: $F=F_\mathrm{int} + F_\mathrm{ext}$.
+\begin{itemize}
+	\item $F_\mathrm{int}$ are the internal forces of the curve,
+	specifying the tension and smoothness of the contour (function of
+	the curvature e.g.)
+	\item $F_\mathrm{ext}$ are the external forces that attract the curve
+	towards the desired object boundaries.
+\end{itemize}
+
+\paragraph{Parametric curves}
+In $\R^2$, the curve $\vv{C}\colon [0;1] \mapsto \R^2 \colon p \mapsto
+\vv{C}(p) = (x(p), y(p))^\Tr$ has tangent vector
+$\vv{T}(p) = \frac{\vv{C}'(p)}{\norm{\vv{C}'(p)}}
+= \frac{1}{\sqrt{x'(p)^2+y'(p)^2}} (x'(p), y'(p))^\Tr$
+and inward normal vector $\vv{N}(p) = \frac{1}{\sqrt{x'(p)^2+y'(p)^2}} (-y'(p), x'(p))^\Tr$.
+We can also define arc length $s$ such that $\norm{\diff{\vv{C}(s)}{s}} = 1$;
+that is, $\dif{s} = \norm{\vv{C}'(p)} \dif{p}$ and $\int_{0}^{L} \dif{s} = L$.
+We can then define the Frenet curvature $\kappa$ as $\diff{\vv{T}}{s} = \kappa N$,
+or $\kappa = \frac{x'y'' - x''y'}{\sqrt{x'^2+y'^2}^3}$.
+
+\paragraph{Active contours types}
+There a two types of active contours:
+\begin{itemize}
+	\item boundary-based active contours, where the local information is given
+	by the gradient and we use snakes or geodesic curves as active contours;
+	\item region-based active contours, where the local information is given by
+	terms depending on the boundary and the region.
+\end{itemize}
+
+\subsubsection{Boundary-based active contours}
+
+The basic idea: find $\vv{C}(p)$ minimizing the following energy:
+\begin{equation}
+E(\vv{C}) = \alpha \int_{0}^{1} \norm{\vv{C}'(p)}^2 \dif{p}
++ \beta \int_{0}^{1} \norm{\vv{C}''(p)}^2 \dif{p}
+- \lambda \int_{0}^{1} \norm{\vv{\nabla} I(\vv{C}(p))} \dif{p}.
+\end{equation}
+The first two terms are the internal energy, constraining the smoothness,
+elasticity and rigidity of the curve by means of derivatives,
+and the third term is the external energy, attracting the contour towards
+the object of the image (the greater the gradient, the better).
+$\alpha$, $\beta$ and $\lambda$ are real positive regularization constants.
+
+We can use some calculus to solve this equation and arrive at the following
+movement equation:
+\begin{equation}
+\diffp{\vv{C}(p, t)}{t} = \alpha \diffp{\vv{C}(p, t)}{{p^2}} - \beta \diffp{\vv{C}(p, t)}{{p^4}} + \lambda H(I) \frac{\vv{\nabla}I(\vv{C}(p, t)}{\norm{\vv{\nabla}I(\vv{C}(p, t)}}
+\end{equation}
+which has a ton of problems:
+\begin{itemize}
+	\item no topology change allowed;
+	\item function not intrisic (depending on the parametrization $p$);
+	\item instable numeric scheme requiring $4$-th order derivatives;
+	\item needs a close initialization otherwise it will go havoc.
+\end{itemize}
+
+Rest of the slides not seen in 2018-2019. But they are interesting.
+
+\subsubsection{Region-based active contours}
+
+Not seen in 2018-2019.
+
+\paragraph{Local and global information} Not seen.
+
+\paragraph{Region-based active contours} Not seen.
 
 \end{document}
