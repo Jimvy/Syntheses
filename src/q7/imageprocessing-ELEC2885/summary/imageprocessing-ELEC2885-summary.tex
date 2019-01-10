@@ -4,6 +4,10 @@
 
 \usepackage{amsmath, amssymb, amsfonts, esvect, mathtools, esdiff}
 
+\usepackage[export]{adjustbox}
+
+\DeclareMathOperator{\supp}{supp}
+
 \hypertitle{Image processing and computer version}{7}{ELEC}{2885}
 {Jean-Martin Vlaeminck}
 {Christophe De Vleeschouwer and Laurent Jacques}
@@ -11,6 +15,13 @@
 % Bold for vector notation
 \newcommand{\bv}[1]{\mathbf{#1}}
 \newcommand{\Hist}{\mathrm{Hist}}
+\newcommand{\expand}{\mathrm{Expand}}
+
+\makeatletter
+\def\maxwidth#1{\ifdim\Gin@nat@width>#1 #1\else\Gin@nat@width\fi}
+\makeatother
+
+\graphicspath{{1-2-image_repr_transforms/}{3-sparsity/}{4-hvs_saliency/}{5-learning/}{6-compressed/}{6-morpho/}{7-segmentation_classification/}{8-comp_photo/}{9-10-tracking/}{11-stereo/}{12-13-compression}}
 
 \part{Introduction and some definitions}
 A \emph{two-dimensional digital image} is a matrix of \emph{pixels},
@@ -56,7 +67,7 @@ and therefore maximum $24$ bits for the entire pixel.
 Digital images can have a depth much larger than that.
 
 The \emph{palette} gives the way color is represented using the pixels of the image.
-The human vision is limited to a palette in the visible spectrum.
+The human vision is limited to a palette in the visible spectrum (\num{350} to \SI{700}{nm}).
 Digital images can use a wider spectrum (from \SI{0.0001}{nm} to \SI{100}{um}).
 
 \part{Basics of image processing}
@@ -66,7 +77,7 @@ Digital images can use a wider spectrum (from \SI{0.0001}{nm} to \SI{100}{um}).
 Given an $N$ by $M$ image $I(\bv{x})$, where $I(\bv{x})$ gives the level of pixel $\bv{x}$,
 the histogram $\Hist(l)$ is defined by
 \begin{equation}
-\Hist(l) = \frac{1}{NM} \abs{\{\bv{x} \colon I(\bv{x}) = l\}}
+\Hist(l) = \frac{1}{NM} \abs{\{\bv{x} \colon I(\bv{x}) = l\}}.
 \label{eq:histogram}
 \end{equation}
 The histogram gives, for each level $l$,
@@ -77,12 +88,338 @@ Most of the time, the image uses only a small portion of the available range
 of levels. We can therefore improve the contrast by changing the histogram,
 and therefore the original values, so that the full range is used.
 
-\paragraph{Linear stretch}
+\subsection{Linear stretch}
+\begin{figure}[p]
+	\centering
+	\includegraphics[max width=\linewidth]{linear_stretch}
+	\caption{Example of linear stretch}
+	\label{fig:1-linear_stretch}
+\end{figure}
 With $l_\mathrm{min}$ and $l_\mathrm{max}$ being the lower and upper bounds
 from the histogram (minimum and maximum brightness values),
 we stretch the range $[l_\mathrm{min}, l_\mathrm{max}]$ to fill the full range
-and we interpolate the values in-between.
+and we interpolate the values in-between:
+\begin{equation}
+l_y = f(l_x) = \frac{255-0}{l_\mathrm{max}-l_\mathrm{min}} (l_x-l_\mathrm{min}).
+\end{equation}
+See figure~\ref{fig:1-linear_stretch} for an intuitive description.
 
+\subsection{Histogram equalization}
+\begin{figure}[p]
+	\centering
+	\includegraphics[max width=\linewidth]{hist_equalization_1_1}
+	\caption{Example of histogram equalization}
+	\label{fig:1-hist_eq}
+\end{figure}
+Objective: reinstall democracy in pixel levels. This means that levels that are
+highly represented in the histogram should be stretched more than levels
+that are less represented: this allows a finer scale for highly represented
+levels. See figure~\ref{fig:1-hist_eq} for an illustration.
+
+Technically, we want $f\colon [0, L-1] \mapsto [0, L-1]$
+such that $\#\{x \colon f(I(x)) \le l\}/N^2 \approx l/L$.
+This leads to
+\begin{equation}
+f(l) = \frac{l-1}{N^2} \abs{\{ x \suchthat I(x) \le l \}}.
+\end{equation}
+
+\section{Color spaces}
+
+There exist multiple color spaces: RGB, CMYK, HSI, HSV, YUV\dots
+In this course we focus on RGB.
+We can view an image as a set of grayscale images, one per color channel.
+
+\section{Frequencies and Fourier analysis}
+
+The Fourier basis functions are
+\begin{equation}
+\phi_{k, l}(n, m) = \frac{1}{N} \e^{\imagj \frac{2\pi}{N}(nk+ml)}
+\end{equation}
+with $(n,m)$ being the pixel indices (coordinates in the image),
+$(k,l)$ the frequency indices,
+$\xi=\frac{2\pi}{N}\binom{k}{l}$ the frequency vector,
+$\norm{\xi}$ the frequency amplitude,
+$\angle(\xi)$ the frequency angle.
+
+The discrete Fourier transform (DFT) for a 2-D image is
+\begin{equation}
+F(k, l) = \frac{1}{N} \sum_{n=0}^{N-1} \sum_{m=0}^{N-1} f(n, m) \e^{-\imagj (2 \pi / N) (nk + ml)}
+\end{equation}
+and the inverse transform is
+\begin{equation}
+f(n, m) = \frac{1}{N} \sum_{k=0}^{N-1} \sum{l=0}^{N-1} F(k, l) \e^{+\imagj (2 \pi / N) (nk + ml)}.
+\end{equation}
+The Fourier transform can be interpreted as computing the projection of $f$ on or scalar product of $f$ with $\phi_{k,l}^*$.
+
+From this definition, we define the DC value or image mean as $F(0,0)$,
+and the AC values as the other values.
+
+Usually, the result of the Fourier transform is full of complex numbers,
+and we need both the amplitude and the phase of $F(k,l)$ to recover $f$.
+
+% I stopped at slide 30/85
+% TODO speak about the FFT, the properties of masking, log-scale graphs
+
+% Restart at 61
+\section{Multi-scale transformations}
+
+The Fourier transform has the limit that it transforms the signal
+in a frequency domain. This means that the time component is completely
+transformed and mixed into different coefficients of the transform.
+We would like a representation in a time-frequency domain, similar to musical
+scores, that tells in a local neighborhood of the image what frequencies
+are present and what the structure of the signal is.
+
+\subsection{Laplacian pyramid}
+
+As a first example (others will come later), we present the Laplacian pyramid.
+This representation performs an analysis of the image details at different scales.
+
+We define
+\[ L_k = g_k - g_{k+1} = g_k - g_k \ast h \]
+as the map of details of the image at level $i$ (it is similar to the result
+of applying a Laplacian operator to the image).
+$h$ is usually a Gaussian filter $h(n,m) = c \exp(-\frac{1}{2}(n^2+m^2))$.
+However, we don't define $g_{i+1}$ as $g_i \ast h$, bu rather as
+a downsampled version of $g_i \ast h$, such that we can keep our filter $h$
+but work at a scale that is larger. We need an operation, $\expand$, to go
+from this downsampled version to a version of similar size than $g_i$,
+to define
+\begin{equation}
+L_k = g_{k-1} - g_k' = g_{k-1} - \expand(g_k).
+\end{equation}
+In our context of a $\expand$ can be defined
+Starting from $k=1$, we can construct every $L_k$, up to a given level $K$
+(e.g. $K=5$) where we need to store both $L_K$ and $g_K$.
+The Laplacian transform is then each $L_1,\dots,L_K$, and $g_K$, and we can
+process each level independently before reassembling the image with the relation
+\begin{equation}
+g_{k-1} = \expand(g_{k}) + L_{k}
+\end{equation}
+starting from $k=K$ down to $0$.
+
+For a subsampling of $\frac{1}{2}$, the output of this transformation has about
+$\frac{4}{3}$ the number of pixels than the original image. This feels useless,
+but actually we have unfolded the image by scale and resolution of details.
+
+Additional details: upsampling can be achieved either by interpolating
+$g_k'$ to obtain $g_k$ (any interpolation will work because it will be taken
+into account inside the corresponding $L_k$ at the generation step)
+or by moving it in the Fourier domain, zero-pad around this domain (to obtain
+a $4$ times larger domain), then converting back to the pixel domain.
+Likewise, any reasonable function $h$ and any reasonable  downsampling
+can be used, and this will be taken into account in $L_k$. However, it is
+important that these three functions are common to the forward and
+to the backward procedures, less we won't be able to reconstruct the image.
+
+\section{Wavelet transform}
+
+Note: this section is here because it fits more with the previous subjects
+of transformations from one base to another, even though its most significant
+applications are covered in the next section.
+
+\subsection{General idea}
+
+The general idea of wavelet transforms is to look for a way to describe
+discretely and imperfectly a continuous-time signal such that temporal locality
+is exploited to yield a more straightforward interpretation than the Fourier
+transform, that often produces a complete but messy set of coefficients.
+
+We start by building a piecewise constant approximation to the signal $f(t)$.
+For this, given a resolution $\Delta t$, we compute the mean in each interval
+$[k\Delta t, (k+1)\Delta t]$. This mean is calculated by evaluating
+the correlation of $f$ with a \emph{scaling function}
+$\phi_k(t) = \frac{1}{\sqrt{\Delta t}} \phi(\frac{t}{\Delta t} - k)$,
+where $\phi(t) = 1$ if $0 < t < 1$ and $0$ otherwise:
+\[ c_k = \langle f, \phi_k \rangle = \frac{1}{\sqrt{\Delta t}} \int_{k\Delta t}^{(k+1)\Delta t} f(t) \dif{t}. \]
+From this,
+\[ f_\mathrm{app}(t) = \sum_k c_k \phi_k(t) = \sum_k \langle f, \phi_k \rangle \phi_k(t). \]
+We can say that $f$ was projected on an \emph{approximation space}
+$\mathcal{V}(\Delta t)$ containing all the functions that can be approximated
+using constant piecewise functions of scale $\Delta t$, and which has
+an orthonormal basis (ONB) given by $\phi_k$ for $k\in \N$.
+
+We can then do a finer approximation by using a scale of $\Delta t/2$.
+Then, the difference between the two approximations happens to contain
+the details of the signal at this scale.
+
+Let's formalize it a bit: we assume $\Delta t=1$, so that we have
+\[ \mathcal{V}_j = \{ \phi_{j,k}(t) = 2^{j/2} \phi(2^j t - k) \forall k \in \Z \} \]
+and $f_j(t) = \mathcal{P}_{\mathcal{V}_j} f$. With increasing $j$, $f_j$
+are an increasingly finer approximations of $f$. $j=0$ often corresponds
+to $\Delta t$ being the full length of the signal. We have that $\forall i \le j,
+f_i = \mathbb{P}_{\mathcal{V}_i} f_j$.
+
+Then, $d_j(t) = f_{j+1}(t)-f_j(t) \in \mathcal{W}_j$ can be considered, and are
+the details of the signal. They all belong to a space, $\mathcal{W}_j$, such that
+$\mathcal{V}_{j+1} = \mathcal{V}_j \oplus \mathcal{W}_j$; $\mathcal{W}_j$ is
+orthogonal to space $\mathcal{V}_j$ and together they form $\mathcal{V}_{j+1}$.
+We can also write $f_{j+1}(t) = d_j(t) + f_j(t)$ to notice that we are applying
+a multiscale transformation alike the Laplacian pyramid.
+
+The space $\mathcal{W}_j$ has an ONB given by
+\[ \{\psi_{j, k}(t)=2^{j/2} \psi(2^{j} t - k)\}, \] % FIXME there is an error in the slides
+where $\psi(t) = -1$ if $0 < t < \frac{1}{2}$, $1$ if $\frac{1}{2} < t < 1$, and $0$ otherwise;
+this is what we call a \emph{wavelet}. We can also write
+\begin{equation}
+d_j(t) = \sum_k \langle f, \psi_{j,k} \rangle \psi_{j,k}(t) = \mathcal{P}_{\mathcal{W}_j}(f_{j+1}).
+\end{equation}
+
+\subsection{Multiresolution analysis (MRA)}
+
+For this, we assume that $f$ is sampled at highest resolution $J$, that is
+$f(t)=f_J(t)=\mathcal{P}_{\mathcal{V}_j}f_\mathrm{cont}$.
+From $f_j$, we can calculate
+\[ f_{j-1} = \mathcal{P}_{\mathcal{V}_{j-1}} f_j \]
+and
+\[ d_{j-1} = \mathcal{P}_{\mathcal{W}_{j-1}} f_j. \]
+We finally only keep the $d_j$ signals for $0 \le j \le J-1$ as well
+as the function corresponding to the mean $f_0$ to have our
+\emph{wavelet transform} coefficients, and the process just described
+is exactly the basic computation of the $N$ wavelet coefficients.
+
+The inverse transform is then
+\[
+f_J(t) = (\dots((f_0+d_0)+d_1)\dots+d_{J-1})
+  = \sum_{j=0}^{J-1} \sum_k \langle f_J, \psi_{j,k} \rangle \psi_{j,k}(t)
+  + \sum_k \langle f_J, \phi_{0,k} \rangle \phi_{0,k}(t)
+\]
+
+\subsection{Fast Wavelet Transform (FWT)}
+
+As with FFT for the DFT, we have a FWT for the DWT: the idea is that
+\begin{alignat*}
+\phi(t) &= \frac{1}{\sqrt{2}} & (\sqrt{2} \phi(2t)) &+ \frac{1}{\sqrt{2}} (\sqrt{2} \phi(2t-1)) \\
+\psi(t) &= -\frac{1}{\sqrt{2}} & (\sqrt{2} \psi(2t)) &+ \frac{1}{\sqrt{2}} (\sqrt{2} \psi(2t-1))
+\end{alignat*}
+so we can compute the coefficients at level $j$ from the coefficients at level $j+1$:
+% TODO put the graph of the circuit for computing this (slide 44)
+
+\subsection{Wavelet types}
+
+There are different types of wavelets:
+Haar wavelets (those we studied in the course),
+Daubechies wavelets (commonly used in algorithms, like JPEG2000),\dots
+
+\subsection{Extension to images}
+
+We apply a principle of separability: approximations are formed by computing
+the correlation of $f$ with $\phi(x)\phi(y)$ (for mean value),
+$\phi(x)\psi(y)$ (for horizontal features or vertical details),
+$\psi(x)\phi(y)$ (for vertical features or horizontal details),
+and $\psi(x)\psi(y)$ (for bi-diagonal features).
+
+We then execute the algorithm by first applying it vertically, to yield
+two horizontal rectangles, and then applying it horizontally, to yield
+four squares.
+The bottom right one is usually $d_{J-1}^D$ (bi-diagonal component, HH),
+the bottom left is $d_{J-1}^V$ (vertical features are apparent, LH),
+the top right is $d_{J-1}^H$ (horizontal features, HL),
+and the top left is the mean $a_{J-1}$ (LL), on which we can reapply
+our algorithm to finally yield a sufficiently small $a_0$.
+
+\part{Redundant bases and sparsity: principles, properties and applications}
+
+\section{Sparsity basis}
+
+\begin{myhyp}
+	Any signal can be decomposed in a \emph{sparsity basis} $\Psi$
+	with few non-zero elements $\alpha$:
+	\[ f(m) = \sum_{k=1}^{d} \alpha_k \psi_k(m), \quad \Psi = \{ \psi_j\colon 1 \le j \le d \} \]
+	and $\supp(\alpha)$ (the \emph{support} of $\alpha$, or the number
+	of nonzero elements) is small compared to the size of $\Psi$.
+\end{myhyp}
+
+$\Psi$ can be anything: an ONB (including Fourier basis, wavelets basis),
+a frame (ridgelets, curvelets), or can be redundant.
+
+\section{Redundant system}
+
+A system (more precisely, a basis) $\Psi$ is redundant if there exist signals
+that can be represented by two different ways using $\Psi$, and that every signal
+can be represented in $\Psi$.
+
+If $N$ is the length of the signal of interest, then
+$\Psi = \{ \psi_k \in \R^N \colon 1 \le j \le d \}$ with $d >> N$.
+The dictionary hence contains more atoms $\psi_k$ than required,
+and $\Psi \Psi^\Tr \neq I_N$: this is not an othonormal basis, and we need
+new algorithms to compute this.
+
+An example of redundant system is the combination of the Fourier basis functions
+with the canonical basis (Dirac deltas at each point): this car represent
+sparsely (i.e., with few non-zero components) a sine with two brusque deltas
+(4 components in total, instead of $N$).
+
+Another example of redundant dictionary starts from a mother function $\psi(t)$,
+and applies different transformations to it:
+translation $T_b\psi(t) = \psi(t-b)$,
+dilation $D_a\psi(t) = \frac{1}{\sqrt{a}} \psi\left(\frac{t}{a}\right)$,
+and modulation $M_\omega \psi(t) = \psi(t) \exp(2\pi \imag \omega t)$.
+this is to be compared with the short-time Fourier transform
+(used for spectrogram; see figure~\ref{fig:3-redundant_ex1} for an example),
+which combine translation and modulation, and with the wavelet transform,
+which combines translation and scaling.
+
+\section{Sparse recovery problem}
+
+Given a signal $x \in \R^N$ and a dictionary of atoms $\Psi \in \R^{N \times d}$
+with $d >> N$, we want to find $\alpha \in \R^d$ such that $x=\Psi \alpha$.
+
+This problem has an infinite number of solutions as the dictionary is redundant
+(if it had been orthonormal, there would be only one solution);
+we want to find the sparsest solution, the solution that minimizes
+$\supp(\alpha)$.
+
+However, this problem cannot be solved with our existing technique
+of correlations, as $\Psi \Psi^\Tr \neq I_N$; we need new algorithms to solve
+\[ \alpha = \arg \min \norm{\alpha'}_0 \text{ such that } x = \Psi \alpha'. \]
+
+\section{Algorithms for the sparse recovery problem}
+
+Let's first point out that the sparse recovery problem is actually NP-hard.
+
+\subsection{Basis pursuit}
+
+Proposed by Chen, Donoho ans Saunders in 1998, after MP and OMP.
+
+The idea is to relax the constraint of sparsity from the $l_0$ norm
+to the $l_1$ norm (sum of absolute values) to obtain
+\begin{equation}
+\alpha = \arg \min \norm{\alpha'}_1 \text{ such that } x = \Psi \alpha'.
+\end{equation}
+
+This is justified by the fact that $x=\Psi \alpha$ defines a $d$-dimensional line
+and we want to find its (ideally unique) intersection with the smallest
+$l_0$ ball (which is just the set of axes limited to some value).
+We can replace the $l_0$ ball with the $l_1$ ball (actually a rhombus),
+as most intersections of a random line with the smallest rhombus possible
+will happen on the axes. See figure~\ref{fig:3-bp_norms} for an intuition.
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=\maxwidth{\linewidth}]{basis_pursuit_norms}
+	\caption{A comparison of the smallest $l_0$, $l_1$ and $l_2$ balls that
+	intersect with the line $x=\Psi \alpha$}
+	\label{fig:3-bp_norms}
+\end{figure}
+
+A big advantage of this method is that the resulting problem becomes
+a linear program (a set of linear inequalities as constraints),
+and there exists a lot of different and efficient methods to solve such problems.
+
+\subsection{Matching pursuit}
+
+\subsection{Orthogonal matching pursuit}
+
+\subsection{Iterative hard thresholding}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=\maxwidth{\linewidth}]{Matching_pursuit.png} % Source: Wikipedia, "Matching pursuit"
+	\caption{1-D example of the short-term Fourier transform of a 1-D signal,
+	using matching pursuit.}
+	\label{fig:3-redundant_ex1}
+\end{figure}
 
 \part{Mathematical morphology and relatives}
 
@@ -238,26 +575,35 @@ $(X \circ K) \circ K = X \circ K$, meaning that subsequent applications of openi
 don't change the image.
 
 \paragraph{Examples}
-In the following example, with a disk-shaped structuring element
+In figure~\ref{fig:6-opening-ex1}, with a disk-shaped structuring element
 of the same size as the disks, we can see that the lines were removed from
 the image while the circles have been mostly unaffected.
-\begin{center}
-	\includegraphics[width=\linewidth]{opening_example1.png}
-\end{center}
+\begin{figure}
+	\centering
+	\includegraphics[max width=\linewidth]{opening_example1.png}
+	\caption{Example 1 of opening}
+	\label{fig:6-opening-ex1}
+\end{figure}
 
-In the following example, with a 5-by-5-square-shaped structuring element,
+In figure~\ref{fig:6-opening-ex2}, with a 5-by-5-square-shaped structuring element,
 we can see that the bright features smaller than the shape have been reduced
 in intensity.
-\begin{center}
-	\includegraphics[width=\linewidth]{opening_example2.png}
-\end{center}
+\begin{figure}
+	\centering
+	\includegraphics[max width=\linewidth]{opening_example2.png}
+	\caption{Example 2 of opening}
+	\label{fig:6-opening-ex2}
+\end{figure}
 
-In the following example, opening removes the salt noise and doesn't degrade
+In figure~\ref{fig:6-opening-ex3}, opening removes the salt noise and doesn't degrade
 the image as much as a regular erosion.
 However, opening can't remove pepper noise: it will even increase the noise!
-\begin{center}
-	\includegraphics[width=\linewidth]{opening_example3.png}
-\end{center}
+\begin{figure}
+	\centering
+	\includegraphics[max width=\linewidth]{opening_example3.png}
+	\caption{Example 3 of opening}
+	\label{fig:6-opening-ex3}
+\end{figure}
 
 \subsection{Closing}
 
@@ -280,16 +626,22 @@ any point in the background without covering a point from the new foreground reg
 \end{itemize}
 
 \paragraph{Examples}
-In the following example, we can remove the small holes by closing.
-\begin{center}
-	\includegraphics[width=\linewidth]{closing_example_1.png}
-\end{center}
+In figure~\ref{fig:6-closing-ex1}, we can remove the small holes by closing.
+\begin{figure}
+	\centering
+	\includegraphics[width=\maxwidth{\linewidth}]{closing_example_1.png}
+	\caption{First example of closing}
+	\label{fig:6-closing-ex1}
+\end{figure}
 
-In the following example, we can reduce the complexity of the skeleton
+In figure~\ref{fig:6-closing-ex2}, we can reduce the complexity of the skeleton
 by closing the thresholded image first
-\begin{center}
-	\includegraphics[width=\linewidth]{closing_example2.png}
-\end{center}
+\begin{figure}
+	\centering
+	\includegraphics[width=\maxwidth{\linewidth}]{closing_example2.png}
+	\caption{Second example of closing}
+	\label{fig:6-closing-ex2}
+\end{figure}
 
 And of course, closing can remove pepper noise, but fails to remove salt noise.
 
@@ -529,9 +881,12 @@ The ML classifier then attempts to maximize the probability of
 cluster membership: cluster of $\vv{v}$ = $\arg \max_{i} p(\vv{v} \in \mathcal{C}_i$
 with $p(\vv{v} \in \mathcal{C}_i) \propto \mathcal{N}(\vv{c_i}, \Sigma_i)$.
 
-\begin{center}
-	\includegraphics[width=\linewidth]{ml_classifier.png}
-\end{center}
+\begin{figure}
+	\centering
+	\includegraphics[width=\maxwidth{\linewidth}]{ml_classifier.png}
+	\caption{Example of a classifier}
+	\label{7-ml-classifier-ex}
+\end{figure}
 
 \section{Active contours and level sets}
 
