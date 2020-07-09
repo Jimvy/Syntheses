@@ -1,4 +1,4 @@
-doctype:
+type:
     errata: Books
     exam: Examens
     exercises: APE
@@ -35,7 +35,7 @@ quadri:
     6: BACHELIER
     7: MASTER
     8: MASTER
-title:
+name:
     advalgo: Advanced Algorithms for Optimization
     advsecu: Secured systems engineering
     aerodyn: Aerospace dynamics
@@ -47,7 +47,7 @@ title:
     archi: Architecture and performance of computer systems
     autoindu: Industrial automation
     autolin: Automatique linéaire
-    calcu: Calculabilité
+    calcu: Calculabilité, logique et complexité
     chimie: Chimie
     chimieorga: Chimie Organique
     cinchim: Cinétique physique et chimique
